@@ -17,6 +17,9 @@ interface WellnessPlan {
   valid_until: string | null;
   is_active: boolean;
   created_at: string;
+  status?: string;
+  completed_at?: string | null;
+  archived_at?: string | null;
 }
 
 interface CalendarViewProps {
@@ -30,6 +33,9 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   
   const plansForSelectedDate = plans.filter(plan => {
+    // Don't show archived plans in calendar view
+    if (plan.status === 'archived') return false;
+    
     const validFrom = new Date(plan.valid_from);
     const validUntil = plan.valid_until ? new Date(plan.valid_until) : null;
     
@@ -46,6 +52,9 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
     
     return daysInMonth.filter(day => {
       return plans.some(plan => {
+        // Don't show archived plans
+        if (plan.status === 'archived') return false;
+        
         const validFrom = new Date(plan.valid_from);
         const validUntil = plan.valid_until ? new Date(plan.valid_until) : null;
         
@@ -177,11 +186,15 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                           {plan.plan_content?.summary || 'Plano personalizado de bem-estar'}
                         </p>
                       </div>
-                      {plan.is_active && (
+                      {plan.status === 'completed' ? (
+                        <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400">
+                          Concluído
+                        </Badge>
+                      ) : plan.status === 'active' || plan.is_active ? (
                         <Badge variant="default" className="ml-2">
                           Ativo
                         </Badge>
-                      )}
+                      ) : null}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-3">
                       <CalendarIcon className="h-3 w-3" />
@@ -215,17 +228,17 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
         </Card>
 
         {/* All Plans Timeline */}
-        {plans.length > 0 && (
+        {plans.filter(p => p.status !== 'archived').length > 0 && (
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">Todos os Planos</CardTitle>
               <CardDescription>
-                {plans.length} plano(s) no total
+                {plans.filter(p => p.status !== 'archived').length} plano(s) ativo(s)
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 max-h-96 overflow-y-auto">
-                {plans.map((plan) => (
+                {plans.filter(p => p.status !== 'archived').map((plan) => (
                   <div
                     key={plan.id}
                     className="border-l-4 border-primary pl-4 py-2 hover:bg-accent/5 transition-colors cursor-pointer"
@@ -241,11 +254,15 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                           {plan.valid_until && ` - ${format(new Date(plan.valid_until), "dd/MM/yyyy")}`}
                         </p>
                       </div>
-                      {plan.is_active && (
+                      {plan.status === 'completed' ? (
+                        <Badge variant="outline" className="ml-2 text-xs text-green-600 dark:text-green-400">
+                          Concluído
+                        </Badge>
+                      ) : plan.status === 'active' || plan.is_active ? (
                         <Badge variant="outline" className="ml-2 text-xs">
                           Ativo
                         </Badge>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 ))}

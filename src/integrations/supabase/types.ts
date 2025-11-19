@@ -179,11 +179,14 @@ export type Database = {
       wellness_plans: {
         Row: {
           ai_recommendations: string
+          archived_at: string | null
+          completed_at: string | null
           created_at: string
           id: string
           is_active: boolean | null
           plan_content: Json
           plan_type: string | null
+          status: string | null
           updated_at: string
           user_id: string
           valid_from: string
@@ -191,11 +194,14 @@ export type Database = {
         }
         Insert: {
           ai_recommendations: string
+          archived_at?: string | null
+          completed_at?: string | null
           created_at?: string
           id?: string
           is_active?: boolean | null
           plan_content: Json
           plan_type?: string | null
+          status?: string | null
           updated_at?: string
           user_id: string
           valid_from?: string
@@ -203,11 +209,14 @@ export type Database = {
         }
         Update: {
           ai_recommendations?: string
+          archived_at?: string | null
+          completed_at?: string | null
           created_at?: string
           id?: string
           is_active?: boolean | null
           plan_content?: Json
           plan_type?: string | null
+          status?: string | null
           updated_at?: string
           user_id?: string
           valid_from?: string

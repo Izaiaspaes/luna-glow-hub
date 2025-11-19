@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp } from "lucide-react";
+import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { CycleForm } from "@/components/tracking/CycleForm";
 import { SleepForm } from "@/components/tracking/SleepForm";
 import { MoodForm } from "@/components/tracking/MoodForm";
@@ -70,8 +76,7 @@ export default function Dashboard() {
       .from('wellness_plans')
       .select('*')
       .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(3);
+      .order('created_at', { ascending: false });
     
     if (error) {
       console.error('Error loading wellness plans:', error);
@@ -79,6 +84,50 @@ export default function Dashboard() {
     }
     
     setWellnessPlans(data || []);
+  };
+
+  const updatePlanStatus = async (planId: string, status: 'active' | 'completed' | 'archived') => {
+    if (!user) return;
+    
+    const updates: any = { status };
+    
+    if (status === 'completed') {
+      updates.completed_at = new Date().toISOString();
+      updates.is_active = false;
+    } else if (status === 'archived') {
+      updates.archived_at = new Date().toISOString();
+      updates.is_active = false;
+    } else if (status === 'active') {
+      updates.is_active = true;
+      updates.completed_at = null;
+      updates.archived_at = null;
+    }
+    
+    const { error } = await supabase
+      .from('wellness_plans')
+      .update(updates)
+      .eq('id', planId)
+      .eq('user_id', user.id);
+    
+    if (error) {
+      console.error('Error updating plan status:', error);
+      toast({
+        title: "Erro ao atualizar plano",
+        description: "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    toast({
+      title: "Plano atualizado!",
+      description: 
+        status === 'completed' ? "Plano marcado como concluído." :
+        status === 'archived' ? "Plano arquivado." :
+        "Plano reativado.",
+    });
+    
+    await loadWellnessPlans();
   };
 
   const generateWellnessPlan = async (planType: string) => {
@@ -339,8 +388,12 @@ export default function Dashboard() {
                         </div>
                       ) : (
                         <div className="space-y-4">
-                          {wellnessPlans.map((plan) => (
-                            <WellnessPlanCard key={plan.id} plan={plan} />
+                          {wellnessPlans.filter(p => p.status !== 'archived').slice(0, 3).map((plan) => (
+                            <WellnessPlanCard 
+                              key={plan.id} 
+                              plan={plan}
+                              onStatusChange={updatePlanStatus}
+                            />
                           ))}
                         </div>
                       )}
@@ -444,13 +497,13 @@ export default function Dashboard() {
                 <CardTitle className="text-lg">Planos Ativos</CardTitle>
               </CardHeader>
               <CardContent>
-                {wellnessPlans.filter(plan => plan.is_active).length === 0 ? (
+                {wellnessPlans.filter(plan => plan.status === 'active' || (plan.is_active && !plan.status)).length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
                     Nenhum plano ativo no momento
                   </p>
                 ) : (
                   <div className="space-y-3">
-                    {wellnessPlans.filter(plan => plan.is_active).map((plan) => (
+                    {wellnessPlans.filter(plan => plan.status === 'active' || (plan.is_active && !plan.status)).map((plan) => (
                       <div
                         key={plan.id}
                         className="p-3 bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-colors"
