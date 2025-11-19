@@ -1,7 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Calendar, Sparkles, Heart, Moon, Apple, Dumbbell, Brain } from "lucide-react";
+import { Calendar, Sparkles, Heart, Moon, Apple, Dumbbell, Brain, MoreVertical, CheckCircle, Archive, RotateCcw } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 interface Recommendation {
   category: string;
@@ -25,10 +32,14 @@ interface WellnessPlan {
   valid_from: string;
   valid_until: string | null;
   is_active: boolean;
+  status?: string;
+  completed_at?: string | null;
+  archived_at?: string | null;
 }
 
 interface WellnessPlanCardProps {
   plan: WellnessPlan;
+  onStatusChange?: (planId: string, status: 'active' | 'completed' | 'archived') => void;
 }
 
 const getCategoryIcon = (category: string) => {
@@ -48,11 +59,22 @@ const getPriorityColor = (priority: string) => {
   return 'text-green-500 dark:text-green-400';
 };
 
-export function WellnessPlanCard({ plan }: WellnessPlanCardProps) {
+export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps) {
   const content = plan.plan_content;
+  const status = plan.status || (plan.is_active ? 'active' : 'archived');
+  
+  const getStatusBadge = () => {
+    if (status === 'completed') {
+      return <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400">Concluído</Badge>;
+    }
+    if (status === 'archived') {
+      return <Badge variant="outline" className="ml-2 text-muted-foreground">Arquivado</Badge>;
+    }
+    return <Badge variant="default" className="ml-2">Ativo</Badge>;
+  };
   
   return (
-    <Card className="mb-4 overflow-hidden">
+    <Card className={`mb-4 overflow-hidden ${status !== 'active' ? 'opacity-75' : ''}`}>
       <CardHeader className="bg-gradient-to-r from-primary/10 via-primary/5 to-background">
         <div className="flex items-center justify-between">
           <div className="flex-1">
@@ -63,11 +85,50 @@ export function WellnessPlanCard({ plan }: WellnessPlanCardProps) {
             <CardDescription className="flex items-center gap-2 mt-2">
               <Calendar className="h-4 w-4" />
               Válido desde {new Date(plan.valid_from).toLocaleDateString('pt-BR')}
+              {plan.completed_at && (
+                <span className="text-green-600 dark:text-green-400 ml-2">
+                  • Concluído em {new Date(plan.completed_at).toLocaleDateString('pt-BR')}
+                </span>
+              )}
+              {plan.archived_at && (
+                <span className="text-muted-foreground ml-2">
+                  • Arquivado em {new Date(plan.archived_at).toLocaleDateString('pt-BR')}
+                </span>
+              )}
             </CardDescription>
           </div>
-          {plan.is_active && (
-            <Badge variant="default" className="ml-2">Ativo</Badge>
-          )}
+          <div className="flex items-center gap-2">
+            {getStatusBadge()}
+            {onStatusChange && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {status !== 'completed' && (
+                    <DropdownMenuItem onClick={() => onStatusChange(plan.id, 'completed')}>
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      Marcar como Concluído
+                    </DropdownMenuItem>
+                  )}
+                  {status !== 'archived' && (
+                    <DropdownMenuItem onClick={() => onStatusChange(plan.id, 'archived')}>
+                      <Archive className="h-4 w-4 mr-2" />
+                      Arquivar
+                    </DropdownMenuItem>
+                  )}
+                  {status !== 'active' && (
+                    <DropdownMenuItem onClick={() => onStatusChange(plan.id, 'active')}>
+                      <RotateCcw className="h-4 w-4 mr-2" />
+                      Reativar
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         </div>
       </CardHeader>
       
