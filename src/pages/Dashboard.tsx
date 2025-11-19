@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +8,23 @@ import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp } from "lucide-
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy'>('overview');
+  const { user, loading, isAdmin, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -29,8 +48,13 @@ export default function Dashboard() {
               <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
                 Preços
               </NavLink>
-              <Button variant="hero" size="sm">
-                Upgrade Premium
+              {isAdmin && (
+                <NavLink to="/admin" className="text-sm font-medium hover:text-primary transition-smooth">
+                  Admin
+                </NavLink>
+              )}
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                Sair
               </Button>
             </nav>
           </div>
