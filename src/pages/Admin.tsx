@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
 import { PlansManagement } from "@/components/admin/PlansManagement";
+import { NotificationsBell } from "@/components/admin/NotificationsBell";
 
 export default function Admin() {
   const { user, loading, isAdmin, signOut } = useAuth();
@@ -53,9 +54,12 @@ export default function Admin() {
                 <NavLink to="/dashboard">Dashboard</NavLink>
               </nav>
             </div>
-            <Button onClick={handleSignOut} variant="outline">
-              Sair
-            </Button>
+            <div className="flex items-center gap-2">
+              <NotificationsBell />
+              <Button onClick={handleSignOut} variant="outline">
+                Sair
+              </Button>
+            </div>
           </div>
         </div>
       </header>
