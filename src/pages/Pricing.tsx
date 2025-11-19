@@ -128,7 +128,7 @@ export default function Pricing() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Freemium Plan */}
-            <Card className="bg-gradient-card border-2 relative">
+            <Card className="bg-gradient-card border-2 relative animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
               <CardHeader>
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-muted text-foreground mb-4">
                   <Heart className="w-6 h-6" />
@@ -163,7 +163,7 @@ export default function Pricing() {
             </Card>
 
             {/* Premium Plan */}
-            <Card className="bg-gradient-card border-2 border-primary relative shadow-hover">
+            <Card className="bg-gradient-card border-2 border-primary relative shadow-hover animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-hero text-white text-sm font-medium rounded-full">
                 ⭐ Mais popular
               </div>
@@ -250,7 +250,11 @@ export default function Pricing() {
 
             {/* Table Body */}
             {comparisonFeatures.map((section, sectionIndex) => (
-              <div key={sectionIndex}>
+              <div 
+                key={sectionIndex}
+                className="animate-fade-in"
+                style={{ animationDelay: `${0.3 + sectionIndex * 0.1}s`, animationFillMode: 'both' }}
+              >
                 <div className="px-6 py-4 bg-muted/10">
                   <h3 className="font-bold text-lg">{section.category}</h3>
                 </div>
@@ -294,7 +298,7 @@ export default function Pricing() {
               Perguntas frequentes
             </h2>
             <div className="space-y-6">
-              <Card className="bg-gradient-card">
+              <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
                 <CardHeader>
                   <CardTitle className="text-lg">Posso mudar de plano depois?</CardTitle>
                 </CardHeader>
@@ -307,7 +311,7 @@ export default function Pricing() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-card">
+              <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
                 <CardHeader>
                   <CardTitle className="text-lg">Como funciona o teste gratuito?</CardTitle>
                 </CardHeader>
@@ -320,7 +324,7 @@ export default function Pricing() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-card">
+              <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
                 <CardHeader>
                   <CardTitle className="text-lg">O que acontece se eu cancelar?</CardTitle>
                 </CardHeader>
@@ -333,7 +337,7 @@ export default function Pricing() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-card">
+              <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
                 <CardHeader>
                   <CardTitle className="text-lg">Meus dados estão seguros?</CardTitle>
                 </CardHeader>
