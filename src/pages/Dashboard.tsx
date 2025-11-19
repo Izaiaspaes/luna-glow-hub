@@ -4,10 +4,21 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp } from "lucide-react";
+import { CycleForm } from "@/components/tracking/CycleForm";
+import { SleepForm } from "@/components/tracking/SleepForm";
+import { MoodForm } from "@/components/tracking/MoodForm";
+import { EnergyForm } from "@/components/tracking/EnergyForm";
+import { supabase } from "@/integrations/supabase/client";
+
+type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | null;
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy'>('overview');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [trackingType, setTrackingType] = useState<TrackingType>(null);
+  const [recentData, setRecentData] = useState<any[]>([]);
   const { user, loading, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -17,9 +28,42 @@ export default function Dashboard() {
     }
   }, [user, loading, navigate]);
 
+  useEffect(() => {
+    if (user && activeTab !== 'overview') {
+      loadRecentData();
+    }
+  }, [user, activeTab]);
+
+  const loadRecentData = async () => {
+    if (!user || activeTab === 'overview') return;
+
+    const tableName = `${activeTab}_tracking` as 'cycle_tracking' | 'sleep_tracking' | 'mood_tracking' | 'energy_tracking';
+    const { data, error } = await supabase
+      .from(tableName)
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    if (!error && data) {
+      setRecentData(data);
+    }
+  };
+
   const handleLogout = async () => {
     await signOut();
     navigate("/");
+  };
+
+  const openTrackingDialog = (type: TrackingType) => {
+    setTrackingType(type);
+    setDialogOpen(true);
+  };
+
+  const handleTrackingSuccess = () => {
+    setDialogOpen(false);
+    setTrackingType(null);
+    loadRecentData();
   };
 
   if (loading) {
@@ -185,15 +229,63 @@ export default function Dashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-center py-12">
-                  <TrendingUp className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-muted-foreground mb-4">
-                    Comece a registrar seus dados para ver análises e insights personalizados
-                  </p>
-                  <Button variant="hero">
-                    Adicionar Registro
-                  </Button>
-                </div>
+                {activeTab === 'overview' ? (
+                  <div className="text-center py-12">
+                    <TrendingUp className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                    <p className="text-muted-foreground mb-4">
+                      Selecione uma categoria acima para começar a registrar seus dados
+                    </p>
+                  </div>
+                ) : recentData.length === 0 ? (
+                  <div className="text-center py-12">
+                    <TrendingUp className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                    <p className="text-muted-foreground mb-4">
+                      Você ainda não tem registros nesta categoria
+                    </p>
+                    <Button variant="hero" onClick={() => openTrackingDialog(activeTab as TrackingType)}>
+                      Adicionar Primeiro Registro
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-semibold">Registros Recentes</h3>
+                      <Button size="sm" onClick={() => openTrackingDialog(activeTab as TrackingType)}>
+                        Adicionar Novo
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      {recentData.map((record) => (
+                        <Card key={record.id} className="p-4">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-medium">
+                                {new Date(
+                                  record.cycle_start_date || record.sleep_date || record.mood_date || record.energy_date
+                                ).toLocaleDateString('pt-BR')}
+                              </p>
+                              {record.notes && (
+                                <p className="text-sm text-muted-foreground mt-1">{record.notes}</p>
+                              )}
+                              {activeTab === 'cycle' && record.flow_intensity && (
+                                <p className="text-sm">Intensidade: {record.flow_intensity}</p>
+                              )}
+                              {activeTab === 'sleep' && record.sleep_quality && (
+                                <p className="text-sm">Qualidade: {record.sleep_quality}/5</p>
+                              )}
+                              {activeTab === 'mood' && record.mood_level && (
+                                <p className="text-sm">Nível: {record.mood_level}/5</p>
+                              )}
+                              {activeTab === 'energy' && record.energy_level && (
+                                <p className="text-sm">Energia: {record.energy_level}/5</p>
+                              )}
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
@@ -242,6 +334,35 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+
+      {/* Tracking Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {trackingType === 'cycle' && 'Registrar Ciclo'}
+              {trackingType === 'sleep' && 'Registrar Sono'}
+              {trackingType === 'mood' && 'Registrar Humor'}
+              {trackingType === 'energy' && 'Registrar Energia'}
+            </DialogTitle>
+            <DialogDescription>
+              Preencha as informações para registrar seus dados
+            </DialogDescription>
+          </DialogHeader>
+          {user && trackingType === 'cycle' && (
+            <CycleForm userId={user.id} onSuccess={handleTrackingSuccess} />
+          )}
+          {user && trackingType === 'sleep' && (
+            <SleepForm userId={user.id} onSuccess={handleTrackingSuccess} />
+          )}
+          {user && trackingType === 'mood' && (
+            <MoodForm userId={user.id} onSuccess={handleTrackingSuccess} />
+          )}
+          {user && trackingType === 'energy' && (
+            <EnergyForm userId={user.id} onSuccess={handleTrackingSuccess} />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
