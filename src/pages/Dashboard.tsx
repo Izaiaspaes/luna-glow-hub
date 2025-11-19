@@ -11,13 +11,14 @@ import { SleepForm } from "@/components/tracking/SleepForm";
 import { MoodForm } from "@/components/tracking/MoodForm";
 import { EnergyForm } from "@/components/tracking/EnergyForm";
 import { WellnessPlanCard } from "@/components/WellnessPlanCard";
+import { CalendarView } from "@/components/CalendarView";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | null;
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'calendar'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
   const [recentData, setRecentData] = useState<any[]>([]);
@@ -40,7 +41,7 @@ export default function Dashboard() {
   }, [user, activeTab]);
 
   useEffect(() => {
-    if (user && activeTab === 'overview') {
+    if (user && (activeTab === 'overview' || activeTab === 'calendar')) {
       loadWellnessPlans();
     }
   }, [user, activeTab]);
@@ -243,7 +244,7 @@ export default function Dashboard() {
                 size="sm"
                 onClick={() => setActiveTab('cycle')}
               >
-                <Calendar className="w-4 h-4 mr-2" />
+                <Heart className="w-4 h-4 mr-2" />
                 Ciclo
               </Button>
               <Button
@@ -270,26 +271,41 @@ export default function Dashboard() {
                 <Zap className="w-4 h-4 mr-2" />
                 Energia
               </Button>
+              <Button
+                variant={activeTab === 'calendar' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setActiveTab('calendar')}
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Calendário
+              </Button>
             </div>
 
             {/* Content Area */}
-            <Card className="bg-gradient-card">
-              <CardHeader>
-                <CardTitle>
-                  {activeTab === 'overview' && 'Visão Geral'}
-                  {activeTab === 'cycle' && 'Rastreamento de Ciclo'}
-                  {activeTab === 'sleep' && 'Rastreamento de Sono'}
-                  {activeTab === 'mood' && 'Rastreamento de Humor'}
-                  {activeTab === 'energy' && 'Rastreamento de Energia'}
-                </CardTitle>
-                <CardDescription>
-                  {activeTab === 'overview' && 'Resumo dos seus dados de bem-estar'}
-                  {activeTab === 'cycle' && 'Acompanhe seu ciclo menstrual e sintomas'}
-                  {activeTab === 'sleep' && 'Monitore a qualidade e duração do seu sono'}
-                  {activeTab === 'mood' && 'Registre como você está se sentindo'}
-                  {activeTab === 'energy' && 'Acompanhe seus níveis de energia ao longo do dia'}
-                </CardDescription>
-              </CardHeader>
+            {activeTab === 'calendar' ? (
+              <CalendarView 
+                plans={wellnessPlans} 
+                onGeneratePlan={() => generateWellnessPlan('geral')}
+                generatingPlan={generatingPlan}
+              />
+            ) : (
+              <Card className="bg-gradient-card">
+                <CardHeader>
+                  <CardTitle>
+                    {activeTab === 'overview' && 'Visão Geral'}
+                    {activeTab === 'cycle' && 'Rastreamento de Ciclo'}
+                    {activeTab === 'sleep' && 'Rastreamento de Sono'}
+                    {activeTab === 'mood' && 'Rastreamento de Humor'}
+                    {activeTab === 'energy' && 'Rastreamento de Energia'}
+                  </CardTitle>
+                  <CardDescription>
+                    {activeTab === 'overview' && 'Resumo dos seus dados de bem-estar'}
+                    {activeTab === 'cycle' && 'Acompanhe seu ciclo menstrual e sintomas'}
+                    {activeTab === 'sleep' && 'Monitore a qualidade e duração do seu sono'}
+                    {activeTab === 'mood' && 'Registre como você está se sentindo'}
+                    {activeTab === 'energy' && 'Acompanhe seus níveis de energia ao longo do dia'}
+                  </CardDescription>
+                </CardHeader>
               <CardContent className="space-y-4">
                 {activeTab === 'overview' ? (
                   <div className="space-y-6">
@@ -388,6 +404,7 @@ export default function Dashboard() {
                 )}
               </CardContent>
             </Card>
+            )}
           </div>
 
           {/* Right Column - AI Insights */}
