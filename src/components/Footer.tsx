@@ -41,9 +41,9 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/pricing" className="hover:text-primary transition-smooth">
                   Preços
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>

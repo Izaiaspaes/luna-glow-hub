@@ -40,6 +40,9 @@ export default function Features() {
               <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
                 Funcionalidades
               </NavLink>
+              <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
+                Preços
+              </NavLink>
               <Button variant="hero" size="sm">
                 Entrar na lista de espera
               </Button>
@@ -620,6 +623,9 @@ export default function Features() {
               </NavLink>
               <NavLink to="/features" className="hover:text-primary transition-smooth" activeClassName="text-primary">
                 Funcionalidades
+              </NavLink>
+              <NavLink to="/pricing" className="hover:text-primary transition-smooth">
+                Preços
               </NavLink>
             </div>
           </div>
