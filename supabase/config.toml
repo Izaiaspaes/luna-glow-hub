@@ -1,1 +1,4 @@
 project_id = "savriwalgygixwtcpmya"
+
+[functions.generate-wellness-plan]
+verify_jwt = true
