@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp } from "lucide-react";
 import { CycleForm } from "@/components/tracking/CycleForm";
@@ -443,9 +444,39 @@ export default function Dashboard() {
                 <CardTitle className="text-lg">Planos Ativos</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground text-center py-4">
-                  Nenhum plano ativo no momento
-                </p>
+                {wellnessPlans.filter(plan => plan.is_active).length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    Nenhum plano ativo no momento
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {wellnessPlans.filter(plan => plan.is_active).map((plan) => (
+                      <div
+                        key={plan.id}
+                        className="p-3 bg-primary/5 border border-primary/20 rounded-lg hover:bg-primary/10 transition-colors"
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-sm">
+                              {plan.plan_content?.title || `Plano ${plan.plan_type}`}
+                            </h4>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Válido desde {new Date(plan.valid_from).toLocaleDateString('pt-BR')}
+                            </p>
+                          </div>
+                          <Badge variant="default" className="ml-2 text-xs">
+                            Ativo
+                          </Badge>
+                        </div>
+                        {plan.plan_content?.summary && (
+                          <p className="text-xs text-muted-foreground line-clamp-2">
+                            {plan.plan_content.summary}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
