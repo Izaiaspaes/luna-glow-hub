@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { NavLink } from "@/components/NavLink";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-wellness.jpg";
 
@@ -34,9 +35,11 @@ export const Hero = () => {
                 Entrar na lista de espera
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="outline" size="lg">
-                Saiba mais
-              </Button>
+              <NavLink to="/features">
+                <Button variant="outline" size="lg">
+                  Saiba mais
+                </Button>
+              </NavLink>
             </div>
 
             <div className="flex items-center gap-8 justify-center lg:justify-start pt-4">

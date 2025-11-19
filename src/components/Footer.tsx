@@ -1,4 +1,5 @@
 import { Heart } from "lucide-react";
+import { NavLink } from "@/components/NavLink";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,9 +26,9 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">Produto</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/features" className="hover:text-primary transition-smooth">
                   Funcionalidades
-                </a>
+                </NavLink>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
