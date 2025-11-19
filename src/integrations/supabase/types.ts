@@ -14,7 +14,186 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cycle_tracking: {
+        Row: {
+          created_at: string
+          cycle_end_date: string | null
+          cycle_length: number | null
+          cycle_start_date: string
+          flow_intensity: string | null
+          id: string
+          notes: string | null
+          period_length: number | null
+          symptoms: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          cycle_end_date?: string | null
+          cycle_length?: number | null
+          cycle_start_date: string
+          flow_intensity?: string | null
+          id?: string
+          notes?: string | null
+          period_length?: number | null
+          symptoms?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          cycle_end_date?: string | null
+          cycle_length?: number | null
+          cycle_start_date?: string
+          flow_intensity?: string | null
+          id?: string
+          notes?: string | null
+          period_length?: number | null
+          symptoms?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      energy_tracking: {
+        Row: {
+          created_at: string
+          energy_date: string
+          energy_level: number | null
+          id: string
+          notes: string | null
+          time_of_day: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          energy_date: string
+          energy_level?: number | null
+          id?: string
+          notes?: string | null
+          time_of_day?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          energy_date?: string
+          energy_level?: number | null
+          id?: string
+          notes?: string | null
+          time_of_day?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mood_tracking: {
+        Row: {
+          created_at: string
+          id: string
+          mood_date: string
+          mood_level: number | null
+          mood_type: string | null
+          notes: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mood_date: string
+          mood_level?: number | null
+          mood_type?: string | null
+          notes?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mood_date?: string
+          mood_level?: number | null
+          mood_type?: string | null
+          notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sleep_tracking: {
+        Row: {
+          bedtime: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          sleep_date: string
+          sleep_duration_hours: number | null
+          sleep_quality: number | null
+          updated_at: string
+          user_id: string
+          wake_time: string | null
+        }
+        Insert: {
+          bedtime?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          sleep_date: string
+          sleep_duration_hours?: number | null
+          sleep_quality?: number | null
+          updated_at?: string
+          user_id: string
+          wake_time?: string | null
+        }
+        Update: {
+          bedtime?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          sleep_date?: string
+          sleep_duration_hours?: number | null
+          sleep_quality?: number | null
+          updated_at?: string
+          user_id?: string
+          wake_time?: string | null
+        }
+        Relationships: []
+      }
+      wellness_plans: {
+        Row: {
+          ai_recommendations: string
+          created_at: string
+          id: string
+          is_active: boolean | null
+          plan_content: Json
+          plan_type: string | null
+          updated_at: string
+          user_id: string
+          valid_from: string
+          valid_until: string | null
+        }
+        Insert: {
+          ai_recommendations: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          plan_content: Json
+          plan_type?: string | null
+          updated_at?: string
+          user_id: string
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Update: {
+          ai_recommendations?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          plan_content?: Json
+          plan_type?: string | null
+          updated_at?: string
+          user_id?: string
+          valid_from?: string
+          valid_until?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

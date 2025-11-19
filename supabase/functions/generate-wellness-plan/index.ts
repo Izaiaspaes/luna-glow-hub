@@ -1,0 +1,283 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableApiKey) {
+      throw new Error('LOVABLE_API_KEY is not configured');
+    }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Get authorization header
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('No authorization header');
+    }
+
+    // Verify user
+    const token = authHeader.replace('Bearer ', '');
+    const { data: { user }, error: userError } = await supabase.auth.getUser(token);
+    if (userError || !user) {
+      throw new Error('Unauthorized');
+    }
+
+    const { planType, days = 7 } = await req.json();
+
+    console.log(`Generating ${planType} wellness plan for user ${user.id}`);
+
+    // Fetch user's recent tracking data
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    const [cycleData, sleepData, moodData, energyData] = await Promise.all([
+      supabase
+        .from('cycle_tracking')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('cycle_start_date', startDate.toISOString().split('T')[0])
+        .order('cycle_start_date', { ascending: false })
+        .limit(5),
+      supabase
+        .from('sleep_tracking')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('sleep_date', startDate.toISOString().split('T')[0])
+        .order('sleep_date', { ascending: false })
+        .limit(days),
+      supabase
+        .from('mood_tracking')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('mood_date', startDate.toISOString().split('T')[0])
+        .order('mood_date', { ascending: false })
+        .limit(days * 3),
+      supabase
+        .from('energy_tracking')
+        .select('*')
+        .eq('user_id', user.id)
+        .gte('energy_date', startDate.toISOString().split('T')[0])
+        .order('energy_date', { ascending: false })
+        .limit(days * 3),
+    ]);
+
+    // Build context for AI
+    const context = {
+      cycle: cycleData.data || [],
+      sleep: sleepData.data || [],
+      mood: moodData.data || [],
+      energy: energyData.data || [],
+    };
+
+    // Calculate averages
+    const avgSleep = context.sleep.length > 0
+      ? context.sleep.reduce((sum, s) => sum + (s.sleep_duration_hours || 0), 0) / context.sleep.length
+      : 0;
+    
+    const avgSleepQuality = context.sleep.length > 0
+      ? context.sleep.reduce((sum, s) => sum + (s.sleep_quality || 0), 0) / context.sleep.length
+      : 0;
+
+    const avgMood = context.mood.length > 0
+      ? context.mood.reduce((sum, m) => sum + (m.mood_level || 0), 0) / context.mood.length
+      : 0;
+
+    const avgEnergy = context.energy.length > 0
+      ? context.energy.reduce((sum, e) => sum + (e.energy_level || 0), 0) / context.energy.length
+      : 0;
+
+    // Determine cycle phase if available
+    let cyclePhase = 'não disponível';
+    if (context.cycle.length > 0) {
+      const latestCycle = context.cycle[0];
+      if (latestCycle.cycle_start_date) {
+        const cycleStart = new Date(latestCycle.cycle_start_date);
+        const today = new Date();
+        const daysSinceCycleStart = Math.floor((today.getTime() - cycleStart.getTime()) / (1000 * 60 * 60 * 24));
+        
+        if (daysSinceCycleStart >= 0 && daysSinceCycleStart <= 5) {
+          cyclePhase = 'menstrual';
+        } else if (daysSinceCycleStart > 5 && daysSinceCycleStart <= 13) {
+          cyclePhase = 'folicular';
+        } else if (daysSinceCycleStart > 13 && daysSinceCycleStart <= 17) {
+          cyclePhase = 'ovulatória';
+        } else if (daysSinceCycleStart > 17) {
+          cyclePhase = 'lútea';
+        }
+      }
+    }
+
+    // Create prompt based on plan type
+    let systemPrompt = `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
+
+Sempre seja empática, acolhedora e forneça recomendações práticas e acionáveis. Use uma linguagem amigável e motivadora.
+
+Formato da resposta: Retorne um objeto JSON com a seguinte estrutura:
+{
+  "title": "Título do plano",
+  "summary": "Resumo de 2-3 linhas do plano",
+  "recommendations": [
+    {
+      "category": "categoria",
+      "title": "título da recomendação",
+      "description": "descrição detalhada",
+      "priority": "alta|média|baixa"
+    }
+  ],
+  "insights": "Insights principais sobre os dados da usuária (2-3 parágrafos)"
+}`;
+
+    let userPrompt = '';
+
+    if (planType === 'sono') {
+      userPrompt = `Crie um plano personalizado de sono com base nos seguintes dados dos últimos ${days} dias:
+
+Dados de sono:
+- Média de horas dormidas: ${avgSleep.toFixed(1)}h
+- Qualidade média do sono: ${avgSleepQuality.toFixed(1)}/5
+- Registros: ${context.sleep.length}
+
+Fase do ciclo atual: ${cyclePhase}
+Nível médio de humor: ${avgMood.toFixed(1)}/5
+Nível médio de energia: ${avgEnergy.toFixed(1)}/5
+
+Forneça:
+1. Análise dos padrões de sono
+2. 4-6 recomendações práticas para melhorar o sono
+3. Dicas específicas considerando a fase do ciclo menstrual
+4. Sugestões de rotina noturna`;
+
+    } else if (planType === 'meditacao') {
+      userPrompt = `Crie um plano personalizado de meditação e mindfulness com base nos seguintes dados dos últimos ${days} dias:
+
+Nível médio de humor: ${avgMood.toFixed(1)}/5
+Nível médio de energia: ${avgEnergy.toFixed(1)}/5
+Qualidade média do sono: ${avgSleepQuality.toFixed(1)}/5
+Fase do ciclo atual: ${cyclePhase}
+
+Forneça:
+1. Análise do estado emocional atual
+2. 4-6 práticas de meditação adaptadas às necessidades
+3. Micro-meditações de 1-5 minutos para momentos do dia
+4. Técnicas de respiração específicas`;
+
+    } else if (planType === 'nutricao') {
+      userPrompt = `Crie um plano nutricional personalizado com base nos seguintes dados dos últimos ${days} dias:
+
+Fase do ciclo atual: ${cyclePhase}
+Nível médio de energia: ${avgEnergy.toFixed(1)}/5
+Qualidade média do sono: ${avgSleepQuality.toFixed(1)}/5
+Nível médio de humor: ${avgMood.toFixed(1)}/5
+
+Forneça:
+1. Recomendações nutricionais para a fase do ciclo atual
+2. 4-6 dicas de alimentação para aumentar energia
+3. Alimentos que ajudam no equilíbrio hormonal
+4. Sugestões de hidratação e suplementação`;
+
+    } else {
+      // Plano geral
+      userPrompt = `Crie um plano de bem-estar geral com base nos seguintes dados dos últimos ${days} dias:
+
+Dados de sono:
+- Média: ${avgSleep.toFixed(1)}h
+- Qualidade: ${avgSleepQuality.toFixed(1)}/5
+
+Fase do ciclo: ${cyclePhase}
+Humor médio: ${avgMood.toFixed(1)}/5
+Energia média: ${avgEnergy.toFixed(1)}/5
+
+Forneça um plano holístico abordando:
+1. Sono e descanso
+2. Nutrição
+3. Atividade física
+4. Saúde mental
+5. Autocuidado específico para a fase do ciclo`;
+    }
+
+    // Call Lovable AI
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        response_format: { type: "json_object" }
+      }),
+    });
+
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      console.error('AI API error:', aiResponse.status, errorText);
+      throw new Error(`AI API error: ${aiResponse.status}`);
+    }
+
+    const aiData = await aiResponse.json();
+    const planContent = JSON.parse(aiData.choices[0].message.content);
+
+    // Save the wellness plan
+    const { data: savedPlan, error: saveError } = await supabase
+      .from('wellness_plans')
+      .insert({
+        user_id: user.id,
+        plan_type: planType,
+        plan_content: planContent,
+        ai_recommendations: aiData.choices[0].message.content,
+        valid_from: new Date().toISOString().split('T')[0],
+        is_active: true
+      })
+      .select()
+      .single();
+
+    if (saveError) {
+      console.error('Error saving plan:', saveError);
+      throw saveError;
+    }
+
+    console.log('Wellness plan created successfully:', savedPlan.id);
+
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        plan: savedPlan,
+        content: planContent
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+
+  } catch (error) {
+    console.error('Error in generate-wellness-plan:', error);
+    return new Response(
+      JSON.stringify({ 
+        error: error instanceof Error ? error.message : 'Unknown error',
+        details: error instanceof Error ? error.stack : undefined
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  }
+});
