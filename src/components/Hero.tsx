@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
-import { ArrowRight, LogIn, User, LogOut, LayoutDashboard } from "lucide-react";
+import { ArrowRight, LogIn, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-wellness.jpg";
 
 export const Hero = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -57,6 +57,12 @@ export const Hero = () => {
                   <LayoutDashboard className="mr-2 h-4 w-4" />
                   Dashboard
                 </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem onClick={() => navigate("/admin")}>
+                    <Shield className="mr-2 h-4 w-4" />
+                    Painel Admin
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
