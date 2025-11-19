@@ -29,8 +29,6 @@ const premiumFeatures = [
   "Programas guiados (sono, stress, nutrição)",
   "Lives exclusivas com especialistas",
   "Prioridade no suporte",
-  "Cashback de 10% no marketplace",
-  "Conteúdo premium e cursos",
 ];
 
 const comparisonFeatures = [
@@ -68,7 +66,6 @@ const comparisonFeatures = [
     features: [
       { name: "Acesso ao marketplace", free: true, premium: true },
       { name: "Reviews e avaliações", free: true, premium: true },
-      { name: "Cashback em compras", free: false, premium: "10%" },
       { name: "Ofertas exclusivas", free: false, premium: true },
     ]
   },
