@@ -10,7 +10,9 @@ import { CycleForm } from "@/components/tracking/CycleForm";
 import { SleepForm } from "@/components/tracking/SleepForm";
 import { MoodForm } from "@/components/tracking/MoodForm";
 import { EnergyForm } from "@/components/tracking/EnergyForm";
+import { WellnessPlanCard } from "@/components/WellnessPlanCard";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | null;
 
@@ -19,7 +21,10 @@ export default function Dashboard() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
   const [recentData, setRecentData] = useState<any[]>([]);
+  const [wellnessPlans, setWellnessPlans] = useState<any[]>([]);
+  const [generatingPlan, setGeneratingPlan] = useState(false);
   const { user, loading, isAdmin, signOut } = useAuth();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +36,12 @@ export default function Dashboard() {
   useEffect(() => {
     if (user && activeTab !== 'overview') {
       loadRecentData();
+    }
+  }, [user, activeTab]);
+
+  useEffect(() => {
+    if (user && activeTab === 'overview') {
+      loadWellnessPlans();
     }
   }, [user, activeTab]);
 
@@ -47,6 +58,57 @@ export default function Dashboard() {
 
     if (!error && data) {
       setRecentData(data);
+    }
+  };
+
+  const loadWellnessPlans = async () => {
+    if (!user) return;
+    
+    const { data, error } = await supabase
+      .from('wellness_plans')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(3);
+    
+    if (error) {
+      console.error('Error loading wellness plans:', error);
+      return;
+    }
+    
+    setWellnessPlans(data || []);
+  };
+
+  const generateWellnessPlan = async (planType: string) => {
+    if (!user) return;
+    
+    setGeneratingPlan(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-wellness-plan', {
+        body: { 
+          planType,
+          days: 7
+        }
+      });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Plano gerado com sucesso!",
+        description: "Seu plano personalizado está pronto.",
+      });
+      
+      await loadWellnessPlans();
+    } catch (error) {
+      console.error('Error generating plan:', error);
+      toast({
+        title: "Erro ao gerar plano",
+        description: "Tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setGeneratingPlan(false);
     }
   };
 
@@ -230,11 +292,49 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {activeTab === 'overview' ? (
-                  <div className="text-center py-12">
-                    <TrendingUp className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                    <p className="text-muted-foreground mb-4">
-                      Selecione uma categoria acima para começar a registrar seus dados
-                    </p>
+                  <div className="space-y-6">
+                    {/* AI Wellness Plans Section */}
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h3 className="text-lg font-semibold flex items-center gap-2">
+                            <Sparkles className="h-5 w-5 text-primary" />
+                            Planos Personalizados com IA
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Gere planos baseados nos seus dados de rastreamento
+                          </p>
+                        </div>
+                        <Button 
+                          onClick={() => generateWellnessPlan('daily')}
+                          disabled={generatingPlan}
+                          size="sm"
+                        >
+                          {generatingPlan ? "Gerando..." : "Gerar Plano"}
+                        </Button>
+                      </div>
+                      
+                      {wellnessPlans.length === 0 ? (
+                        <div className="text-center py-8 bg-muted/20 rounded-lg">
+                          <p className="text-muted-foreground">
+                            Nenhum plano gerado ainda. Adicione dados de rastreamento e gere seu primeiro plano!
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {wellnessPlans.map((plan) => (
+                            <WellnessPlanCard key={plan.id} plan={plan} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Quick Start Guide */}
+                    <div className="pt-4 border-t">
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Comece selecionando uma categoria acima para registrar seus dados
+                      </p>
+                    </div>
                   </div>
                 ) : recentData.length === 0 ? (
                   <div className="text-center py-12">
