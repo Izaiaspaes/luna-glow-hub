@@ -306,7 +306,7 @@ export default function Dashboard() {
                           </p>
                         </div>
                         <Button 
-                          onClick={() => generateWellnessPlan('daily')}
+                          onClick={() => generateWellnessPlan('geral')}
                           disabled={generatingPlan}
                           size="sm"
                         >
