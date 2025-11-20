@@ -51,7 +51,6 @@ export default function Admin() {
               </div>
               <nav className="hidden md:flex gap-6">
                 <NavLink to="/">Início</NavLink>
-                <NavLink to="/dashboard">Dashboard</NavLink>
               </nav>
             </div>
             <div className="flex items-center gap-2">
