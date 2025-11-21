@@ -221,6 +221,89 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          notification_type: string
+          phase: string | null
+          read: boolean
+          relationship_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          notification_type: string
+          phase?: string | null
+          read?: boolean
+          relationship_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          notification_type?: string
+          phase?: string | null
+          read?: boolean
+          relationship_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_notifications_relationship_id_fkey"
+            columns: ["relationship_id"]
+            isOneToOne: false
+            referencedRelation: "partner_relationships"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_relationships: {
+        Row: {
+          accepted_at: string | null
+          created_at: string
+          id: string
+          invite_token: string
+          invited_at: string
+          owner_user_id: string
+          partner_email: string
+          partner_user_id: string | null
+          sharing_settings: Json
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          created_at?: string
+          id?: string
+          invite_token: string
+          invited_at?: string
+          owner_user_id: string
+          partner_email: string
+          partner_user_id?: string | null
+          sharing_settings?: Json
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          created_at?: string
+          id?: string
+          invite_token?: string
+          invited_at?: string
+          owner_user_id?: string
+          partner_email?: string
+          partner_user_id?: string | null
+          sharing_settings?: Json
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
