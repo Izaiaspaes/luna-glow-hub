@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -7,6 +8,11 @@ export const Footer = () => {
   return (
     <footer className="bg-muted/30 border-t border-border py-12">
       <div className="container mx-auto px-4">
+        {/* Newsletter Section */}
+        <div className="mb-12">
+          <NewsletterSignup />
+        </div>
+
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="space-y-4">
