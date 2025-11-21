@@ -206,9 +206,11 @@ export default function Dashboard() {
                 Preços
               </NavLink>
               {isAdmin && (
-                <NavLink to="/admin" className="text-sm font-medium hover:text-primary transition-smooth">
-                  Admin
-                </NavLink>
+                <Button variant="default" size="sm" asChild>
+                  <NavLink to="/admin">
+                    Painel de Controle
+                  </NavLink>
+                </Button>
               )}
               <Button variant="outline" size="sm" onClick={handleLogout}>
                 Sair
