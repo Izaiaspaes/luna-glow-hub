@@ -415,6 +415,39 @@ export type Database = {
         }
         Relationships: []
       }
+      symptom_predictions: {
+        Row: {
+          confidence_score: number
+          created_at: string
+          id: string
+          predicted_phase: string
+          predicted_symptoms: Json
+          prediction_date: string
+          recommendations: Json
+          user_id: string
+        }
+        Insert: {
+          confidence_score: number
+          created_at?: string
+          id?: string
+          predicted_phase: string
+          predicted_symptoms?: Json
+          prediction_date: string
+          recommendations?: Json
+          user_id: string
+        }
+        Update: {
+          confidence_score?: number
+          created_at?: string
+          id?: string
+          predicted_phase?: string
+          predicted_symptoms?: Json
+          prediction_date?: string
+          recommendations?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
