@@ -22,13 +22,14 @@ import { MoodForm } from "@/components/tracking/MoodForm";
 import { EnergyForm } from "@/components/tracking/EnergyForm";
 import { WellnessPlanCard } from "@/components/WellnessPlanCard";
 import { CalendarView } from "@/components/CalendarView";
+import { SymptomPredictions } from "@/components/SymptomPredictions";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | null;
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'calendar'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'predictions' | 'calendar'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
   const [recentData, setRecentData] = useState<any[]>([]);
@@ -337,6 +338,14 @@ export default function Dashboard() {
                 Energia
               </Button>
               <Button
+                variant={activeTab === 'predictions' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setActiveTab('predictions')}
+              >
+                <Sparkles className="w-4 h-4 mr-2" />
+                Previsões IA
+              </Button>
+              <Button
                 variant={activeTab === 'calendar' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('calendar')}
@@ -353,6 +362,8 @@ export default function Dashboard() {
                 onGeneratePlan={() => generateWellnessPlan('geral')}
                 generatingPlan={generatingPlan}
               />
+            ) : activeTab === 'predictions' ? (
+              <SymptomPredictions userId={user!.id} />
             ) : (
               <Card className="bg-gradient-card">
                 <CardHeader>
