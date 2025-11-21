@@ -19,7 +19,8 @@ const freemiumFeatures = [
 ];
 
 const premiumFeatures = [
-  "Tudo do plano gratuito",
+  "Tudo do pacote gratuito",
+  "Transcrição por voz para rastreamento",
   "Assistente AI conversacional 24/7",
   "Planos personalizados de bem-estar",
   "Análises avançadas com insights",
@@ -37,6 +38,7 @@ const comparisonFeatures = [
     features: [
       { name: "Rastreamento de ciclo", free: true, premium: true },
       { name: "Registro de sintomas", free: true, premium: true },
+      { name: "Transcrição por voz", free: false, premium: true },
       { name: "Integração com wearables", free: false, premium: true },
       { name: "Assistente AI 24/7", free: false, premium: true },
       { name: "Planos personalizados", free: false, premium: true },
@@ -106,11 +108,11 @@ export default function Pricing() {
         <div className="container mx-auto px-4 text-center">
           <div className="inline-block mb-6">
             <span className="px-4 py-2 bg-accent/50 text-accent-foreground rounded-full text-sm font-medium">
-              💫 Planos para todas
+              💫 Pacotes para todas
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Escolha o plano ideal{" "}
+            Escolha o pacote ideal{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
               para você
             </span>
@@ -232,10 +234,10 @@ export default function Pricing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Compare os planos
+              Compare os pacotes
             </h2>
             <p className="text-lg text-muted-foreground">
-              Veja todos os recursos detalhados de cada plano
+              Veja todos os recursos detalhados de cada pacote
             </p>
           </div>
 
@@ -299,11 +301,11 @@ export default function Pricing() {
             <div className="space-y-6">
               <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg">Posso mudar de plano depois?</CardTitle>
+                  <CardTitle className="text-lg">Posso mudar de pacote depois?</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Sim! Você pode fazer upgrade ou downgrade do seu plano a qualquer momento. 
+                    Sim! Você pode fazer upgrade ou downgrade do seu pacote a qualquer momento. 
                     Se fizer upgrade, terá acesso imediato aos recursos Premium. Se fizer downgrade, 
                     os recursos Premium permanecerão até o fim do período pago.
                   </p>

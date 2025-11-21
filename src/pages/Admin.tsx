@@ -95,7 +95,7 @@ export default function Admin() {
             </TabsTrigger>
             <TabsTrigger value="plans" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              <span className="hidden sm:inline">Planos</span>
+              <span className="hidden sm:inline">Pacotes</span>
             </TabsTrigger>
           </TabsList>
 
