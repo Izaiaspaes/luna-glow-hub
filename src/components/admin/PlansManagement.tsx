@@ -38,22 +38,22 @@ export const PlansManagement = () => {
     const mockTemplates: PlanTemplate[] = [
       {
         id: "1",
-        name: "Plano Holístico Menstrual",
-        description: "Plano focado em bem-estar durante o ciclo menstrual",
+        name: "Pacote Holístico Menstrual",
+        description: "Pacote focado em bem-estar durante o ciclo menstrual",
         type: "cycle",
         recommendations: "Melhorar sono, gerenciar energia, praticar meditação",
       },
       {
         id: "2",
         name: "Rotina de Sono Saudável",
-        description: "Plano para melhorar qualidade do sono",
+        description: "Pacote para melhorar qualidade do sono",
         type: "sleep",
         recommendations: "Estabelecer horários regulares, reduzir cafeína, criar ambiente relaxante",
       },
       {
         id: "3",
         name: "Equilíbrio Emocional",
-        description: "Plano para gerenciamento de humor e emoções",
+        description: "Pacote para gerenciamento de humor e emoções",
         type: "mood",
         recommendations: "Práticas de mindfulness, journaling, conexão social",
       },
@@ -121,9 +121,9 @@ export const PlansManagement = () => {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-lg font-semibold">Templates de Planos</h3>
+          <h3 className="text-lg font-semibold">Templates de Pacotes</h3>
           <p className="text-sm text-muted-foreground">
-            Gerencie templates de planos de bem-estar que podem ser oferecidos aos usuários
+            Gerencie templates de pacotes de bem-estar que podem ser oferecidos aos usuários
           </p>
         </div>
         <Button onClick={() => setIsCreating(!isCreating)} variant={isCreating ? "outline" : "default"}>
@@ -136,18 +136,18 @@ export const PlansManagement = () => {
           <CardHeader>
             <CardTitle>{editingId ? "Editar" : "Criar"} Template</CardTitle>
             <CardDescription>
-              {editingId ? "Atualize" : "Defina"} as informações do template de plano
+              {editingId ? "Atualize" : "Defina"} as informações do template de pacote
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Nome do Plano</Label>
+                <Label htmlFor="name">Nome do Pacote</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Ex: Plano Holístico Menstrual"
+                  placeholder="Ex: Pacote Holístico Menstrual"
                   required
                 />
               </div>
@@ -158,7 +158,7 @@ export const PlansManagement = () => {
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Descreva o objetivo deste plano"
+                  placeholder="Descreva o objetivo deste pacote"
                   required
                 />
               </div>
@@ -186,7 +186,7 @@ export const PlansManagement = () => {
                   id="recommendations"
                   value={formData.recommendations}
                   onChange={(e) => setFormData({ ...formData, recommendations: e.target.value })}
-                  placeholder="Liste as recomendações principais deste plano"
+                  placeholder="Liste as recomendações principais deste pacote"
                   required
                   rows={4}
                 />

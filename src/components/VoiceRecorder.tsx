@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Mic, Square, Loader2 } from "lucide-react";
+import { Mic, Square, Loader2, Crown } from "lucide-react";
 import { toast } from "sonner";
 import { useWhisperModel } from "@/hooks/useWhisperModel";
+import { useProfile } from "@/hooks/useProfile";
 
 interface VoiceRecorderProps {
   onTranscription: (text: string) => void;
@@ -14,11 +15,21 @@ export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps)
   const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const { profile } = useProfile();
   
   // Use the cached Whisper model
   const { transcriber, isLoadingModel, modelError } = useWhisperModel();
 
+  const isPremium = profile?.subscription_plan === 'premium';
+
   const startRecording = async () => {
+    if (!isPremium) {
+      toast.error("A transcrição por voz está disponível apenas no Pacote Premium", {
+        description: "Faça upgrade para acessar este recurso"
+      });
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream, {
@@ -92,24 +103,29 @@ export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps)
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 relative">
       {!isRecording ? (
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={startRecording}
-          disabled={disabled || isProcessing || isLoadingModel}
-        >
-          {isProcessing || isLoadingModel ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Mic className="h-4 w-4" />
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={startRecording}
+            disabled={disabled || isProcessing || isLoadingModel}
+          >
+            {isProcessing || isLoadingModel ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Mic className="h-4 w-4" />
+            )}
+            <span className="ml-2">
+              {isLoadingModel ? 'Carregando modelo...' : 'Gravar'}
+            </span>
+          </Button>
+          {!isPremium && (
+            <Crown className="absolute -top-1 -right-1 w-3 h-3 text-primary" />
           )}
-          <span className="ml-2">
-            {isLoadingModel ? 'Carregando modelo...' : 'Gravar'}
-          </span>
-        </Button>
+        </>
       ) : (
         <Button
           type="button"
