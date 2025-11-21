@@ -135,14 +135,15 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>Nível de energia: {energyLevel}/5</Label>
+        <Label>Nível de energia: {energyLevel}/5 {analysis && "✓ Ajustado pela IA"}</Label>
         <Slider
           value={[energyLevel]}
-          onValueChange={(value) => setEnergyLevel(value[0])}
+          onValueChange={(value) => !analysis && setEnergyLevel(value[0])}
           min={1}
           max={5}
           step={1}
           className="py-4"
+          disabled={!!analysis}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
           <span>Exausto</span>

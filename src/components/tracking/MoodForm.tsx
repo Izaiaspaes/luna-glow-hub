@@ -139,14 +139,15 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>Intensidade: {moodLevel}/5</Label>
+        <Label>Intensidade: {moodLevel}/5 {analysis && "✓ Ajustado pela IA"}</Label>
         <Slider
           value={[moodLevel]}
-          onValueChange={(value) => setMoodLevel(value[0])}
+          onValueChange={(value) => !analysis && setMoodLevel(value[0])}
           min={1}
           max={5}
           step={1}
           className="py-4"
+          disabled={!!analysis}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
           <span>Muito baixo</span>
