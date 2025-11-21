@@ -18,8 +18,10 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface UserWithRole {
-  id: string;
+  user_id: string;
   email: string;
+  full_name: string | null;
+  phone: string | null;
   created_at: string;
   roles: { role: string }[];
 }
@@ -37,29 +39,22 @@ export const UsersManagement = () => {
     setLoadingUsers(true);
     
     const { data: usersData, error: usersError } = await supabase
-      .from('user_roles')
-      .select('user_id, role');
+      .rpc('get_users_with_profiles');
 
     if (usersError) {
       toast.error("Erro ao carregar usuários");
+      console.error(usersError);
       setLoadingUsers(false);
       return;
     }
 
-    const userMap = new Map<string, { roles: { role: string }[] }>();
-    
-    usersData.forEach(item => {
-      if (!userMap.has(item.user_id)) {
-        userMap.set(item.user_id, { roles: [] });
-      }
-      userMap.get(item.user_id)?.roles.push({ role: item.role });
-    });
-
-    const usersArray: UserWithRole[] = Array.from(userMap.entries()).map(([id, data]) => ({
-      id,
-      email: id.substring(0, 8) + "...",
-      created_at: new Date().toISOString(),
-      roles: data.roles,
+    const usersArray: UserWithRole[] = (usersData || []).map((user: any) => ({
+      user_id: user.user_id,
+      email: user.email || 'N/A',
+      full_name: user.full_name,
+      phone: user.phone,
+      created_at: user.created_at,
+      roles: user.roles || [],
     }));
 
     setUsers(usersArray);
@@ -82,7 +77,7 @@ export const UsersManagement = () => {
   };
 
   const handleToggleRole = async (userId: string, role: 'admin' | 'moderator' | 'user') => {
-    const userRoles = users.find(u => u.id === userId)?.roles || [];
+    const userRoles = users.find(u => u.user_id === userId)?.roles || [];
     const hasRole = userRoles.some(r => r.role === role);
 
     if (hasRole) {
@@ -128,7 +123,9 @@ export const UsersManagement = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID do Usuário</TableHead>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>E-mail</TableHead>
+                  <TableHead>Telefone</TableHead>
                   <TableHead>Roles</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Ações</TableHead>
@@ -141,8 +138,10 @@ export const UsersManagement = () => {
                   const isUser = user.roles.some(r => r.role === 'user');
                   
                   return (
-                    <TableRow key={user.id}>
-                      <TableCell className="font-mono text-sm">{user.id.substring(0, 16)}...</TableCell>
+                    <TableRow key={user.user_id}>
+                      <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.phone || 'Não informado'}</TableCell>
                       <TableCell>
                         <div className="flex gap-1">
                           {isAdmin && <Badge variant="destructive"><Shield className="w-3 h-3 mr-1" />Admin</Badge>}
@@ -160,21 +159,21 @@ export const UsersManagement = () => {
                           <Button
                             size="sm"
                             variant={isAdmin ? "destructive" : "outline"}
-                            onClick={() => handleToggleRole(user.id, 'admin')}
+                            onClick={() => handleToggleRole(user.user_id, 'admin')}
                           >
                             {isAdmin ? 'Remover' : 'Tornar'} Admin
                           </Button>
                           <Button
                             size="sm"
                             variant={isModerator ? "destructive" : "outline"}
-                            onClick={() => handleToggleRole(user.id, 'moderator')}
+                            onClick={() => handleToggleRole(user.user_id, 'moderator')}
                           >
                             {isModerator ? 'Remover' : 'Tornar'} Moderador
                           </Button>
                           <Button
                             size="sm"
                             variant="ghost"
-                            onClick={() => setDeleteUserId(user.id)}
+                            onClick={() => setDeleteUserId(user.user_id)}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
