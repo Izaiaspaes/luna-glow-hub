@@ -4,11 +4,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
 import { PlansManagement } from "@/components/admin/PlansManagement";
+import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 
 export default function Admin() {
@@ -73,7 +74,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
+          <TabsList className="grid w-full grid-cols-4 lg:w-[800px]">
             <TabsTrigger value="statistics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">Estatísticas</span>
@@ -81,6 +82,10 @@ export default function Admin() {
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
               <span className="hidden sm:inline">Usuários</span>
+            </TabsTrigger>
+            <TabsTrigger value="invites" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              <span className="hidden sm:inline">Convites</span>
             </TabsTrigger>
             <TabsTrigger value="plans" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
@@ -94,6 +99,10 @@ export default function Admin() {
 
           <TabsContent value="users" className="space-y-4">
             <UsersManagement />
+          </TabsContent>
+
+          <TabsContent value="invites" className="space-y-4">
+            <InvitesManagement />
           </TabsContent>
 
           <TabsContent value="plans" className="space-y-4">
