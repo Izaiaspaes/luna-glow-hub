@@ -121,8 +121,14 @@ serve(async (req) => {
       }
     }
 
-    // Get user name from metadata
-    const userName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'usuária';
+    // Fetch user profile for personalized greeting
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('user_id', user.id)
+      .single();
+    
+    const userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
     
     // Create prompt based on plan type
     let systemPrompt = `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
