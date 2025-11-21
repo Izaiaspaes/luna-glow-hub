@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Mic, Square, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { pipeline, env } from '@huggingface/transformers';
 
 interface VoiceRecorderProps {
   onTranscription: (text: string) => void;
@@ -12,8 +12,35 @@ interface VoiceRecorderProps {
 export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isLoadingModel, setIsLoadingModel] = useState(true);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const transcriberRef = useRef<any>(null);
+
+  // Configure and load the Whisper model
+  useEffect(() => {
+    const loadModel = async () => {
+      try {
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+        
+        console.log('Carregando modelo Whisper...');
+        transcriberRef.current = await pipeline(
+          "automatic-speech-recognition",
+          "onnx-community/whisper-tiny",
+          { device: "webgpu" }
+        );
+        console.log('Modelo Whisper carregado com sucesso!');
+        setIsLoadingModel(false);
+      } catch (error) {
+        console.error('Erro ao carregar modelo:', error);
+        toast.error("Erro ao carregar modelo de transcrição");
+        setIsLoadingModel(false);
+      }
+    };
+    
+    loadModel();
+  }, []);
 
   const startRecording = async () => {
     try {
@@ -56,31 +83,32 @@ export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps)
   const processAudio = async (audioBlob: Blob) => {
     setIsProcessing(true);
     try {
-      // Convert blob to base64
-      const reader = new FileReader();
-      reader.readAsDataURL(audioBlob);
+      if (!transcriberRef.current) {
+        throw new Error('Modelo de transcrição não carregado');
+      }
+
+      console.log('Processando áudio localmente...');
       
-      await new Promise((resolve) => {
-        reader.onloadend = resolve;
+      // Convert blob to URL for the transcriber
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      // Transcribe using local Whisper model
+      const output = await transcriberRef.current(audioUrl, {
+        language: 'portuguese',
+        task: 'transcribe'
       });
 
-      const base64Audio = (reader.result as string).split(',')[1];
+      // Clean up the blob URL
+      URL.revokeObjectURL(audioUrl);
 
-      // Send to transcription function
-      const { data, error } = await supabase.functions.invoke('transcribe-audio', {
-        body: { audio: base64Audio }
-      });
-
-      if (error) throw error;
-
-      if (data?.text) {
-        onTranscription(data.text);
+      if (output?.text) {
+        onTranscription(output.text);
         toast.success("Áudio transcrito com sucesso!");
       } else {
-        throw new Error('No transcription returned');
+        throw new Error('Nenhuma transcrição retornada');
       }
     } catch (error) {
-      console.error('Error processing audio:', error);
+      console.error('Erro ao processar áudio:', error);
       toast.error("Erro ao processar áudio");
     } finally {
       setIsProcessing(false);
@@ -95,14 +123,16 @@ export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps)
           variant="outline"
           size="sm"
           onClick={startRecording}
-          disabled={disabled || isProcessing}
+          disabled={disabled || isProcessing || isLoadingModel}
         >
-          {isProcessing ? (
+          {isProcessing || isLoadingModel ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <Mic className="h-4 w-4" />
           )}
-          <span className="ml-2">Gravar</span>
+          <span className="ml-2">
+            {isLoadingModel ? 'Carregando modelo...' : 'Gravar'}
+          </span>
         </Button>
       ) : (
         <Button
