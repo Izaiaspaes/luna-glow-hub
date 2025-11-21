@@ -22,10 +22,9 @@ export function useAuth() {
               .from('user_roles')
               .select('role')
               .eq('user_id', session.user.id)
-              .eq('role', 'admin')
-              .single();
+              .eq('role', 'admin');
             
-            setIsAdmin(!!data);
+            setIsAdmin(data && data.length > 0);
           }, 0);
         } else {
           setIsAdmin(false);
@@ -46,9 +45,8 @@ export function useAuth() {
           .select('role')
           .eq('user_id', session.user.id)
           .eq('role', 'admin')
-          .single()
           .then(({ data }) => {
-            setIsAdmin(!!data);
+            setIsAdmin(data && data.length > 0);
           });
       }
     });
