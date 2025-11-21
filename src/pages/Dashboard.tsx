@@ -537,8 +537,8 @@ export default function Dashboard() {
                               Válido desde {new Date(plan.valid_from).toLocaleDateString('pt-BR')}
                             </p>
                           </div>
-                          <Badge variant="default" className="ml-2 text-xs">
-                            Ativo
+                          <Badge variant="wellness" className="ml-2 text-xs">
+                            ✓ Ativo
                           </Badge>
                         </div>
                         {plan.plan_content?.summary && (

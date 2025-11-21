@@ -25,6 +25,7 @@ interface UserWithRole {
   phone: string | null;
   created_at: string;
   roles: { role: string }[];
+  subscription_plan?: string | null;
 }
 
 export const UsersManagement = () => {
@@ -58,6 +59,7 @@ export const UsersManagement = () => {
       phone: user.phone,
       created_at: user.created_at,
       roles: user.roles || [],
+      subscription_plan: user.subscription_plan || 'free',
     }));
 
     setUsers(usersArray);
@@ -199,6 +201,7 @@ export const UsersManagement = () => {
                   <TableHead>Nome</TableHead>
                   <TableHead>E-mail</TableHead>
                   <TableHead>Telefone</TableHead>
+                  <TableHead>Pacote</TableHead>
                   <TableHead>Roles</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Ações</TableHead>
@@ -215,6 +218,13 @@ export const UsersManagement = () => {
                       <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.phone || 'Não informado'}</TableCell>
+                      <TableCell>
+                        {user.subscription_plan === 'premium' ? (
+                          <Badge variant="premium">✨ Premium</Badge>
+                        ) : (
+                          <Badge variant="free">Free</Badge>
+                        )}
+                      </TableCell>
                       <TableCell>
                         <div className="flex gap-1">
                           {isAdmin && <Badge variant="destructive"><Shield className="w-3 h-3 mr-1" />Admin</Badge>}

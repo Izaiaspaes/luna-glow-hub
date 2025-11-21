@@ -187,12 +187,12 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                         </p>
                       </div>
                       {plan.status === 'completed' ? (
-                        <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400">
-                          Concluído
+                        <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400 border-green-600">
+                          ✓ Concluído
                         </Badge>
                       ) : plan.status === 'active' || plan.is_active ? (
-                        <Badge variant="default" className="ml-2">
-                          Ativo
+                        <Badge variant="wellness" className="ml-2">
+                          ✓ Ativo
                         </Badge>
                       ) : null}
                     </div>
@@ -255,12 +255,12 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                         </p>
                       </div>
                       {plan.status === 'completed' ? (
-                        <Badge variant="outline" className="ml-2 text-xs text-green-600 dark:text-green-400">
-                          Concluído
+                        <Badge variant="outline" className="ml-2 text-xs text-green-600 dark:text-green-400 border-green-600">
+                          ✓ Concluído
                         </Badge>
                       ) : plan.status === 'active' || plan.is_active ? (
-                        <Badge variant="outline" className="ml-2 text-xs">
-                          Ativo
+                        <Badge variant="wellness" className="ml-2 text-xs">
+                          ✓ Ativo
                         </Badge>
                       ) : null}
                     </div>
