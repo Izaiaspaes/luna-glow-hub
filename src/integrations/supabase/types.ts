@@ -387,6 +387,7 @@ export type Database = {
           full_name: string
           phone: string
           roles: Json
+          subscription_plan: string
           user_id: string
         }[]
       }

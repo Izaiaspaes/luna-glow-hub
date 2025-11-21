@@ -65,12 +65,12 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
   
   const getStatusBadge = () => {
     if (status === 'completed') {
-      return <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400">Concluído</Badge>;
+      return <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400 border-green-600">✓ Concluído</Badge>;
     }
     if (status === 'archived') {
       return <Badge variant="outline" className="ml-2 text-muted-foreground">Arquivado</Badge>;
     }
-    return <Badge variant="default" className="ml-2">Ativo</Badge>;
+    return <Badge variant="wellness" className="ml-2">✓ Ativo</Badge>;
   };
   
   return (

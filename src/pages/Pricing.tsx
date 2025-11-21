@@ -1,5 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Heart, 
@@ -131,8 +132,11 @@ export default function Pricing() {
             {/* Freemium Plan */}
             <Card className="bg-gradient-card border-2 relative animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
               <CardHeader>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-muted text-foreground mb-4">
-                  <Heart className="w-6 h-6" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-muted text-foreground">
+                    <Heart className="w-6 h-6" />
+                  </div>
+                  <Badge variant="free">Pacote Free</Badge>
                 </div>
                 <CardTitle className="text-3xl">Gratuito</CardTitle>
                 <CardDescription className="text-lg">
@@ -169,8 +173,11 @@ export default function Pricing() {
                 ⭐ Mais popular
               </div>
               <CardHeader>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-hero text-white mb-4">
-                  <Sparkles className="w-6 h-6" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-hero text-white">
+                    <Sparkles className="w-6 h-6" />
+                  </div>
+                  <Badge variant="premium">✨ Pacote Premium</Badge>
                 </div>
                 <CardTitle className="text-3xl">Premium</CardTitle>
                 <CardDescription className="text-lg">
