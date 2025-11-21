@@ -11,6 +11,8 @@ import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Zap } from "lucide-react";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
+import { HealthAnalysis } from "@/components/HealthAnalysis";
 
 const energySchema = z.object({
   energy_date: z.string().min(1, "Data obrigatória"),
@@ -29,13 +31,45 @@ interface EnergyFormProps {
 export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
   const [loading, setLoading] = useState(false);
   const [energyLevel, setEnergyLevel] = useState(3);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<EnergyFormData>({
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<EnergyFormData>({
     resolver: zodResolver(energySchema),
     defaultValues: {
       energy_level: 3,
     },
   });
+
+  const notesValue = watch("notes");
+
+  const handleAnalyzeDescription = async (description: string) => {
+    if (!description) return;
+    
+    setIsAnalyzing(true);
+    try {
+      const { data: analysisData, error } = await supabase.functions.invoke('analyze-health-description', {
+        body: { 
+          description,
+          trackingType: 'energia'
+        }
+      });
+
+      if (error) throw error;
+      
+      if (analysisData?.quality_score) {
+        setEnergyLevel(analysisData.quality_score);
+      }
+      
+      setAnalysis(analysisData);
+      toast.success("Análise concluída! Nível ajustado automaticamente.");
+    } catch (error) {
+      console.error('Error analyzing description:', error);
+      toast.error("Erro ao analisar descrição");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const onSubmit = async (data: EnergyFormData) => {
     setLoading(true);
@@ -113,8 +147,31 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
           id="notes"
           placeholder="Exercícios, alimentação, sono, estresse..."
           {...register("notes")}
+          onChange={(e) => setValue("notes", e.target.value)}
         />
+        <div className="flex gap-2 mt-2">
+          <VoiceRecorder 
+            onTranscription={(text) => {
+              setValue("notes", text);
+              handleAnalyzeDescription(text);
+            }}
+            disabled={loading}
+          />
+          {notesValue && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => handleAnalyzeDescription(notesValue)}
+              disabled={isAnalyzing}
+            >
+              {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+            </Button>
+          )}
+        </div>
       </div>
+
+      {analysis && <HealthAnalysis analysis={analysis} />}
 
       <Button type="submit" className="w-full" variant="hero" disabled={loading}>
         {loading ? "Salvando..." : "Registrar Energia"}

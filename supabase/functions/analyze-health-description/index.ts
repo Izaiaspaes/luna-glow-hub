@@ -31,7 +31,8 @@ Forneça sua resposta em formato JSON com os seguintes campos:
 - analysis: uma análise breve da situação descrita (2-3 frases)
 - suggestions: array de 3 sugestões práticas e específicas
 - insights: array de 2-3 insights sobre o que isso pode indicar
-- needs_attention: booleano indicando se requer atenção médica`;
+- needs_attention: booleano indicando se requer atenção médica
+- quality_score: número de 1 a 5 avaliando a qualidade (1=muito ruim, 5=excelente) baseado na descrição. Para sono: qualidade do sono. Para humor: intensidade positiva do humor. Para energia: nível de energia.`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
