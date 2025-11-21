@@ -31,15 +31,16 @@ export default function Dashboard() {
   const [recentData, setRecentData] = useState<any[]>([]);
   const [wellnessPlans, setWellnessPlans] = useState<any[]>([]);
   const [generatingPlan, setGeneratingPlan] = useState(false);
-  const { user, loading, isAdmin, signOut } = useAuth();
+  const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!adminChecked) return;
     if (!loading && !user) {
       navigate("/auth");
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, adminChecked, navigate]);
 
   useEffect(() => {
     if (user && activeTab !== 'overview') {
@@ -179,7 +180,7 @@ export default function Dashboard() {
     loadRecentData();
   };
 
-  if (loading) {
+  if (loading || !adminChecked) {
     return null;
   }
 

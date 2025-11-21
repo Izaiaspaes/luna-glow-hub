@@ -13,10 +13,12 @@ import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 
 export default function Admin() {
-  const { user, loading, isAdmin, signOut } = useAuth();
+  const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!adminChecked) return;
+
     if (!loading && !user) {
       navigate("/auth");
     }
@@ -24,19 +26,23 @@ export default function Admin() {
       navigate("/dashboard");
       toast.error("Você não tem permissão para acessar esta área");
     }
-  }, [user, loading, isAdmin, navigate]);
+  }, [user, loading, isAdmin, adminChecked, navigate]);
 
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
 
-  if (loading || !isAdmin) {
+  if (loading || !adminChecked) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-muted-foreground">Carregando...</p>
       </div>
     );
+  }
+
+  if (!isAdmin) {
+    return null;
   }
 
   return (

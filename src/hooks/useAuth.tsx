@@ -7,6 +7,7 @@ export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminChecked, setAdminChecked] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener first
@@ -24,31 +25,36 @@ export function useAuth() {
               .eq('user_id', session.user.id)
               .eq('role', 'admin');
             
-            setIsAdmin(data && data.length > 0);
+            setIsAdmin(!!data && data.length > 0);
+            setAdminChecked(true);
           }, 0);
         } else {
           setIsAdmin(false);
+          setAdminChecked(true);
         }
       }
     );
 
     // Then check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      setLoading(false);
       
       if (session?.user) {
         // Check if user is admin
-        supabase
+        const { data } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', session.user.id)
-          .eq('role', 'admin')
-          .then(({ data }) => {
-            setIsAdmin(data && data.length > 0);
-          });
+          .eq('role', 'admin');
+
+        setIsAdmin(!!data && data.length > 0);
+      } else {
+        setIsAdmin(false);
       }
+
+      setAdminChecked(true);
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -84,6 +90,7 @@ export function useAuth() {
     session,
     loading,
     isAdmin,
+    adminChecked,
     signUp,
     signIn,
     signOut,
