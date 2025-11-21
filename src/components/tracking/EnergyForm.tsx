@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -33,6 +33,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
   const [energyLevel, setEnergyLevel] = useState(3);
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<EnergyFormData>({
     resolver: zodResolver(energySchema),
@@ -40,6 +41,14 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       energy_level: 3,
     },
   });
+
+  useEffect(() => {
+    if (analysis && submitButtonRef.current) {
+      setTimeout(() => {
+        submitButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+    }
+  }, [analysis]);
 
   const notesValue = watch("notes");
 
@@ -171,9 +180,22 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
         </div>
       </div>
 
-      {analysis && <HealthAnalysis analysis={analysis} />}
+      {analysis && (
+        <>
+          <HealthAnalysis analysis={analysis} />
+          <div className="pt-2 pb-1 text-center text-sm text-muted-foreground">
+            ⬇️ Clique em "Registrar Energia" abaixo para salvar
+          </div>
+        </>
+      )}
 
-      <Button type="submit" className="w-full" variant="hero" disabled={loading}>
+      <Button 
+        ref={submitButtonRef}
+        type="submit" 
+        className="w-full" 
+        variant="hero" 
+        disabled={loading}
+      >
         {loading ? "Salvando..." : "Registrar Energia"}
       </Button>
     </form>
