@@ -12,11 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock } from "lucide-react";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PartnerSharing } from "@/components/PartnerSharing";
 
 interface ProfileSettingsProps {
   open: boolean;
@@ -241,7 +242,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
 
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="profile">
               <User className="h-4 w-4 mr-2" />
               Perfil
@@ -249,6 +250,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
             <TabsTrigger value="account">
               <Lock className="h-4 w-4 mr-2" />
               Conta
+            </TabsTrigger>
+            <TabsTrigger value="sharing">
+              <Heart className="h-4 w-4 mr-2" />
+              Compartilhar
             </TabsTrigger>
             <TabsTrigger value="appearance">
               <Palette className="h-4 w-4 mr-2" />
@@ -392,6 +397,20 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                   Salvar Alterações
                 </Button>
               </div>
+            </div>
+          </TabsContent>
+
+          {/* Sharing Tab */}
+          <TabsContent value="sharing" className="space-y-4 py-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Heart className="h-4 w-4" />
+                <h3 className="text-sm font-semibold">Compartilhamento</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Compartilhe seu ciclo com seu(sua) parceiro(a) de forma segura
+              </p>
+              <PartnerSharing />
             </div>
           </TabsContent>
 
