@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,6 +13,26 @@ serve(async (req) => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Get authorization header
+    const authHeader = req.headers.get('Authorization');
+    let userName = 'usuária';
+    
+    if (authHeader) {
+      try {
+        const token = authHeader.replace('Bearer ', '');
+        const { data: { user } } = await supabase.auth.getUser(token);
+        if (user) {
+          userName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'usuária';
+        }
+      } catch (error) {
+        console.log('Could not fetch user info, using default name');
+      }
+    }
+
     const { description, trackingType } = await req.json();
     
     if (!description || !trackingType) {
@@ -27,8 +48,11 @@ serve(async (req) => {
 
     const systemPrompt = `Você é uma assistente de saúde feminina especializada em bem-estar holístico. 
 Analise a descrição do usuário sobre ${trackingType} e forneça insights compassivos e úteis.
+
+IMPORTANTE: Sempre inicie sua análise com "Olá ${userName}," (sem "querida" ou outros apelidos).
+
 Forneça sua resposta em formato JSON com os seguintes campos:
-- analysis: uma análise breve da situação descrita (2-3 frases)
+- analysis: uma análise breve da situação descrita (2-3 frases), começando com "Olá ${userName},"
 - suggestions: array de 3 sugestões práticas e específicas
 - insights: array de 2-3 insights sobre o que isso pode indicar
 - needs_attention: booleano indicando se requer atenção médica
