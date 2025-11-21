@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
 import { Moon } from "lucide-react";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
+import { HealthAnalysis } from "@/components/HealthAnalysis";
 
 const sleepSchema = z.object({
   sleep_date: z.string().min(1, "Data obrigatória"),
@@ -29,13 +31,45 @@ interface SleepFormProps {
 export function SleepForm({ userId, onSuccess }: SleepFormProps) {
   const [loading, setLoading] = useState(false);
   const [sleepQuality, setSleepQuality] = useState(3);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   
-  const { register, handleSubmit, formState: { errors } } = useForm<SleepFormData>({
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<SleepFormData>({
     resolver: zodResolver(sleepSchema),
     defaultValues: {
       sleep_quality: 3,
     },
   });
+
+  const notesValue = watch("notes");
+
+  const handleAnalyzeDescription = async (description: string) => {
+    if (!description) return;
+    
+    setIsAnalyzing(true);
+    try {
+      const { data: analysisData, error } = await supabase.functions.invoke('analyze-health-description', {
+        body: { 
+          description,
+          trackingType: 'sono'
+        }
+      });
+
+      if (error) throw error;
+      
+      if (analysisData?.quality_score) {
+        setSleepQuality(analysisData.quality_score);
+      }
+      
+      setAnalysis(analysisData);
+      toast.success("Análise concluída! Qualidade ajustada automaticamente.");
+    } catch (error) {
+      console.error('Error analyzing description:', error);
+      toast.error("Erro ao analisar descrição");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const onSubmit = async (data: SleepFormData) => {
     setLoading(true);
@@ -135,8 +169,31 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
           id="notes"
           placeholder="Como você se sentiu ao acordar..."
           {...register("notes")}
+          onChange={(e) => setValue("notes", e.target.value)}
         />
+        <div className="flex gap-2 mt-2">
+          <VoiceRecorder 
+            onTranscription={(text) => {
+              setValue("notes", text);
+              handleAnalyzeDescription(text);
+            }}
+            disabled={loading}
+          />
+          {notesValue && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => handleAnalyzeDescription(notesValue)}
+              disabled={isAnalyzing}
+            >
+              {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+            </Button>
+          )}
+        </div>
       </div>
+
+      {analysis && <HealthAnalysis analysis={analysis} />}
 
       <Button type="submit" className="w-full" variant="hero" disabled={loading}>
         {loading ? "Salvando..." : "Registrar Sono"}

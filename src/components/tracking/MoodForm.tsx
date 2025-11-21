@@ -11,6 +11,8 @@ import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Smile } from "lucide-react";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
+import { HealthAnalysis } from "@/components/HealthAnalysis";
 
 const moodSchema = z.object({
   mood_date: z.string().min(1, "Data obrigatória"),
@@ -29,13 +31,45 @@ interface MoodFormProps {
 export function MoodForm({ userId, onSuccess }: MoodFormProps) {
   const [loading, setLoading] = useState(false);
   const [moodLevel, setMoodLevel] = useState(3);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<MoodFormData>({
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<MoodFormData>({
     resolver: zodResolver(moodSchema),
     defaultValues: {
       mood_level: 3,
     },
   });
+
+  const notesValue = watch("notes");
+
+  const handleAnalyzeDescription = async (description: string) => {
+    if (!description) return;
+    
+    setIsAnalyzing(true);
+    try {
+      const { data: analysisData, error } = await supabase.functions.invoke('analyze-health-description', {
+        body: { 
+          description,
+          trackingType: 'humor'
+        }
+      });
+
+      if (error) throw error;
+      
+      if (analysisData?.quality_score) {
+        setMoodLevel(analysisData.quality_score);
+      }
+      
+      setAnalysis(analysisData);
+      toast.success("Análise concluída! Intensidade ajustada automaticamente.");
+    } catch (error) {
+      console.error('Error analyzing description:', error);
+      toast.error("Erro ao analisar descrição");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const onSubmit = async (data: MoodFormData) => {
     setLoading(true);
@@ -117,8 +151,31 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
           id="notes"
           placeholder="Eventos, pessoas, situações..."
           {...register("notes")}
+          onChange={(e) => setValue("notes", e.target.value)}
         />
+        <div className="flex gap-2 mt-2">
+          <VoiceRecorder 
+            onTranscription={(text) => {
+              setValue("notes", text);
+              handleAnalyzeDescription(text);
+            }}
+            disabled={loading}
+          />
+          {notesValue && (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => handleAnalyzeDescription(notesValue)}
+              disabled={isAnalyzing}
+            >
+              {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+            </Button>
+          )}
+        </div>
       </div>
+
+      {analysis && <HealthAnalysis analysis={analysis} />}
 
       <Button type="submit" className="w-full" variant="hero" disabled={loading}>
         {loading ? "Salvando..." : "Registrar Humor"}
