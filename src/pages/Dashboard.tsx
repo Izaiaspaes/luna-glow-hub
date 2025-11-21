@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useTheme } from "@/hooks/useTheme";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical } from "lucide-react";
+import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings } from "lucide-react";
+import { ProfileSettings } from "@/components/ProfileSettings";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,9 +34,14 @@ export default function Dashboard() {
   const [recentData, setRecentData] = useState<any[]>([]);
   const [wellnessPlans, setWellnessPlans] = useState<any[]>([]);
   const [generatingPlan, setGeneratingPlan] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
+  const { profile } = useProfile();
   const { toast } = useToast();
   const navigate = useNavigate();
+  
+  // Apply theme
+  useTheme();
 
   useEffect(() => {
     if (!adminChecked) return;
@@ -213,6 +221,10 @@ export default function Dashboard() {
                   </NavLink>
                 </Button>
               )}
+              <Button variant="ghost" size="sm" onClick={() => setSettingsOpen(true)}>
+                <Settings className="h-4 w-4 mr-2" />
+                Configurações
+              </Button>
               <Button variant="outline" size="sm" onClick={handleLogout}>
                 Sair
               </Button>
@@ -225,7 +237,7 @@ export default function Dashboard() {
         {/* Welcome Section */}
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Olá, bem-vinda! 👋
+            Olá{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}, bem-vinda! 👋
           </h1>
           <p className="text-muted-foreground">
             Acompanhe sua jornada de bem-estar e receba insights personalizados
@@ -567,6 +579,9 @@ export default function Dashboard() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Profile Settings Dialog */}
+      <ProfileSettings open={settingsOpen} onOpenChange={setSettingsOpen} />
     </div>
   );
 }
