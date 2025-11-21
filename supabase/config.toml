@@ -5,3 +5,6 @@ verify_jwt = true
 
 [functions.check-cycle-phase-changes]
 verify_jwt = false
+
+[functions.send-partner-reminders]
+verify_jwt = false
