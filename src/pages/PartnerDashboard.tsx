@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, ArrowLeft, Calendar, AlertCircle, Book } from "lucide-react";
+import NotificationBell from "@/components/partner/NotificationBell";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -191,6 +192,7 @@ export default function PartnerDashboard() {
               <span className="text-xl font-semibold">Luna a Dois</span>
             </div>
             <div className="flex items-center gap-2">
+              <NotificationBell />
               <Button onClick={() => navigate("/")} variant="ghost" size="sm">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar
