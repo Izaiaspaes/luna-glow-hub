@@ -157,14 +157,15 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>Qualidade do sono: {sleepQuality}/5</Label>
+        <Label>Qualidade do sono: {sleepQuality}/5 {analysis && "✓ Ajustado pela IA"}</Label>
         <Slider
           value={[sleepQuality]}
-          onValueChange={(value) => setSleepQuality(value[0])}
+          onValueChange={(value) => !analysis && setSleepQuality(value[0])}
           min={1}
           max={5}
           step={1}
           className="py-4"
+          disabled={!!analysis}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
           <span>Muito ruim</span>
