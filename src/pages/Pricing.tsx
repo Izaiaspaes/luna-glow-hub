@@ -91,9 +91,11 @@ export default function Pricing() {
               <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
                 Preços
               </NavLink>
-              <Button variant="hero" size="sm">
-                Entrar na lista de espera
-              </Button>
+              <NavLink to="/auth">
+                <Button variant="hero" size="sm">
+                  Entrar
+                </Button>
+              </NavLink>
             </nav>
           </div>
         </div>

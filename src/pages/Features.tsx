@@ -43,9 +43,11 @@ export default function Features() {
               <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
                 Preços
               </NavLink>
-              <Button variant="hero" size="sm">
-                Entrar na lista de espera
-              </Button>
+              <NavLink to="/auth">
+                <Button variant="hero" size="sm">
+                  Entrar
+                </Button>
+              </NavLink>
             </nav>
           </div>
         </div>
@@ -597,13 +599,14 @@ export default function Features() {
             Pronta para começar sua jornada?
           </h2>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Junte-se à lista de espera e seja uma das primeiras a experimentar 
-            o futuro do bem-estar feminino.
+            Crie sua conta agora e comece a cuidar do seu bem-estar de forma personalizada.
           </p>
-          <Button variant="secondary" size="lg" className="group">
-            Entrar na lista de espera
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <NavLink to="/auth">
+            <Button variant="secondary" size="lg" className="group">
+              Criar conta grátis
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </NavLink>
         </div>
       </section>
 
