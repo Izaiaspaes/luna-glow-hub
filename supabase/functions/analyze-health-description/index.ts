@@ -17,7 +17,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get authorization header
+    // Get authorization header and fetch user profile
     const authHeader = req.headers.get('Authorization');
     let userName = 'usuária';
     
@@ -26,7 +26,14 @@ serve(async (req) => {
         const token = authHeader.replace('Bearer ', '');
         const { data: { user } } = await supabase.auth.getUser(token);
         if (user) {
-          userName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'usuária';
+          // Fetch user profile from profiles table
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('user_id', user.id)
+            .single();
+          
+          userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
         }
       } catch (error) {
         console.log('Could not fetch user info, using default name');
