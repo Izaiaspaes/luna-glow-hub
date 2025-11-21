@@ -6,53 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Footer } from "@/components/Footer";
-import blogCycleImage from "@/assets/blog-cycle-understanding.jpg";
-import blogNutritionImage from "@/assets/blog-nutrition-hormonal.jpg";
-import blogSleepImage from "@/assets/blog-sleep-quality.jpg";
-import blogMentalHealthImage from "@/assets/blog-mental-health.jpg";
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "Entendendo seu Ciclo Menstrual: Um Guia Completo",
-    excerpt:
-      "Descubra as 4 fases do ciclo menstrual e como cada uma afeta seu corpo, humor e energia. Aprenda a identificar padrões e otimizar sua rotina de acordo com cada fase.",
-    category: "Ciclo Menstrual",
-    image: blogCycleImage,
-    date: "15 Nov 2024",
-    readTime: "8 min",
-  },
-  {
-    id: 2,
-    title: "Nutrição e Equilíbrio Hormonal: O Que Comer em Cada Fase",
-    excerpt:
-      "Alimentos específicos podem ajudar a equilibrar seus hormônios naturalmente. Conheça o que incluir na sua dieta durante cada fase do ciclo para se sentir melhor.",
-    category: "Nutrição",
-    image: blogNutritionImage,
-    date: "12 Nov 2024",
-    readTime: "6 min",
-  },
-  {
-    id: 3,
-    title: "Qualidade do Sono e Saúde Hormonal: A Conexão Essencial",
-    excerpt:
-      "O sono afeta diretamente seus hormônios e bem-estar. Descubra como melhorar sua qualidade de sono e criar uma rotina noturna que realmente funciona.",
-    category: "Sono",
-    image: blogSleepImage,
-    date: "10 Nov 2024",
-    readTime: "7 min",
-  },
-  {
-    id: 4,
-    title: "Saúde Mental no Ciclo: Gerenciando Humor e Ansiedade",
-    excerpt:
-      "As flutuações hormonais podem afetar seu humor e bem-estar emocional. Aprenda estratégias práticas para cuidar da sua saúde mental durante todo o ciclo.",
-    category: "Saúde Mental",
-    image: blogMentalHealthImage,
-    date: "8 Nov 2024",
-    readTime: "9 min",
-  },
-];
+import { blogPosts } from "@/data/blogPosts";
 
 const categories = [
   "Todos",
@@ -151,10 +105,7 @@ const Blog = () => {
                   image={post.image}
                   date={post.date}
                   readTime={post.readTime}
-                  onClick={() => {
-                    // Future: navigate to individual blog post
-                    console.log("Navigate to post:", post.id);
-                  }}
+                onClick={() => navigate(`/blog/${post.slug}`)}
                 />
               ))}
             </div>
