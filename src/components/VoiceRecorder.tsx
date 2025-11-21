@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Mic, Square, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { pipeline, env } from '@huggingface/transformers';
+import { useWhisperModel } from "@/hooks/useWhisperModel";
 
 interface VoiceRecorderProps {
   onTranscription: (text: string) => void;
@@ -12,35 +12,11 @@ interface VoiceRecorderProps {
 export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isLoadingModel, setIsLoadingModel] = useState(true);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
-  const transcriberRef = useRef<any>(null);
-
-  // Configure and load the Whisper model
-  useEffect(() => {
-    const loadModel = async () => {
-      try {
-        env.allowLocalModels = false;
-        env.useBrowserCache = true;
-        
-        console.log('Carregando modelo Whisper...');
-        transcriberRef.current = await pipeline(
-          "automatic-speech-recognition",
-          "onnx-community/whisper-tiny",
-          { device: "webgpu" }
-        );
-        console.log('Modelo Whisper carregado com sucesso!');
-        setIsLoadingModel(false);
-      } catch (error) {
-        console.error('Erro ao carregar modelo:', error);
-        toast.error("Erro ao carregar modelo de transcrição");
-        setIsLoadingModel(false);
-      }
-    };
-    
-    loadModel();
-  }, []);
+  
+  // Use the cached Whisper model
+  const { transcriber, isLoadingModel, modelError } = useWhisperModel();
 
   const startRecording = async () => {
     try {
@@ -83,7 +59,7 @@ export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps)
   const processAudio = async (audioBlob: Blob) => {
     setIsProcessing(true);
     try {
-      if (!transcriberRef.current) {
+      if (!transcriber) {
         throw new Error('Modelo de transcrição não carregado');
       }
 
@@ -93,7 +69,7 @@ export function VoiceRecorder({ onTranscription, disabled }: VoiceRecorderProps)
       const audioUrl = URL.createObjectURL(audioBlob);
       
       // Transcribe using local Whisper model
-      const output = await transcriberRef.current(audioUrl, {
+      const output = await transcriber(audioUrl, {
         language: 'portuguese',
         task: 'transcribe'
       });
