@@ -121,10 +121,15 @@ serve(async (req) => {
       }
     }
 
+    // Get user name from metadata
+    const userName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'usuária';
+    
     // Create prompt based on plan type
     let systemPrompt = `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
 
 Sempre seja empática, acolhedora e forneça recomendações práticas e acionáveis. Use uma linguagem amigável e motivadora.
+
+IMPORTANTE: Sempre inicie os insights com "Olá ${userName}," (sem "querida" ou outros apelidos).
 
 Formato da resposta: Retorne um objeto JSON com a seguinte estrutura:
 {
@@ -138,7 +143,7 @@ Formato da resposta: Retorne um objeto JSON com a seguinte estrutura:
       "priority": "alta|média|baixa"
     }
   ],
-  "insights": "Insights principais sobre os dados da usuária (2-3 parágrafos)"
+  "insights": "Insights principais sobre os dados da usuária (2-3 parágrafos), começando com 'Olá ${userName},'"
 }`;
 
     let userPrompt = '';
