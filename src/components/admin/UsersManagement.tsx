@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Shield, User, Trash2, CheckCircle, XCircle } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Shield, User, Trash2, CheckCircle, Search, X } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -30,6 +31,8 @@ export const UsersManagement = () => {
   const [users, setUsers] = useState<UserWithRole[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [roleFilter, setRoleFilter] = useState<string | null>(null);
 
   useEffect(() => {
     loadUsers();
@@ -107,6 +110,21 @@ export const UsersManagement = () => {
     }
   };
 
+  const filteredUsers = users.filter(user => {
+    const matchesSearch = 
+      user.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesRole = !roleFilter || user.roles.some(r => r.role === roleFilter);
+    
+    return matchesSearch && matchesRole;
+  });
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setRoleFilter(null);
+  };
+
   return (
     <>
       <Card>
@@ -115,10 +133,65 @@ export const UsersManagement = () => {
           <CardDescription>Gerencie usuários, permissões e assinaturas</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="space-y-4 mb-6">
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar por nome ou e-mail..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-9"
+                />
+              </div>
+              {(searchTerm || roleFilter) && (
+                <Button variant="outline" size="icon" onClick={clearFilters}>
+                  <X className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
+            
+            <div className="flex gap-2">
+              <Button
+                variant={roleFilter === null ? "default" : "outline"}
+                size="sm"
+                onClick={() => setRoleFilter(null)}
+              >
+                Todos
+              </Button>
+              <Button
+                variant={roleFilter === "admin" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setRoleFilter("admin")}
+              >
+                <Shield className="w-3 h-3 mr-1" />
+                Admin
+              </Button>
+              <Button
+                variant={roleFilter === "moderator" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setRoleFilter("moderator")}
+              >
+                <User className="w-3 h-3 mr-1" />
+                Moderador
+              </Button>
+              <Button
+                variant={roleFilter === "user" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setRoleFilter("user")}
+              >
+                <User className="w-3 h-3 mr-1" />
+                Usuário
+              </Button>
+            </div>
+          </div>
+
           {loadingUsers ? (
             <p className="text-muted-foreground">Carregando usuários...</p>
-          ) : users.length === 0 ? (
-            <p className="text-muted-foreground">Nenhum usuário encontrado</p>
+          ) : filteredUsers.length === 0 ? (
+            <p className="text-muted-foreground">
+              {users.length === 0 ? "Nenhum usuário encontrado" : "Nenhum usuário corresponde aos filtros"}
+            </p>
           ) : (
             <Table>
               <TableHeader>
@@ -132,7 +205,7 @@ export const UsersManagement = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users.map((user) => {
+                {filteredUsers.map((user) => {
                   const isAdmin = user.roles.some(r => r.role === 'admin');
                   const isModerator = user.roles.some(r => r.role === 'moderator');
                   const isUser = user.roles.some(r => r.role === 'user');
