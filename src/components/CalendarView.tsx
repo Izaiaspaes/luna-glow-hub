@@ -87,10 +87,10 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
             <div>
               <CardTitle className="flex items-center gap-2">
                 <CalendarIcon className="h-5 w-5 text-primary" />
-                Calendário de Planos
+                Calendário de Pacotes
               </CardTitle>
               <CardDescription className="mt-1">
-                Selecione uma data para ver os planos ativos
+                Selecione uma data para ver os pacotes ativos
               </CardDescription>
             </div>
           </div>
@@ -151,7 +151,7 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-3 w-3 rounded-full border-2 border-primary" />
-                <span>Dias com planos</span>
+                <span>Dias com pacotes</span>
               </div>
             </div>
           </div>
@@ -164,12 +164,12 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-primary" />
-              Planos para {format(selectedDate, "dd 'de' MMMM", { locale: ptBR })}
+              Pacotes para {format(selectedDate, "dd 'de' MMMM", { locale: ptBR })}
             </CardTitle>
             <CardDescription>
               {plansForSelectedDate.length > 0 
-                ? `${plansForSelectedDate.length} plano(s) ativo(s) para esta data`
-                : "Nenhum plano ativo para esta data"}
+                ? `${plansForSelectedDate.length} pacote(s) ativo(s) para esta data`
+                : "Nenhum pacote ativo para esta data"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -180,10 +180,10 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <h4 className="font-semibold text-lg">
-                          {plan.plan_content?.title || `Plano ${plan.plan_type}`}
+                          {plan.plan_content?.title || `Pacote ${plan.plan_type}`}
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          {plan.plan_content?.summary || 'Plano personalizado de bem-estar'}
+                          {plan.plan_content?.summary || 'Pacote personalizado de bem-estar'}
                         </p>
                       </div>
                       {plan.status === 'completed' ? (
@@ -209,7 +209,7 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
             ) : (
               <div className="text-center py-8">
                 <p className="text-muted-foreground mb-4">
-                  Nenhum plano ativo para esta data
+                  Nenhum pacote ativo para esta data
                 </p>
                 {onGeneratePlan && (
                   <Button
@@ -219,7 +219,7 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                     size="sm"
                   >
                     <Sparkles className="h-4 w-4 mr-2" />
-                    {generatingPlan ? "Gerando..." : "Gerar Novo Plano"}
+                    {generatingPlan ? "Gerando..." : "Gerar Novo Pacote"}
                   </Button>
                 )}
               </div>
@@ -231,9 +231,9 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
         {plans.filter(p => p.status !== 'archived').length > 0 && (
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Todos os Planos</CardTitle>
+              <CardTitle className="text-lg">Todos os Pacotes</CardTitle>
               <CardDescription>
-                {plans.filter(p => p.status !== 'archived').length} plano(s) ativo(s)
+                {plans.filter(p => p.status !== 'archived').length} pacote(s) ativo(s)
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -247,7 +247,7 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h5 className="font-medium text-sm">
-                          {plan.plan_content?.title || `Plano ${plan.plan_type}`}
+                          {plan.plan_content?.title || `Pacote ${plan.plan_type}`}
                         </h5>
                         <p className="text-xs text-muted-foreground mt-1">
                           {format(new Date(plan.valid_from), "dd/MM/yyyy")}

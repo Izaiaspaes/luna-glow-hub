@@ -80,7 +80,7 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
           <div className="flex-1">
             <CardTitle className="flex items-center gap-2 text-xl">
               <Sparkles className="h-6 w-6 text-primary" />
-              {content.title || `Plano ${plan.plan_type}`}
+              {content.title || `Pacote ${plan.plan_type}`}
             </CardTitle>
             <CardDescription className="flex items-center gap-2 mt-2">
               <Calendar className="h-4 w-4" />
