@@ -129,11 +129,11 @@ export default function Dashboard() {
     }
     
     toast({
-      title: "Pacote atualizado!",
+      title: "Plano de Bem-Estar atualizado!",
       description: 
-        status === 'completed' ? "Pacote marcado como concluído." :
-        status === 'archived' ? "Pacote arquivado." :
-        "Pacote reativado.",
+        status === 'completed' ? "Plano marcado como concluído." :
+        status === 'archived' ? "Plano arquivado." :
+        "Plano reativado.",
     });
     
     await loadWellnessPlans();
@@ -155,15 +155,15 @@ export default function Dashboard() {
       if (error) throw error;
       
       toast({
-        title: "Pacote gerado com sucesso!",
-        description: "Seu pacote personalizado está pronto.",
+        title: "Plano de Bem-Estar gerado com sucesso!",
+        description: "Seu plano personalizado está pronto.",
       });
       
       await loadWellnessPlans();
     } catch (error) {
       console.error('Error generating plan:', error);
       toast({
-        title: "Erro ao gerar pacote",
+        title: "Erro ao gerar plano",
         description: "Tente novamente mais tarde.",
         variant: "destructive",
       });
@@ -380,10 +380,10 @@ export default function Dashboard() {
                         <div>
                           <h3 className="text-lg font-semibold flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-primary" />
-                            Pacotes Personalizados com IA
+                            Planos de Bem-Estar Personalizados
                           </h3>
                           <p className="text-sm text-muted-foreground">
-                            Gere pacotes baseados nos seus dados de rastreamento
+                            Gere planos baseados nos seus dados de rastreamento
                           </p>
                         </div>
                         <Button 
@@ -391,14 +391,14 @@ export default function Dashboard() {
                           disabled={generatingPlan}
                           size="sm"
                         >
-                          {generatingPlan ? "Gerando..." : "Gerar Pacote"}
+                          {generatingPlan ? "Gerando..." : "Gerar Plano"}
                         </Button>
                       </div>
                       
                       {wellnessPlans.length === 0 ? (
                         <div className="text-center py-8 bg-muted/20 rounded-lg">
                           <p className="text-muted-foreground">
-                            Nenhum pacote gerado ainda. Adicione dados de rastreamento e gere seu primeiro pacote!
+                            Nenhum plano gerado ainda. Adicione dados de rastreamento e gere seu primeiro plano!
                           </p>
                         </div>
                       ) : (
@@ -507,19 +507,19 @@ export default function Dashboard() {
                   onClick={() => generateWellnessPlan('geral')}
                   disabled={generatingPlan}
                 >
-                  {generatingPlan ? "Gerando..." : "Gerar Pacote Personalizado"}
+                  {generatingPlan ? "Gerando..." : "Gerar Plano de Bem-Estar"}
                 </Button>
               </CardContent>
             </Card>
 
             <Card className="bg-gradient-card">
               <CardHeader>
-                <CardTitle className="text-lg">Pacotes Ativos</CardTitle>
+                <CardTitle className="text-lg">Planos de Bem-Estar Ativos</CardTitle>
               </CardHeader>
               <CardContent>
                 {wellnessPlans.filter(plan => plan.status === 'active' || (plan.is_active && !plan.status)).length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
-                    Nenhum pacote ativo no momento
+                    Nenhum plano ativo no momento
                   </p>
                 ) : (
                   <div className="space-y-3">
@@ -531,7 +531,7 @@ export default function Dashboard() {
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex-1">
                             <h4 className="font-semibold text-sm">
-                              {plan.plan_content?.title || `Pacote ${plan.plan_type}`}
+                              {plan.plan_content?.title || `Plano ${plan.plan_type}`}
                             </h4>
                             <p className="text-xs text-muted-foreground mt-1">
                               Válido desde {new Date(plan.valid_from).toLocaleDateString('pt-BR')}
