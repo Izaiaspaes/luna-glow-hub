@@ -122,6 +122,48 @@ export type Database = {
         }
         Relationships: []
       }
+      invites: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string
+          current_uses: number
+          email: string | null
+          expires_at: string
+          id: string
+          is_active: boolean
+          max_uses: number
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by: string
+          current_uses?: number
+          email?: string | null
+          expires_at: string
+          id?: string
+          is_active?: boolean
+          max_uses?: number
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string
+          current_uses?: number
+          email?: string | null
+          expires_at?: string
+          id?: string
+          is_active?: boolean
+          max_uses?: number
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
       mood_tracking: {
         Row: {
           created_at: string

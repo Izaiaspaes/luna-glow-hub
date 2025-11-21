@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const authSchema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -18,6 +19,7 @@ export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [inviteCode, setInviteCode] = useState("");
   const [loading, setLoading] = useState(false);
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
@@ -40,6 +42,46 @@ export default function Auth() {
 
     setLoading(true);
 
+    // Validate invite code for signup
+    if (!isLogin) {
+      if (!inviteCode.trim()) {
+        toast.error("Código de convite é obrigatório para criar uma conta");
+        setLoading(false);
+        return;
+      }
+
+      const { data: invite, error: inviteError } = await supabase
+        .from("invites")
+        .select("*")
+        .eq("code", inviteCode)
+        .eq("is_active", true)
+        .single();
+
+      if (inviteError || !invite) {
+        toast.error("Código de convite inválido");
+        setLoading(false);
+        return;
+      }
+
+      if (new Date(invite.expires_at) < new Date()) {
+        toast.error("Este código de convite já expirou");
+        setLoading(false);
+        return;
+      }
+
+      if (invite.current_uses >= invite.max_uses) {
+        toast.error("Este código de convite já atingiu o limite de usos");
+        setLoading(false);
+        return;
+      }
+
+      if (invite.email && invite.email !== email) {
+        toast.error("Este convite é válido apenas para outro email");
+        setLoading(false);
+        return;
+      }
+    }
+
     if (isLogin) {
       const { error } = await signIn(email, password);
       if (error) {
@@ -61,6 +103,23 @@ export default function Auth() {
           toast.error("Erro ao criar conta: " + error.message);
         }
       } else {
+        // Update invite usage - increment current_uses
+        const { data: currentInvite } = await supabase
+          .from("invites")
+          .select("current_uses")
+          .eq("code", inviteCode)
+          .single();
+        
+        if (currentInvite) {
+          await supabase
+            .from("invites")
+            .update({
+              current_uses: currentInvite.current_uses + 1,
+              used_at: new Date().toISOString(),
+            })
+            .eq("code", inviteCode);
+        }
+        
         toast.success("Conta criada com sucesso!");
         navigate("/dashboard");
       }
@@ -112,6 +171,24 @@ export default function Auth() {
                 required
               />
             </div>
+            
+            {!isLogin && (
+              <div className="space-y-2">
+                <Label htmlFor="invite">Código de Convite</Label>
+                <Input
+                  id="invite"
+                  type="text"
+                  placeholder="Digite seu código de convite"
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value)}
+                  required
+                />
+                <p className="text-xs text-muted-foreground">
+                  Você precisa de um código de convite para criar uma conta
+                </p>
+              </div>
+            )}
+            
             <Button type="submit" className="w-full" variant="hero" disabled={loading}>
               {loading ? "Carregando..." : isLogin ? "Entrar" : "Criar conta"}
             </Button>
