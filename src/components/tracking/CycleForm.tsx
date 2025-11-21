@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -30,6 +30,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const form = useForm<CycleFormData>({
     resolver: zodResolver(cycleSchema),
@@ -39,6 +40,14 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
       notes: "",
     },
   });
+
+  useEffect(() => {
+    if (analysis && submitButtonRef.current) {
+      setTimeout(() => {
+        submitButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+    }
+  }, [analysis]);
 
   const handleAnalyzeDescription = async (description: string) => {
     if (!description) return;
@@ -180,9 +189,21 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           )}
         />
 
-        {analysis && <HealthAnalysis analysis={analysis} />}
+        {analysis && (
+          <>
+            <HealthAnalysis analysis={analysis} />
+            <div className="pt-2 pb-1 text-center text-sm text-muted-foreground">
+              ⬇️ Clique em "Salvar Registro" abaixo para salvar
+            </div>
+          </>
+        )}
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button 
+          ref={submitButtonRef}
+          type="submit" 
+          className="w-full" 
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Salvando..." : "Salvar Registro"}
         </Button>
       </form>
