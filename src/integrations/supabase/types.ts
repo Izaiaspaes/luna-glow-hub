@@ -308,9 +308,11 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          encryption_enabled: boolean | null
           full_name: string | null
           id: string
           phone: string | null
+          privacy_mode: boolean | null
           subscription_plan: string | null
           theme: string | null
           updated_at: string
@@ -319,9 +321,11 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          encryption_enabled?: boolean | null
           full_name?: string | null
           id?: string
           phone?: string | null
+          privacy_mode?: boolean | null
           subscription_plan?: string | null
           theme?: string | null
           updated_at?: string
@@ -330,9 +334,11 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           created_at?: string
+          encryption_enabled?: boolean | null
           full_name?: string | null
           id?: string
           phone?: string | null
+          privacy_mode?: boolean | null
           subscription_plan?: string | null
           theme?: string | null
           updated_at?: string

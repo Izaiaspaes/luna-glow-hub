@@ -11,6 +11,8 @@ export interface Profile {
   phone: string | null;
   theme: string | null;
   subscription_plan: string | null;
+  privacy_mode: boolean | null;
+  encryption_enabled: boolean | null;
   created_at: string;
   updated_at: string;
 }

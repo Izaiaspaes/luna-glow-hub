@@ -23,6 +23,7 @@ import { EnergyForm } from "@/components/tracking/EnergyForm";
 import { WellnessPlanCard } from "@/components/WellnessPlanCard";
 import { CalendarView } from "@/components/CalendarView";
 import { SymptomPredictions } from "@/components/SymptomPredictions";
+import { PrivacyModeIndicator } from "@/components/PrivacyModeIndicator";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -236,13 +237,16 @@ export default function Dashboard() {
 
       <main className="container mx-auto px-4 py-8">
         {/* Welcome Section */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Olá{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}, bem-vinda! 👋
-          </h1>
-          <p className="text-muted-foreground">
-            Acompanhe sua jornada de bem-estar e receba insights personalizados
-          </p>
+        <div className="mb-8 animate-fade-in flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold mb-2">
+              Olá{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}, bem-vinda! 👋
+            </h1>
+            <p className="text-muted-foreground">
+              Acompanhe sua jornada de bem-estar e receba insights personalizados
+            </p>
+          </div>
+          <PrivacyModeIndicator />
         </div>
 
         {/* Quick Stats */}

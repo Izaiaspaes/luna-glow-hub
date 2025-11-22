@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { setEncryptionPassword, clearEncryptionPassword } from "@/lib/encryption";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
@@ -75,7 +77,15 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState(profile?.avatar_url || "");
+  const [privacyMode, setPrivacyMode] = useState(profile?.privacy_mode || false);
+  const [encryptionPassword, setEncryptionPasswordLocal] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (profile) {
+      setPrivacyMode(profile.privacy_mode || false);
+    }
+  }, [profile]);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -231,6 +241,48 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
     }
   };
 
+  const handlePrivacyModeToggle = async (enabled: boolean) => {
+    if (enabled && !encryptionPassword) {
+      toast({
+        title: "Senha necessária",
+        description: "Configure uma senha de criptografia para ativar o Modo Privacidade Ultra",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const { error } = await updateProfile({
+        privacy_mode: enabled,
+        encryption_enabled: enabled,
+      });
+
+      if (error) throw error;
+
+      setPrivacyMode(enabled);
+
+      if (enabled && encryptionPassword) {
+        setEncryptionPassword(encryptionPassword);
+        toast({
+          title: "Modo Privacidade Ultra ativado",
+          description: "Seus dados sensíveis agora são criptografados com sua senha pessoal",
+        });
+      } else {
+        clearEncryptionPassword();
+        toast({
+          title: "Modo Privacidade Ultra desativado",
+          description: "A criptografia adicional foi removida",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erro",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
@@ -242,7 +294,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
 
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="profile">
               <User className="h-4 w-4 mr-2" />
               Perfil
@@ -258,6 +310,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
             <TabsTrigger value="appearance">
               <Palette className="h-4 w-4 mr-2" />
               Aparência
+            </TabsTrigger>
+            <TabsTrigger value="privacy">
+              <Shield className="h-4 w-4 mr-2" />
+              Privacidade
             </TabsTrigger>
           </TabsList>
 
@@ -454,6 +510,63 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                   Aplicar Tema
                 </Button>
               </div>
+            </div>
+          </TabsContent>
+
+          {/* Privacy Tab */}
+          <TabsContent value="privacy" className="space-y-4 py-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                <h3 className="text-sm font-semibold">Modo Privacidade Ultra</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Ative criptografia adicional para seus dados mais sensíveis
+              </p>
+
+              <div className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="space-y-0.5">
+                  <Label htmlFor="privacy-mode">Criptografia Adicional</Label>
+                  <p className="text-sm text-muted-foreground">
+                    Seus dados de rastreamento serão criptografados com sua senha pessoal
+                  </p>
+                </div>
+                <Switch
+                  id="privacy-mode"
+                  checked={privacyMode}
+                  onCheckedChange={handlePrivacyModeToggle}
+                />
+              </div>
+
+              {!privacyMode && (
+                <div className="space-y-2">
+                  <Label htmlFor="encryption-password">Senha de Criptografia</Label>
+                  <Input
+                    id="encryption-password"
+                    type="password"
+                    placeholder="Crie uma senha forte"
+                    value={encryptionPassword}
+                    onChange={(e) => setEncryptionPasswordLocal(e.target.value)}
+                  />
+                  <p className="text-sm text-muted-foreground">
+                    ⚠️ Importante: Se você esquecer esta senha, não será possível recuperar seus dados criptografados.
+                  </p>
+                </div>
+              )}
+
+              {privacyMode && (
+                <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                  <div className="flex items-start gap-2">
+                    <Shield className="w-5 h-5 text-primary mt-0.5" />
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium">Modo Privacidade Ultra Ativo</p>
+                      <p className="text-xs text-muted-foreground">
+                        Seus dados de ciclo, humor, energia e sono estão sendo criptografados com segurança máxima.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>
