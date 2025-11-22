@@ -8,7 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings } from "lucide-react";
+import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings, Menu } from "lucide-react";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { ProfileSettings } from "@/components/ProfileSettings";
 import {
   DropdownMenu,
@@ -206,6 +216,8 @@ export default function Dashboard() {
               </div>
               <span className="text-xl font-bold">Luna</span>
             </NavLink>
+            
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6">
               <NavLink to="/dashboard" className="text-sm font-medium text-primary transition-smooth" activeClassName="text-primary">
                 Dashboard
@@ -231,18 +243,71 @@ export default function Dashboard() {
                 Sair
               </Button>
             </nav>
+
+            {/* Mobile Navigation */}
+            <Drawer>
+              <DrawerTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="sm">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>Menu</DrawerTitle>
+                  <DrawerDescription>Navegue pela plataforma Luna</DrawerDescription>
+                </DrawerHeader>
+                <div className="px-4 py-4 space-y-2">
+                  <Button variant="ghost" className="w-full justify-start" asChild>
+                    <NavLink to="/dashboard">
+                      Dashboard
+                    </NavLink>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start" asChild>
+                    <NavLink to="/features">
+                      Funcionalidades
+                    </NavLink>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start" asChild>
+                    <NavLink to="/pricing">
+                      Preços
+                    </NavLink>
+                  </Button>
+                  {isAdmin && (
+                    <Button variant="default" className="w-full" asChild>
+                      <NavLink to="/admin">
+                        Painel de Controle
+                      </NavLink>
+                    </Button>
+                  )}
+                  <Button variant="ghost" className="w-full justify-start" onClick={() => {
+                    setSettingsOpen(true);
+                  }}>
+                    <Settings className="h-4 w-4 mr-2" />
+                    Configurações
+                  </Button>
+                </div>
+                <DrawerFooter>
+                  <Button variant="outline" onClick={handleLogout} className="w-full">
+                    Sair
+                  </Button>
+                  <DrawerClose asChild>
+                    <Button variant="ghost">Fechar</Button>
+                  </DrawerClose>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8">
         {/* Welcome Section */}
-        <div className="mb-8 animate-fade-in flex items-start justify-between">
+        <div className="mb-8 animate-fade-in flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
               Olá{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}, bem-vinda! 👋
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm md:text-base text-muted-foreground">
               Acompanhe sua jornada de bem-estar e receba insights personalizados
             </p>
           </div>
@@ -250,112 +315,122 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Ciclo</CardTitle>
-              <Calendar className="h-4 w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Ciclo</CardTitle>
+              <Calendar className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">Dia 14</div>
-              <p className="text-xs text-muted-foreground">Fase folicular</p>
+            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
+              <div className="text-lg md:text-2xl font-bold">Dia 14</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">Fase folicular</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Sono</CardTitle>
-              <Moon className="h-4 w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Sono</CardTitle>
+              <Moon className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">7.2h</div>
-              <p className="text-xs text-muted-foreground">Média da semana</p>
+            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
+              <div className="text-lg md:text-2xl font-bold">7.2h</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">Média da semana</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Humor</CardTitle>
-              <Smile className="h-4 w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Humor</CardTitle>
+              <Smile className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">4.2/5</div>
-              <p className="text-xs text-muted-foreground">Hoje você está bem</p>
+            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
+              <div className="text-lg md:text-2xl font-bold">4.2/5</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">Hoje você está bem</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Energia</CardTitle>
-              <Zap className="h-4 w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Energia</CardTitle>
+              <Zap className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">3.8/5</div>
-              <p className="text-xs text-muted-foreground">Nível moderado</p>
+            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
+              <div className="text-lg md:text-2xl font-bold">3.8/5</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">Nível moderado</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Main Content */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Column - Tracking */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
             {/* Tabs */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
               <Button
                 variant={activeTab === 'overview' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('overview')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                Visão Geral
+                <span className="hidden sm:inline">Visão Geral</span>
+                <span className="sm:hidden">Geral</span>
               </Button>
               <Button
                 variant={activeTab === 'cycle' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('cycle')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                <Heart className="w-4 h-4 mr-2" />
+                <Heart className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Ciclo
               </Button>
               <Button
                 variant={activeTab === 'sleep' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('sleep')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                <Moon className="w-4 h-4 mr-2" />
+                <Moon className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Sono
               </Button>
               <Button
                 variant={activeTab === 'mood' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('mood')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                <Smile className="w-4 h-4 mr-2" />
+                <Smile className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Humor
               </Button>
               <Button
                 variant={activeTab === 'energy' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('energy')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                <Zap className="w-4 h-4 mr-2" />
+                <Zap className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Energia
               </Button>
               <Button
                 variant={activeTab === 'predictions' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('predictions')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                <Sparkles className="w-4 h-4 mr-2" />
-                Previsões IA
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Previsões IA</span>
+                <span className="sm:hidden">Previsões</span>
               </Button>
               <Button
                 variant={activeTab === 'calendar' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('calendar')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
-                <Calendar className="w-4 h-4 mr-2" />
-                Calendário
+                <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Calendário</span>
+                <span className="sm:hidden">Cal.</span>
               </Button>
             </div>
 

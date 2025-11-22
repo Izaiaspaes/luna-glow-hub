@@ -79,9 +79,9 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
   };
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2">
       {/* Calendar Section */}
-      <Card>
+      <Card className="w-full">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -95,10 +95,10 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-2 md:p-6">
           <div className="flex flex-col items-center space-y-4">
             {/* Month Navigation */}
-            <div className="flex items-center justify-between w-full px-4">
+            <div className="flex items-center justify-between w-full px-2 md:px-4">
               <Button
                 variant="ghost"
                 size="sm"
@@ -128,7 +128,7 @@ export function CalendarView({ plans, onGeneratePlan, generatingPlan }: Calendar
               month={currentMonth}
               onMonthChange={setCurrentMonth}
               locale={ptBR}
-              className="rounded-lg border bg-card"
+              className="rounded-lg border bg-card w-full"
               modifiers={{
                 hasPlans: daysWithPlans,
               }}
