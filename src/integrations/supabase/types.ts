@@ -454,6 +454,126 @@ export type Database = {
         }
         Relationships: []
       }
+      user_onboarding_data: {
+        Row: {
+          age: number | null
+          birth_city: string | null
+          birth_coordinates: Json | null
+          birth_country: string | null
+          birth_date: string | null
+          birth_time: string | null
+          body_shapes: string[] | null
+          care_improvement_goals: string[] | null
+          completed_at: string | null
+          content_preferences: string[] | null
+          created_at: string
+          current_care_routines: string[] | null
+          current_city: string | null
+          current_country: string | null
+          eye_color: string | null
+          favorite_color: string | null
+          full_name: string | null
+          hair_color: string | null
+          hair_length: string | null
+          hair_type: string | null
+          height: number | null
+          hobbies: string[] | null
+          id: string
+          life_area_to_improve: string | null
+          main_app_goal: string | null
+          most_explored_life_area: string | null
+          nail_preference: string | null
+          notification_frequency: string | null
+          personal_interests: string | null
+          profession: string | null
+          self_love_notes: string | null
+          skin_tone: string | null
+          skin_types: string[] | null
+          social_name: string | null
+          updated_at: string
+          user_id: string
+          weight: number | null
+        }
+        Insert: {
+          age?: number | null
+          birth_city?: string | null
+          birth_coordinates?: Json | null
+          birth_country?: string | null
+          birth_date?: string | null
+          birth_time?: string | null
+          body_shapes?: string[] | null
+          care_improvement_goals?: string[] | null
+          completed_at?: string | null
+          content_preferences?: string[] | null
+          created_at?: string
+          current_care_routines?: string[] | null
+          current_city?: string | null
+          current_country?: string | null
+          eye_color?: string | null
+          favorite_color?: string | null
+          full_name?: string | null
+          hair_color?: string | null
+          hair_length?: string | null
+          hair_type?: string | null
+          height?: number | null
+          hobbies?: string[] | null
+          id?: string
+          life_area_to_improve?: string | null
+          main_app_goal?: string | null
+          most_explored_life_area?: string | null
+          nail_preference?: string | null
+          notification_frequency?: string | null
+          personal_interests?: string | null
+          profession?: string | null
+          self_love_notes?: string | null
+          skin_tone?: string | null
+          skin_types?: string[] | null
+          social_name?: string | null
+          updated_at?: string
+          user_id: string
+          weight?: number | null
+        }
+        Update: {
+          age?: number | null
+          birth_city?: string | null
+          birth_coordinates?: Json | null
+          birth_country?: string | null
+          birth_date?: string | null
+          birth_time?: string | null
+          body_shapes?: string[] | null
+          care_improvement_goals?: string[] | null
+          completed_at?: string | null
+          content_preferences?: string[] | null
+          created_at?: string
+          current_care_routines?: string[] | null
+          current_city?: string | null
+          current_country?: string | null
+          eye_color?: string | null
+          favorite_color?: string | null
+          full_name?: string | null
+          hair_color?: string | null
+          hair_length?: string | null
+          hair_type?: string | null
+          height?: number | null
+          hobbies?: string[] | null
+          id?: string
+          life_area_to_improve?: string | null
+          main_app_goal?: string | null
+          most_explored_life_area?: string | null
+          nail_preference?: string | null
+          notification_frequency?: string | null
+          personal_interests?: string | null
+          profession?: string | null
+          self_love_notes?: string | null
+          skin_tone?: string | null
+          skin_types?: string[] | null
+          social_name?: string | null
+          updated_at?: string
+          user_id?: string
+          weight?: number | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
