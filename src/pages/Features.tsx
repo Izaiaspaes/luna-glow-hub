@@ -23,6 +23,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import logoLuna from "@/assets/logo-luna.png";
 
 export default function Features() {
   return (
@@ -32,10 +33,7 @@ export default function Features() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <NavLink to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
-                <Heart className="w-5 h-5 text-white fill-white" />
-              </div>
-              <span className="text-xl font-bold">Luna</span>
+              <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
             </NavLink>
             <nav className="hidden md:flex items-center gap-6">
               <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
@@ -58,7 +56,7 @@ export default function Features() {
       <section className="py-20 lg:py-32 bg-gradient-soft">
         <div className="container mx-auto px-4 text-center">
           <div className="inline-block mb-6">
-            <span className="px-4 py-2 bg-accent/50 text-accent-foreground rounded-full text-sm font-medium">
+            <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
               🌟 Funcionalidades completas
             </span>
           </div>
