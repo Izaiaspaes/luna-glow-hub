@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Footer } from "@/components/Footer";
 import { blogPosts } from "@/data/blogPosts";
 import logoLuna from "@/assets/logo-luna.png";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const categories = [
   "Todos",
@@ -121,6 +122,8 @@ const Blog = () => {
       </section>
 
       <Footer />
+      
+      <WhatsAppButton />
     </div>
   );
 };

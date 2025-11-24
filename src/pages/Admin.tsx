@@ -13,6 +13,7 @@ import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NewsletterManagement } from "@/components/admin/NewsletterManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export default function Admin() {
   const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
@@ -126,6 +127,8 @@ export default function Admin() {
           </TabsContent>
         </Tabs>
       </main>
+      
+      <WhatsAppButton />
     </div>
   );
 }

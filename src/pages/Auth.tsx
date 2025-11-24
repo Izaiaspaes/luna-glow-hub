@@ -9,6 +9,7 @@ import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const authSchema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -206,6 +207,8 @@ export default function Auth() {
           </div>
         </CardContent>
       </Card>
+      
+      <WhatsAppButton />
     </div>
   );
 }

@@ -22,6 +22,7 @@ import {
   Leaf,
   ArrowRight
 } from "lucide-react";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export default function Features() {
   return (
@@ -634,6 +635,8 @@ export default function Features() {
           </div>
         </div>
       </footer>
+      
+      <WhatsAppButton />
     </div>
   );
 }

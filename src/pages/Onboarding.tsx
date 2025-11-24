@@ -8,6 +8,7 @@ import { OnboardingStep4 } from "@/components/onboarding/OnboardingStep4";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -92,6 +93,8 @@ export default function Onboarding() {
           </CardContent>
         </Card>
       </div>
+      
+      <WhatsAppButton />
     </div>
   );
 }
