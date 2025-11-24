@@ -38,6 +38,7 @@ import { WorkForm } from "@/components/tracking/WorkForm";
 import { WeeklySummary } from "@/components/WeeklySummary";
 import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { AppTour } from "@/components/AppTour";
+import { SubscriptionCard } from "@/components/SubscriptionCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
@@ -474,6 +475,9 @@ export default function Dashboard() {
                   <div className="space-y-6">
                     {/* Daily Work Message */}
                     <DailyWorkMessage />
+                    
+                    {/* Subscription Status */}
+                    <SubscriptionCard />
                     
                     {/* AI Wellness Plans Section */}
                     <div>

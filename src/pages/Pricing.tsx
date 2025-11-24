@@ -10,6 +10,15 @@ import {
   Zap
 } from "lucide-react";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
+import { useState } from "react";
+
+const STRIPE_PRICES = {
+  monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
+  yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
+};
 
 const freemiumFeatures = [
   "Rastreamento de ciclo menstrual",
@@ -76,6 +85,42 @@ const comparisonFeatures = [
 ];
 
 export default function Pricing() {
+  const { user, session } = useAuth();
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async (priceId: string) => {
+    if (!user || !session) {
+      toast({
+        title: "Login necessário",
+        description: "Você precisa fazer login para assinar",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { priceId },
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error: any) {
+      console.error('Error creating checkout:', error);
+      toast({
+        title: "Erro ao processar",
+        description: error.message || "Tente novamente",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header/Nav */}
@@ -162,9 +207,11 @@ export default function Pricing() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" size="lg" className="w-full">
-                  Começar gratuitamente
-                </Button>
+                <NavLink to="/auth" className="w-full">
+                  <Button variant="outline" size="lg" className="w-full">
+                    Começar gratuitamente
+                  </Button>
+                </NavLink>
               </CardFooter>
             </Card>
 
@@ -205,10 +252,25 @@ export default function Pricing() {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
-                <Button variant="hero" size="lg" className="w-full group">
-                  Começar teste gratuito
+              <CardFooter className="flex-col gap-2">
+                <Button 
+                  variant="hero" 
+                  size="lg" 
+                  className="w-full group"
+                  onClick={() => handleCheckout(STRIPE_PRICES.monthly)}
+                  disabled={loading}
+                >
+                  {loading ? "Processando..." : "Assinar Mensal (R$ 29,90)"}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="w-full"
+                  onClick={() => handleCheckout(STRIPE_PRICES.yearly)}
+                  disabled={loading}
+                >
+                  {loading ? "Processando..." : "Assinar Anual (R$ 299,00)"}
                 </Button>
               </CardFooter>
             </Card>
@@ -374,10 +436,25 @@ export default function Pricing() {
             Junte-se a milhares de mulheres que já estão cuidando melhor de si mesmas com a Luna.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="lg" className="group">
-              Começar teste gratuito
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
+            {user ? (
+              <Button 
+                variant="secondary" 
+                size="lg" 
+                className="group"
+                onClick={() => handleCheckout(STRIPE_PRICES.monthly)}
+                disabled={loading}
+              >
+                {loading ? "Processando..." : "Começar agora"}
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            ) : (
+              <NavLink to="/auth">
+                <Button variant="secondary" size="lg" className="group">
+                  Começar teste gratuito
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </NavLink>
+            )}
             <NavLink to="/features">
               <Button variant="outline" size="lg" className="bg-white/10 hover:bg-white/20 border-white/20">
                 Ver funcionalidades
