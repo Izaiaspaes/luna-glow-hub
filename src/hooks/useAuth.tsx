@@ -2,12 +2,35 @@ import { useState, useEffect } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
+interface SubscriptionStatus {
+  subscribed: boolean;
+  product_id: string | null;
+  subscription_end: string | null;
+}
+
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminChecked, setAdminChecked] = useState(false);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null);
+
+  const checkSubscription = async () => {
+    if (!session) {
+      setSubscriptionStatus({ subscribed: false, product_id: null, subscription_end: null });
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.functions.invoke('check-subscription');
+      if (error) throw error;
+      setSubscriptionStatus(data);
+    } catch (error) {
+      console.error('Error checking subscription:', error);
+      setSubscriptionStatus({ subscribed: false, product_id: null, subscription_end: null });
+    }
+  };
 
   useEffect(() => {
     // Set up auth state listener first
@@ -27,6 +50,9 @@ export function useAuth() {
             
             setIsAdmin(!!data && data.length > 0);
             setAdminChecked(true);
+            
+            // Check subscription status
+            checkSubscription();
           }, 0);
         } else {
           setIsAdmin(false);
@@ -49,6 +75,9 @@ export function useAuth() {
           .eq('role', 'admin');
 
         setIsAdmin(!!data && data.length > 0);
+        
+        // Check subscription status
+        setTimeout(() => checkSubscription(), 0);
       } else {
         setIsAdmin(false);
       }
@@ -91,6 +120,8 @@ export function useAuth() {
     loading,
     isAdmin,
     adminChecked,
+    subscriptionStatus,
+    checkSubscription,
     signUp,
     signIn,
     signOut,
