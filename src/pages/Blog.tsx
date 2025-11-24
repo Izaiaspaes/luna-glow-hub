@@ -7,6 +7,7 @@ import { Search, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Footer } from "@/components/Footer";
 import { blogPosts } from "@/data/blogPosts";
+import logoLuna from "@/assets/logo-luna.png";
 
 const categories = [
   "Todos",
@@ -39,7 +40,7 @@ const Blog = () => {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => navigate("/")}
           >
-            <BookOpen className="h-6 w-6 text-primary" />
+            <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
             <span className="font-bold text-xl">Luna Blog</span>
           </div>
           <Button onClick={() => navigate("/")} variant="ghost">

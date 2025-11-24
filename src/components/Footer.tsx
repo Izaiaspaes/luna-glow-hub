@@ -1,4 +1,4 @@
-import { Heart, Mail } from "lucide-react";
+import { Heart, Mail, Phone } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import logoLuna from "@/assets/logo-luna.png";
@@ -35,6 +35,12 @@ export const Footer = () => {
               <Mail className="h-4 w-4" />
               <a href="mailto:suporte@topdigitais.net" className="hover:text-primary transition-smooth">
                 suporte@topdigitais.net
+              </a>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Phone className="h-4 w-4" />
+              <a href="https://wa.me/5511963697488" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-smooth">
+                +55 11 96369-7488
               </a>
             </div>
           </div>

@@ -40,6 +40,7 @@ import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { AppTour } from "@/components/AppTour";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import logoLuna from "@/assets/logo-luna.png";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | null;
 
@@ -216,9 +217,7 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <NavLink to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
-                <Heart className="w-5 h-5 text-white fill-white" />
-              </div>
+              <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
               <span className="text-xl font-bold">Luna</span>
             </NavLink>
             
