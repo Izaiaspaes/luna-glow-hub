@@ -14,12 +14,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield } from "lucide-react";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PartnerSharing } from "@/components/PartnerSharing";
+import { OnboardingDataView } from "@/components/OnboardingDataView";
 
 interface ProfileSettingsProps {
   open: boolean;
@@ -294,7 +295,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
 
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="profile">
               <User className="h-4 w-4 mr-2" />
               Perfil
@@ -302,6 +303,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
             <TabsTrigger value="account">
               <Lock className="h-4 w-4 mr-2" />
               Conta
+            </TabsTrigger>
+            <TabsTrigger value="onboarding">
+              <FileText className="h-4 w-4 mr-2" />
+              Dados Pessoais
             </TabsTrigger>
             <TabsTrigger value="sharing">
               <Heart className="h-4 w-4 mr-2" />
@@ -454,6 +459,11 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                 </Button>
               </div>
             </div>
+          </TabsContent>
+
+          {/* Onboarding Data Tab */}
+          <TabsContent value="onboarding" className="space-y-4 py-4">
+            <OnboardingDataView />
           </TabsContent>
 
           {/* Sharing Tab */}
