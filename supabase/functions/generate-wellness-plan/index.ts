@@ -39,6 +39,43 @@ serve(async (req) => {
 
     console.log(`Generating ${planType} wellness plan for user ${user.id}`);
 
+    // Check subscription status and get user profile
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('subscription_plan, full_name')
+      .eq('user_id', user.id)
+      .single();
+
+    const isPremium = profile?.subscription_plan === 'premium';
+    const userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
+
+    // If user is free, check active wellness plans limit
+    if (!isPremium) {
+      const { data: activePlans, error: plansError } = await supabase
+        .from('wellness_plans')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('is_active', true);
+
+      if (plansError) {
+        console.error('Error checking active plans:', plansError);
+        throw new Error('Erro ao verificar planos ativos');
+      }
+
+      if (activePlans && activePlans.length >= 1) {
+        return new Response(
+          JSON.stringify({ 
+            error: 'PLAN_LIMIT_REACHED',
+            message: 'Usuários gratuitos podem ter apenas 1 plano de bem-estar ativo por vez. Arquive ou conclua seu plano atual para criar um novo, ou faça upgrade para Premium e tenha planos ilimitados!'
+          }),
+          {
+            status: 403,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+    }
+
     // Fetch user's recent tracking data
     const endDate = new Date();
     const startDate = new Date();
@@ -121,15 +158,6 @@ serve(async (req) => {
       }
     }
 
-    // Fetch user profile for personalized greeting
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('full_name')
-      .eq('user_id', user.id)
-      .single();
-    
-    const userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
-    
     // Create prompt based on plan type
     let systemPrompt = `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
 
