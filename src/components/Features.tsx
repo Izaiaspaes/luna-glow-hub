@@ -54,7 +54,7 @@ export const Features = () => {
             return (
               <Card
                 key={index}
-                className="group relative overflow-hidden border-2 hover:shadow-hover transition-smooth bg-gradient-card"
+                className="group relative overflow-hidden border-2 hover:shadow-colorful transition-all duration-300 bg-gradient-card hover:scale-105"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-hero opacity-5 rounded-full blur-3xl"></div>
                 
@@ -68,7 +68,7 @@ export const Features = () => {
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-card"></div>
                   </div>
 
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-hero text-white shadow-soft">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-colorful text-white shadow-colorful">
                     <Icon className="w-6 h-6" />
                   </div>
 

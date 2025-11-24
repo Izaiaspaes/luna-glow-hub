@@ -1,7 +1,7 @@
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardColorful, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Heart, 
   Check,
@@ -216,13 +216,13 @@ export default function Pricing() {
             </Card>
 
             {/* Premium Plan */}
-            <Card className="bg-gradient-card border-2 border-primary relative shadow-hover animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-hero text-white text-sm font-medium rounded-full">
+            <Card className="bg-gradient-card border-2 border-primary relative shadow-colorful animate-fade-in hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-colorful text-white text-sm font-medium rounded-full shadow-colorful">
                 ⭐ Mais popular
               </div>
               <CardHeader>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-hero text-white">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-colorful text-white shadow-colorful">
                     <Sparkles className="w-6 h-6" />
                   </div>
                   <Badge variant="premium">✨ Pacote Premium</Badge>
@@ -254,7 +254,7 @@ export default function Pricing() {
               </CardContent>
               <CardFooter className="flex-col gap-2">
                 <Button 
-                  variant="hero" 
+                  variant="colorful" 
                   size="lg" 
                   className="w-full group"
                   onClick={() => handleCheckout(STRIPE_PRICES.monthly)}
@@ -266,7 +266,7 @@ export default function Pricing() {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="w-full"
+                  className="w-full hover:bg-primary/10"
                   onClick={() => handleCheckout(STRIPE_PRICES.yearly)}
                   disabled={loading}
                 >

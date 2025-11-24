@@ -109,7 +109,7 @@ export const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <NavLink to="/auth">
-                <Button variant="hero" size="lg" className="group">
+                <Button variant="colorful" size="lg" className="group">
                   Começar agora
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
