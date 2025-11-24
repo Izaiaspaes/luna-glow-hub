@@ -27,14 +27,14 @@ export const Footer = () => {
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4" />
-              <a href="mailto:contato@luna.com.br" className="hover:text-primary transition-smooth">
-                contato@luna.com.br
+              <a href="mailto:contato.luna@topdigitais.net" className="hover:text-primary transition-smooth">
+                contato.luna@topdigitais.net
               </a>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4" />
-              <a href="mailto:suporte@luna.com.br" className="hover:text-primary transition-smooth">
-                suporte@luna.com.br
+              <a href="mailto:suporte@topdigitais.net" className="hover:text-primary transition-smooth">
+                suporte@topdigitais.net
               </a>
             </div>
           </div>
@@ -108,7 +108,7 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:contato@luna.com.br" className="hover:text-primary transition-smooth">
+                <a href="mailto:contato.luna@topdigitais.net" className="hover:text-primary transition-smooth">
                   Contato
                 </a>
               </li>
