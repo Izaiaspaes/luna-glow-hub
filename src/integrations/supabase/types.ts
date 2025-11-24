@@ -457,6 +457,45 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          display_order: number
+          id: string
+          is_featured: boolean
+          testimonial_text: string
+          updated_at: string
+          user_age: number | null
+          user_avatar_url: string | null
+          user_name: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          display_order?: number
+          id?: string
+          is_featured?: boolean
+          testimonial_text: string
+          updated_at?: string
+          user_age?: number | null
+          user_avatar_url?: string | null
+          user_name: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          display_order?: number
+          id?: string
+          is_featured?: boolean
+          testimonial_text?: string
+          updated_at?: string
+          user_age?: number | null
+          user_avatar_url?: string | null
+          user_name?: string
+        }
+        Relationships: []
+      }
       user_onboarding_data: {
         Row: {
           age: number | null
