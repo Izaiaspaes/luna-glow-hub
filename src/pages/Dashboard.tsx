@@ -37,6 +37,7 @@ import { PrivacyModeIndicator } from "@/components/PrivacyModeIndicator";
 import { WorkForm } from "@/components/tracking/WorkForm";
 import { WeeklySummary } from "@/components/WeeklySummary";
 import { DailyWorkMessage } from "@/components/DailyWorkMessage";
+import { AppTour } from "@/components/AppTour";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -209,6 +210,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      <AppTour />
       {/* Header/Nav */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
@@ -238,11 +240,11 @@ export default function Dashboard() {
                   </NavLink>
                 </Button>
               )}
-              <Button variant="ghost" size="sm" onClick={() => setSettingsOpen(true)}>
+              <Button variant="ghost" size="sm" onClick={() => setSettingsOpen(true)} data-tour="settings">
                 <Settings className="h-4 w-4 mr-2" />
                 Configurações
               </Button>
-              <Button variant="outline" size="sm" onClick={handleLogout}>
+              <Button variant="outline" size="sm" onClick={handleLogout} data-tour="avatar">
                 Sair
               </Button>
             </nav>
@@ -375,6 +377,7 @@ export default function Dashboard() {
                 size="sm"
                 onClick={() => setActiveTab('overview')}
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
+                data-tour="overview"
               >
                 <span className="hidden sm:inline">Visão Geral</span>
                 <span className="sm:hidden">Geral</span>
@@ -384,6 +387,7 @@ export default function Dashboard() {
                 size="sm"
                 onClick={() => setActiveTab('cycle')}
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
+                data-tour="tracking"
               >
                 <Heart className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Ciclo
@@ -430,6 +434,7 @@ export default function Dashboard() {
                 size="sm"
                 onClick={() => setActiveTab('calendar')}
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
+                data-tour="calendar"
               >
                 <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 <span className="hidden sm:inline">Calendário</span>
@@ -472,7 +477,7 @@ export default function Dashboard() {
                     
                     {/* AI Wellness Plans Section */}
                     <div>
-                      <div className="flex items-center justify-between mb-4">
+                       <div className="flex items-center justify-between mb-4">
                         <div>
                           <h3 className="text-lg font-semibold flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-primary" />
@@ -486,6 +491,7 @@ export default function Dashboard() {
                           onClick={() => generateWellnessPlan('geral')}
                           disabled={generatingPlan}
                           size="sm"
+                          data-tour="plans"
                         >
                           {generatingPlan ? "Gerando..." : "Gerar Plano"}
                         </Button>
@@ -612,7 +618,7 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle className="text-lg">Planos de Bem-Estar Ativos</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent data-tour="plans">
                 {wellnessPlans.filter(plan => plan.status === 'active' || (plan.is_active && !plan.status)).length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
                     Nenhum plano ativo no momento

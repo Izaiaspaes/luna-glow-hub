@@ -315,6 +315,7 @@ export type Database = {
           privacy_mode: boolean | null
           subscription_plan: string | null
           theme: string | null
+          tour_completed: boolean | null
           updated_at: string
           user_id: string
         }
@@ -328,6 +329,7 @@ export type Database = {
           privacy_mode?: boolean | null
           subscription_plan?: string | null
           theme?: string | null
+          tour_completed?: boolean | null
           updated_at?: string
           user_id: string
         }
@@ -341,6 +343,7 @@ export type Database = {
           privacy_mode?: boolean | null
           subscription_plan?: string | null
           theme?: string | null
+          tour_completed?: boolean | null
           updated_at?: string
           user_id?: string
         }
