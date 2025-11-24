@@ -12,6 +12,7 @@ import { PlansManagement } from "@/components/admin/PlansManagement";
 import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NewsletterManagement } from "@/components/admin/NewsletterManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
+import logoLuna from "@/assets/logo-luna.png";
 
 export default function Admin() {
   const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
@@ -54,7 +55,7 @@ export default function Admin() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
               <div className="flex items-center gap-2">
-                <Heart className="h-6 w-6 text-primary" />
+                <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
                 <span className="text-xl font-semibold">Luna Admin</span>
               </div>
               <nav className="hidden md:flex gap-6">
