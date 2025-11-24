@@ -13,6 +13,7 @@ export interface Profile {
   subscription_plan: string | null;
   privacy_mode: boolean | null;
   encryption_enabled: boolean | null;
+  tour_completed: boolean | null;
   created_at: string;
   updated_at: string;
 }

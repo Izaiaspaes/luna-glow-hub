@@ -308,7 +308,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
               <FileText className="h-4 w-4 mr-2" />
               Dados Pessoais
             </TabsTrigger>
-            <TabsTrigger value="sharing">
+            <TabsTrigger value="sharing" data-tour="partner">
               <Heart className="h-4 w-4 mr-2" />
               Compartilhar
             </TabsTrigger>
