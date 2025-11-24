@@ -29,14 +29,12 @@ export const CTA = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in">
           <Button
             size="lg"
+            variant="colorful"
             onClick={() => navigate("/auth")}
-            className="group relative overflow-hidden bg-gradient-to-r from-primary to-primary-glow hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 text-lg px-8 py-6"
+            className="group text-lg px-8 py-6"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              Começar agora
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-glow to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            Começar agora
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
 
           <Button
