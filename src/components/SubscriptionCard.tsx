@@ -102,7 +102,8 @@ export function SubscriptionCard() {
         
         {!subscriptionStatus?.subscribed && (
           <div className="space-y-2 text-sm text-muted-foreground">
-            <p>✨ Transcrição por voz ilimitada</p>
+            <p>✨ Planos de bem-estar ilimitados</p>
+            <p>🎤 Transcrição por voz ilimitada</p>
             <p>🤖 Assistente AI conversacional 24/7</p>
             <p>📊 Análises avançadas com insights</p>
             <p>📅 Relatórios semanais detalhados</p>

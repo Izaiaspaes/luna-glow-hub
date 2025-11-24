@@ -171,7 +171,27 @@ export default function Dashboard() {
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        // Check if it's a plan limit error
+        if (error.message?.includes('PLAN_LIMIT_REACHED') || error.message?.includes('apenas 1 plano')) {
+          toast({
+            title: "Limite de planos atingido",
+            description: "Usuários gratuitos podem ter apenas 1 plano ativo. Arquive ou conclua seu plano atual, ou faça upgrade para Premium!",
+            variant: "destructive",
+            action: (
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => navigate("/pricing")}
+              >
+                Ver Premium
+              </Button>
+            ),
+          });
+          return;
+        }
+        throw error;
+      }
       
       toast({
         title: "Plano de Bem-Estar gerado com sucesso!",
@@ -179,11 +199,11 @@ export default function Dashboard() {
       });
       
       await loadWellnessPlans();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating plan:', error);
       toast({
         title: "Erro ao gerar plano",
-        description: "Tente novamente mais tarde.",
+        description: error.message || "Tente novamente mais tarde.",
         variant: "destructive",
       });
     } finally {

@@ -29,10 +29,12 @@ const freemiumFeatures = [
   "Acesso a comunidades públicas",
   "Previsões de ciclo",
   "Relatórios mensais básicos",
+  "1 plano de bem-estar ativo por vez",
 ];
 
 const premiumFeatures = [
   "Tudo do pacote gratuito",
+  "Planos de bem-estar ilimitados",
   "Transcrição por voz para rastreamento",
   "Assistente AI conversacional 24/7",
   "Planos personalizados de bem-estar",
@@ -47,14 +49,23 @@ const premiumFeatures = [
 
 const comparisonFeatures = [
   {
-    category: "Saúde & Bem-estar",
+    category: "Planos de Bem-Estar",
+    features: [
+      { name: "Planos ativos simultâneos", free: "1 por vez", premium: "Ilimitado" },
+      { name: "Plano de sono", free: true, premium: true },
+      { name: "Plano de meditação", free: true, premium: true },
+      { name: "Plano de nutrição", free: true, premium: true },
+      { name: "Plano geral de bem-estar", free: true, premium: true },
+    ]
+  },
+  {
+    category: "Rastreamento & IA",
     features: [
       { name: "Rastreamento de ciclo", free: true, premium: true },
       { name: "Registro de sintomas", free: true, premium: true },
       { name: "Transcrição por voz", free: false, premium: true },
       { name: "Integração com wearables", free: false, premium: true },
       { name: "Assistente AI 24/7", free: false, premium: true },
-      { name: "Planos personalizados", free: false, premium: true },
       { name: "Programas guiados", free: false, premium: true },
     ]
   },
