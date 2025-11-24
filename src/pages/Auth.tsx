@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import logoLuna from "@/assets/logo-luna.png";
 
 const authSchema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -133,11 +133,12 @@ export default function Auth() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-gradient-card">
         <CardHeader className="space-y-2 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-gradient-hero flex items-center justify-center">
-              <Heart className="w-6 h-6 text-white fill-white" />
-            </div>
-            <span className="text-2xl font-bold">Luna</span>
+          <div className="flex items-center justify-center mb-4">
+            <img 
+              src={logoLuna} 
+              alt="Luna Logo" 
+              className="h-16 w-auto"
+            />
           </div>
           <CardTitle className="text-2xl">
             {isLogin ? "Bem-vinda de volta" : "Crie sua conta"}
@@ -190,7 +191,7 @@ export default function Auth() {
               </div>
             )}
             
-            <Button type="submit" className="w-full" variant="hero" disabled={loading}>
+            <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
               {loading ? "Carregando..." : isLogin ? "Entrar" : "Criar conta"}
             </Button>
           </form>
