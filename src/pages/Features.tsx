@@ -350,6 +350,18 @@ export default function Features() {
                   Dicas, networking e apoio para sua jornada profissional
                 </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <a 
+                  href="https://growthpwr.com.br/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Growth PWR - Rede de empreendedoras</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </CardContent>
             </Card>
 
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth">
@@ -365,6 +377,27 @@ export default function Features() {
                   Compartilhe desafios e conquistas da maternidade sem julgamentos
                 </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <a 
+                  href="https://brasil.babycenter.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>BabyCenter Brasil - Rede de apoio</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://www.b2mamy.com.br/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>B2Mamy - Comunidade de mães</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </CardContent>
             </Card>
 
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth">
@@ -380,6 +413,18 @@ export default function Features() {
                   Apoio e informação para todas as fases da vida hormonal
                 </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <a 
+                  href="https://menopausacomciencia.igorpadovesi.com.br/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Menopausa com Ciência</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </CardContent>
             </Card>
 
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth">
@@ -395,6 +440,27 @@ export default function Features() {
                   Espaço seguro para falar sobre ansiedade, depressão e autocuidado
                 </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <a 
+                  href="https://mapasaudemental.com.br/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Mapa da Saúde Mental</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://acolheretransformar.com.br/psicologas/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Acolher & Transformar</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </CardContent>
             </Card>
 
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth">
@@ -410,6 +476,27 @@ export default function Features() {
                   Exercícios adaptados ao seu ciclo e nível de energia
                 </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <a 
+                  href="https://flo.health/pt" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Flo Health - App de saúde feminina</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://helloclue.com/pt" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Clue - Calendário menstrual</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </CardContent>
             </Card>
 
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth">
@@ -425,6 +512,18 @@ export default function Features() {
                   Conversas honestas sobre amor, amizade e conexões
                 </CardDescription>
               </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <a 
+                  href="https://guiadaalma.com.br/terapias-para-casal/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-sm text-primary hover:underline"
+                >
+                  <span>Guia da Alma - Terapias para casal</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </CardContent>
             </Card>
           </div>
 
