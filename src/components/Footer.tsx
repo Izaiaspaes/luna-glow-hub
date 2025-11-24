@@ -1,6 +1,7 @@
-import { Heart } from "lucide-react";
+import { Heart, Mail } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import logoLuna from "@/assets/logo-luna.png";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -16,15 +17,26 @@ export const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-hero flex items-center justify-center">
-                <Heart className="w-5 h-5 text-white fill-white" />
-              </div>
-              <span className="text-xl font-bold">Luna</span>
-            </div>
+            <img 
+              src={logoLuna} 
+              alt="Luna Logo" 
+              className="h-12 w-auto mb-2"
+            />
             <p className="text-sm text-muted-foreground">
               Sua plataforma de bem-estar, comunidade e lifestyle feminina.
             </p>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Mail className="h-4 w-4" />
+              <a href="mailto:contato@luna.com.br" className="hover:text-primary transition-smooth">
+                contato@luna.com.br
+              </a>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Mail className="h-4 w-4" />
+              <a href="mailto:suporte@luna.com.br" className="hover:text-primary transition-smooth">
+                suporte@luna.com.br
+              </a>
+            </div>
           </div>
 
           {/* Produto */}
@@ -96,7 +108,7 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <a href="mailto:contato@luna.com.br" className="hover:text-primary transition-smooth">
                   Contato
                 </a>
               </li>

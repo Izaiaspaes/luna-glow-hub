@@ -12,6 +12,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-wellness.jpg";
+import logoLuna from "@/assets/logo-luna.png";
 
 export const Hero = () => {
   const { user, signOut, isAdmin } = useAuth();
@@ -31,9 +32,11 @@ export const Hero = () => {
       {/* Navigation Bar */}
       <nav className="absolute top-0 left-0 right-0 z-10 border-b border-border/50 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-            Luna
-          </div>
+          <img 
+            src={logoLuna} 
+            alt="Luna Logo" 
+            className="h-10 w-auto"
+          />
           
           {user ? (
             <DropdownMenu>
