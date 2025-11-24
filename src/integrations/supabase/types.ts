@@ -493,6 +493,7 @@ export type Database = {
           updated_at: string
           user_id: string
           weight: number | null
+          work_routine_type: string | null
         }
         Insert: {
           age?: number | null
@@ -532,6 +533,7 @@ export type Database = {
           updated_at?: string
           user_id: string
           weight?: number | null
+          work_routine_type?: string | null
         }
         Update: {
           age?: number | null
@@ -571,6 +573,7 @@ export type Database = {
           updated_at?: string
           user_id?: string
           weight?: number | null
+          work_routine_type?: string | null
         }
         Relationships: []
       }
@@ -640,6 +643,51 @@ export type Database = {
           user_id?: string
           valid_from?: string
           valid_until?: string | null
+        }
+        Relationships: []
+      }
+      work_tracking: {
+        Row: {
+          created_at: string
+          daily_message: string | null
+          hours_worked: number
+          id: string
+          mood_impact_level: string
+          notes: string | null
+          routine_type: string
+          shift_type: string | null
+          updated_at: string
+          user_id: string
+          work_date: string
+          workload_level: string
+        }
+        Insert: {
+          created_at?: string
+          daily_message?: string | null
+          hours_worked: number
+          id?: string
+          mood_impact_level: string
+          notes?: string | null
+          routine_type: string
+          shift_type?: string | null
+          updated_at?: string
+          user_id: string
+          work_date: string
+          workload_level: string
+        }
+        Update: {
+          created_at?: string
+          daily_message?: string | null
+          hours_worked?: number
+          id?: string
+          mood_impact_level?: string
+          notes?: string | null
+          routine_type?: string
+          shift_type?: string | null
+          updated_at?: string
+          user_id?: string
+          work_date?: string
+          workload_level?: string
         }
         Relationships: []
       }

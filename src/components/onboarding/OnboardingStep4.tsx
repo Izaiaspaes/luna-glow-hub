@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { OnboardingData } from "@/hooks/useOnboarding";
 
 const step4Schema = z.object({
+  work_routine_type: z.enum(['fixed', 'variable', 'shift']).optional(),
   favorite_color: z.string().optional(),
   hobbies: z.array(z.string()).optional(),
   personal_interests: z.string().optional(),
@@ -43,6 +44,7 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
   const { register, handleSubmit, control, watch, setValue } = useForm<Step4Data>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
+      work_routine_type: (data.work_routine_type as 'fixed' | 'variable' | 'shift') || undefined,
       favorite_color: data.favorite_color || "",
       hobbies: data.hobbies || [],
       personal_interests: data.personal_interests || "",
@@ -76,6 +78,26 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
       </div>
 
       <div className="space-y-6">
+        <div className="space-y-2">
+          <Label>Tipo de Rotina de Trabalho</Label>
+          <Controller
+            control={control}
+            name="work_routine_type"
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione o tipo de rotina" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="fixed">Horário Fixo</SelectItem>
+                  <SelectItem value="variable">Horários Variáveis</SelectItem>
+                  <SelectItem value="shift">Escala de Plantão</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="favorite_color">Cor Favorita</Label>
           <Input
