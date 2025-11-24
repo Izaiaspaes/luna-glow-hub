@@ -34,10 +34,13 @@ import { WellnessPlanCard } from "@/components/WellnessPlanCard";
 import { CalendarView } from "@/components/CalendarView";
 import { SymptomPredictions } from "@/components/SymptomPredictions";
 import { PrivacyModeIndicator } from "@/components/PrivacyModeIndicator";
+import { WorkForm } from "@/components/tracking/WorkForm";
+import { WeeklySummary } from "@/components/WeeklySummary";
+import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | null;
+type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | null;
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'predictions' | 'calendar'>('overview');
@@ -464,6 +467,9 @@ export default function Dashboard() {
               <CardContent className="space-y-4">
                 {activeTab === 'overview' ? (
                   <div className="space-y-6">
+                    {/* Daily Work Message */}
+                    <DailyWorkMessage />
+                    
                     {/* AI Wellness Plans Section */}
                     <div>
                       <div className="flex items-center justify-between mb-4">
@@ -655,6 +661,7 @@ export default function Dashboard() {
               {trackingType === 'sleep' && 'Registrar Sono'}
               {trackingType === 'mood' && 'Registrar Humor'}
               {trackingType === 'energy' && 'Registrar Energia'}
+              {trackingType === 'work' && 'Registrar Trabalho'}
             </DialogTitle>
             <DialogDescription>
               Preencha as informações para registrar seus dados
@@ -671,6 +678,9 @@ export default function Dashboard() {
           )}
           {user && trackingType === 'energy' && (
             <EnergyForm userId={user.id} onSuccess={handleTrackingSuccess} />
+          )}
+          {user && trackingType === 'work' && (
+            <WorkForm />
           )}
         </DialogContent>
       </Dialog>

@@ -50,6 +50,7 @@ export interface OnboardingData {
   main_app_goal?: string;
   
   // Preferências gerais
+  work_routine_type?: string;
   content_preferences?: string[];
   notification_frequency?: string;
   
