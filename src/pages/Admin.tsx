@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -37,6 +37,25 @@ export default function Admin() {
     navigate("/");
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Luna - Bem-estar Feminino',
+      text: 'Descubra a Luna, sua plataforma completa de bem-estar, comunidade e lifestyle feminina!',
+      url: window.location.origin
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.origin);
+        toast.success("Link copiado para a área de transferência!");
+      }
+    } catch (error) {
+      console.error('Erro ao compartilhar:', error);
+    }
+  };
+
   if (loading || !adminChecked) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -60,8 +79,17 @@ export default function Admin() {
                 <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
                 <span className="text-xl font-semibold">Luna Admin</span>
               </div>
-              <nav className="hidden md:flex gap-6">
+              <nav className="hidden md:flex gap-6 items-center">
                 <NavLink to="/">Início</NavLink>
+                <Button 
+                  onClick={handleShare} 
+                  variant="ghost" 
+                  size="sm"
+                  className="gap-2"
+                >
+                  <Share2 className="h-4 w-4" />
+                  Compartilhar
+                </Button>
               </nav>
             </div>
             <div className="flex items-center gap-2">
