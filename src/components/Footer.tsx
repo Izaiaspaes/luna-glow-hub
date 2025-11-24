@@ -20,7 +20,7 @@ export const Footer = () => {
             <img 
               src={logoLuna} 
               alt="Luna Logo" 
-              className="h-12 w-auto mb-2"
+              className="h-16 w-auto mb-2"
             />
             <p className="text-sm text-muted-foreground">
               Sua plataforma de bem-estar, comunidade e lifestyle feminina.
