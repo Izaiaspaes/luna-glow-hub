@@ -1,10 +1,12 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Quote } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import testimonialMaria from "@/assets/testimonial-maria.jpg";
 import testimonialAna from "@/assets/testimonial-ana.jpg";
 import testimonialJulia from "@/assets/testimonial-julia.jpg";
 
-const testimonials = [
+const fallbackTestimonials = [
   {
     name: "Maria Silva",
     age: 28,
@@ -25,7 +27,37 @@ const testimonials = [
   },
 ];
 
+interface Testimonial {
+  name: string;
+  age: number;
+  photo: string;
+  text: string;
+}
+
 export const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(fallbackTestimonials);
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    const { data, error } = await supabase
+      .from("testimonials")
+      .select("*")
+      .eq("is_featured", true)
+      .order("display_order", { ascending: true });
+
+    if (!error && data && data.length > 0) {
+      const formattedTestimonials = data.map((t) => ({
+        name: t.user_name,
+        age: t.user_age || 0,
+        photo: t.user_avatar_url || testimonialMaria,
+        text: t.testimonial_text,
+      }));
+      setTestimonials(formattedTestimonials);
+    }
+  };
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-7xl mx-auto">
