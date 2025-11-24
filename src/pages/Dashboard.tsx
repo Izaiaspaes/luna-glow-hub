@@ -41,6 +41,7 @@ import { AppTour } from "@/components/AppTour";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | null;
 
@@ -692,6 +693,8 @@ export default function Dashboard() {
 
       {/* Profile Settings Dialog */}
       <ProfileSettings open={settingsOpen} onOpenChange={setSettingsOpen} />
+      
+      <WhatsAppButton />
     </div>
   );
 }

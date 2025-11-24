@@ -9,6 +9,7 @@ import {
   ArrowRight,
   Zap
 } from "lucide-react";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const freemiumFeatures = [
   "Rastreamento de ciclo menstrual",
@@ -410,6 +411,8 @@ export default function Pricing() {
           </div>
         </div>
       </footer>
+      
+      <WhatsAppButton />
     </div>
   );
 }

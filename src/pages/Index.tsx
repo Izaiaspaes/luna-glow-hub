@@ -6,6 +6,7 @@ import { FAQ } from "@/components/FAQ";
 import { Privacy } from "@/components/Privacy";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Privacy />
       <CTA />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
