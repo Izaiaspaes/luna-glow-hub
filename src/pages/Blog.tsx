@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Footer } from "@/components/Footer";
+import { MobileNav } from "@/components/MobileNav";
 import { blogPosts } from "@/data/blogPosts";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -44,9 +45,12 @@ const Blog = () => {
             <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
             <span className="font-bold text-xl">Luna Blog</span>
           </div>
-          <Button onClick={() => navigate("/")} variant="ghost">
-            Voltar ao início
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button onClick={() => navigate("/")} variant="ghost" className="hidden md:flex">
+              Voltar ao início
+            </Button>
+            <MobileNav />
+          </div>
         </div>
       </header>
 
