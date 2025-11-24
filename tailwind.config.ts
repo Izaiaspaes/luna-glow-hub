@@ -47,15 +47,24 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        luna: {
+          orange: "hsl(var(--luna-orange))",
+          green: "hsl(var(--luna-green))",
+          blue: "hsl(var(--luna-blue))",
+          pink: "hsl(var(--luna-pink))",
+          purple: "hsl(var(--luna-purple))",
+        },
       },
       backgroundImage: {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-soft': 'var(--gradient-soft)',
         'gradient-card': 'var(--gradient-card)',
+        'gradient-colorful': 'var(--gradient-colorful)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
         'hover': 'var(--shadow-hover)',
+        'colorful': 'var(--shadow-colorful)',
       },
       transitionProperty: {
         'smooth': 'var(--transition-smooth)',
