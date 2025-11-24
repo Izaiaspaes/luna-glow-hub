@@ -88,7 +88,7 @@ export const Hero = () => {
           {/* Text Content */}
           <div className="space-y-8 text-center lg:text-left">
             <div className="inline-block">
-              <span className="px-4 py-2 bg-accent/50 text-accent-foreground rounded-full text-sm font-medium">
+              <span className="px-4 py-2 bg-gradient-colorful text-white rounded-full text-sm font-medium shadow-colorful">
                 🌙 Lançamento em breve
               </span>
             </div>
