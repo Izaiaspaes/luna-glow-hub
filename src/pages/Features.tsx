@@ -23,6 +23,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { MobileNav } from "@/components/MobileNav";
 import logoLuna from "@/assets/logo-luna.png";
 
 export default function Features() {
@@ -35,19 +36,22 @@ export default function Features() {
             <NavLink to="/" className="flex items-center gap-2">
               <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
             </NavLink>
-            <nav className="hidden md:flex items-center gap-6">
-              <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
-                Funcionalidades
-              </NavLink>
-              <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
-                Preços
-              </NavLink>
-              <NavLink to="/auth">
-                <Button variant="hero" size="sm">
-                  Entrar
-                </Button>
-              </NavLink>
-            </nav>
+            <div className="flex items-center gap-2">
+              <nav className="hidden md:flex items-center gap-6">
+                <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
+                  Funcionalidades
+                </NavLink>
+                <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
+                  Preços
+                </NavLink>
+                <NavLink to="/auth">
+                  <Button variant="hero" size="sm">
+                    Entrar
+                  </Button>
+                </NavLink>
+              </nav>
+              <MobileNav />
+            </div>
           </div>
         </div>
       </header>

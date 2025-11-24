@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { MobileNav } from "@/components/MobileNav";
 import heroImage from "@/assets/hero-wellness.jpg";
 import logoLuna from "@/assets/logo-luna.png";
 
@@ -38,7 +39,8 @@ export const Hero = () => {
             className="h-14 w-auto"
           />
           
-          {user ? (
+          <div className="flex items-center gap-2">
+            {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
@@ -74,13 +76,15 @@ export const Hero = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <NavLink to="/auth">
+            <NavLink to="/auth" className="hidden md:block">
               <Button variant="outline" size="sm" className="gap-2">
                 <LogIn className="h-4 w-4" />
                 Login
               </Button>
             </NavLink>
           )}
+            <MobileNav />
+          </div>
         </div>
       </nav>
       <div className="container mx-auto px-4 py-20 lg:py-32">
