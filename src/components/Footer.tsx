@@ -1,10 +1,31 @@
-import { Heart, Mail, Phone } from "lucide-react";
+import { Heart, Mail, Phone, Share2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import logoLuna from "@/assets/logo-luna.png";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Luna - Bem-estar Feminino',
+      text: 'Descubra a Luna, sua plataforma completa de bem-estar, comunidade e lifestyle feminina!',
+      url: window.location.origin
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.origin);
+        toast.success("Link copiado para a área de transferência!");
+      }
+    } catch (error) {
+      console.error('Erro ao compartilhar:', error);
+    }
+  };
 
   return (
     <footer className="bg-muted/30 border-t border-border py-12">
@@ -129,9 +150,20 @@ export const Footer = () => {
 
         {/* Bottom */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} Luna. Todos os direitos reservados.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              © {currentYear} Luna. Todos os direitos reservados.
+            </p>
+            <Button 
+              onClick={handleShare} 
+              variant="outline" 
+              size="sm"
+              className="gap-2"
+            >
+              <Share2 className="h-4 w-4" />
+              Compartilhar Luna
+            </Button>
+          </div>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-primary transition-smooth">
               Termos de Uso
