@@ -3,29 +3,32 @@ import { Menu, X, Heart, Sparkles, DollarSign, BookOpen, LogIn } from "lucide-re
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { NavLink } from "@/components/NavLink";
+import { useTranslation } from "react-i18next";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
 
 export const MobileNav = () => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   const menuItems = [
     {
-      title: "Início",
+      title: t('nav.home') || "Início",
       href: "/",
       icon: Heart,
     },
     {
-      title: "Funcionalidades",
+      title: t('nav.features'),
       href: "/features",
       icon: Sparkles,
     },
     {
-      title: "Preços",
+      title: t('nav.pricing'),
       href: "/pricing",
       icon: DollarSign,
     },
     {
-      title: "Blog",
+      title: t('nav.blog'),
       href: "/blog",
       icon: BookOpen,
     },
@@ -58,11 +61,12 @@ export const MobileNav = () => {
               <span className="text-lg">{item.title}</span>
             </NavLink>
           ))}
-          <div className="pt-4 border-t border-border">
+          <div className="pt-4 border-t border-border space-y-4">
+            <LanguageSelector />
             <NavLink to="/auth" onClick={() => setOpen(false)}>
               <Button variant="hero" size="lg" className="w-full gap-2">
                 <LogIn className="h-5 w-5" />
-                Entrar
+                {t('common.login')}
               </Button>
             </NavLink>
           </div>

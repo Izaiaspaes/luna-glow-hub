@@ -14,13 +14,15 @@
     "signup": "Cadastrar",
     "email": "E-mail",
     "password": "Senha",
-    "name": "Nome"
+    "name": "Nome",
+    "copied": "Link copiado!"
   },
   "nav": {
     "features": "Funcionalidades",
     "pricing": "Preços",
     "blog": "Blog",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "home": "Início"
   },
   "hero": {
     "title": "Seu Bem-estar, Sua Comunidade, Seu Estilo",
@@ -70,7 +72,21 @@
     "links": "Links Rápidos",
     "contact": "Contato",
     "support": "Suporte",
-    "rights": "Todos os direitos reservados."
+    "rights": "Todos os direitos reservados.",
+    "product": "Produto",
+    "community": "Comunidade",
+    "company": "Empresa",
+    "security": "Segurança",
+    "stories": "Histórias",
+    "events": "Eventos",
+    "partners": "Parceiros",
+    "about": "Sobre nós",
+    "careers": "Carreiras",
+    "press": "Imprensa",
+    "share": "Compartilhar Luna",
+    "terms": "Termos de Uso",
+    "privacyPolicy": "Política de Privacidade",
+    "cookies": "Cookies"
   },
   "dashboard": {
     "welcome": "Bem-vinda, {{name}}!",
@@ -104,7 +120,10 @@
     "perMonth": "/mês",
     "perYear": "/ano",
     "selectPlan": "Escolher Plano",
-    "features": "Funcionalidades"
+    "features": "Funcionalidades",
+    "subtitle": "Comece gratuitamente e desbloqueie recursos avançados quando precisar.",
+    "loginRequired": "Login necessário",
+    "loginRequiredDescription": "Você precisa fazer login para assinar"
   },
   "blog": {
     "title": "Blog",
@@ -129,5 +148,53 @@
     "notConnected": "Não conectado",
     "sync": "Sincronizar Agora",
     "lastSync": "Última sincronização: {{date}}"
+  },
+  "tracking": {
+    "cycle": {
+      "title": "Rastreamento de Ciclo",
+      "startDate": "Data de Início",
+      "endDate": "Data de Término",
+      "flowIntensity": "Intensidade do Fluxo",
+      "symptoms": "Sintomas",
+      "notes": "Observações"
+    },
+    "sleep": {
+      "title": "Rastreamento de Sono",
+      "bedtime": "Hora de Dormir",
+      "wakeTime": "Hora de Acordar",
+      "duration": "Duração",
+      "quality": "Qualidade"
+    },
+    "mood": {
+      "title": "Rastreamento de Humor",
+      "level": "Nível",
+      "type": "Tipo de Humor"
+    },
+    "energy": {
+      "title": "Rastreamento de Energia",
+      "level": "Nível de Energia",
+      "timeOfDay": "Período do Dia"
+    },
+    "nutrition": {
+      "title": "Rastreamento de Nutrição",
+      "mealType": "Tipo de Refeição",
+      "foods": "Alimentos Consumidos",
+      "quality": "Qualidade Nutricional"
+    },
+    "work": {
+      "title": "Rotina de Trabalho",
+      "hours": "Horas Trabalhadas",
+      "routine": "Tipo de Rotina",
+      "workload": "Carga de Trabalho",
+      "moodImpact": "Impacto no Humor"
+    }
+  },
+  "subscription": {
+    "free": "Plano Gratuito",
+    "premium": "Plano Premium",
+    "currentPlan": "Seu Plano Atual",
+    "upgrade": "Fazer Upgrade",
+    "manageSubscription": "Gerenciar Assinatura",
+    "benefits": "Benefícios"
   }
 }
