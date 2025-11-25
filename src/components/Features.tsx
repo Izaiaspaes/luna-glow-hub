@@ -33,25 +33,16 @@ export const Features = () => {
   ];
 
   return (
-    <section
-      className="py-20 lg:py-32 bg-background"
-      key={i18n.language}
-      aria-labelledby="features-heading"
-    >
+    <section className="py-20 lg:py-32 bg-background" key={i18n.language} aria-labelledby="features-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 space-y-4">
-          <h2
-            id="features-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold"
-          >
-            {t("features.sectionTitle")} {" "}
+          <h2 id="features-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold">
+            {t("features.sectionTitle")}{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
               {t("features.sectionTitleHighlight")}
             </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {t("features.sectionDescription")}
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("features.sectionDescription")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -81,9 +72,7 @@ export const Features = () => {
 
                   <h3 className="text-2xl font-bold">{feature.title}</h3>
 
-                  <p className="text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
                 </div>
               </Card>
             );
