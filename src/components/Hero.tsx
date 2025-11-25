@@ -71,7 +71,7 @@ export const Hero = () => {
                 {isAdmin && (
                   <DropdownMenuItem onClick={() => navigate("/admin")}>
                     <Shield className="mr-2 h-4 w-4" />
-                    Painel Admin
+                    {t('nav.admin')}
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
@@ -99,7 +99,7 @@ export const Hero = () => {
           <div className="space-y-8 text-center lg:text-left">
             <div className="inline-block">
               <span className="px-4 py-2 bg-gradient-colorful text-white rounded-full text-sm font-medium shadow-colorful">
-                🌙 Lançamento em breve
+                {t('hero.badge')}
               </span>
             </div>
             
@@ -128,17 +128,17 @@ export const Hero = () => {
             <div className="flex items-center gap-8 justify-center lg:justify-start pt-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-foreground">100%</p>
-                <p className="text-sm text-muted-foreground">Privado</p>
+                <p className="text-sm text-muted-foreground">{t('hero.stats.private')}</p>
               </div>
               <div className="h-12 w-px bg-border"></div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">Gratuito</p>
-                <p className="text-sm text-muted-foreground">Para começar</p>
+                <p className="text-2xl font-bold text-foreground">{t('hero.stats.free')}</p>
+                <p className="text-sm text-muted-foreground">{t('hero.stats.freeDesc')}</p>
               </div>
               <div className="h-12 w-px bg-border"></div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">24/7</p>
-                <p className="text-sm text-muted-foreground">Assistente AI</p>
+                <p className="text-2xl font-bold text-foreground">{t('hero.stats.ai')}</p>
+                <p className="text-sm text-muted-foreground">{t('hero.stats.aiDesc')}</p>
               </div>
             </div>
           </div>
@@ -156,8 +156,8 @@ export const Hero = () => {
             
             {/* Floating card */}
             <div className="absolute -bottom-6 -left-6 bg-card p-6 rounded-2xl shadow-hover max-w-xs hidden lg:block">
-              <p className="text-sm text-muted-foreground mb-2">Última análise</p>
-              <p className="font-semibold text-lg">Seus padrões de sono melhoraram 23%</p>
+              <p className="text-sm text-muted-foreground mb-2">{t('hero.floatingCard.lastAnalysis')}</p>
+              <p className="font-semibold text-lg">{t('hero.floatingCard.sleepImprovement')}</p>
             </div>
           </div>
         </div>

@@ -36,14 +36,13 @@ export const Features = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            Três pilares para o seu{" "}
+            {t('features.sectionTitle')}{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
-              equilíbrio
+              {t('features.sectionTitleHighlight')}
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Uma experiência integrada que combina tecnologia, comunidade e consciência 
-            para apoiar todas as dimensões do seu bem-estar.
+            {t('features.sectionDescription')}
           </p>
         </div>
 

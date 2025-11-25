@@ -14,23 +14,40 @@
     "signup": "Sign Up",
     "email": "Email",
     "password": "Password",
-    "name": "Name"
+    "name": "Name",
+    "copied": "Link copied!"
   },
   "nav": {
     "features": "Features",
     "pricing": "Pricing",
     "blog": "Blog",
     "dashboard": "Dashboard",
-    "home": "Home"
+    "home": "Home",
+    "admin": "Admin Panel"
   },
   "hero": {
     "title": "Your Wellness, Your Community, Your Style",
     "subtitle": "Track your cycle, connect with other women and discover products that respect your body and the planet.",
     "cta": "Start Now - Free",
-    "ctaSecondary": "Learn More"
+    "ctaSecondary": "Learn More",
+    "badge": "🌙 Launching soon",
+    "stats": {
+      "private": "Private",
+      "free": "Free",
+      "freeDesc": "To start",
+      "ai": "24/7",
+      "aiDesc": "AI Assistant"
+    },
+    "floatingCard": {
+      "lastAnalysis": "Last analysis",
+      "sleepImprovement": "Your sleep patterns improved 23%"
+    }
   },
   "features": {
     "title": "Features",
+    "sectionTitle": "Three pillars for your",
+    "sectionTitleHighlight": "balance",
+    "sectionDescription": "An integrated experience that combines technology, community and consciousness to support all dimensions of your well-being.",
     "health": {
       "title": "Smart Health & Wellness",
       "description": "Complete tracking of cycle, sleep, mood and energy with AI-generated personalized plans."
