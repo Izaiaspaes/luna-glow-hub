@@ -30,31 +30,6 @@ const STRIPE_PRICES = {
   }
 };
 
-const freemiumFeatures = [
-  "Rastreamento de ciclo menstrual",
-  "Registro de sintomas básicos",
-  "Feed de conteúdo personalizado",
-  "Acesso a comunidades públicas",
-  "Previsões de ciclo",
-  "Relatórios mensais básicos",
-  "1 plano de bem-estar ativo por vez",
-];
-
-const premiumFeatures = [
-  "Tudo do pacote gratuito",
-  "Planos de bem-estar ilimitados",
-  "Transcrição por voz para rastreamento",
-  "Assistente AI conversacional 24/7",
-  "Planos personalizados de bem-estar",
-  "Análises avançadas com insights",
-  "Relatórios semanais detalhados",
-  "Integração com wearables",
-  "Acesso a todas as comunidades privadas",
-  "Programas guiados (sono, stress, nutrição)",
-  "Lives exclusivas com especialistas",
-  "Prioridade no suporte",
-];
-
 const comparisonFeatures = [
   {
     category: "Planos de Bem-Estar",
@@ -111,6 +86,31 @@ export default function Pricing() {
   const [currency, setCurrency] = useState<'brl' | 'usd'>('brl');
   const [countryCode, setCountryCode] = useState<string>('BR');
   const { t } = useTranslation();
+  
+  const freemiumFeatures = [
+    t('pricing.freemiumFeatures.cycle'),
+    t('pricing.freemiumFeatures.symptoms'),
+    t('pricing.freemiumFeatures.feed'),
+    t('pricing.freemiumFeatures.publicCommunities'),
+    t('pricing.freemiumFeatures.predictions'),
+    t('pricing.freemiumFeatures.reports'),
+    t('pricing.freemiumFeatures.onePlan'),
+  ];
+
+  const premiumFeatures = [
+    t('pricing.premiumFeatures.everythingFree'),
+    t('pricing.premiumFeatures.unlimitedPlans'),
+    t('pricing.premiumFeatures.voiceTranscription'),
+    t('pricing.premiumFeatures.aiAssistant'),
+    t('pricing.premiumFeatures.personalizedPlans'),
+    t('pricing.premiumFeatures.advancedAnalysis'),
+    t('pricing.premiumFeatures.weeklyReports'),
+    t('pricing.premiumFeatures.wearablesIntegration'),
+    t('pricing.premiumFeatures.privateCommunities'),
+    t('pricing.premiumFeatures.guidedPrograms'),
+    t('pricing.premiumFeatures.exclusiveLives'),
+    t('pricing.premiumFeatures.prioritySupport'),
+  ];
 
   // Detect user's country on mount
   useEffect(() => {
@@ -201,14 +201,14 @@ export default function Pricing() {
         <div className="container mx-auto px-4 text-center">
           <div className="inline-block mb-6">
             <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
-              💫 Pacotes para todas
+              {t('pricing.packagesForAll')}
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             {t('pricing.title')}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            {t('pricing.subtitle') || 'Comece gratuitamente e desbloqueie recursos avançados quando precisar.'}
+            {t('pricing.subtitle')}
           </p>
         </div>
       </section>
@@ -224,20 +224,20 @@ export default function Pricing() {
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-muted text-foreground">
                     <Heart className="w-6 h-6" />
                   </div>
-                  <Badge variant="free">Pacote Free</Badge>
+                  <Badge variant="free">{t('pricing.freePackage')}</Badge>
                 </div>
-                <CardTitle className="text-3xl">Gratuito</CardTitle>
+                <CardTitle className="text-3xl">{t('pricing.freeTitle')}</CardTitle>
                 <CardDescription className="text-lg">
-                  Perfeito para começar sua jornada
+                  {t('pricing.freeDescription')}
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">{currency === 'brl' ? 'R$' : '$'} 0</span>
-                  <span className="text-muted-foreground">/mês</span>
+                  <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground pb-4 border-b border-border">
-                  Acesso gratuito para sempre aos recursos essenciais
+                  {t('pricing.freeForever')}
                 </p>
                 <ul className="space-y-3">
                   {freemiumFeatures.map((feature, index) => (
@@ -251,7 +251,7 @@ export default function Pricing() {
               <CardFooter>
                 <NavLink to="/auth" className="w-full">
                   <Button variant="outline" size="lg" className="w-full">
-                    Começar gratuitamente
+                    {t('pricing.startFree')}
                   </Button>
                 </NavLink>
               </CardFooter>
@@ -260,34 +260,34 @@ export default function Pricing() {
             {/* Premium Plan */}
             <Card className="bg-gradient-card border-2 border-primary relative shadow-colorful animate-fade-in hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-colorful text-white text-sm font-medium rounded-full shadow-colorful">
-                ⭐ Mais popular
+                {t('pricing.mostPopular')}
               </div>
               <CardHeader>
                 <div className="flex items-center justify-between mb-4">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-colorful text-white shadow-colorful">
                     <Sparkles className="w-6 h-6" />
                   </div>
-                  <Badge variant="premium">✨ Pacote Premium</Badge>
+                  <Badge variant="premium">{t('pricing.premiumPackage')}</Badge>
                 </div>
-                <CardTitle className="text-3xl">Premium</CardTitle>
+                <CardTitle className="text-3xl">{t('pricing.premiumTitle')}</CardTitle>
                 <CardDescription className="text-lg">
-                  Experiência completa com IA e recursos avançados
+                  {t('pricing.premiumDescription')}
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
-                    {currency === 'brl' ? 'R$ 29,90' : '$9.90'}
+                    {currency === 'brl' ? t('pricing.monthlyPrice') : t('pricing.monthlyPriceUSD')}
                   </span>
-                  <span className="text-muted-foreground">/mês</span>
+                  <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
                 </div>
                 <p className="text-sm text-muted-foreground pt-2">
                   {currency === 'brl' 
-                    ? 'ou R$ 299,00/ano (economize 17%)' 
-                    : 'or $99.00/year (save 17%)'}
+                    ? t('pricing.yearlyPrice') 
+                    : t('pricing.yearlyPriceUSD')}
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground pb-4 border-b border-border">
-                  Potencialize seu bem-estar com tecnologia e suporte personalizado
+                  {t('pricing.premiumPower')}
                 </p>
                 <ul className="space-y-3">
                   {premiumFeatures.map((feature, index) => (
@@ -306,7 +306,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].monthly)}
                   disabled={loading}
                 >
-                  {loading ? "Processando..." : `${currency === 'brl' ? 'Assinar Mensal (R$ 29,90)' : 'Subscribe Monthly ($9.90)'}`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 29,90' : '$9.90'})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
@@ -316,7 +316,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].yearly)}
                   disabled={loading}
                 >
-                  {loading ? "Processando..." : `${currency === 'brl' ? 'Assinar Anual (R$ 299,00)' : 'Subscribe Yearly ($99.00)'}`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 299,00' : '$99.00'})`}
                 </Button>
               </CardFooter>
             </Card>
