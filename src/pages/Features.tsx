@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,9 +25,11 @@ import {
 } from "lucide-react";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MobileNav } from "@/components/MobileNav";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
 
 export default function Features() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background">
       {/* Header/Nav */}
@@ -39,14 +42,15 @@ export default function Features() {
             <div className="flex items-center gap-2">
               <nav className="hidden md:flex items-center gap-6">
                 <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
-                  Funcionalidades
+                  {t('nav.features')}
                 </NavLink>
                 <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
-                  Preços
+                  {t('nav.pricing')}
                 </NavLink>
+                <LanguageSelector />
                 <NavLink to="/auth">
                   <Button variant="hero" size="sm">
-                    Entrar
+                    {t('common.login')}
                   </Button>
                 </NavLink>
               </nav>
@@ -61,18 +65,17 @@ export default function Features() {
         <div className="container mx-auto px-4 text-center">
           <div className="inline-block mb-6">
             <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
-              🌟 Funcionalidades completas
+              {t('features.badge')}
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Tudo que você precisa para seu{" "}
+            {t('features.heroTitle')}{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
-              bem-estar integral
+              {t('features.heroTitleHighlight')}
             </span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Descubra como a Luna combina tecnologia, comunidade e consciência para 
-            apoiar todas as dimensões da sua saúde e estilo de vida.
+            {t('features.heroDescription')}
           </p>
         </div>
       </section>
