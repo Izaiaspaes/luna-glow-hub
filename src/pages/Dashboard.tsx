@@ -494,7 +494,7 @@ export default function Dashboard() {
                     
                     {/* AI Wellness Plans Section */}
                     <div>
-                       <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mb-4">
                         <div>
                           <h3 className="text-lg font-semibold flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-primary" />
@@ -504,14 +504,35 @@ export default function Dashboard() {
                             Gere planos baseados nos seus dados de rastreamento
                           </p>
                         </div>
-                        <Button 
-                          onClick={() => generateWellnessPlan('geral')}
-                          disabled={generatingPlan}
-                          size="sm"
-                          data-tour="plans"
-                        >
-                          {generatingPlan ? "Gerando..." : "Gerar Plano"}
-                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button 
+                              disabled={generatingPlan}
+                              size="sm"
+                              data-tour="plans"
+                            >
+                              {generatingPlan ? "Gerando..." : "Gerar Plano"}
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuItem onClick={() => generateWellnessPlan('geral')}>
+                              <Sparkles className="w-4 h-4 mr-2" />
+                              Plano Geral
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => generateWellnessPlan('sono')}>
+                              <Moon className="w-4 h-4 mr-2" />
+                              Plano de Sono
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => generateWellnessPlan('meditacao')}>
+                              <Sparkles className="w-4 h-4 mr-2" />
+                              Plano de Meditação
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => generateWellnessPlan('alimentacao')}>
+                              <Heart className="w-4 h-4 mr-2" />
+                              Plano de Alimentação
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                       
                       {wellnessPlans.length === 0 ? (
@@ -620,14 +641,35 @@ export default function Dashboard() {
                     Baseado nos seus últimos 7 dias de dados
                   </p>
                 </div>
-                <Button 
-                  variant="hero" 
-                  className="w-full"
-                  onClick={() => generateWellnessPlan('geral')}
-                  disabled={generatingPlan}
-                >
-                  {generatingPlan ? "Gerando..." : "Gerar Plano de Bem-Estar"}
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="hero" 
+                      className="w-full"
+                      disabled={generatingPlan}
+                    >
+                      {generatingPlan ? "Gerando..." : "Gerar Plano de Bem-Estar"}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="w-48">
+                    <DropdownMenuItem onClick={() => generateWellnessPlan('geral')}>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Plano Geral
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => generateWellnessPlan('sono')}>
+                      <Moon className="w-4 h-4 mr-2" />
+                      Plano de Sono
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => generateWellnessPlan('meditacao')}>
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Plano de Meditação
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => generateWellnessPlan('alimentacao')}>
+                      <Heart className="w-4 h-4 mr-2" />
+                      Plano de Alimentação
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </CardContent>
             </Card>
 
