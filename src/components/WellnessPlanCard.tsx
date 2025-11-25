@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Calendar, Sparkles, Heart, Moon, Apple, Dumbbell, Brain, MoreVertical, CheckCircle, Archive, RotateCcw } from "lucide-react";
+import { Calendar, Sparkles, Heart, Moon, Apple, Dumbbell, Brain, MoreVertical, CheckCircle, Archive, RotateCcw, UtensilsCrossed } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -59,9 +59,46 @@ const getPriorityColor = (priority: string) => {
   return 'text-green-500 dark:text-green-400';
 };
 
+const getPlanTypeBadge = (planType: string) => {
+  const type = planType.toLowerCase();
+  
+  if (type === 'sono') {
+    return {
+      icon: Moon,
+      label: 'Plano de Sono',
+      className: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30'
+    };
+  }
+  
+  if (type === 'meditacao' || type === 'meditação') {
+    return {
+      icon: Brain,
+      label: 'Plano de Meditação',
+      className: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30'
+    };
+  }
+  
+  if (type === 'nutricao' || type === 'nutrição' || type === 'alimentacao' || type === 'alimentação') {
+    return {
+      icon: UtensilsCrossed,
+      label: 'Plano de Alimentação',
+      className: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30'
+    };
+  }
+  
+  // Plano geral ou outro tipo
+  return {
+    icon: Sparkles,
+    label: 'Plano Geral',
+    className: 'bg-primary/10 text-primary border-primary/30'
+  };
+};
+
 export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps) {
   const content = plan.plan_content;
   const status = plan.status || (plan.is_active ? 'active' : 'archived');
+  const planTypeBadge = getPlanTypeBadge(plan.plan_type);
+  const PlanTypeIcon = planTypeBadge.icon;
   
   const getStatusBadge = () => {
     if (status === 'completed') {
@@ -78,6 +115,12 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
       <CardHeader className="bg-gradient-to-r from-primary/10 via-primary/5 to-background">
         <div className="flex items-center justify-between">
           <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <Badge variant="outline" className={planTypeBadge.className}>
+                <PlanTypeIcon className="h-3 w-3 mr-1" />
+                {planTypeBadge.label}
+              </Badge>
+            </div>
             <CardTitle className="flex items-center gap-2 text-xl">
               <Sparkles className="h-6 w-6 text-primary" />
               {content.title || `Plano ${plan.plan_type}`}
