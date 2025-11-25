@@ -18,6 +18,7 @@ import PartnerInvite from "./pages/PartnerInvite";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
+import "./i18n";
 
 const queryClient = new QueryClient();
 
