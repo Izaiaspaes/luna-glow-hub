@@ -17,11 +17,17 @@ import logoLuna from "@/assets/logo-luna.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const STRIPE_PRICES = {
-  monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
-  yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
+  brl: {
+    monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
+    yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
+  },
+  usd: {
+    monthly: "price_1SXPuTIEVFZTiFWxVohXH8xe",
+    yearly: "price_1SXPucIEVFZTiFWxAaZO1YyI",
+  }
 };
 
 const freemiumFeatures = [
@@ -102,7 +108,28 @@ const comparisonFeatures = [
 export default function Pricing() {
   const { user, session } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [currency, setCurrency] = useState<'brl' | 'usd'>('brl');
+  const [countryCode, setCountryCode] = useState<string>('BR');
   const { t } = useTranslation();
+
+  // Detect user's country on mount
+  useEffect(() => {
+    const detectCountry = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        const country = data.country_code || 'BR';
+        setCountryCode(country);
+        setCurrency(country === 'BR' ? 'brl' : 'usd');
+      } catch (error) {
+        console.error('Error detecting country:', error);
+        // Default to BRL if detection fails
+        setCurrency('brl');
+      }
+    };
+    
+    detectCountry();
+  }, []);
 
   const handleCheckout = async (priceId: string) => {
     if (!user || !session) {
@@ -204,7 +231,7 @@ export default function Pricing() {
                   Perfeito para começar sua jornada
                 </CardDescription>
                 <div className="pt-4">
-                  <span className="text-5xl font-bold">R$ 0</span>
+                  <span className="text-5xl font-bold">{currency === 'brl' ? 'R$' : '$'} 0</span>
                   <span className="text-muted-foreground">/mês</span>
                 </div>
               </CardHeader>
@@ -247,11 +274,15 @@ export default function Pricing() {
                   Experiência completa com IA e recursos avançados
                 </CardDescription>
                 <div className="pt-4">
-                  <span className="text-5xl font-bold">R$ 29,90</span>
+                  <span className="text-5xl font-bold">
+                    {currency === 'brl' ? 'R$ 29,90' : '$9.90'}
+                  </span>
                   <span className="text-muted-foreground">/mês</span>
                 </div>
                 <p className="text-sm text-muted-foreground pt-2">
-                  ou R$ 299,00/ano (economize 17%)
+                  {currency === 'brl' 
+                    ? 'ou R$ 299,00/ano (economize 17%)' 
+                    : 'or $99.00/year (save 17%)'}
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -272,20 +303,20 @@ export default function Pricing() {
                   variant="colorful" 
                   size="lg" 
                   className="w-full group"
-                  onClick={() => handleCheckout(STRIPE_PRICES.monthly)}
+                  onClick={() => handleCheckout(STRIPE_PRICES[currency].monthly)}
                   disabled={loading}
                 >
-                  {loading ? "Processando..." : "Assinar Mensal (R$ 29,90)"}
+                  {loading ? "Processando..." : `${currency === 'brl' ? 'Assinar Mensal (R$ 29,90)' : 'Subscribe Monthly ($9.90)'}`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
                   className="w-full hover:bg-primary/10"
-                  onClick={() => handleCheckout(STRIPE_PRICES.yearly)}
+                  onClick={() => handleCheckout(STRIPE_PRICES[currency].yearly)}
                   disabled={loading}
                 >
-                  {loading ? "Processando..." : "Assinar Anual (R$ 299,00)"}
+                  {loading ? "Processando..." : `${currency === 'brl' ? 'Assinar Anual (R$ 299,00)' : 'Subscribe Yearly ($99.00)'}`}
                 </Button>
               </CardFooter>
             </Card>
@@ -456,7 +487,7 @@ export default function Pricing() {
                 variant="secondary" 
                 size="lg" 
                 className="group"
-                onClick={() => handleCheckout(STRIPE_PRICES.monthly)}
+                onClick={() => handleCheckout(STRIPE_PRICES[currency].monthly)}
                 disabled={loading}
               >
                 {loading ? "Processando..." : "Começar agora"}
