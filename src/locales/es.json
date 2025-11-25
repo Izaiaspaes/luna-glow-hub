@@ -195,5 +195,97 @@
     "upgrade": "Mejorar Plan",
     "manageSubscription": "Gestionar Suscripción",
     "benefits": "Beneficios"
+  },
+  "statistics": {
+    "title": "Números que hablan por sí mismos",
+    "subtitle": "Únete a las mujeres que ya están transformando su bienestar con Luna",
+    "usersValue": "500+",
+    "usersLabel": "Mujeres probando",
+    "usersDesc": "Usuarias activas en la plataforma",
+    "plansValue": "1.200+",
+    "plansLabel": "Planes personalizados",
+    "plansDesc": "Generados por IA",
+    "cyclesValue": "3.500+",
+    "cyclesLabel": "Ciclos rastreados",
+    "cyclesDesc": "Monitoreados con precisión",
+    "satisfactionValue": "98%",
+    "satisfactionLabel": "Satisfacción",
+    "satisfactionDesc": "De las usuarias probadoras",
+    "disclaimer": "* Datos actualizados en tiempo real durante el período de pruebas"
+  },
+  "testimonials": {
+    "title": "Lo que dicen nuestras probadoras",
+    "subtitle": "Conoce mujeres que están transformando su bienestar con Luna"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Resuelve tus dudas sobre privacidad, funcionamiento y características de Luna",
+    "q1": "¿Mis datos están realmente seguros?",
+    "a1": "¡Sí! La privacidad es nuestra máxima prioridad. Todos tus datos están encriptados y almacenados de forma segura. Tienes control total sobre tu información y puedes exportar o eliminar tus datos en cualquier momento. Nunca compartimos tu información personal sin tu consentimiento explícito.",
+    "q2": "¿Cómo funciona la Inteligencia Artificial de Luna?",
+    "a2": "Nuestra IA analiza tus datos de seguimiento (ciclo, sueño, humor y energía) para identificar patrones únicos de tu cuerpo. Con base en estos análisis, genera Planes de Bienestar personalizados con recomendaciones prácticas y accionables, adaptadas específicamente para ti. Cuanto más lo uses, más precisas serán las recomendaciones.",
+    "q3": "¿Cuál es la diferencia entre Paquetes y Planes de Bienestar?",
+    "a3": "Los Paquetes son nuestros planes de suscripción (Gratuito y Premium) que definen a qué recursos tienes acceso. Los Planes de Bienestar son las recomendaciones personalizadas generadas por nuestra IA basándose en tus datos de seguimiento, como rutinas de sueño, consejos nutricionales y ejercicios.",
+    "q4": "¿Qué incluye el Paquete Gratuito?",
+    "a4": "El Paquete Gratuito incluye seguimiento básico de ciclo, sueño, humor y energía, acceso al asistente AI con respuestas limitadas, visualización de datos en gráficos simples y notificaciones básicas. Es perfecto para empezar a entender mejor tu cuerpo y rutina.",
+    "q5": "¿Cómo funciona la transcripción por voz?",
+    "a5": "La transcripción por voz está disponible solo en el Paquete Premium y te permite registrar tu información de seguimiento hablando en lugar de escribiendo. Nuestra IA transcribe automáticamente tu voz y analiza el contenido para completar los campos y generar insights personalizados.",
+    "q6": "¿Puedo cancelar mi suscripción en cualquier momento?",
+    "a6": "Sí, puedes cancelar tu suscripción Premium en cualquier momento sin costos adicionales. Tus datos permanecerán seguros y seguirás teniendo acceso a las características del Paquete Gratuito. No hay período de fidelidad ni tarifas de cancelación.",
+    "contact": "¿Aún tienes dudas?",
+    "contactLink": "Contáctanos"
+  },
+  "privacy": {
+    "title": "La privacidad no es",
+    "titleHighlight": "negociable",
+    "subtitle": "En un mundo donde los datos reproductivos están cada vez más expuestos, Luna fue construida con privacidad desde el primer día. Tus datos de salud son tuyos — y siempre lo serán.",
+    "encrypted": "Datos Encriptados",
+    "encryptedDesc": "Toda tu información está protegida con encriptación de extremo a extremo.",
+    "control": "Control Total",
+    "controlDesc": "Tú decides qué compartir y puedes eliminar tus datos en cualquier momento.",
+    "transparency": "Transparencia Completa",
+    "transparencyDesc": "Registros de auditoría disponibles para que veas exactamente cómo se usan tus datos.",
+    "yourData": "Tus Datos, Tus Reglas",
+    "yourDataDesc": "Exporta o elimina tu información cuando quieras, sin complicaciones.",
+    "commitment": "Compromiso de transparencia:",
+    "commitmentText": "Trabajamos con auditorías independientes y seguimos las mejores prácticas de seguridad. Los datos agregados y anónimos solo se comparten para investigación con tu consentimiento explícito y opt-in."
+  },
+  "cta": {
+    "badge": "100% Gratis para comenzar",
+    "title": "¿Lista para transformar tu bienestar?",
+    "subtitle": "Únete a cientos de mujeres que ya están cuidándose mejor con Luna. Comienza tu viaje de autocuidado hoy mismo.",
+    "startButton": "Comenzar ahora",
+    "featuresButton": "Conocer características",
+    "noCard": "Sin tarjeta de crédito",
+    "private": "100% Privado",
+    "cancelAnytime": "Cancela cuando quieras"
+  },
+  "newsletter": {
+    "title": "Newsletter Luna",
+    "description": "Recibe artículos exclusivos sobre salud femenina, bienestar y autocuidado directamente en tu correo electrónico.",
+    "placeholder": "tu@email.com",
+    "button": "Suscribirse",
+    "buttonLoading": "Enviando...",
+    "disclaimer": "Sin spam. Cancela en cualquier momento.",
+    "successSubscribed": "¡Suscripción confirmada! Revisa tu correo para más detalles.",
+    "successNoEmail": "¡Suscripción realizada! Recibirás nuestro próximo contenido.",
+    "errorAlreadySubscribed": "¡Este correo ya está suscrito al newsletter!",
+    "errorGeneric": "Error al suscribirse. Intenta nuevamente más tarde.",
+    "errorInvalidEmail": "Correo electrónico inválido",
+    "errorEmailTooLong": "Correo electrónico demasiado largo"
+  },
+  "blogPage": {
+    "title": "Contenido Educativo sobre Salud Femenina",
+    "subtitle": "Aprende más sobre tu cuerpo, ciclo menstrual, bienestar y salud hormonal con contenido basado en ciencia y experiencias reales.",
+    "searchPlaceholder": "Buscar artículos...",
+    "backToHome": "Volver al inicio",
+    "noResults": "No se encontraron artículos. Intenta otra búsqueda o categoría.",
+    "categories": {
+      "all": "Todos",
+      "menstrualCycle": "Ciclo Menstrual",
+      "nutrition": "Nutrición",
+      "sleep": "Sueño",
+      "mentalHealth": "Salud Mental"
+    }
   }
 }

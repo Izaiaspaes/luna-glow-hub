@@ -1,33 +1,35 @@
 import { Users, Heart, Calendar, Sparkles } from "lucide-react";
-
-const statistics = [
-  {
-    icon: Users,
-    value: "500+",
-    label: "Mulheres testando",
-    description: "Usuárias ativas na plataforma",
-  },
-  {
-    icon: Heart,
-    value: "1.200+",
-    label: "Planos personalizados",
-    description: "Gerados pela IA",
-  },
-  {
-    icon: Calendar,
-    value: "3.500+",
-    label: "Ciclos rastreados",
-    description: "Monitorados com precisão",
-  },
-  {
-    icon: Sparkles,
-    value: "98%",
-    label: "Satisfação",
-    description: "Das usuárias testadoras",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export const Statistics = () => {
+  const { t } = useTranslation();
+
+  const statistics = [
+    {
+      icon: Users,
+      value: t('statistics.usersValue'),
+      label: t('statistics.usersLabel'),
+      description: t('statistics.usersDesc'),
+    },
+    {
+      icon: Heart,
+      value: t('statistics.plansValue'),
+      label: t('statistics.plansLabel'),
+      description: t('statistics.plansDesc'),
+    },
+    {
+      icon: Calendar,
+      value: t('statistics.cyclesValue'),
+      label: t('statistics.cyclesLabel'),
+      description: t('statistics.cyclesDesc'),
+    },
+    {
+      icon: Sparkles,
+      value: t('statistics.satisfactionValue'),
+      label: t('statistics.satisfactionLabel'),
+      description: t('statistics.satisfactionDesc'),
+    },
+  ];
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden">
       {/* Decorative background elements */}
@@ -38,10 +40,10 @@ export const Statistics = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            Números que falam por si
+            {t('statistics.title')}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Junte-se às mulheres que já estão transformando seu bem-estar com o Luna
+            {t('statistics.subtitle')}
           </p>
         </div>
 
@@ -77,7 +79,7 @@ export const Statistics = () => {
 
         <div className="mt-16 text-center">
           <p className="text-muted-foreground italic">
-            * Dados atualizados em tempo real durante o período de testes
+            {t('statistics.disclaimer')}
           </p>
         </div>
       </div>

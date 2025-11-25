@@ -1,30 +1,32 @@
 import { Shield, Lock, Eye, Download } from "lucide-react";
 import { Card } from "@/components/ui/card";
-
-const privacyFeatures = [
-  {
-    icon: Shield,
-    title: "Dados Criptografados",
-    description: "Todas as suas informações são protegidas com criptografia de ponta a ponta.",
-  },
-  {
-    icon: Lock,
-    title: "Controle Total",
-    description: "Você decide o que compartilhar e pode excluir seus dados a qualquer momento.",
-  },
-  {
-    icon: Eye,
-    title: "Transparência Completa",
-    description: "Audit logs disponíveis para você ver exatamente como seus dados são usados.",
-  },
-  {
-    icon: Download,
-    title: "Seus Dados, Suas Regras",
-    description: "Exporte ou elimine suas informações quando quiser, sem complicações.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export const Privacy = () => {
+  const { t } = useTranslation();
+
+  const privacyFeatures = [
+    {
+      icon: Shield,
+      title: t('privacy.encrypted'),
+      description: t('privacy.encryptedDesc'),
+    },
+    {
+      icon: Lock,
+      title: t('privacy.control'),
+      description: t('privacy.controlDesc'),
+    },
+    {
+      icon: Eye,
+      title: t('privacy.transparency'),
+      description: t('privacy.transparencyDesc'),
+    },
+    {
+      icon: Download,
+      title: t('privacy.yourData'),
+      description: t('privacy.yourDataDesc'),
+    },
+  ];
   return (
     <section className="py-20 lg:py-32 bg-gradient-soft">
       <div className="container mx-auto px-4">
@@ -35,16 +37,14 @@ export const Privacy = () => {
             </div>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-              Privacidade não é{" "}
+              {t('privacy.title')}{" "}
               <span className="bg-gradient-hero bg-clip-text text-transparent">
-                negociável
+                {t('privacy.titleHighlight')}
               </span>
             </h2>
             
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Em um mundo onde dados reprodutivos são cada vez mais expostos, 
-              Luna foi construída com privacidade desde o primeiro dia. 
-              Seus dados de saúde são seus — e sempre serão.
+              {t('privacy.subtitle')}
             </p>
           </div>
 
@@ -78,10 +78,8 @@ export const Privacy = () => {
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-2 h-2 bg-secondary rounded-full mt-2"></div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">Compromisso de transparência:</strong> 
-                {" "}Trabalhamos com auditorias independentes e seguimos as melhores práticas 
-                de segurança. Dados agregados e anônimos só são compartilhados para pesquisa 
-                com seu consentimento explícito e opt-in.
+                <strong className="text-foreground">{t('privacy.commitment')}</strong> 
+                {" "}{t('privacy.commitmentText')}
               </p>
             </div>
           </div>
