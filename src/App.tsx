@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useSessionTimeout } from "./hooks/useSessionTimeout";
+import { SessionTimeoutModal } from "./components/SessionTimeoutModal";
 import Index from "./pages/Index";
 import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
@@ -18,11 +20,18 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+const AppContent = () => {
+  const { showWarning, handleRenewSession, handleLogout } = useSessionTimeout();
+
+  return (
+    <>
       <Toaster />
       <Sonner />
+      <SessionTimeoutModal
+        open={showWarning}
+        onRenew={handleRenewSession}
+        onLogout={handleLogout}
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -40,6 +49,14 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+    </>
+  );
+};
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <AppContent />
     </TooltipProvider>
   </QueryClientProvider>
 );
