@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings, Menu } from "lucide-react";
+import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings, Menu, Apple } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -35,6 +35,7 @@ import { CalendarView } from "@/components/CalendarView";
 import { SymptomPredictions } from "@/components/SymptomPredictions";
 import { PrivacyModeIndicator } from "@/components/PrivacyModeIndicator";
 import { WorkForm } from "@/components/tracking/WorkForm";
+import { NutritionForm } from "@/components/tracking/NutritionForm";
 import { PlanLimitModal } from "@/components/PlanLimitModal";
 import { WeeklySummary } from "@/components/WeeklySummary";
 import { DailyWorkMessage } from "@/components/DailyWorkMessage";
@@ -45,10 +46,10 @@ import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
-type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | null;
+type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition' | null;
 
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'predictions' | 'calendar'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'nutrition' | 'predictions' | 'calendar'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
   const [recentData, setRecentData] = useState<any[]>([]);
@@ -86,7 +87,7 @@ export default function Dashboard() {
   const loadRecentData = async () => {
     if (!user || activeTab === 'overview') return;
 
-    const tableName = `${activeTab}_tracking` as 'cycle_tracking' | 'sleep_tracking' | 'mood_tracking' | 'energy_tracking';
+    const tableName = `${activeTab}_tracking` as 'cycle_tracking' | 'sleep_tracking' | 'mood_tracking' | 'energy_tracking' | 'nutrition_tracking';
     const { data, error } = await supabase
       .from(tableName)
       .select('*')
@@ -434,6 +435,15 @@ export default function Dashboard() {
                 Energia
               </Button>
               <Button
+                variant={activeTab === 'nutrition' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setActiveTab('nutrition')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
+              >
+                <Apple className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                Alimento
+              </Button>
+              <Button
                 variant={activeTab === 'predictions' ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setActiveTab('predictions')}
@@ -474,6 +484,7 @@ export default function Dashboard() {
                     {activeTab === 'sleep' && 'Rastreamento de Sono'}
                     {activeTab === 'mood' && 'Rastreamento de Humor'}
                     {activeTab === 'energy' && 'Rastreamento de Energia'}
+                    {activeTab === 'nutrition' && 'Rastreamento de Alimentação'}
                   </CardTitle>
                   <CardDescription>
                     {activeTab === 'overview' && 'Resumo dos seus dados de bem-estar'}
@@ -481,6 +492,7 @@ export default function Dashboard() {
                     {activeTab === 'sleep' && 'Monitore a qualidade e duração do seu sono'}
                     {activeTab === 'mood' && 'Registre como você está se sentindo'}
                     {activeTab === 'energy' && 'Acompanhe seus níveis de energia ao longo do dia'}
+                    {activeTab === 'nutrition' && 'Registre suas refeições e receba orientação nutricional'}
                   </CardDescription>
                 </CardHeader>
               <CardContent className="space-y-4">
@@ -585,9 +597,9 @@ export default function Dashboard() {
                           <div className="flex justify-between items-start">
                             <div>
                               <p className="font-medium">
-                                {new Date(
-                                  record.cycle_start_date || record.sleep_date || record.mood_date || record.energy_date
-                                ).toLocaleDateString('pt-BR')}
+                                 {new Date(
+                                   record.cycle_start_date || record.sleep_date || record.mood_date || record.energy_date || record.nutrition_date
+                                 ).toLocaleDateString('pt-BR')}
                               </p>
                               {record.notes && (
                                 <p className="text-sm text-muted-foreground mt-1">{record.notes}</p>
@@ -603,6 +615,9 @@ export default function Dashboard() {
                               )}
                               {activeTab === 'energy' && record.energy_level && (
                                 <p className="text-sm">Energia: {record.energy_level}/5</p>
+                              )}
+                              {activeTab === 'nutrition' && record.nutrition_quality && (
+                                <p className="text-sm">Qualidade: {record.nutrition_quality}/5</p>
                               )}
                             </div>
                           </div>
@@ -727,6 +742,7 @@ export default function Dashboard() {
               {trackingType === 'mood' && 'Registrar Humor'}
               {trackingType === 'energy' && 'Registrar Energia'}
               {trackingType === 'work' && 'Registrar Trabalho'}
+              {trackingType === 'nutrition' && 'Registrar Alimentação'}
             </DialogTitle>
             <DialogDescription>
               Preencha as informações para registrar seus dados
@@ -743,6 +759,9 @@ export default function Dashboard() {
           )}
           {user && trackingType === 'energy' && (
             <EnergyForm userId={user.id} onSuccess={handleTrackingSuccess} />
+          )}
+          {user && trackingType === 'nutrition' && (
+            <NutritionForm userId={user.id} onSuccess={handleTrackingSuccess} />
           )}
           {user && trackingType === 'work' && (
             <WorkForm />

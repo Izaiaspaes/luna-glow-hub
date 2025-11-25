@@ -156,7 +156,7 @@ export default function Features() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Activity className="w-10 h-10 text-primary mb-2" />
@@ -187,6 +187,17 @@ export default function Features() {
               <CardContent>
                 <p className="text-muted-foreground">
                   Acompanhe padrões de sono e descubra como eles afetam seu bem-estar
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-card">
+              <CardHeader>
+                <Leaf className="w-10 h-10 text-primary mb-2" />
+                <CardTitle>Nutrição Consciente</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Registre suas refeições e receba orientação personalizada sobre alimentação saudável
                 </p>
               </CardContent>
             </Card>
