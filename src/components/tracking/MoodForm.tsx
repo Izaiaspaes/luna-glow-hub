@@ -13,15 +13,16 @@ import { toast } from "sonner";
 import { Smile } from "lucide-react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
+import { useTranslation } from "react-i18next";
 
-const moodSchema = z.object({
-  mood_date: z.string().min(1, "Data obrigatória"),
+const getMoodSchema = (t: (key: string) => string) => z.object({
+  mood_date: z.string().min(1, t("forms.mood.dateRequired")),
   mood_type: z.string().optional(),
   mood_level: z.number().min(1).max(5),
   notes: z.string().optional(),
 });
 
-type MoodFormData = z.infer<typeof moodSchema>;
+type MoodFormData = z.infer<ReturnType<typeof getMoodSchema>>;
 
 interface MoodFormProps {
   userId: string;
@@ -29,6 +30,7 @@ interface MoodFormProps {
 }
 
 export function MoodForm({ userId, onSuccess }: MoodFormProps) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [moodLevel, setMoodLevel] = useState(3);
   const [analysis, setAnalysis] = useState<any>(null);
@@ -36,7 +38,7 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<MoodFormData>({
-    resolver: zodResolver(moodSchema),
+    resolver: zodResolver(getMoodSchema(t)),
     defaultValues: {
       mood_level: 3,
     },
@@ -71,10 +73,10 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
       }
       
       setAnalysis(analysisData);
-      toast.success("Análise concluída! Intensidade ajustada automaticamente.");
+      toast.success(t("forms.mood.analysisComplete"));
     } catch (error) {
       console.error('Error analyzing description:', error);
-      toast.error("Erro ao analisar descrição");
+      toast.error(t("forms.mood.analysisError"));
     } finally {
       setIsAnalyzing(false);
     }
@@ -96,9 +98,9 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
     setLoading(false);
 
     if (error) {
-      toast.error("Erro ao salvar dados: " + error.message);
+      toast.error(t("forms.mood.errorMessage") + error.message);
     } else {
-      toast.success("Humor registrado com sucesso!");
+      toast.success(t("forms.mood.successMessage"));
       onSuccess();
     }
   };
@@ -108,7 +110,7 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
       <div className="space-y-2">
         <Label htmlFor="mood_date">
           <Smile className="w-4 h-4 inline mr-2" />
-          Data *
+          {t("forms.mood.date")}
         </Label>
         <Input
           id="mood_date"
@@ -121,25 +123,25 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="mood_type">Como você está se sentindo?</Label>
+        <Label htmlFor="mood_type">{t("forms.mood.feeling")}</Label>
         <Select onValueChange={(value) => setValue("mood_type", value)}>
           <SelectTrigger>
-            <SelectValue placeholder="Selecione" />
+            <SelectValue placeholder={t("forms.mood.feelingPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="feliz">😊 Feliz</SelectItem>
-            <SelectItem value="calma">😌 Calma</SelectItem>
-            <SelectItem value="ansiosa">😰 Ansiosa</SelectItem>
-            <SelectItem value="triste">😢 Triste</SelectItem>
-            <SelectItem value="irritada">😤 Irritada</SelectItem>
-            <SelectItem value="energizada">⚡ Energizada</SelectItem>
-            <SelectItem value="cansada">😴 Cansada</SelectItem>
+            <SelectItem value="feliz">{t("forms.mood.feelingHappy")}</SelectItem>
+            <SelectItem value="calma">{t("forms.mood.feelingCalm")}</SelectItem>
+            <SelectItem value="ansiosa">{t("forms.mood.feelingAnxious")}</SelectItem>
+            <SelectItem value="triste">{t("forms.mood.feelingSad")}</SelectItem>
+            <SelectItem value="irritada">{t("forms.mood.feelingIrritated")}</SelectItem>
+            <SelectItem value="energizada">{t("forms.mood.feelingEnergized")}</SelectItem>
+            <SelectItem value="cansada">{t("forms.mood.feelingTired")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
-        <Label>Intensidade: {moodLevel}/5 {analysis && "✓ Ajustado pela IA"}</Label>
+        <Label>{t("forms.mood.intensity", { level: moodLevel })} {analysis && t("forms.mood.intensityAdjusted")}</Label>
         <Slider
           value={[moodLevel]}
           onValueChange={(value) => !analysis && setMoodLevel(value[0])}
@@ -150,16 +152,16 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
           disabled={!!analysis}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Muito baixo</span>
-          <span>Muito alto</span>
+          <span>{t("forms.mood.intensityLow")}</span>
+          <span>{t("forms.mood.intensityHigh")}</span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes">O que pode ter influenciado seu humor?</Label>
+        <Label htmlFor="notes">{t("forms.mood.notes")}</Label>
         <Textarea
           id="notes"
-          placeholder="Eventos, pessoas, situações..."
+          placeholder={t("forms.mood.notesPlaceholder")}
           {...register("notes")}
           onChange={(e) => setValue("notes", e.target.value)}
         />
@@ -179,7 +181,7 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
               onClick={() => handleAnalyzeDescription(notesValue)}
               disabled={isAnalyzing}
             >
-              {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+              {isAnalyzing ? t("forms.mood.analyzing") : t("forms.mood.analyzeAI")}
             </Button>
           )}
         </div>
@@ -189,7 +191,7 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
         <>
           <HealthAnalysis analysis={analysis} />
           <div className="pt-2 pb-1 text-center text-sm text-muted-foreground">
-            ⬇️ Clique em "Registrar Humor" abaixo para salvar
+            {t("forms.mood.scrollHint")}
           </div>
         </>
       )}
@@ -201,7 +203,7 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
         variant="hero" 
         disabled={loading}
       >
-        {loading ? "Salvando..." : "Registrar Humor"}
+        {loading ? t("forms.mood.saving") : t("forms.mood.save")}
       </Button>
     </form>
   );

@@ -13,15 +13,16 @@ import { toast } from "sonner";
 import { Zap } from "lucide-react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
+import { useTranslation } from "react-i18next";
 
-const energySchema = z.object({
-  energy_date: z.string().min(1, "Data obrigatória"),
+const getEnergySchema = (t: (key: string) => string) => z.object({
+  energy_date: z.string().min(1, t("forms.energy.dateRequired")),
   time_of_day: z.string().optional(),
   energy_level: z.number().min(1).max(5),
   notes: z.string().optional(),
 });
 
-type EnergyFormData = z.infer<typeof energySchema>;
+type EnergyFormData = z.infer<ReturnType<typeof getEnergySchema>>;
 
 interface EnergyFormProps {
   userId: string;
@@ -29,6 +30,7 @@ interface EnergyFormProps {
 }
 
 export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [energyLevel, setEnergyLevel] = useState(3);
   const [analysis, setAnalysis] = useState<any>(null);
@@ -36,7 +38,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<EnergyFormData>({
-    resolver: zodResolver(energySchema),
+    resolver: zodResolver(getEnergySchema(t)),
     defaultValues: {
       energy_level: 3,
     },
@@ -71,10 +73,10 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       }
       
       setAnalysis(analysisData);
-      toast.success("Análise concluída! Nível ajustado automaticamente.");
+      toast.success(t("forms.energy.analysisComplete"));
     } catch (error) {
       console.error('Error analyzing description:', error);
-      toast.error("Erro ao analisar descrição");
+      toast.error(t("forms.energy.analysisError"));
     } finally {
       setIsAnalyzing(false);
     }
@@ -96,9 +98,9 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
     setLoading(false);
 
     if (error) {
-      toast.error("Erro ao salvar dados: " + error.message);
+      toast.error(t("forms.energy.errorMessage") + error.message);
     } else {
-      toast.success("Energia registrada com sucesso!");
+      toast.success(t("forms.energy.successMessage"));
       onSuccess();
     }
   };
@@ -108,7 +110,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       <div className="space-y-2">
         <Label htmlFor="energy_date">
           <Zap className="w-4 h-4 inline mr-2" />
-          Data *
+          {t("forms.energy.date")}
         </Label>
         <Input
           id="energy_date"
@@ -121,21 +123,21 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="time_of_day">Período do dia</Label>
+        <Label htmlFor="time_of_day">{t("forms.energy.timeOfDay")}</Label>
         <Select onValueChange={(value) => setValue("time_of_day", value)}>
           <SelectTrigger>
-            <SelectValue placeholder="Selecione" />
+            <SelectValue placeholder={t("forms.energy.timePlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="manha">🌅 Manhã</SelectItem>
-            <SelectItem value="tarde">☀️ Tarde</SelectItem>
-            <SelectItem value="noite">🌙 Noite</SelectItem>
+            <SelectItem value="manha">{t("forms.energy.timeMorning")}</SelectItem>
+            <SelectItem value="tarde">{t("forms.energy.timeAfternoon")}</SelectItem>
+            <SelectItem value="noite">{t("forms.energy.timeNight")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
-        <Label>Nível de energia: {energyLevel}/5 {analysis && "✓ Ajustado pela IA"}</Label>
+        <Label>{t("forms.energy.level", { level: energyLevel })} {analysis && t("forms.energy.levelAdjusted")}</Label>
         <Slider
           value={[energyLevel]}
           onValueChange={(value) => !analysis && setEnergyLevel(value[0])}
@@ -146,16 +148,16 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
           disabled={!!analysis}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Exausto</span>
-          <span>Muito energizado</span>
+          <span>{t("forms.energy.levelExhausted")}</span>
+          <span>{t("forms.energy.levelEnergized")}</span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes">O que afetou sua energia?</Label>
+        <Label htmlFor="notes">{t("forms.energy.notes")}</Label>
         <Textarea
           id="notes"
-          placeholder="Exercícios, alimentação, sono, estresse..."
+          placeholder={t("forms.energy.notesPlaceholder")}
           {...register("notes")}
           onChange={(e) => setValue("notes", e.target.value)}
         />
@@ -175,7 +177,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
               onClick={() => handleAnalyzeDescription(notesValue)}
               disabled={isAnalyzing}
             >
-              {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+              {isAnalyzing ? t("forms.energy.analyzing") : t("forms.energy.analyzeAI")}
             </Button>
           )}
         </div>
@@ -185,7 +187,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
         <>
           <HealthAnalysis analysis={analysis} />
           <div className="pt-2 pb-1 text-center text-sm text-muted-foreground">
-            ⬇️ Clique em "Registrar Energia" abaixo para salvar
+            {t("forms.energy.scrollHint")}
           </div>
         </>
       )}
@@ -197,7 +199,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
         variant="hero" 
         disabled={loading}
       >
-        {loading ? "Salvando..." : "Registrar Energia"}
+        {loading ? t("forms.energy.saving") : t("forms.energy.save")}
       </Button>
     </form>
   );
