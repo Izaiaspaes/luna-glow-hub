@@ -15,29 +15,31 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useWorkTracking } from "@/hooks/useWorkTracking";
+import { useTranslation } from "react-i18next";
 
-const workFormSchema = z.object({
+const getWorkFormSchema = (t: (key: string) => string) => z.object({
   work_date: z.date({
-    required_error: "Selecione uma data",
+    required_error: t("forms.work.dateRequired"),
   }),
   routine_type: z.enum(['fixed', 'variable', 'shift'], {
-    required_error: "Selecione o tipo de rotina",
+    required_error: t("forms.work.routineRequired"),
   }),
   hours_worked: z.number({
-    required_error: "Informe as horas trabalhadas",
+    required_error: t("forms.work.hoursRequired"),
   }).min(0).max(24),
   shift_type: z.enum(['day', 'night', 'mixed', 'off']).optional(),
   notes: z.string().optional(),
 });
 
-type WorkFormValues = z.infer<typeof workFormSchema>;
+type WorkFormValues = z.infer<ReturnType<typeof getWorkFormSchema>>;
 
 export function WorkForm() {
+  const { t } = useTranslation();
   const { saveWorkData } = useWorkTracking();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<WorkFormValues>({
-    resolver: zodResolver(workFormSchema),
+    resolver: zodResolver(getWorkFormSchema(t)),
     defaultValues: {
       work_date: new Date(),
       routine_type: 'fixed',
@@ -68,10 +70,10 @@ export function WorkForm() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Briefcase className="h-5 w-5" />
-          Registrar Rotina de Trabalho
+          {t("forms.work.title")}
         </CardTitle>
         <CardDescription>
-          Registre suas horas de trabalho e receba orientações automáticas de autocuidado
+          {t("forms.work.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -82,7 +84,7 @@ export function WorkForm() {
               name="work_date"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Data</FormLabel>
+                  <FormLabel>{t("forms.work.date")}</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -97,7 +99,7 @@ export function WorkForm() {
                           {field.value ? (
                             format(field.value, "PPP", { locale: ptBR })
                           ) : (
-                            <span>Selecione uma data</span>
+                            <span>{t("forms.work.selectDate")}</span>
                           )}
                         </Button>
                       </FormControl>
@@ -122,17 +124,17 @@ export function WorkForm() {
               name="routine_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tipo de Rotina</FormLabel>
+                  <FormLabel>{t("forms.work.routineType")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo" />
+                        <SelectValue placeholder={t("forms.work.routinePlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="fixed">Horário Fixo</SelectItem>
-                      <SelectItem value="variable">Horários Variáveis</SelectItem>
-                      <SelectItem value="shift">Escala de Plantão</SelectItem>
+                      <SelectItem value="fixed">{t("forms.work.routineFixed")}</SelectItem>
+                      <SelectItem value="variable">{t("forms.work.routineVariable")}</SelectItem>
+                      <SelectItem value="shift">{t("forms.work.routineShift")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -145,7 +147,7 @@ export function WorkForm() {
               name="hours_worked"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Horas Trabalhadas</FormLabel>
+                  <FormLabel>{t("forms.work.hoursWorked")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -167,18 +169,18 @@ export function WorkForm() {
               name="shift_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Turno (Opcional)</FormLabel>
+                  <FormLabel>{t("forms.work.shiftType")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione o turno" />
+                        <SelectValue placeholder={t("forms.work.shiftPlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="day">Diurno</SelectItem>
-                      <SelectItem value="night">Noturno</SelectItem>
-                      <SelectItem value="mixed">Misto</SelectItem>
-                      <SelectItem value="off">Folga / Não trabalhei</SelectItem>
+                      <SelectItem value="day">{t("forms.work.shiftDay")}</SelectItem>
+                      <SelectItem value="night">{t("forms.work.shiftNight")}</SelectItem>
+                      <SelectItem value="mixed">{t("forms.work.shiftMixed")}</SelectItem>
+                      <SelectItem value="off">{t("forms.work.shiftOff")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -191,10 +193,10 @@ export function WorkForm() {
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Observações (Opcional)</FormLabel>
+                  <FormLabel>{t("forms.work.notes")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Como foi seu dia de trabalho?"
+                      placeholder={t("forms.work.notesPlaceholder")}
                       {...field}
                     />
                   </FormControl>
@@ -204,7 +206,7 @@ export function WorkForm() {
             />
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Salvando..." : "Salvar Registro"}
+              {isSubmitting ? t("forms.work.saving") : t("forms.work.save")}
             </Button>
           </form>
         </Form>

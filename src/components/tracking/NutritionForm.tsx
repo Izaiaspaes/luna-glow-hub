@@ -13,16 +13,17 @@ import { useState, useRef, useEffect } from "react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
 import { Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const nutritionSchema = z.object({
+const getNutritionSchema = (t: (key: string) => string) => z.object({
   nutritionDate: z.string(),
   mealType: z.string().optional(),
-  foodsConsumed: z.string().min(1, "Descreva o que você comeu"),
+  foodsConsumed: z.string().min(1, t("forms.nutrition.foodsRequired")),
   portionSize: z.string().optional(),
   notes: z.string().optional(),
 });
 
-type NutritionFormData = z.infer<typeof nutritionSchema>;
+type NutritionFormData = z.infer<ReturnType<typeof getNutritionSchema>>;
 
 interface NutritionFormProps {
   userId: string;
@@ -30,6 +31,7 @@ interface NutritionFormProps {
 }
 
 export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [nutritionQuality, setNutritionQuality] = useState<number>(3);
@@ -38,7 +40,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const form = useForm<NutritionFormData>({
-    resolver: zodResolver(nutritionSchema),
+    resolver: zodResolver(getNutritionSchema(t)),
     defaultValues: {
       nutritionDate: new Date().toISOString().split('T')[0],
       mealType: "",
@@ -61,8 +63,8 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
     
     if (!description.trim()) {
       toast({
-        title: "Erro",
-        description: "Por favor, descreva o que você comeu antes de analisar.",
+        title: t("forms.nutrition.errorMessage"),
+        description: t("forms.nutrition.analysisRequirement"),
         variant: "destructive",
       });
       return;
@@ -86,14 +88,14 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
       setAnalysis(data);
       
       toast({
-        title: "Análise concluída!",
-        description: "A IA analisou sua alimentação.",
+        title: t("forms.nutrition.analysisComplete"),
+        description: t("forms.nutrition.analysisCompleteDesc"),
       });
     } catch (error: any) {
       console.error('Error analyzing description:', error);
       toast({
-        title: "Erro ao analisar",
-        description: error.message || "Tente novamente mais tarde.",
+        title: t("forms.nutrition.analysisError"),
+        description: error.message || t("forms.nutrition.analysisErrorRetry"),
         variant: "destructive",
       });
     } finally {
@@ -117,8 +119,8 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
       if (error) throw error;
 
       toast({
-        title: "Alimentação registrada!",
-        description: "Seus dados foram salvos com sucesso.",
+        title: t("forms.nutrition.successMessage"),
+        description: t("forms.nutrition.successDesc"),
       });
 
       form.reset();
@@ -127,7 +129,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
       onSuccess();
     } catch (error: any) {
       toast({
-        title: "Erro ao registrar",
+        title: t("forms.nutrition.errorMessage"),
         description: error.message,
         variant: "destructive",
       });
@@ -144,7 +146,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="nutritionDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Data</FormLabel>
+              <FormLabel>{t("forms.nutrition.date")}</FormLabel>
               <FormControl>
                 <Input type="date" {...field} />
               </FormControl>
@@ -158,18 +160,18 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="mealType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo de Refeição</FormLabel>
+              <FormLabel>{t("forms.nutrition.mealType")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo de refeição" />
+                    <SelectValue placeholder={t("forms.nutrition.mealPlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="breakfast">Café da manhã</SelectItem>
-                  <SelectItem value="lunch">Almoço</SelectItem>
-                  <SelectItem value="dinner">Jantar</SelectItem>
-                  <SelectItem value="snack">Lanche</SelectItem>
+                  <SelectItem value="breakfast">{t("forms.nutrition.breakfast")}</SelectItem>
+                  <SelectItem value="lunch">{t("forms.nutrition.lunch")}</SelectItem>
+                  <SelectItem value="dinner">{t("forms.nutrition.dinner")}</SelectItem>
+                  <SelectItem value="snack">{t("forms.nutrition.snack")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -182,10 +184,10 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="foodsConsumed"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>O que você comeu?</FormLabel>
+              <FormLabel>{t("forms.nutrition.foodsConsumed")}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Descreva sua refeição..."
+                  placeholder={t("forms.nutrition.foodsPlaceholder")}
                   className="min-h-[100px]"
                   {...field}
                 />
@@ -200,17 +202,17 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="portionSize"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tamanho da Porção</FormLabel>
+              <FormLabel>{t("forms.nutrition.portionSize")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tamanho" />
+                    <SelectValue placeholder={t("forms.nutrition.portionPlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="small">Pequena</SelectItem>
-                  <SelectItem value="medium">Média</SelectItem>
-                  <SelectItem value="large">Grande</SelectItem>
+                  <SelectItem value="small">{t("forms.nutrition.portionSmall")}</SelectItem>
+                  <SelectItem value="medium">{t("forms.nutrition.portionMedium")}</SelectItem>
+                  <SelectItem value="large">{t("forms.nutrition.portionLarge")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -223,11 +225,11 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Observações (opcional)</FormLabel>
+              <FormLabel>{t("forms.nutrition.notes")}</FormLabel>
               <div className="space-y-2">
                 <FormControl>
                   <Textarea
-                    placeholder="Como você se sentiu após a refeição?"
+                    placeholder={t("forms.nutrition.notesPlaceholder")}
                     className="min-h-[80px]"
                     {...field}
                   />
@@ -252,7 +254,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           className="w-full"
         >
           <Sparkles className="mr-2 h-4 w-4" />
-          {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+          {isAnalyzing ? t("forms.nutrition.analyzing") : t("forms.nutrition.analyzeAI")}
         </Button>
 
         {analysis && (
@@ -260,7 +262,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
         )}
 
         <FormItem>
-          <FormLabel>Qualidade Nutricional (1-5): {nutritionQuality}</FormLabel>
+          <FormLabel>{t("forms.nutrition.quality", { quality: nutritionQuality })}</FormLabel>
           <FormControl>
             <Slider
               value={[nutritionQuality]}
@@ -280,7 +282,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           disabled={isLoading} 
           className="w-full"
         >
-          {isLoading ? "Registrando..." : "Registrar Alimentação"}
+          {isLoading ? t("forms.nutrition.registering") : t("forms.nutrition.save")}
         </Button>
       </form>
     </Form>
