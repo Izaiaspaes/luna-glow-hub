@@ -14,13 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText } from "lucide-react";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PartnerSharing } from "@/components/PartnerSharing";
 import { OnboardingDataView } from "@/components/OnboardingDataView";
+import { WearableIntegration } from "@/components/WearableIntegration";
 
 interface ProfileSettingsProps {
   open: boolean;
@@ -295,7 +296,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
 
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="profile">
               <User className="h-4 w-4 mr-2" />
               Perfil
@@ -315,6 +316,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
             <TabsTrigger value="appearance">
               <Palette className="h-4 w-4 mr-2" />
               Aparência
+            </TabsTrigger>
+            <TabsTrigger value="wearables">
+              <Watch className="h-4 w-4 mr-2" />
+              Wearables
             </TabsTrigger>
             <TabsTrigger value="privacy">
               <Shield className="h-4 w-4 mr-2" />
@@ -521,6 +526,11 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                 </Button>
               </div>
             </div>
+          </TabsContent>
+
+          {/* Wearables Tab */}
+          <TabsContent value="wearables" className="space-y-4 py-4">
+            <WearableIntegration />
           </TabsContent>
 
           {/* Privacy Tab */}
