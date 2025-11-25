@@ -7,12 +7,10 @@ import { Privacy } from "@/components/Privacy";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Hero />
-      <Features />
+      
       <Statistics />
       <Testimonials />
       <FAQ />
@@ -20,8 +18,6 @@ const Index = () => {
       <CTA />
       <Footer />
       <WhatsAppButton />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
