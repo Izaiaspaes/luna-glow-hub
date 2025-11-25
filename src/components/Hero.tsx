@@ -13,6 +13,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { MobileNav } from "@/components/MobileNav";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import heroImage from "@/assets/hero-wellness.jpg";
 import logoLuna from "@/assets/logo-luna.png";
 
@@ -42,6 +43,9 @@ export const Hero = () => {
           />
           
           <div className="flex items-center gap-2">
+            <div className="hidden md:block">
+              <LanguageSelector />
+            </div>
             {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

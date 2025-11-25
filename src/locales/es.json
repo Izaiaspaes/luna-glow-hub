@@ -20,7 +20,8 @@
     "features": "Funcionalidades",
     "pricing": "Precios",
     "blog": "Blog",
-    "dashboard": "Panel"
+    "dashboard": "Panel",
+    "home": "Inicio"
   },
   "hero": {
     "title": "Tu Bienestar, Tu Comunidad, Tu Estilo",
@@ -70,7 +71,21 @@
     "links": "Enlaces Rápidos",
     "contact": "Contacto",
     "support": "Soporte",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "product": "Producto",
+    "community": "Comunidad",
+    "company": "Empresa",
+    "security": "Seguridad",
+    "stories": "Historias",
+    "events": "Eventos",
+    "partners": "Socios",
+    "about": "Sobre nosotros",
+    "careers": "Carreras",
+    "press": "Prensa",
+    "share": "Compartir Luna",
+    "terms": "Términos de Uso",
+    "privacyPolicy": "Política de Privacidad",
+    "cookies": "Cookies"
   },
   "dashboard": {
     "welcome": "¡Bienvenida, {{name}}!",
@@ -104,7 +119,10 @@
     "perMonth": "/mes",
     "perYear": "/año",
     "selectPlan": "Seleccionar Plan",
-    "features": "Funcionalidades"
+    "features": "Funcionalidades",
+    "subtitle": "Comienza gratis y desbloquea funciones avanzadas cuando las necesites.",
+    "loginRequired": "Inicio de sesión necesario",
+    "loginRequiredDescription": "Necesitas iniciar sesión para suscribirte"
   },
   "blog": {
     "title": "Blog",
@@ -129,5 +147,53 @@
     "notConnected": "No conectado",
     "sync": "Sincronizar Ahora",
     "lastSync": "Última sincronización: {{date}}"
+  },
+  "tracking": {
+    "cycle": {
+      "title": "Seguimiento de Ciclo",
+      "startDate": "Fecha de Inicio",
+      "endDate": "Fecha de Término",
+      "flowIntensity": "Intensidad del Flujo",
+      "symptoms": "Síntomas",
+      "notes": "Observaciones"
+    },
+    "sleep": {
+      "title": "Seguimiento de Sueño",
+      "bedtime": "Hora de Dormir",
+      "wakeTime": "Hora de Despertar",
+      "duration": "Duración",
+      "quality": "Calidad"
+    },
+    "mood": {
+      "title": "Seguimiento de Humor",
+      "level": "Nivel",
+      "type": "Tipo de Humor"
+    },
+    "energy": {
+      "title": "Seguimiento de Energía",
+      "level": "Nivel de Energía",
+      "timeOfDay": "Momento del Día"
+    },
+    "nutrition": {
+      "title": "Seguimiento de Nutrición",
+      "mealType": "Tipo de Comida",
+      "foods": "Alimentos Consumidos",
+      "quality": "Calidad Nutricional"
+    },
+    "work": {
+      "title": "Rutina de Trabajo",
+      "hours": "Horas Trabajadas",
+      "routine": "Tipo de Rutina",
+      "workload": "Carga de Trabajo",
+      "moodImpact": "Impacto en el Humor"
+    }
+  },
+  "subscription": {
+    "free": "Plan Gratuito",
+    "premium": "Plan Premium",
+    "currentPlan": "Tu Plan Actual",
+    "upgrade": "Mejorar Plan",
+    "manageSubscription": "Gestionar Suscripción",
+    "benefits": "Beneficios"
   }
 }

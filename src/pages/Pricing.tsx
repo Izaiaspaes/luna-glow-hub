@@ -9,8 +9,10 @@ import {
   ArrowRight,
   Zap
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MobileNav } from "@/components/MobileNav";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -100,12 +102,13 @@ const comparisonFeatures = [
 export default function Pricing() {
   const { user, session } = useAuth();
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleCheckout = async (priceId: string) => {
     if (!user || !session) {
       toast({
-        title: "Login necessário",
-        description: "Você precisa fazer login para assinar",
+        title: t('pricing.loginRequired') || "Login necessário",
+        description: t('pricing.loginRequiredDescription') || "Você precisa fazer login para assinar",
         variant: "destructive",
       });
       return;
@@ -144,16 +147,19 @@ export default function Pricing() {
               <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
             </NavLink>
             <div className="flex items-center gap-2">
+              <div className="hidden md:block mr-2">
+                <LanguageSelector />
+              </div>
               <nav className="hidden md:flex items-center gap-6">
                 <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth">
-                  Funcionalidades
+                  {t('nav.features')}
                 </NavLink>
                 <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
-                  Preços
+                  {t('nav.pricing')}
                 </NavLink>
                 <NavLink to="/auth">
                   <Button variant="hero" size="sm">
-                    Entrar
+                    {t('common.login')}
                   </Button>
                 </NavLink>
               </nav>
@@ -172,14 +178,10 @@ export default function Pricing() {
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Escolha o pacote ideal{" "}
-            <span className="bg-gradient-hero bg-clip-text text-transparent">
-              para você
-            </span>
+            {t('pricing.title')}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comece gratuitamente e desbloqueie recursos avançados quando precisar. 
-            Sem pegadinhas, sem taxas escondidas.
+            {t('pricing.subtitle') || 'Comece gratuitamente e desbloqueie recursos avançados quando precisar.'}
           </p>
         </div>
       </section>

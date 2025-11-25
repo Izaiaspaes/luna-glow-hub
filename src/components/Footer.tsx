@@ -3,15 +3,17 @@ import { NavLink } from "@/components/NavLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 import logoLuna from "@/assets/logo-luna.png";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
 
   const handleShare = async () => {
     const shareData = {
-      title: 'Luna - Bem-estar Feminino',
-      text: 'Descubra a Luna, sua plataforma completa de bem-estar, comunidade e lifestyle feminina!',
+      title: 'Luna - ' + t('footer.description'),
+      text: t('hero.subtitle'),
       url: window.location.origin
     };
 
@@ -20,7 +22,7 @@ export const Footer = () => {
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(window.location.origin);
-        toast.success("Link copiado para a área de transferência!");
+        toast.success(t('common.copied') || "Link copiado!");
       }
     } catch (error) {
       console.error('Erro ao compartilhar:', error);
@@ -44,7 +46,7 @@ export const Footer = () => {
               className="h-16 w-auto mb-2"
             />
             <p className="text-sm text-muted-foreground">
-              Sua plataforma de bem-estar, comunidade e lifestyle feminina.
+              {t('footer.description')}
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4" />
@@ -68,26 +70,26 @@ export const Footer = () => {
 
           {/* Produto */}
           <div>
-            <h4 className="font-semibold mb-4">Produto</h4>
+            <h4 className="font-semibold mb-4">{t('footer.product') || 'Produto'}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <NavLink to="/features" className="hover:text-primary transition-smooth">
-                  Funcionalidades
+                  {t('nav.features')}
                 </NavLink>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Privacidade
+                  {t('privacy.title')}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Segurança
+                  {t('footer.security') || 'Segurança'}
                 </a>
               </li>
               <li>
                 <NavLink to="/pricing" className="hover:text-primary transition-smooth">
-                  Preços
+                  {t('nav.pricing')}
                 </NavLink>
               </li>
             </ul>
@@ -95,26 +97,26 @@ export const Footer = () => {
 
           {/* Comunidade */}
           <div>
-            <h4 className="font-semibold mb-4">Comunidade</h4>
+            <h4 className="font-semibold mb-4">{t('footer.community') || 'Comunidade'}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <NavLink to="/blog" className="hover:text-primary transition-smooth">
-                  Blog
+                  {t('nav.blog')}
                 </NavLink>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Histórias
+                  {t('footer.stories') || 'Histórias'}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Eventos
+                  {t('footer.events') || 'Eventos'}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Parceiros
+                  {t('footer.partners') || 'Parceiros'}
                 </a>
               </li>
             </ul>
@@ -122,26 +124,26 @@ export const Footer = () => {
 
           {/* Empresa */}
           <div>
-            <h4 className="font-semibold mb-4">Empresa</h4>
+            <h4 className="font-semibold mb-4">{t('footer.company') || 'Empresa'}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Sobre nós
+                  {t('footer.about') || 'Sobre nós'}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Carreiras
+                  {t('footer.careers') || 'Carreiras'}
                 </a>
               </li>
               <li>
                 <a href="mailto:contato.luna@topdigitais.net" className="hover:text-primary transition-smooth">
-                  Contato
+                  {t('footer.contact')}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary transition-smooth">
-                  Imprensa
+                  {t('footer.press') || 'Imprensa'}
                 </a>
               </li>
             </ul>
@@ -152,7 +154,7 @@ export const Footer = () => {
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex flex-col md:flex-row items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Luna. Todos os direitos reservados.
+              © {currentYear} Luna. {t('footer.rights')}
             </p>
             <Button 
               onClick={handleShare} 
@@ -161,18 +163,18 @@ export const Footer = () => {
               className="gap-2"
             >
               <Share2 className="h-4 w-4" />
-              Compartilhar Luna
+              {t('footer.share') || 'Compartilhar Luna'}
             </Button>
           </div>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-primary transition-smooth">
-              Termos de Uso
+              {t('footer.terms') || 'Termos de Uso'}
             </a>
             <a href="#" className="hover:text-primary transition-smooth">
-              Política de Privacidade
+              {t('footer.privacyPolicy') || 'Política de Privacidade'}
             </a>
             <a href="#" className="hover:text-primary transition-smooth">
-              Cookies
+              {t('footer.cookies') || 'Cookies'}
             </a>
           </div>
         </div>

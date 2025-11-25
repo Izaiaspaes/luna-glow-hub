@@ -20,7 +20,8 @@
     "features": "Features",
     "pricing": "Pricing",
     "blog": "Blog",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "home": "Home"
   },
   "hero": {
     "title": "Your Wellness, Your Community, Your Style",
@@ -70,7 +71,21 @@
     "links": "Quick Links",
     "contact": "Contact",
     "support": "Support",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "product": "Product",
+    "community": "Community",
+    "company": "Company",
+    "security": "Security",
+    "stories": "Stories",
+    "events": "Events",
+    "partners": "Partners",
+    "about": "About us",
+    "careers": "Careers",
+    "press": "Press",
+    "share": "Share Luna",
+    "terms": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "cookies": "Cookies"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
@@ -104,7 +119,10 @@
     "perMonth": "/month",
     "perYear": "/year",
     "selectPlan": "Select Plan",
-    "features": "Features"
+    "features": "Features",
+    "subtitle": "Start for free and unlock advanced features when you need them.",
+    "loginRequired": "Login required",
+    "loginRequiredDescription": "You need to login to subscribe"
   },
   "blog": {
     "title": "Blog",
@@ -129,5 +147,53 @@
     "notConnected": "Not connected",
     "sync": "Sync Now",
     "lastSync": "Last sync: {{date}}"
+  },
+  "tracking": {
+    "cycle": {
+      "title": "Cycle Tracking",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "flowIntensity": "Flow Intensity",
+      "symptoms": "Symptoms",
+      "notes": "Notes"
+    },
+    "sleep": {
+      "title": "Sleep Tracking",
+      "bedtime": "Bedtime",
+      "wakeTime": "Wake Time",
+      "duration": "Duration",
+      "quality": "Quality"
+    },
+    "mood": {
+      "title": "Mood Tracking",
+      "level": "Level",
+      "type": "Mood Type"
+    },
+    "energy": {
+      "title": "Energy Tracking",
+      "level": "Energy Level",
+      "timeOfDay": "Time of Day"
+    },
+    "nutrition": {
+      "title": "Nutrition Tracking",
+      "mealType": "Meal Type",
+      "foods": "Foods Consumed",
+      "quality": "Nutritional Quality"
+    },
+    "work": {
+      "title": "Work Routine",
+      "hours": "Hours Worked",
+      "routine": "Routine Type",
+      "workload": "Workload",
+      "moodImpact": "Mood Impact"
+    }
+  },
+  "subscription": {
+    "free": "Free Plan",
+    "premium": "Premium Plan",
+    "currentPlan": "Your Current Plan",
+    "upgrade": "Upgrade",
+    "manageSubscription": "Manage Subscription",
+    "benefits": "Benefits"
   }
 }
