@@ -214,19 +214,27 @@ Forneça:
 3. Micro-meditações de 1-5 minutos para momentos do dia
 4. Técnicas de respiração específicas`;
 
-    } else if (planType === 'nutricao') {
-      userPrompt = `Crie um plano nutricional personalizado com base nos seguintes dados dos últimos ${days} dias:
+    } else if (planType === 'nutricao' || planType === 'alimentacao') {
+      userPrompt = `Crie um plano nutricional personalizado com receitas práticas com base nos seguintes dados dos últimos ${days} dias:
 
 Fase do ciclo atual: ${cyclePhase}
 Nível médio de energia: ${avgEnergy.toFixed(1)}/5
 Qualidade média do sono: ${avgSleepQuality.toFixed(1)}/5
 Nível médio de humor: ${avgMood.toFixed(1)}/5
 
-Forneça:
-1. Recomendações nutricionais para a fase do ciclo atual
-2. 4-6 dicas de alimentação para aumentar energia
-3. Alimentos que ajudam no equilíbrio hormonal
-4. Sugestões de hidratação e suplementação`;
+Forneça um plano completo incluindo:
+1. Análise nutricional para a fase do ciclo atual
+2. 5-7 recomendações nutricionais específicas com alimentos que:
+   - Aumentam energia e disposição
+   - Equilibram hormônios naturalmente
+   - Melhoram qualidade do sono
+   - Estabilizam o humor
+3. 3-4 RECEITAS COMPLETAS e fáceis de preparar (com ingredientes, modo de preparo e benefícios)
+4. Dicas de hidratação adequada
+5. Sugestões de lanches saudáveis para diferentes momentos do dia
+6. Lista de alimentos a priorizar e evitar nesta fase
+
+IMPORTANTE: As receitas devem ser práticas, com ingredientes acessíveis e preparos simples (máximo 30 minutos). Inclua receitas variadas: café da manhã, almoço/jantar, lanches.`;
 
     } else {
       // Plano geral
