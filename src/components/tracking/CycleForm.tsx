@@ -11,15 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-const cycleSchema = z.object({
-  cycleStartDate: z.string().min(1, "Data de início é obrigatória"),
-  flowIntensity: z.enum(["leve", "moderado", "intenso"]).optional(),
-  symptoms: z.string().optional(),
-  notes: z.string().optional(),
-});
-
-type CycleFormData = z.infer<typeof cycleSchema>;
+import { useTranslation } from "react-i18next";
 
 interface CycleFormProps {
   userId: string;
@@ -27,10 +19,20 @@ interface CycleFormProps {
 }
 
 export function CycleForm({ userId, onSuccess }: CycleFormProps) {
+  const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+
+  const cycleSchema = z.object({
+    cycleStartDate: z.string().min(1, t('forms.cycle.dateRequired')),
+    flowIntensity: z.enum(["leve", "moderado", "intenso"]).optional(),
+    symptoms: z.string().optional(),
+    notes: z.string().optional(),
+  });
+
+  type CycleFormData = z.infer<typeof cycleSchema>;
 
   const form = useForm<CycleFormData>({
     resolver: zodResolver(cycleSchema),
@@ -63,10 +65,10 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
 
       if (error) throw error;
       setAnalysis(analysisData);
-      toast.success("Análise concluída!");
+      toast.success(t('forms.cycle.analysisComplete'));
     } catch (error) {
       console.error('Error analyzing description:', error);
-      toast.error("Erro ao analisar descrição");
+      toast.error(t('forms.cycle.analysisError'));
     } finally {
       setIsAnalyzing(false);
     }
@@ -89,13 +91,13 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
 
       if (error) throw error;
 
-      toast.success("Registro de ciclo salvo com sucesso!");
+      toast.success(t('forms.cycle.successMessage'));
       form.reset();
       setAnalysis(null);
       onSuccess();
     } catch (error) {
       console.error("Error saving cycle tracking:", error);
-      toast.error("Erro ao salvar registro");
+      toast.error(t('forms.cycle.errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -109,7 +111,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="cycleStartDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Data de Início do Ciclo</FormLabel>
+              <FormLabel>{t('forms.cycle.startDate')}</FormLabel>
               <FormControl>
                 <Input type="date" {...field} />
               </FormControl>
@@ -123,17 +125,17 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="flowIntensity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Intensidade do Fluxo</FormLabel>
+              <FormLabel>{t('forms.cycle.flowIntensity')}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione a intensidade" />
+                    <SelectValue placeholder={t('forms.cycle.flowPlaceholder')} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="leve">Leve</SelectItem>
-                  <SelectItem value="moderado">Moderado</SelectItem>
-                  <SelectItem value="intenso">Intenso</SelectItem>
+                  <SelectItem value="leve">{t('forms.cycle.flowLight')}</SelectItem>
+                  <SelectItem value="moderado">{t('forms.cycle.flowModerate')}</SelectItem>
+                  <SelectItem value="intenso">{t('forms.cycle.flowHeavy')}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -146,9 +148,9 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="symptoms"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Sintomas (separados por vírgula)</FormLabel>
+              <FormLabel>{t('forms.cycle.symptoms')}</FormLabel>
               <FormControl>
-                <Input placeholder="Ex: cólica, fadiga, dor de cabeça" {...field} />
+                <Input placeholder={t('forms.cycle.symptomsPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,9 +162,9 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Notas (opcional)</FormLabel>
+              <FormLabel>{t('forms.cycle.notes')}</FormLabel>
               <FormControl>
-                <Textarea placeholder="Adicione observações adicionais..." {...field} />
+                <Textarea placeholder={t('forms.cycle.notesPlaceholder')} {...field} />
               </FormControl>
               <div className="flex gap-2 mt-2">
                 <VoiceRecorder 
@@ -180,7 +182,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
                     onClick={() => handleAnalyzeDescription(field.value)}
                     disabled={isAnalyzing}
                   >
-                    {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+                    {isAnalyzing ? t('forms.cycle.analyzing') : t('forms.cycle.analyzeAI')}
                   </Button>
                 )}
               </div>
@@ -193,7 +195,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           <>
             <HealthAnalysis analysis={analysis} />
             <div className="pt-2 pb-1 text-center text-sm text-muted-foreground">
-              ⬇️ Clique em "Salvar Registro" abaixo para salvar
+              {t('forms.cycle.scrollHint')}
             </div>
           </>
         )}
@@ -204,7 +206,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           className="w-full" 
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Salvando..." : "Salvar Registro"}
+          {isSubmitting ? t('forms.cycle.saving') : t('forms.cycle.save')}
         </Button>
       </form>
     </Form>
