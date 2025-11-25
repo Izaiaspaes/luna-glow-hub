@@ -35,6 +35,7 @@ import { CalendarView } from "@/components/CalendarView";
 import { SymptomPredictions } from "@/components/SymptomPredictions";
 import { PrivacyModeIndicator } from "@/components/PrivacyModeIndicator";
 import { WorkForm } from "@/components/tracking/WorkForm";
+import { PlanLimitModal } from "@/components/PlanLimitModal";
 import { WeeklySummary } from "@/components/WeeklySummary";
 import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { AppTour } from "@/components/AppTour";
@@ -54,6 +55,7 @@ export default function Dashboard() {
   const [wellnessPlans, setWellnessPlans] = useState<any[]>([]);
   const [generatingPlan, setGeneratingPlan] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [showPlanLimitModal, setShowPlanLimitModal] = useState(false);
   const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
   const { profile } = useProfile();
   const { toast } = useToast();
@@ -174,20 +176,7 @@ export default function Dashboard() {
       if (error) {
         // Check if it's a plan limit error
         if (error.message?.includes('PLAN_LIMIT_REACHED') || error.message?.includes('apenas 1 plano')) {
-          toast({
-            title: "Limite de planos atingido",
-            description: "Usuários gratuitos podem ter apenas 1 plano ativo. Arquive ou conclua seu plano atual, ou faça upgrade para Premium!",
-            variant: "destructive",
-            action: (
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => navigate("/pricing")}
-              >
-                Ver Premium
-              </Button>
-            ),
-          });
+          setShowPlanLimitModal(true);
           return;
         }
         throw error;
@@ -233,6 +222,10 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      <PlanLimitModal 
+        open={showPlanLimitModal} 
+        onOpenChange={setShowPlanLimitModal} 
+      />
       <AppTour />
       {/* Header/Nav */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
