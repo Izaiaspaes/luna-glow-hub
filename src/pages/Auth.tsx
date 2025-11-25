@@ -10,13 +10,10 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import logoLuna from "@/assets/logo-luna.png";
-
-const authSchema = z.object({
-  email: z.string().email({ message: "Email inválido" }),
-  password: z.string().min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
-});
+import { useTranslation } from "react-i18next";
 
 export default function Auth() {
+  const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [isResetPassword, setIsResetPassword] = useState(false);
@@ -27,6 +24,11 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
+
+  const authSchema = z.object({
+    email: z.string().email({ message: t("auth.errors.invalidEmail") }),
+    password: z.string().min(6, { message: t("auth.errors.passwordTooShort") }),
+  });
 
   useEffect(() => {
     if (user) {
@@ -57,7 +59,7 @@ export default function Auth() {
     // Validate invite code for signup
     if (!isLogin) {
       if (!inviteCode.trim()) {
-        toast.error("Código de convite é obrigatório para criar uma conta");
+        toast.error(t("auth.errors.inviteRequired"));
         setLoading(false);
         return;
       }
@@ -70,25 +72,25 @@ export default function Auth() {
         .single();
 
       if (inviteError || !invite) {
-        toast.error("Código de convite inválido");
+        toast.error(t("auth.errors.inviteInvalid"));
         setLoading(false);
         return;
       }
 
       if (new Date(invite.expires_at) < new Date()) {
-        toast.error("Este código de convite já expirou");
+        toast.error(t("auth.errors.inviteExpired"));
         setLoading(false);
         return;
       }
 
       if (invite.current_uses >= invite.max_uses) {
-        toast.error("Este código de convite já atingiu o limite de usos");
+        toast.error(t("auth.errors.inviteMaxUses"));
         setLoading(false);
         return;
       }
 
       if (invite.email && invite.email !== email) {
-        toast.error("Este convite é válido apenas para outro email");
+        toast.error(t("auth.errors.inviteWrongEmail"));
         setLoading(false);
         return;
       }
@@ -98,21 +100,21 @@ export default function Auth() {
       const { error } = await signIn(email, password);
       if (error) {
         if (error.message.includes("Invalid login credentials")) {
-          toast.error("Email ou senha incorretos");
+          toast.error(t("auth.errors.wrongCredentials"));
         } else {
-          toast.error("Erro ao fazer login: " + error.message);
+          toast.error(t("auth.errors.loginError") + error.message);
         }
       } else {
-        toast.success("Login realizado com sucesso!");
+        toast.success(t("auth.success.loginSuccess"));
         navigate("/dashboard");
       }
     } else {
       const { error } = await signUp(email, password);
       if (error) {
         if (error.message.includes("already registered")) {
-          toast.error("Este email já está cadastrado");
+          toast.error(t("auth.errors.alreadyRegistered"));
         } else {
-          toast.error("Erro ao criar conta: " + error.message);
+          toast.error(t("auth.errors.signupError") + error.message);
         }
       } else {
         // Update invite usage - increment current_uses
@@ -132,7 +134,7 @@ export default function Auth() {
             .eq("code", inviteCode);
         }
         
-        toast.success("Conta criada com sucesso!");
+        toast.success(t("auth.success.accountCreated"));
         navigate("/dashboard");
       }
     }
@@ -144,13 +146,13 @@ export default function Auth() {
     e.preventDefault();
 
     if (!email) {
-      toast.error("Por favor, insira seu email");
+      toast.error(t("auth.errors.enterEmail"));
       return;
     }
 
     const emailValidation = z.string().email().safeParse(email);
     if (!emailValidation.success) {
-      toast.error("Email inválido");
+      toast.error(t("auth.errors.invalidEmail"));
       return;
     }
 
@@ -161,9 +163,9 @@ export default function Auth() {
     });
 
     if (error) {
-      toast.error("Erro ao enviar email: " + error.message);
+      toast.error(t("auth.errors.emailSentError") + error.message);
     } else {
-      toast.success("Email de recuperação enviado! Verifique sua caixa de entrada.");
+      toast.success(t("auth.success.emailSent"));
       setIsForgotPassword(false);
       setEmail("");
     }
@@ -175,12 +177,12 @@ export default function Auth() {
     e.preventDefault();
 
     if (password.length < 6) {
-      toast.error("Senha deve ter no mínimo 6 caracteres");
+      toast.error(t("auth.errors.passwordTooShort"));
       return;
     }
 
     if (password !== confirmPassword) {
-      toast.error("As senhas não coincidem");
+      toast.error(t("auth.errors.passwordsMismatch"));
       return;
     }
 
@@ -191,9 +193,9 @@ export default function Auth() {
     });
 
     if (error) {
-      toast.error("Erro ao redefinir senha: " + error.message);
+      toast.error(t("auth.errors.resetError") + error.message);
     } else {
-      toast.success("Senha redefinida com sucesso!");
+      toast.success(t("auth.success.passwordReset"));
       setIsResetPassword(false);
       setPassword("");
       setConfirmPassword("");
@@ -216,28 +218,28 @@ export default function Auth() {
           </div>
           <CardTitle className="text-2xl">
             {isResetPassword
-              ? "Redefinir senha"
+              ? t("auth.resetPassword")
               : isForgotPassword
-              ? "Recuperar senha"
+              ? t("auth.forgotPassword")
               : isLogin
-              ? "Bem-vinda de volta"
-              : "Crie sua conta"}
+              ? t("auth.welcomeBack")
+              : t("auth.createAccount")}
           </CardTitle>
           <CardDescription>
             {isResetPassword
-              ? "Digite sua nova senha"
+              ? t("auth.enterNewPassword")
               : isForgotPassword
-              ? "Enviaremos um link de recuperação para seu email"
+              ? t("auth.sendResetLink")
               : isLogin
-              ? "Entre com seu email e senha"
-              : "Preencha os dados para começar"}
+              ? t("auth.enterEmail")
+              : t("auth.fillData")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {isResetPassword ? (
             <form onSubmit={handleResetPassword} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password">Nova senha</Label>
+                <Label htmlFor="password">{t("auth.newPassword")}</Label>
                 <Input
                   id="password"
                   type="password"
@@ -248,7 +250,7 @@ export default function Auth() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirmar nova senha</Label>
+                <Label htmlFor="confirmPassword">{t("auth.confirmNewPassword")}</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -259,13 +261,13 @@ export default function Auth() {
                 />
               </div>
               <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
-                {loading ? "Carregando..." : "Redefinir senha"}
+                {loading ? t("auth.resettingPassword") : t("auth.resetPasswordButton")}
               </Button>
             </form>
           ) : isForgotPassword ? (
             <form onSubmit={handleForgotPassword} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("common.email")}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -276,7 +278,7 @@ export default function Auth() {
                 />
               </div>
               <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
-                {loading ? "Enviando..." : "Enviar link de recuperação"}
+                {loading ? t("auth.sendingLink") : t("auth.sendLink")}
               </Button>
               <div className="text-center text-sm">
                 <button
@@ -284,54 +286,58 @@ export default function Auth() {
                   onClick={() => setIsForgotPassword(false)}
                   className="text-primary hover:underline"
                 >
-                  Voltar para login
+                  {t("auth.backToLogin")}
                 </button>
               </div>
             </form>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="seu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            
-            {!isLogin && (
               <div className="space-y-2">
-                <Label htmlFor="invite">Código de Convite</Label>
+                <Label htmlFor="email">{t("common.email")}</Label>
                 <Input
-                  id="invite"
-                  type="text"
-                  placeholder="Digite seu código de convite"
-                  value={inviteCode}
-                  onChange={(e) => setInviteCode(e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <p className="text-xs text-muted-foreground">
-                  Você precisa de um código de convite para criar uma conta
-                </p>
               </div>
-            )}
-            
+              <div className="space-y-2">
+                <Label htmlFor="password">{t("common.password")}</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              
+              {!isLogin && (
+                <div className="space-y-2">
+                  <Label htmlFor="invite">{t("auth.inviteCode")}</Label>
+                  <Input
+                    id="invite"
+                    type="text"
+                    placeholder={t("auth.inviteCodePlaceholder")}
+                    value={inviteCode}
+                    onChange={(e) => setInviteCode(e.target.value)}
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {t("auth.inviteCodeRequired")}
+                  </p>
+                </div>
+              )}
+              
               <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
-                {loading ? "Carregando..." : isLogin ? "Entrar" : "Criar conta"}
+                {loading 
+                  ? t("common.loading") 
+                  : isLogin 
+                    ? t("auth.enterButton") 
+                    : t("auth.createButton")}
               </Button>
             </form>
           )}
@@ -345,7 +351,7 @@ export default function Auth() {
                     onClick={() => setIsForgotPassword(true)}
                     className="text-primary hover:underline"
                   >
-                    Esqueci minha senha
+                    {t("auth.forgotPasswordLink")}
                   </button>
                 </div>
               )}
@@ -356,8 +362,8 @@ export default function Auth() {
                   className="text-primary hover:underline"
                 >
                   {isLogin
-                    ? "Não tem uma conta? Cadastre-se"
-                    : "Já tem uma conta? Entre"}
+                    ? t("auth.noAccount")
+                    : t("auth.hasAccount")}
                 </button>
               </div>
             </div>
