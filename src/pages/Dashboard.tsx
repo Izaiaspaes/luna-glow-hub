@@ -388,7 +388,7 @@ export default function Dashboard() {
           {/* Left Column - Tracking */}
           <div className="lg:col-span-2 space-y-4 md:space-y-6">
             {/* Tabs */}
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex flex-wrap gap-2 pb-2 scrollbar-hide">
               <Button
                 variant={activeTab === 'overview' ? 'default' : 'outline'}
                 size="sm"
