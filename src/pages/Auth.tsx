@@ -18,8 +18,11 @@ const authSchema = z.object({
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [isResetPassword, setIsResetPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [loading, setLoading] = useState(false);
   const { user, signIn, signUp } = useAuth();
@@ -29,6 +32,14 @@ export default function Auth() {
     if (user) {
       navigate("/dashboard");
     }
+
+    // Check if user is accessing via password reset link
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setIsResetPassword(true);
+        setIsForgotPassword(false);
+      }
+    });
   }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -129,6 +140,69 @@ export default function Auth() {
     setLoading(false);
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email) {
+      toast.error("Por favor, insira seu email");
+      return;
+    }
+
+    const emailValidation = z.string().email().safeParse(email);
+    if (!emailValidation.success) {
+      toast.error("Email inválido");
+      return;
+    }
+
+    setLoading(true);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth`,
+    });
+
+    if (error) {
+      toast.error("Erro ao enviar email: " + error.message);
+    } else {
+      toast.success("Email de recuperação enviado! Verifique sua caixa de entrada.");
+      setIsForgotPassword(false);
+      setEmail("");
+    }
+
+    setLoading(false);
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password.length < 6) {
+      toast.error("Senha deve ter no mínimo 6 caracteres");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("As senhas não coincidem");
+      return;
+    }
+
+    setLoading(true);
+
+    const { error } = await supabase.auth.updateUser({
+      password: password,
+    });
+
+    if (error) {
+      toast.error("Erro ao redefinir senha: " + error.message);
+    } else {
+      toast.success("Senha redefinida com sucesso!");
+      setIsResetPassword(false);
+      setPassword("");
+      setConfirmPassword("");
+      navigate("/dashboard");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-gradient-card">
@@ -141,16 +215,81 @@ export default function Auth() {
             />
           </div>
           <CardTitle className="text-2xl">
-            {isLogin ? "Bem-vinda de volta" : "Crie sua conta"}
+            {isResetPassword
+              ? "Redefinir senha"
+              : isForgotPassword
+              ? "Recuperar senha"
+              : isLogin
+              ? "Bem-vinda de volta"
+              : "Crie sua conta"}
           </CardTitle>
           <CardDescription>
-            {isLogin
+            {isResetPassword
+              ? "Digite sua nova senha"
+              : isForgotPassword
+              ? "Enviaremos um link de recuperação para seu email"
+              : isLogin
               ? "Entre com seu email e senha"
               : "Preencha os dados para começar"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {isResetPassword ? (
+            <form onSubmit={handleResetPassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Nova senha</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirmar nova senha</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
+                {loading ? "Carregando..." : "Redefinir senha"}
+              </Button>
+            </form>
+          ) : isForgotPassword ? (
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
+                {loading ? "Enviando..." : "Enviar link de recuperação"}
+              </Button>
+              <div className="text-center text-sm">
+                <button
+                  type="button"
+                  onClick={() => setIsForgotPassword(false)}
+                  className="text-primary hover:underline"
+                >
+                  Voltar para login
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -191,21 +330,38 @@ export default function Auth() {
               </div>
             )}
             
-            <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
-              {loading ? "Carregando..." : isLogin ? "Entrar" : "Criar conta"}
-            </Button>
-          </form>
+              <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
+                {loading ? "Carregando..." : isLogin ? "Entrar" : "Criar conta"}
+              </Button>
+            </form>
+          )}
 
-          <div className="mt-4 text-center text-sm">
-            <button
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-primary hover:underline"
-            >
-              {isLogin
-                ? "Não tem uma conta? Cadastre-se"
-                : "Já tem uma conta? Entre"}
-            </button>
-          </div>
+          {!isResetPassword && !isForgotPassword && (
+            <div className="mt-4 space-y-2">
+              {isLogin && (
+                <div className="text-center text-sm">
+                  <button
+                    type="button"
+                    onClick={() => setIsForgotPassword(true)}
+                    className="text-primary hover:underline"
+                  >
+                    Esqueci minha senha
+                  </button>
+                </div>
+              )}
+              <div className="text-center text-sm">
+                <button
+                  type="button"
+                  onClick={() => setIsLogin(!isLogin)}
+                  className="text-primary hover:underline"
+                >
+                  {isLogin
+                    ? "Não tem uma conta? Cadastre-se"
+                    : "Já tem uma conta? Entre"}
+                </button>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
       
