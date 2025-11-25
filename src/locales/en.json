@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name"
+  },
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "blog": "Blog",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": "Your Wellness, Your Community, Your Style",
+    "subtitle": "Track your cycle, connect with other women and discover products that respect your body and the planet.",
+    "cta": "Start Now - Free",
+    "ctaSecondary": "Learn More"
+  },
+  "features": {
+    "title": "Features",
+    "health": {
+      "title": "Smart Health & Wellness",
+      "description": "Complete tracking of cycle, sleep, mood and energy with AI-generated personalized plans."
+    },
+    "community": {
+      "title": "Safe Community",
+      "description": "Connect with other women in moderated thematic groups with anonymity option."
+    },
+    "shop": {
+      "title": "Conscious Curation",
+      "description": "Discover sustainable and ethical products with live sales and personalized recommendations."
+    }
+  },
+  "statistics": {
+    "users": "Women Testing",
+    "plans": "Personalized Plans",
+    "satisfaction": "Satisfaction",
+    "privacy": "Privacy Guaranteed"
+  },
+  "testimonials": {
+    "title": "What our users say"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions"
+  },
+  "privacy": {
+    "title": "Your Privacy First",
+    "description": "Your data is encrypted and you have full control over what you share."
+  },
+  "cta": {
+    "title": "Start your wellness journey today",
+    "description": "Join hundreds of women who have already transformed their relationship with self-care.",
+    "button": "Create Free Account",
+    "learnMore": "Learn More"
+  },
+  "footer": {
+    "description": "Your complete platform for women's wellness, community and conscious lifestyle.",
+    "links": "Quick Links",
+    "contact": "Contact",
+    "support": "Support",
+    "rights": "All rights reserved."
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{name}}!",
+    "tracking": "Tracking",
+    "cycle": "Cycle",
+    "sleep": "Sleep",
+    "mood": "Mood",
+    "energy": "Energy",
+    "nutrition": "Nutrition",
+    "work": "Work",
+    "plans": "Wellness Plans",
+    "calendar": "Calendar",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "account": "Account",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "subscription": "Subscription",
+    "wearables": "Wearables",
+    "language": "Language"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "free": "Free",
+    "premium": "Premium",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "selectPlan": "Select Plan",
+    "features": "Features"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Read more",
+    "relatedArticles": "Related Articles",
+    "newsletter": {
+      "title": "Get new articles",
+      "description": "Subscribe to receive exclusive content about women's health.",
+      "placeholder": "Your email",
+      "button": "Subscribe"
+    }
+  },
+  "wearables": {
+    "title": "Wearable Integration",
+    "description": "Connect your devices to automatically sync health data.",
+    "appleHealth": "Apple Health",
+    "googleFit": "Google Fit",
+    "fitbit": "Fitbit",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "connected": "Connected",
+    "notConnected": "Not connected",
+    "sync": "Sync Now",
+    "lastSync": "Last sync: {{date}}"
+  }
+}

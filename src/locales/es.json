@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "signup": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "name": "Nombre"
+  },
+  "nav": {
+    "features": "Funcionalidades",
+    "pricing": "Precios",
+    "blog": "Blog",
+    "dashboard": "Panel"
+  },
+  "hero": {
+    "title": "Tu Bienestar, Tu Comunidad, Tu Estilo",
+    "subtitle": "Rastrea tu ciclo, conéctate con otras mujeres y descubre productos que respetan tu cuerpo y el planeta.",
+    "cta": "Comienza Ahora - Gratis",
+    "ctaSecondary": "Saber Más"
+  },
+  "features": {
+    "title": "Funcionalidades",
+    "health": {
+      "title": "Salud y Bienestar Inteligente",
+      "description": "Seguimiento completo de ciclo, sueño, humor y energía con planes personalizados generados por IA."
+    },
+    "community": {
+      "title": "Comunidad Segura",
+      "description": "Conéctate con otras mujeres en grupos temáticos moderados con opción de anonimato."
+    },
+    "shop": {
+      "title": "Curaduría Consciente",
+      "description": "Descubre productos sostenibles y éticos con ventas en vivo y recomendaciones personalizadas."
+    }
+  },
+  "statistics": {
+    "users": "Mujeres Probando",
+    "plans": "Planes Personalizados",
+    "satisfaction": "Satisfacción",
+    "privacy": "Privacidad Garantizada"
+  },
+  "testimonials": {
+    "title": "Lo que dicen nuestras usuarias"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes"
+  },
+  "privacy": {
+    "title": "Tu Privacidad Primero",
+    "description": "Tus datos están encriptados y tienes control total sobre lo que compartes."
+  },
+  "cta": {
+    "title": "Comienza tu viaje de bienestar hoy",
+    "description": "Únete a cientos de mujeres que ya transformaron su relación con el autocuidado.",
+    "button": "Crear Cuenta Gratis",
+    "learnMore": "Saber Más"
+  },
+  "footer": {
+    "description": "Tu plataforma completa de bienestar femenino, comunidad y estilo de vida consciente.",
+    "links": "Enlaces Rápidos",
+    "contact": "Contacto",
+    "support": "Soporte",
+    "rights": "Todos los derechos reservados."
+  },
+  "dashboard": {
+    "welcome": "¡Bienvenida, {{name}}!",
+    "tracking": "Seguimiento",
+    "cycle": "Ciclo",
+    "sleep": "Sueño",
+    "mood": "Humor",
+    "energy": "Energía",
+    "nutrition": "Nutrición",
+    "work": "Trabajo",
+    "plans": "Planes de Bienestar",
+    "calendar": "Calendario",
+    "profile": "Perfil",
+    "settings": "Configuraciones"
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Información Personal",
+    "account": "Cuenta",
+    "appearance": "Apariencia",
+    "notifications": "Notificaciones",
+    "privacy": "Privacidad",
+    "subscription": "Suscripción",
+    "wearables": "Wearables",
+    "language": "Idioma"
+  },
+  "pricing": {
+    "title": "Elige tu Plan",
+    "free": "Gratis",
+    "premium": "Premium",
+    "perMonth": "/mes",
+    "perYear": "/año",
+    "selectPlan": "Seleccionar Plan",
+    "features": "Funcionalidades"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Leer más",
+    "relatedArticles": "Artículos Relacionados",
+    "newsletter": {
+      "title": "Recibe nuevos artículos",
+      "description": "Suscríbete para recibir contenido exclusivo sobre salud femenina.",
+      "placeholder": "Tu correo electrónico",
+      "button": "Suscribirse"
+    }
+  },
+  "wearables": {
+    "title": "Integración con Wearables",
+    "description": "Conecta tus dispositivos para sincronizar automáticamente datos de salud.",
+    "appleHealth": "Apple Health",
+    "googleFit": "Google Fit",
+    "fitbit": "Fitbit",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "connected": "Conectado",
+    "notConnected": "No conectado",
+    "sync": "Sincronizar Ahora",
+    "lastSync": "Última sincronización: {{date}}"
+  }
+}

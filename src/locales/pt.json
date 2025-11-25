@@ -1,0 +1,133 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "close": "Fechar",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "login": "Entrar",
+    "logout": "Sair",
+    "signup": "Cadastrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "name": "Nome"
+  },
+  "nav": {
+    "features": "Funcionalidades",
+    "pricing": "Preços",
+    "blog": "Blog",
+    "dashboard": "Dashboard"
+  },
+  "hero": {
+    "title": "Seu Bem-estar, Sua Comunidade, Seu Estilo",
+    "subtitle": "Rastreie seu ciclo, conecte-se com outras mulheres e descubra produtos que respeitam seu corpo e o planeta.",
+    "cta": "Comece Agora - Grátis",
+    "ctaSecondary": "Saiba Mais"
+  },
+  "features": {
+    "title": "Funcionalidades",
+    "health": {
+      "title": "Saúde & Bem-estar Inteligente",
+      "description": "Rastreamento completo de ciclo, sono, humor e energia com planos personalizados gerados por IA."
+    },
+    "community": {
+      "title": "Comunidade Segura",
+      "description": "Conecte-se com outras mulheres em grupos temáticos moderados com opção de anonimato."
+    },
+    "shop": {
+      "title": "Curadoria Consciente",
+      "description": "Descubra produtos sustentáveis e éticos com vendas ao vivo e recomendações personalizadas."
+    }
+  },
+  "statistics": {
+    "users": "Mulheres Testando",
+    "plans": "Planos Personalizados",
+    "satisfaction": "Satisfação",
+    "privacy": "Privacidade Garantida"
+  },
+  "testimonials": {
+    "title": "O que nossas usuárias dizem"
+  },
+  "faq": {
+    "title": "Perguntas Frequentes"
+  },
+  "privacy": {
+    "title": "Sua Privacidade em Primeiro Lugar",
+    "description": "Seus dados são criptografados e você tem controle total sobre o que compartilha."
+  },
+  "cta": {
+    "title": "Comece sua jornada de bem-estar hoje",
+    "description": "Junte-se a centenas de mulheres que já transformaram sua relação com o autocuidado.",
+    "button": "Criar Conta Grátis",
+    "learnMore": "Saber Mais"
+  },
+  "footer": {
+    "description": "Sua plataforma completa de bem-estar feminino, comunidade e lifestyle consciente.",
+    "links": "Links Rápidos",
+    "contact": "Contato",
+    "support": "Suporte",
+    "rights": "Todos os direitos reservados."
+  },
+  "dashboard": {
+    "welcome": "Bem-vinda, {{name}}!",
+    "tracking": "Rastreamento",
+    "cycle": "Ciclo",
+    "sleep": "Sono",
+    "mood": "Humor",
+    "energy": "Energia",
+    "nutrition": "Nutrição",
+    "work": "Trabalho",
+    "plans": "Planos de Bem-estar",
+    "calendar": "Calendário",
+    "profile": "Perfil",
+    "settings": "Configurações"
+  },
+  "profile": {
+    "title": "Perfil",
+    "personalInfo": "Informações Pessoais",
+    "account": "Conta",
+    "appearance": "Aparência",
+    "notifications": "Notificações",
+    "privacy": "Privacidade",
+    "subscription": "Assinatura",
+    "wearables": "Wearables",
+    "language": "Idioma"
+  },
+  "pricing": {
+    "title": "Escolha seu Plano",
+    "free": "Grátis",
+    "premium": "Premium",
+    "perMonth": "/mês",
+    "perYear": "/ano",
+    "selectPlan": "Escolher Plano",
+    "features": "Funcionalidades"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Ler mais",
+    "relatedArticles": "Artigos Relacionados",
+    "newsletter": {
+      "title": "Receba novos artigos",
+      "description": "Inscreva-se para receber conteúdo exclusivo sobre saúde feminina.",
+      "placeholder": "Seu e-mail",
+      "button": "Inscrever"
+    }
+  },
+  "wearables": {
+    "title": "Integração com Wearables",
+    "description": "Conecte seus dispositivos para sincronizar automaticamente dados de saúde.",
+    "appleHealth": "Apple Health",
+    "googleFit": "Google Fit",
+    "fitbit": "Fitbit",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "connected": "Conectado",
+    "notConnected": "Não conectado",
+    "sync": "Sincronizar Agora",
+    "lastSync": "Última sincronização: {{date}}"
+  }
+}
