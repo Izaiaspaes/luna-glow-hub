@@ -14,7 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch } from "lucide-react";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch, Globe } from "lucide-react";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
@@ -321,6 +322,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
               <Watch className="h-4 w-4 mr-2" />
               Wearables
             </TabsTrigger>
+            <TabsTrigger value="language">
+              <Globe className="h-4 w-4 mr-2" />
+              Idioma
+            </TabsTrigger>
             <TabsTrigger value="privacy">
               <Shield className="h-4 w-4 mr-2" />
               Privacidade
@@ -531,6 +536,21 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           {/* Wearables Tab */}
           <TabsContent value="wearables" className="space-y-4 py-4">
             <WearableIntegration />
+          </TabsContent>
+
+          {/* Language Tab */}
+          <TabsContent value="language" className="space-y-4 py-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Globe className="h-4 w-4" />
+                <h3 className="text-sm font-semibold">Idioma da Interface</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Escolha o idioma de sua preferência para a interface do aplicativo
+              </p>
+              
+              <LanguageSelector />
+            </div>
           </TabsContent>
 
           {/* Privacy Tab */}

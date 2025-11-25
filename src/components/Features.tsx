@@ -1,37 +1,36 @@
 import { Card } from "@/components/ui/card";
 import { Heart, Users, ShoppingBag } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import featureHealth from "@/assets/feature-health.jpg";
 import featureCommunity from "@/assets/feature-community.jpg";
 import featureShop from "@/assets/feature-shop.jpg";
 
-const features = [
-  {
-    icon: Heart,
-    title: "Saúde & Bem-estar Inteligente",
-    description:
-      "Rastreamento completo de ciclo, sono, humor e energia com AI que gera planos personalizados: rotinas de sono, micro-meditações e dicas nutricionais adaptadas ao seu corpo.",
-    image: featureHealth,
-    color: "primary",
-  },
-  {
-    icon: Users,
-    title: "Comunidade Moderada e Segura",
-    description:
-      "Grupos privados por tema (carreira, maternidade, menopausa), conteúdo verificado por especialistas e moderação humana. Seu espaço seguro para trocar experiências reais.",
-    image: featureCommunity,
-    color: "secondary",
-  },
-  {
-    icon: ShoppingBag,
-    title: "Curadoria & Social Commerce Ético",
-    description:
-      "Marketplace com produtos sustentáveis curados, lives de vendas interativas e reviews da comunidade. Descubra marcas que compartilham seus valores.",
-    image: featureShop,
-    color: "accent",
-  },
-];
-
 export const Features = () => {
+  const { t } = useTranslation();
+  
+  const features = [
+    {
+      icon: Heart,
+      title: t('features.health.title'),
+      description: t('features.health.description'),
+      image: featureHealth,
+      color: "primary",
+    },
+    {
+      icon: Users,
+      title: t('features.community.title'),
+      description: t('features.community.description'),
+      image: featureCommunity,
+      color: "secondary",
+    },
+    {
+      icon: ShoppingBag,
+      title: t('features.shop.title'),
+      description: t('features.shop.description'),
+      image: featureShop,
+      color: "accent",
+    },
+  ];
   return (
     <section className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4">

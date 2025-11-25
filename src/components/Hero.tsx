@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
 import { ArrowRight, LogIn, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -18,6 +19,7 @@ import logoLuna from "@/assets/logo-luna.png";
 export const Hero = () => {
   const { user, signOut, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSignOut = async () => {
     await signOut();
@@ -58,9 +60,9 @@ export const Hero = () => {
                   </div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                 <DropdownMenuItem onClick={() => navigate("/dashboard")}>
                   <LayoutDashboard className="mr-2 h-4 w-4" />
-                  Dashboard
+                  {t('nav.dashboard')}
                 </DropdownMenuItem>
                 {isAdmin && (
                   <DropdownMenuItem onClick={() => navigate("/admin")}>
@@ -71,7 +73,7 @@ export const Hero = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
-                  Sair
+                  {t('common.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -79,7 +81,7 @@ export const Hero = () => {
             <NavLink to="/auth" className="hidden md:block">
               <Button variant="outline" size="sm" className="gap-2">
                 <LogIn className="h-4 w-4" />
-                Login
+                {t('common.login')}
               </Button>
             </NavLink>
           )}
@@ -98,29 +100,23 @@ export const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Seu bem-estar,{" "}
-              <span className="bg-gradient-hero bg-clip-text text-transparent">
-                sua comunidade
-              </span>
-              , seu estilo
+              {t('hero.title')}
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
-              Luna é a plataforma completa para mulheres que buscam equilíbrio: 
-              rastreamento de saúde hormonal e mental, comunidade segura e curadoria 
-              consciente de produtos — tudo em um lugar privado e personalizado.
+              {t('hero.subtitle')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <NavLink to="/auth">
                 <Button variant="colorful" size="lg" className="group">
-                  Começar agora
+                  {t('hero.cta')}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </NavLink>
               <NavLink to="/features">
                 <Button variant="outline" size="lg">
-                  Saiba mais
+                  {t('hero.ctaSecondary')}
                 </Button>
               </NavLink>
             </div>
