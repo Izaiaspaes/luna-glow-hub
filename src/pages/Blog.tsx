@@ -10,23 +10,25 @@ import { MobileNav } from "@/components/MobileNav";
 import { blogPosts } from "@/data/blogPosts";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-
-const categories = [
-  "Todos",
-  "Ciclo Menstrual",
-  "Nutrição",
-  "Sono",
-  "Saúde Mental",
-];
+import { useTranslation } from "react-i18next";
 
 const Blog = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [selectedCategory, setSelectedCategory] = useState(t('blogPage.categories.all'));
   const [searchQuery, setSearchQuery] = useState("");
+
+  const categories = [
+    t('blogPage.categories.all'),
+    t('blogPage.categories.menstrualCycle'),
+    t('blogPage.categories.nutrition'),
+    t('blogPage.categories.sleep'),
+    t('blogPage.categories.mentalHealth'),
+  ];
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesCategory =
-      selectedCategory === "Todos" || post.category === selectedCategory;
+      selectedCategory === t('blogPage.categories.all') || post.category === selectedCategory;
     const matchesSearch =
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
@@ -47,7 +49,7 @@ const Blog = () => {
           </div>
           <div className="flex items-center gap-2">
             <Button onClick={() => navigate("/")} variant="ghost" className="hidden md:flex">
-              Voltar ao início
+              {t('blogPage.backToHome')}
             </Button>
             <MobileNav />
           </div>
@@ -58,11 +60,10 @@ const Blog = () => {
       <section className="py-16 px-4 bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            Conteúdo Educativo sobre Saúde Feminina
+            {t('blogPage.title')}
           </h1>
           <p className="text-lg text-muted-foreground mb-8">
-            Aprenda mais sobre seu corpo, ciclo menstrual, bem-estar e saúde
-            hormonal com conteúdo baseado em ciência e experiências reais.
+            {t('blogPage.subtitle')}
           </p>
 
           {/* Search Bar */}
@@ -70,7 +71,7 @@ const Blog = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Buscar artigos..."
+              placeholder={t('blogPage.searchPlaceholder')}
               className="pl-10"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -118,7 +119,7 @@ const Blog = () => {
           ) : (
             <div className="text-center py-16">
               <p className="text-muted-foreground text-lg">
-                Nenhum artigo encontrado. Tente outra busca ou categoria.
+                {t('blogPage.noResults')}
               </p>
             </div>
           )}

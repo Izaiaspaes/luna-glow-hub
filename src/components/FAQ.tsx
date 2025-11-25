@@ -5,56 +5,52 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Shield, Sparkles, CreditCard, Lock, Users, Calendar } from "lucide-react";
-
-const faqs = [
-  {
-    icon: Shield,
-    question: "Meus dados estão realmente seguros?",
-    answer:
-      "Sim! A privacidade é nossa prioridade máxima. Todos os seus dados são criptografados e armazenados de forma segura. Você tem controle total sobre suas informações e pode exportar ou deletar seus dados a qualquer momento. Nunca compartilhamos suas informações pessoais sem seu consentimento explícito.",
-  },
-  {
-    icon: Sparkles,
-    question: "Como funciona a Inteligência Artificial do Luna?",
-    answer:
-      "Nossa IA analisa seus dados de rastreamento (ciclo, sono, humor e energia) para identificar padrões únicos do seu corpo. Com base nessas análises, ela gera Planos de Bem-Estar personalizados com recomendações práticas e acionáveis, adaptadas especificamente para você. Quanto mais você usa, mais precisas ficam as recomendações.",
-  },
-  {
-    icon: Calendar,
-    question: "Qual a diferença entre Pacotes e Planos de Bem-Estar?",
-    answer:
-      "Pacotes são os nossos planos de assinatura (Gratuito e Premium) que definem quais recursos você tem acesso. Já os Planos de Bem-Estar são as recomendações personalizadas geradas pela nossa IA com base nos seus dados de rastreamento, como rotinas de sono, dicas nutricionais e exercícios.",
-  },
-  {
-    icon: CreditCard,
-    question: "O que está incluído no Pacote Gratuito?",
-    answer:
-      "O Pacote Gratuito inclui rastreamento básico de ciclo, sono, humor e energia, acesso ao assistente AI com respostas limitadas, visualização de dados em gráficos simples e notificações básicas. É perfeito para começar a entender melhor seu corpo e rotina.",
-  },
-  {
-    icon: Users,
-    question: "Como funciona a transcrição por voz?",
-    answer:
-      "A transcrição por voz está disponível apenas no Pacote Premium e permite que você registre suas informações de rastreamento falando ao invés de digitando. Nossa IA transcreve automaticamente sua fala e analisa o conteúdo para preencher os campos e gerar insights personalizados.",
-  },
-  {
-    icon: Lock,
-    question: "Posso cancelar minha assinatura a qualquer momento?",
-    answer:
-      "Sim, você pode cancelar sua assinatura Premium a qualquer momento sem custos adicionais. Seus dados permanecerão seguros e você continuará tendo acesso aos recursos do Pacote Gratuito. Não há período de fidelidade ou taxas de cancelamento.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export const FAQ = () => {
+  const { t } = useTranslation();
+
+  const faqs = [
+    {
+      icon: Shield,
+      question: t('faq.q1'),
+      answer: t('faq.a1'),
+    },
+    {
+      icon: Sparkles,
+      question: t('faq.q2'),
+      answer: t('faq.a2'),
+    },
+    {
+      icon: Calendar,
+      question: t('faq.q3'),
+      answer: t('faq.a3'),
+    },
+    {
+      icon: CreditCard,
+      question: t('faq.q4'),
+      answer: t('faq.a4'),
+    },
+    {
+      icon: Users,
+      question: t('faq.q5'),
+      answer: t('faq.a5'),
+    },
+    {
+      icon: Lock,
+      question: t('faq.q6'),
+      answer: t('faq.a6'),
+    },
+  ];
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            Perguntas Frequentes
+            {t('faq.title')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            Tire suas dúvidas sobre privacidade, funcionamento e recursos do Luna
+            {t('faq.subtitle')}
           </p>
         </div>
 
@@ -87,12 +83,12 @@ export const FAQ = () => {
 
         <div className="mt-12 text-center">
           <p className="text-muted-foreground">
-            Ainda tem dúvidas?{" "}
+            {t('faq.contact')}{" "}
             <a
-              href="mailto:suporte@luna.app"
+              href="mailto:suporte@topdigitais.net"
               className="text-primary font-semibold hover:underline"
             >
-              Entre em contato conosco
+              {t('faq.contactLink')}
             </a>
           </p>
         </div>

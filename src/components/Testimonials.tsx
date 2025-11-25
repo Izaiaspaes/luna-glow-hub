@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Quote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 import testimonialMaria from "@/assets/testimonial-maria.jpg";
 import testimonialAna from "@/assets/testimonial-ana.jpg";
 import testimonialJulia from "@/assets/testimonial-julia.jpg";
@@ -35,6 +36,7 @@ interface Testimonial {
 }
 
 export const Testimonials = () => {
+  const { t } = useTranslation();
   const [testimonials, setTestimonials] = useState<Testimonial[]>(fallbackTestimonials);
 
   useEffect(() => {
@@ -63,10 +65,10 @@ export const Testimonials = () => {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            O que nossas testadoras estão dizendo
+            {t('testimonials.title')}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Conheça mulheres que estão transformando seu bem-estar com o Luna
+            {t('testimonials.subtitle')}
           </p>
         </div>
 
