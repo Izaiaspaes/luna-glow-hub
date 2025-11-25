@@ -221,6 +221,45 @@ export type Database = {
         }
         Relationships: []
       }
+      nutrition_tracking: {
+        Row: {
+          created_at: string
+          foods_consumed: string | null
+          id: string
+          meal_type: string | null
+          notes: string | null
+          nutrition_date: string
+          nutrition_quality: number | null
+          portion_size: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          foods_consumed?: string | null
+          id?: string
+          meal_type?: string | null
+          notes?: string | null
+          nutrition_date: string
+          nutrition_quality?: number | null
+          portion_size?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          foods_consumed?: string | null
+          id?: string
+          meal_type?: string | null
+          notes?: string | null
+          nutrition_date?: string
+          nutrition_quality?: number | null
+          portion_size?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       partner_notifications: {
         Row: {
           created_at: string

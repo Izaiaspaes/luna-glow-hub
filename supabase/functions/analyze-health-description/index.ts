@@ -63,7 +63,12 @@ Forneça sua resposta em formato JSON com os seguintes campos:
 - suggestions: array de 3 sugestões práticas e específicas
 - insights: array de 2-3 insights sobre o que isso pode indicar
 - needs_attention: booleano indicando se requer atenção médica
-- quality_score: número de 1 a 5 avaliando a qualidade (1=muito ruim, 5=excelente) baseado na descrição. Para sono: qualidade do sono. Para humor: intensidade positiva do humor. Para energia: nível de energia.`;
+- quality_score: número de 1 a 5 avaliando a qualidade (1=muito ruim, 5=excelente) baseado na descrição. 
+  ${trackingType === 'sleep' ? 'Para sono: qualidade do sono' : 
+    trackingType === 'mood' ? 'Para humor: intensidade positiva do humor' : 
+    trackingType === 'energy' ? 'Para energia: nível de energia' :
+    trackingType === 'nutrition' ? 'Para alimentação: qualidade nutricional da refeição (considerando equilíbrio, variedade e nutrientes)' : 
+    'Qualidade geral'}.`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
