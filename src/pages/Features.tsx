@@ -89,11 +89,10 @@ export default function Features() {
                 <Heart className="w-8 h-8" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Rastreamento de Ciclo & Sintomas
+                {t('features.cycleTracking.title')}
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Acompanhe seu ciclo menstrual, sintomas físicos e emocionais em um único lugar, 
-                com visualizações intuitivas e insights personalizados.
+                {t('features.cycleTracking.description')}
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -101,9 +100,9 @@ export default function Features() {
                     <Activity className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Rastreamento completo</p>
+                    <p className="font-semibold">{t('features.cycleTracking.completeTracking')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Período, ovulação, sintomas, humor, energia e sono
+                      {t('features.cycleTracking.completeTrackingDesc')}
                     </p>
                   </div>
                 </li>
@@ -112,9 +111,9 @@ export default function Features() {
                     <Zap className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Integração com wearables</p>
+                    <p className="font-semibold">{t('features.cycleTracking.wearableIntegration')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Conecte seus dispositivos de saúde para dados mais precisos
+                      {t('features.cycleTracking.wearableIntegrationDesc')}
                     </p>
                   </div>
                 </li>
@@ -123,9 +122,9 @@ export default function Features() {
                     <TrendingUp className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Padrões e previsões</p>
+                    <p className="font-semibold">{t('features.cycleTracking.patternsAndPredictions')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Identifique tendências e receba previsões baseadas no seu histórico
+                      {t('features.cycleTracking.patternsAndPredictionsDesc')}
                     </p>
                   </div>
                 </li>
@@ -135,24 +134,24 @@ export default function Features() {
               <Card className="bg-gradient-card border-2">
                 <CardHeader>
                   <Moon className="w-8 h-8 text-primary mb-2" />
-                  <CardTitle className="text-lg">Fase Lútea</CardTitle>
-                  <CardDescription>Dia 22 do ciclo</CardDescription>
+                  <CardTitle className="text-lg">{t('features.cycleTracking.lutealPhase')}</CardTitle>
+                  <CardDescription>{t('features.cycleTracking.cycleDay', { day: 22 })}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Energia diminuída, priorize descanso e alimentos nutritivos
+                    {t('features.cycleTracking.lutealAdvice')}
                   </p>
                 </CardContent>
               </Card>
               <Card className="bg-gradient-card border-2">
                 <CardHeader>
                   <Sun className="w-8 h-8 text-primary mb-2" />
-                  <CardTitle className="text-lg">Fase Folicular</CardTitle>
-                  <CardDescription>Próxima fase</CardDescription>
+                  <CardTitle className="text-lg">{t('features.cycleTracking.follicularPhase')}</CardTitle>
+                  <CardDescription>{t('features.cycleTracking.nextPhase')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Em 6 dias, energia renovada para novos projetos
+                    {t('features.cycleTracking.follicularAdvice', { days: 6 })}
                   </p>
                 </CardContent>
               </Card>
@@ -163,44 +162,44 @@ export default function Features() {
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Activity className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Sintomas Físicos</CardTitle>
+                <CardTitle>{t('features.cycleTracking.physicalSymptoms')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Registre cólicas, dores de cabeça, acne e outros sintomas para entender seu corpo melhor
+                  {t('features.cycleTracking.physicalSymptomsDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Brain className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Humor & Energia</CardTitle>
+                <CardTitle>{t('features.cycleTracking.moodAndEnergy')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Monitore seu estado emocional e níveis de energia ao longo do ciclo
+                  {t('features.cycleTracking.moodAndEnergyDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Moon className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Qualidade do Sono</CardTitle>
+                <CardTitle>{t('features.cycleTracking.sleepQuality')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Acompanhe padrões de sono e descubra como eles afetam seu bem-estar
+                  {t('features.cycleTracking.sleepQualityDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Leaf className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Nutrição Consciente</CardTitle>
+                <CardTitle>{t('features.cycleTracking.consciousNutrition')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Registre suas refeições e receba orientação personalizada sobre alimentação saudável
+                  {t('features.cycleTracking.consciousNutritionDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -219,9 +218,9 @@ export default function Features() {
                     <Sparkles className="w-5 h-5 text-white" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium mb-2">Você</p>
+                    <p className="font-medium mb-2">{t('features.aiAssistant.you')}</p>
                     <p className="text-muted-foreground">
-                      Tenho me sentido cansada ultimamente, o que posso fazer?
+                      {t('features.aiAssistant.sampleQuestion')}
                     </p>
                   </div>
                 </div>
@@ -230,21 +229,19 @@ export default function Features() {
                     <MessageCircle className="w-5 h-5 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium mb-2">Luna AI</p>
+                    <p className="font-medium mb-2">{t('features.aiAssistant.lunaAI')}</p>
                     <p className="text-muted-foreground">
-                      Observei que você está na fase lútea e seu sono tem sido irregular. 
-                      Recomendo: dormir 30min mais cedo hoje, uma caminhada leve de 15min 
-                      ao ar livre e chá de camomila à noite. 🌙
+                      {t('features.aiAssistant.sampleAnswer')}
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" className="text-xs">
                     <Heart className="w-3 h-3 mr-1" />
-                    Útil
+                    {t('features.aiAssistant.helpful')}
                   </Button>
                   <Button variant="outline" size="sm" className="text-xs">
-                    Mais dicas
+                    {t('features.aiAssistant.moreTips')}
                   </Button>
                 </div>
               </div>
@@ -254,11 +251,10 @@ export default function Features() {
                 <Sparkles className="w-8 h-8" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Assistente AI Contextual
+                {t('features.aiAssistant.title')}
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Um coach pessoal 24/7 que entende seu ciclo, humor, sono e objetivos 
-                para oferecer recomendações personalizadas e acionáveis.
+                {t('features.aiAssistant.description')}
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -266,9 +262,9 @@ export default function Features() {
                     <Brain className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Planos personalizados</p>
+                    <p className="font-semibold">{t('features.aiAssistant.personalizedPlans')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Rotinas de sono, micro-meditações e dicas nutricionais baseadas nos seus dados
+                      {t('features.aiAssistant.personalizedPlansDesc')}
                     </p>
                   </div>
                 </li>
@@ -277,9 +273,9 @@ export default function Features() {
                     <MessageCircle className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Conversa natural</p>
+                    <p className="font-semibold">{t('features.aiAssistant.naturalConversation')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Faça perguntas e receba respostas contextualizadas sobre sua saúde
+                      {t('features.aiAssistant.naturalConversationDesc')}
                     </p>
                   </div>
                 </li>
@@ -288,9 +284,9 @@ export default function Features() {
                     <Lock className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">100% privado</p>
+                    <p className="font-semibold">{t('features.aiAssistant.private')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Suas conversas são criptografadas e nunca compartilhadas
+                      {t('features.aiAssistant.privateDesc')}
                     </p>
                   </div>
                 </li>
@@ -302,33 +298,33 @@ export default function Features() {
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Zap className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Micro-ações diárias</CardTitle>
+                <CardTitle>{t('features.aiAssistant.dailyMicroActions')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Sugestões simples e rápidas adaptadas à sua fase do ciclo e rotina
+                  {t('features.aiAssistant.dailyMicroActionsDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <TrendingUp className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Relatórios semanais</CardTitle>
+                <CardTitle>{t('features.aiAssistant.weeklyReports')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Análises automáticas dos seus padrões e progresso ao longo do tempo
+                  {t('features.aiAssistant.weeklyReportsDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Heart className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Suporte emocional</CardTitle>
+                <CardTitle>{t('features.aiAssistant.emotionalSupport')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Orientações para gerenciar stress, ansiedade e desafios emocionais
+                  {t('features.aiAssistant.emotionalSupportDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -344,11 +340,10 @@ export default function Features() {
               <Users className="w-8 h-8" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Comunidades Moderadas e Seguras
+              {t('features.communities.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Conecte-se com mulheres que compartilham suas experiências em grupos 
-              temáticos moderados por especialistas, onde você pode ser autêntica e acolhida.
+              {t('features.communities.description')}
             </p>
           </div>
 
@@ -358,16 +353,16 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-2">
                   <Users className="w-8 h-8 text-primary" />
                   <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    2.4k membros
+                    2.4k {t('features.communities.members')}
                   </span>
                 </div>
-                <CardTitle>Carreira & Empreendedorismo</CardTitle>
+                <CardTitle>{t('features.communities.careerTitle')}</CardTitle>
                 <CardDescription>
-                  Dicas, networking e apoio para sua jornada profissional
+                  {t('features.communities.careerDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <p className="text-xs text-muted-foreground font-medium mb-2">{t('features.communities.recommendedResources')}</p>
                 <a 
                   href="https://growthpwr.com.br/" 
                   target="_blank" 
@@ -385,16 +380,16 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-2">
                   <Heart className="w-8 h-8 text-primary" />
                   <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    1.8k membros
+                    1.8k {t('features.communities.members')}
                   </span>
                 </div>
-                <CardTitle>Maternidade Real</CardTitle>
+                <CardTitle>{t('features.communities.motherhoodTitle')}</CardTitle>
                 <CardDescription>
-                  Compartilhe desafios e conquistas da maternidade sem julgamentos
+                  {t('features.communities.motherhoodDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <p className="text-xs text-muted-foreground font-medium mb-2">{t('features.communities.recommendedResources')}</p>
                 <a 
                   href="https://brasil.babycenter.com/" 
                   target="_blank" 
@@ -421,16 +416,16 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-2">
                   <Moon className="w-8 h-8 text-primary" />
                   <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    3.1k membros
+                    3.1k {t('features.communities.members')}
                   </span>
                 </div>
-                <CardTitle>Menopausa & Transições</CardTitle>
+                <CardTitle>{t('features.communities.menopauseTitle')}</CardTitle>
                 <CardDescription>
-                  Apoio e informação para todas as fases da vida hormonal
+                  {t('features.communities.menopauseDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <p className="text-xs text-muted-foreground font-medium mb-2">{t('features.communities.recommendedResources')}</p>
                 <a 
                   href="https://menopausacomciencia.igorpadovesi.com.br/" 
                   target="_blank" 
@@ -448,16 +443,16 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-2">
                   <Brain className="w-8 h-8 text-primary" />
                   <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    1.5k membros
+                    1.5k {t('features.communities.members')}
                   </span>
                 </div>
-                <CardTitle>Saúde Mental</CardTitle>
+                <CardTitle>{t('features.communities.mentalHealthTitle')}</CardTitle>
                 <CardDescription>
-                  Espaço seguro para falar sobre ansiedade, depressão e autocuidado
+                  {t('features.communities.mentalHealthDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <p className="text-xs text-muted-foreground font-medium mb-2">{t('features.communities.recommendedResources')}</p>
                 <a 
                   href="https://mapasaudemental.com.br/" 
                   target="_blank" 
@@ -484,16 +479,16 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-2">
                   <Activity className="w-8 h-8 text-primary" />
                   <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    2.2k membros
+                    2.2k {t('features.communities.members')}
                   </span>
                 </div>
-                <CardTitle>Fitness & Movimento</CardTitle>
+                <CardTitle>{t('features.communities.fitnessTitle')}</CardTitle>
                 <CardDescription>
-                  Exercícios adaptados ao seu ciclo e nível de energia
+                  {t('features.communities.fitnessDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <p className="text-xs text-muted-foreground font-medium mb-2">{t('features.communities.recommendedResources')}</p>
                 <a 
                   href="https://flo.health/pt" 
                   target="_blank" 
@@ -520,16 +515,16 @@ export default function Features() {
                 <div className="flex items-center justify-between mb-2">
                   <Sparkles className="w-8 h-8 text-primary" />
                   <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    900 membros
+                    900 {t('features.communities.members')}
                   </span>
                 </div>
-                <CardTitle>Relacionamentos</CardTitle>
+                <CardTitle>{t('features.communities.relationshipsTitle')}</CardTitle>
                 <CardDescription>
-                  Conversas honestas sobre amor, amizade e conexões
+                  {t('features.communities.relationshipsDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-xs text-muted-foreground font-medium mb-2">Recursos recomendados:</p>
+                <p className="text-xs text-muted-foreground font-medium mb-2">{t('features.communities.recommendedResources')}</p>
                 <a 
                   href="https://guiadaalma.com.br/terapias-para-casal/" 
                   target="_blank" 
@@ -547,33 +542,33 @@ export default function Features() {
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Shield className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Moderação humana</CardTitle>
+                <CardTitle>{t('features.communities.humanModeration')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Equipe dedicada e guidelines claros para manter um ambiente respeitoso
+                  {t('features.communities.humanModerationDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <UserCheck className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Conteúdo verificado</CardTitle>
+                <CardTitle>{t('features.communities.verifiedContent')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Informações revisadas por profissionais de saúde e especialistas
+                  {t('features.communities.verifiedContentDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Lock className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Opção de anonimato</CardTitle>
+                <CardTitle>{t('features.communities.anonymityOption')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Compartilhe suas experiências com privacidade total quando desejar
+                  {t('features.communities.anonymityOptionDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -590,11 +585,10 @@ export default function Features() {
                 <ShoppingBag className="w-8 h-8" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Curadoria & Social Commerce Ético
+                {t('features.marketplace.title')}
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Descubra produtos sustentáveis e marcas que compartilham seus valores, 
-                com reviews reais da comunidade e vendas interativas.
+                {t('features.marketplace.description')}
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -602,9 +596,9 @@ export default function Features() {
                     <Leaf className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Marcas sustentáveis</p>
+                    <p className="font-semibold">{t('features.marketplace.sustainableBrands')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Produtos eco-friendly de empresas com práticas éticas e transparentes
+                      {t('features.marketplace.sustainableBrandsDesc')}
                     </p>
                   </div>
                 </li>
@@ -613,9 +607,9 @@ export default function Features() {
                     <Video className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Lives de vendas</p>
+                    <p className="font-semibold">{t('features.marketplace.liveSales')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Eventos interativos com demonstrações de produtos e ofertas exclusivas
+                      {t('features.marketplace.liveSalesDesc')}
                     </p>
                   </div>
                 </li>
@@ -624,9 +618,9 @@ export default function Features() {
                     <Star className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold">Reviews da comunidade</p>
+                    <p className="font-semibold">{t('features.marketplace.communityReviews')}</p>
                     <p className="text-sm text-muted-foreground">
-                      Avaliações honestas de mulheres reais que testaram os produtos
+                      {t('features.marketplace.communityReviewsDesc')}
                     </p>
                   </div>
                 </li>
@@ -636,34 +630,34 @@ export default function Features() {
               <Card className="bg-gradient-card border-2">
                 <CardHeader>
                   <Package className="w-8 h-8 text-primary mb-2" />
-                  <CardTitle className="text-lg">Skincare Natural</CardTitle>
-                  <CardDescription>Curadoria especial</CardDescription>
+                  <CardTitle className="text-lg">{t('features.marketplace.naturalSkincare')}</CardTitle>
+                  <CardDescription>{t('features.marketplace.specialCuration')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Produtos certificados para cada tipo de pele
+                    {t('features.marketplace.naturalSkincareDesc')}
                   </p>
                   <div className="flex items-center gap-1 mt-2">
                     <Star className="w-4 h-4 fill-primary text-primary" />
                     <span className="text-sm font-medium">4.8</span>
-                    <span className="text-xs text-muted-foreground">(342 reviews)</span>
+                    <span className="text-xs text-muted-foreground">(342 {t('features.marketplace.reviews')})</span>
                   </div>
                 </CardContent>
               </Card>
               <Card className="bg-gradient-card border-2">
                 <CardHeader>
                   <Leaf className="w-8 h-8 text-primary mb-2" />
-                  <CardTitle className="text-lg">Wellness Box</CardTitle>
-                  <CardDescription>Assinatura mensal</CardDescription>
+                  <CardTitle className="text-lg">{t('features.marketplace.wellnessBox')}</CardTitle>
+                  <CardDescription>{t('features.marketplace.monthlySubscription')}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Surpresas selecionadas para seu bem-estar
+                    {t('features.marketplace.wellnessBoxDesc')}
                   </p>
                   <div className="flex items-center gap-1 mt-2">
                     <Star className="w-4 h-4 fill-primary text-primary" />
                     <span className="text-sm font-medium">4.9</span>
-                    <span className="text-xs text-muted-foreground">(218 reviews)</span>
+                    <span className="text-xs text-muted-foreground">(218 {t('features.marketplace.reviews')})</span>
                   </div>
                 </CardContent>
               </Card>
@@ -674,33 +668,33 @@ export default function Features() {
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Package className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Produtos curados</CardTitle>
+                <CardTitle>{t('features.marketplace.curatedProducts')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Seleção criteriosa de itens testados e aprovados pela comunidade
+                  {t('features.marketplace.curatedProductsDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Users className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Apoio a empreendedoras</CardTitle>
+                <CardTitle>{t('features.marketplace.supportEntrepreneurs')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Prioridade para marcas lideradas por mulheres e pequenos negócios
+                  {t('features.marketplace.supportEntrepreneursDesc')}
                 </p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Sparkles className="w-10 h-10 text-primary mb-2" />
-                <CardTitle>Cashback Premium</CardTitle>
+                <CardTitle>{t('features.marketplace.premiumCashback')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Assinantes ganham desconto e pontos em cada compra no marketplace
+                  {t('features.marketplace.premiumCashbackDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -712,14 +706,14 @@ export default function Features() {
       <section className="py-20 bg-gradient-hero text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Pronta para começar sua jornada?
+            {t('features.cta.title')}
           </h2>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Crie sua conta agora e comece a cuidar do seu bem-estar de forma personalizada.
+            {t('features.cta.description')}
           </p>
           <NavLink to="/auth">
             <Button variant="secondary" size="lg" className="group">
-              Criar conta grátis
+              {t('features.cta.createAccount')}
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </NavLink>
@@ -738,13 +732,13 @@ export default function Features() {
             </NavLink>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <NavLink to="/" className="hover:text-primary transition-smooth">
-                Home
+                {t('features.footer.home')}
               </NavLink>
               <NavLink to="/features" className="hover:text-primary transition-smooth" activeClassName="text-primary">
-                Funcionalidades
+                {t('features.footer.features')}
               </NavLink>
               <NavLink to="/pricing" className="hover:text-primary transition-smooth">
-                Preços
+                {t('features.footer.pricing')}
               </NavLink>
             </div>
           </div>
