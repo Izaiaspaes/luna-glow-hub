@@ -105,18 +105,103 @@
     "cookies": "Cookies"
   },
   "dashboard": {
-    "welcome": "Bem-vinda, {{name}}!",
+    "welcome": "Olá{{name}}, bem-vinda! 👋",
+    "subtitle": "Acompanhe sua jornada de bem-estar e receba insights personalizados",
     "tracking": "Rastreamento",
     "cycle": "Ciclo",
     "sleep": "Sono",
     "mood": "Humor",
     "energy": "Energia",
     "nutrition": "Nutrição",
+    "food": "Alimento",
     "work": "Trabalho",
     "plans": "Planos de Bem-estar",
     "calendar": "Calendário",
     "profile": "Perfil",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "menu": "Menu",
+    "menuDescription": "Navegue pela plataforma Luna",
+    "close": "Fechar",
+    "controlPanel": "Painel de Controle",
+    "quickStats": {
+      "cycle": "Ciclo",
+      "cycleDay": "Dia 14",
+      "cyclePhase": "Fase folicular",
+      "sleep": "Sono",
+      "sleepAvg": "7.2h",
+      "sleepWeek": "Média da semana",
+      "mood": "Humor",
+      "moodScore": "4.2/5",
+      "moodToday": "Hoje você está bem",
+      "energy": "Energia",
+      "energyScore": "3.8/5",
+      "energyLevel": "Nível moderado"
+    },
+    "tabs": {
+      "overview": "Visão Geral",
+      "overviewShort": "Geral",
+      "cycle": "Ciclo",
+      "sleep": "Sono",
+      "mood": "Humor",
+      "energy": "Energia",
+      "nutrition": "Alimento",
+      "predictions": "Previsões",
+      "calendar": "Calendário"
+    },
+    "planTypes": {
+      "sleep": "Sono",
+      "exercise": "Exercício",
+      "nutrition": "Alimentação",
+      "stress": "Estresse",
+      "general": "Geral"
+    },
+    "planStatus": {
+      "markComplete": "Marcar como concluído",
+      "archive": "Arquivar",
+      "reactivate": "Reativar"
+    },
+    "messages": {
+      "generating": "Gerando plano de bem-estar...",
+      "planGenerated": "Plano de Bem-Estar gerado com sucesso!",
+      "planGeneratedDesc": "Seu plano personalizado está pronto.",
+      "planError": "Erro ao gerar plano",
+      "planErrorRetry": "Tente novamente mais tarde.",
+      "planUpdated": "Plano de Bem-Estar atualizado!",
+      "planCompleted": "Plano marcado como concluído.",
+      "planArchived": "Plano arquivado.",
+      "planReactivated": "Plano reativado.",
+      "planUpdateError": "Erro ao atualizar plano"
+    },
+    "content": {
+      "overviewTitle": "Visão Geral",
+      "overviewDesc": "Resumo dos seus dados de bem-estar",
+      "cycleTitle": "Rastreamento de Ciclo",
+      "cycleDesc": "Acompanhe seu ciclo menstrual e sintomas",
+      "sleepTitle": "Rastreamento de Sono",
+      "sleepDesc": "Monitore a qualidade e duração do seu sono",
+      "moodTitle": "Rastreamento de Humor",
+      "moodDesc": "Registre como você está se sentindo",
+      "energyTitle": "Rastreamento de Energia",
+      "energyDesc": "Acompanhe seus níveis de energia ao longo do dia",
+      "nutritionTitle": "Rastreamento de Alimentação",
+      "nutritionDesc": "Registre suas refeições e receba orientação nutricional",
+      "plansTitle": "Planos de Bem-Estar Personalizados",
+      "plansDesc": "Gere planos baseados nos seus dados de rastreamento",
+      "generateButton": "Gerar Plano",
+      "generating": "Gerando...",
+      "noPlans": "Nenhum plano gerado ainda. Adicione dados de rastreamento e gere seu primeiro plano!",
+      "quickStart": "Comece selecionando uma categoria acima para registrar seus dados",
+      "noRecords": "Você ainda não tem registros nesta categoria",
+      "addFirstRecord": "Adicionar Primeiro Registro",
+      "recentRecords": "Registros Recentes",
+      "addNew": "Adicionar Novo"
+    },
+    "planMenu": {
+      "general": "Plano Geral",
+      "sleep": "Plano de Sono",
+      "meditation": "Plano de Meditação",
+      "nutrition": "Plano de Alimentação"
+    }
   },
   "profile": {
     "title": "Perfil",
@@ -208,10 +293,32 @@
   "subscription": {
     "free": "Plano Gratuito",
     "premium": "Plano Premium",
-    "currentPlan": "Seu Plano Atual",
+    "currentPlan": "Minha Assinatura",
     "upgrade": "Fazer Upgrade",
     "manageSubscription": "Gerenciar Assinatura",
-    "benefits": "Benefícios"
+    "benefits": "Benefícios",
+    "subscribed": "Premium",
+    "notSubscribed": "Gratuito",
+    "hasAccess": "Você tem acesso a todos os recursos premium",
+    "upgradeDesc": "Faça upgrade para desbloquear recursos exclusivos",
+    "renewsOn": "Renova em:",
+    "package": "Pacote:",
+    "opening": "Abrindo...",
+    "refreshing": "Atualizando...",
+    "features": {
+      "unlimitedPlans": "Planos de bem-estar ilimitados",
+      "voiceTranscription": "Transcrição por voz ilimitada",
+      "aiAssistant": "Assistente AI conversacional 24/7",
+      "advancedAnalysis": "Análises avançadas com insights",
+      "weeklyReports": "Relatórios semanais detalhados"
+    },
+    "messages": {
+      "errorOpening": "Erro ao abrir portal",
+      "errorRefreshing": "Erro ao atualizar",
+      "statusUpdated": "Status atualizado",
+      "statusUpdatedDesc": "Seu status de assinatura foi verificado",
+      "tryAgain": "Tente novamente"
+    }
   },
   "statistics": {
     "title": "Números que falam por si",

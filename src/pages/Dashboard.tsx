@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useTheme } from "@/hooks/useTheme";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -49,6 +50,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition' | null;
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'nutrition' | 'predictions' | 'calendar'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
@@ -240,27 +242,27 @@ export default function Dashboard() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6">
               <NavLink to="/dashboard" className="text-sm font-medium text-primary transition-smooth" activeClassName="text-primary">
-                Dashboard
+                {t('nav.dashboard')}
               </NavLink>
               <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth">
-                Funcionalidades
+                {t('nav.features')}
               </NavLink>
               <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
-                Preços
+                {t('nav.pricing')}
               </NavLink>
               {isAdmin && (
                 <Button variant="default" size="sm" asChild>
                   <NavLink to="/admin">
-                    Painel de Controle
+                    {t('dashboard.controlPanel')}
                   </NavLink>
                 </Button>
               )}
               <Button variant="ghost" size="sm" onClick={() => setSettingsOpen(true)} data-tour="settings">
                 <Settings className="h-4 w-4 mr-2" />
-                Configurações
+                {t('dashboard.settings')}
               </Button>
               <Button variant="outline" size="sm" onClick={handleLogout} data-tour="avatar">
-                Sair
+                {t('common.logout')}
               </Button>
             </nav>
 
@@ -273,29 +275,29 @@ export default function Dashboard() {
               </DrawerTrigger>
               <DrawerContent>
                 <DrawerHeader>
-                  <DrawerTitle>Menu</DrawerTitle>
-                  <DrawerDescription>Navegue pela plataforma Luna</DrawerDescription>
+                  <DrawerTitle>{t('dashboard.menu')}</DrawerTitle>
+                  <DrawerDescription>{t('dashboard.menuDescription')}</DrawerDescription>
                 </DrawerHeader>
                 <div className="px-4 py-4 space-y-2">
                   <Button variant="ghost" className="w-full justify-start" asChild>
                     <NavLink to="/dashboard">
-                      Dashboard
+                      {t('nav.dashboard')}
                     </NavLink>
                   </Button>
                   <Button variant="ghost" className="w-full justify-start" asChild>
                     <NavLink to="/features">
-                      Funcionalidades
+                      {t('nav.features')}
                     </NavLink>
                   </Button>
                   <Button variant="ghost" className="w-full justify-start" asChild>
                     <NavLink to="/pricing">
-                      Preços
+                      {t('nav.pricing')}
                     </NavLink>
                   </Button>
                   {isAdmin && (
                     <Button variant="default" className="w-full" asChild>
                       <NavLink to="/admin">
-                        Painel de Controle
+                        {t('dashboard.controlPanel')}
                       </NavLink>
                     </Button>
                   )}
@@ -303,15 +305,15 @@ export default function Dashboard() {
                     setSettingsOpen(true);
                   }}>
                     <Settings className="h-4 w-4 mr-2" />
-                    Configurações
+                    {t('dashboard.settings')}
                   </Button>
                 </div>
                 <DrawerFooter>
                   <Button variant="outline" onClick={handleLogout} className="w-full">
-                    Sair
+                    {t('common.logout')}
                   </Button>
                   <DrawerClose asChild>
-                    <Button variant="ghost">Fechar</Button>
+                    <Button variant="ghost">{t('dashboard.close')}</Button>
                   </DrawerClose>
                 </DrawerFooter>
               </DrawerContent>
@@ -325,10 +327,10 @@ export default function Dashboard() {
         <div className="mb-8 animate-fade-in flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-              Olá{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}, bem-vinda! 👋
+              {t('dashboard.welcome', { name: profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : '' })}
             </h1>
             <p className="text-sm md:text-base text-muted-foreground">
-              Acompanhe sua jornada de bem-estar e receba insights personalizados
+              {t('dashboard.subtitle')}
             </p>
           </div>
           <PrivacyModeIndicator />
@@ -338,45 +340,45 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">Ciclo</CardTitle>
+              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.cycle')}</CardTitle>
               <Calendar className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
             <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">Dia 14</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">Fase folicular</p>
+              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.cycleDay')}</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.cyclePhase')}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">Sono</CardTitle>
+              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.sleep')}</CardTitle>
               <Moon className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
             <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">7.2h</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">Média da semana</p>
+              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.sleepAvg')}</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.sleepWeek')}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">Humor</CardTitle>
+              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.mood')}</CardTitle>
               <Smile className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
             <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">4.2/5</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">Hoje você está bem</p>
+              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.moodScore')}</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.moodToday')}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">Energia</CardTitle>
+              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.energy')}</CardTitle>
               <Zap className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
             <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">3.8/5</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">Nível moderado</p>
+              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.energyScore')}</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.energyLevel')}</p>
             </CardContent>
           </Card>
         </div>
@@ -394,8 +396,8 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
                 data-tour="overview"
               >
-                <span className="hidden sm:inline">Visão Geral</span>
-                <span className="sm:hidden">Geral</span>
+                <span className="hidden sm:inline">{t('dashboard.tabs.overview')}</span>
+                <span className="sm:hidden">{t('dashboard.tabs.overviewShort')}</span>
               </Button>
               <Button
                 variant={activeTab === 'cycle' ? 'default' : 'outline'}
@@ -405,7 +407,7 @@ export default function Dashboard() {
                 data-tour="tracking"
               >
                 <Heart className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                Ciclo
+                {t('dashboard.tabs.cycle')}
               </Button>
               <Button
                 variant={activeTab === 'sleep' ? 'default' : 'outline'}
@@ -414,7 +416,7 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
                 <Moon className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                Sono
+                {t('dashboard.tabs.sleep')}
               </Button>
               <Button
                 variant={activeTab === 'mood' ? 'default' : 'outline'}
@@ -423,7 +425,7 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
                 <Smile className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                Humor
+                {t('dashboard.tabs.mood')}
               </Button>
               <Button
                 variant={activeTab === 'energy' ? 'default' : 'outline'}
@@ -432,7 +434,7 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
                 <Zap className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                Energia
+                {t('dashboard.tabs.energy')}
               </Button>
               <Button
                 variant={activeTab === 'nutrition' ? 'default' : 'outline'}
@@ -441,7 +443,7 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
                 <Apple className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                Alimento
+                {t('dashboard.tabs.nutrition')}
               </Button>
               <Button
                 variant={activeTab === 'predictions' ? 'default' : 'outline'}
@@ -450,8 +452,8 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
               >
                 <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden sm:inline">Previsões IA</span>
-                <span className="sm:hidden">Previsões</span>
+                <span className="hidden sm:inline">{t('dashboard.tabs.predictions')} IA</span>
+                <span className="sm:hidden">{t('dashboard.tabs.predictions')}</span>
               </Button>
               <Button
                 variant={activeTab === 'calendar' ? 'default' : 'outline'}
@@ -460,9 +462,8 @@ export default function Dashboard() {
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
                 data-tour="calendar"
               >
-                <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden sm:inline">Calendário</span>
-                <span className="sm:hidden">Cal.</span>
+                <Calendar className="w-3 h-3 md:w-4 md:h-4 md:mr-1 lg:mr-2" />
+                <span className="hidden md:inline">{t('dashboard.tabs.calendar')}</span>
               </Button>
             </div>
 
@@ -478,21 +479,21 @@ export default function Dashboard() {
             ) : (
               <Card className="bg-gradient-card">
                 <CardHeader>
-                  <CardTitle>
-                    {activeTab === 'overview' && 'Visão Geral'}
-                    {activeTab === 'cycle' && 'Rastreamento de Ciclo'}
-                    {activeTab === 'sleep' && 'Rastreamento de Sono'}
-                    {activeTab === 'mood' && 'Rastreamento de Humor'}
-                    {activeTab === 'energy' && 'Rastreamento de Energia'}
-                    {activeTab === 'nutrition' && 'Rastreamento de Alimentação'}
+                <CardTitle>
+                    {activeTab === 'overview' && t('dashboard.content.overviewTitle')}
+                    {activeTab === 'cycle' && t('dashboard.content.cycleTitle')}
+                    {activeTab === 'sleep' && t('dashboard.content.sleepTitle')}
+                    {activeTab === 'mood' && t('dashboard.content.moodTitle')}
+                    {activeTab === 'energy' && t('dashboard.content.energyTitle')}
+                    {activeTab === 'nutrition' && t('dashboard.content.nutritionTitle')}
                   </CardTitle>
                   <CardDescription>
-                    {activeTab === 'overview' && 'Resumo dos seus dados de bem-estar'}
-                    {activeTab === 'cycle' && 'Acompanhe seu ciclo menstrual e sintomas'}
-                    {activeTab === 'sleep' && 'Monitore a qualidade e duração do seu sono'}
-                    {activeTab === 'mood' && 'Registre como você está se sentindo'}
-                    {activeTab === 'energy' && 'Acompanhe seus níveis de energia ao longo do dia'}
-                    {activeTab === 'nutrition' && 'Registre suas refeições e receba orientação nutricional'}
+                    {activeTab === 'overview' && t('dashboard.content.overviewDesc')}
+                    {activeTab === 'cycle' && t('dashboard.content.cycleDesc')}
+                    {activeTab === 'sleep' && t('dashboard.content.sleepDesc')}
+                    {activeTab === 'mood' && t('dashboard.content.moodDesc')}
+                    {activeTab === 'energy' && t('dashboard.content.energyDesc')}
+                    {activeTab === 'nutrition' && t('dashboard.content.nutritionDesc')}
                   </CardDescription>
                 </CardHeader>
               <CardContent className="space-y-4">
@@ -510,10 +511,10 @@ export default function Dashboard() {
                         <div>
                           <h3 className="text-lg font-semibold flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-primary" />
-                            Planos de Bem-Estar Personalizados
+                            {t('dashboard.content.plansTitle')}
                           </h3>
                           <p className="text-sm text-muted-foreground">
-                            Gere planos baseados nos seus dados de rastreamento
+                            {t('dashboard.content.plansDesc')}
                           </p>
                         </div>
                         <DropdownMenu>
@@ -523,25 +524,25 @@ export default function Dashboard() {
                               size="sm"
                               data-tour="plans"
                             >
-                              {generatingPlan ? "Gerando..." : "Gerar Plano"}
+                              {generatingPlan ? t('dashboard.content.generating') : t('dashboard.content.generateButton')}
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-48">
                             <DropdownMenuItem onClick={() => generateWellnessPlan('geral')}>
                               <Sparkles className="w-4 h-4 mr-2" />
-                              Plano Geral
+                              {t('dashboard.planMenu.general')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => generateWellnessPlan('sono')}>
                               <Moon className="w-4 h-4 mr-2" />
-                              Plano de Sono
+                              {t('dashboard.planMenu.sleep')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => generateWellnessPlan('meditacao')}>
                               <Sparkles className="w-4 h-4 mr-2" />
-                              Plano de Meditação
+                              {t('dashboard.planMenu.meditation')}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => generateWellnessPlan('alimentacao')}>
                               <Heart className="w-4 h-4 mr-2" />
-                              Plano de Alimentação
+                              {t('dashboard.planMenu.nutrition')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -550,7 +551,7 @@ export default function Dashboard() {
                       {wellnessPlans.length === 0 ? (
                         <div className="text-center py-8 bg-muted/20 rounded-lg">
                           <p className="text-muted-foreground">
-                            Nenhum plano gerado ainda. Adicione dados de rastreamento e gere seu primeiro plano!
+                            {t('dashboard.content.noPlans')}
                           </p>
                         </div>
                       ) : (
@@ -569,7 +570,7 @@ export default function Dashboard() {
                     {/* Quick Start Guide */}
                     <div className="pt-4 border-t">
                       <p className="text-sm text-muted-foreground mb-3">
-                        Comece selecionando uma categoria acima para registrar seus dados
+                        {t('dashboard.content.quickStart')}
                       </p>
                     </div>
                   </div>
@@ -577,18 +578,18 @@ export default function Dashboard() {
                   <div className="text-center py-12">
                     <TrendingUp className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
                     <p className="text-muted-foreground mb-4">
-                      Você ainda não tem registros nesta categoria
+                      {t('dashboard.content.noRecords')}
                     </p>
                     <Button variant="hero" onClick={() => openTrackingDialog(activeTab as TrackingType)}>
-                      Adicionar Primeiro Registro
+                      {t('dashboard.content.addFirstRecord')}
                     </Button>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="font-semibold">Registros Recentes</h3>
+                      <h3 className="font-semibold">{t('dashboard.content.recentRecords')}</h3>
                       <Button size="sm" onClick={() => openTrackingDialog(activeTab as TrackingType)}>
-                        Adicionar Novo
+                        {t('dashboard.content.addNew')}
                       </Button>
                     </div>
                     <div className="space-y-2">

@@ -5,7 +5,8 @@ import { Heart, AlertCircle, TrendingUp, Sparkles } from "lucide-react";
 import { useWorkTracking } from "@/hooks/useWorkTracking";
 
 export function DailyWorkMessage() {
-  const { workData, loading } = useWorkTracking(new Date());
+  const [todayDate] = useState(() => new Date());
+  const { workData, loading } = useWorkTracking(todayDate);
   const [todayWork, setTodayWork] = useState<any>(null);
 
   useEffect(() => {
