@@ -22,16 +22,32 @@
     "pricing": "Preços",
     "blog": "Blog",
     "dashboard": "Dashboard",
-    "home": "Início"
+    "home": "Início",
+    "admin": "Painel Admin"
   },
   "hero": {
     "title": "Seu Bem-estar, Sua Comunidade, Seu Estilo",
     "subtitle": "Rastreie seu ciclo, conecte-se com outras mulheres e descubra produtos que respeitam seu corpo e o planeta.",
     "cta": "Comece Agora - Grátis",
-    "ctaSecondary": "Saiba Mais"
+    "ctaSecondary": "Saiba Mais",
+    "badge": "🌙 Lançamento em breve",
+    "stats": {
+      "private": "Privado",
+      "free": "Gratuito",
+      "freeDesc": "Para começar",
+      "ai": "24/7",
+      "aiDesc": "Assistente AI"
+    },
+    "floatingCard": {
+      "lastAnalysis": "Última análise",
+      "sleepImprovement": "Seus padrões de sono melhoraram 23%"
+    }
   },
   "features": {
     "title": "Funcionalidades",
+    "sectionTitle": "Três pilares para o seu",
+    "sectionTitleHighlight": "equilíbrio",
+    "sectionDescription": "Uma experiência integrada que combina tecnologia, comunidade e consciência para apoiar todas as dimensões do seu bem-estar.",
     "health": {
       "title": "Saúde & Bem-estar Inteligente",
       "description": "Rastreamento completo de ciclo, sono, humor e energia com planos personalizados gerados por IA."
