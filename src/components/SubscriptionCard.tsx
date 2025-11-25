@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 const PRODUCT_TIERS = {
   "prod_TU4LGK6XvlFPPV": { name: "Premium Mensal", color: "bg-gradient-hero" },
@@ -13,6 +14,7 @@ const PRODUCT_TIERS = {
 };
 
 export function SubscriptionCard() {
+  const { t } = useTranslation();
   const { subscriptionStatus, checkSubscription } = useAuth();
   const [loading, setLoading] = useState(false);
 
@@ -28,8 +30,8 @@ export function SubscriptionCard() {
     } catch (error: any) {
       console.error('Error opening customer portal:', error);
       toast({
-        title: "Erro ao abrir portal",
-        description: error.message || "Tente novamente",
+        title: t("subscription.messages.errorOpening"),
+        description: error.message || t("subscription.messages.tryAgain"),
         variant: "destructive",
       });
     } finally {
@@ -42,13 +44,13 @@ export function SubscriptionCard() {
     try {
       await checkSubscription();
       toast({
-        title: "Status atualizado",
-        description: "Seu status de assinatura foi verificado",
+        title: t("subscription.messages.statusUpdated"),
+        description: t("subscription.messages.statusUpdatedDesc"),
       });
     } catch (error: any) {
       toast({
-        title: "Erro ao atualizar",
-        description: error.message || "Tente novamente",
+        title: t("subscription.messages.errorRefreshing"),
+        description: error.message || t("subscription.messages.tryAgain"),
         variant: "destructive",
       });
     } finally {
@@ -70,16 +72,16 @@ export function SubscriptionCard() {
             ) : (
               <Sparkles className="w-6 h-6 text-muted-foreground" />
             )}
-            <CardTitle>Minha Assinatura</CardTitle>
+            <CardTitle>{t('subscription.currentPlan')}</CardTitle>
           </div>
           <Badge variant={subscriptionStatus?.subscribed ? "premium" : "free"}>
-            {subscriptionStatus?.subscribed ? "Premium" : "Gratuito"}
+            {subscriptionStatus?.subscribed ? t('subscription.subscribed') : t('subscription.notSubscribed')}
           </Badge>
         </div>
         <CardDescription>
           {subscriptionStatus?.subscribed
-            ? "Você tem acesso a todos os recursos premium"
-            : "Faça upgrade para desbloquear recursos exclusivos"}
+            ? t('subscription.hasAccess')
+            : t('subscription.upgradeDesc')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -87,13 +89,13 @@ export function SubscriptionCard() {
           <>
             <div className="flex items-center gap-2 text-sm">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="font-medium">Pacote: {tierInfo.name}</span>
+              <span className="font-medium">{t('subscription.package')} {tierInfo.name}</span>
             </div>
             {subscriptionStatus.subscription_end && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Calendar className="w-4 h-4" />
                 <span>
-                  Renova em: {new Date(subscriptionStatus.subscription_end).toLocaleDateString('pt-BR')}
+                  {t('subscription.renewsOn')} {new Date(subscriptionStatus.subscription_end).toLocaleDateString('pt-BR')}
                 </span>
               </div>
             )}
@@ -102,11 +104,11 @@ export function SubscriptionCard() {
         
         {!subscriptionStatus?.subscribed && (
           <div className="space-y-2 text-sm text-muted-foreground">
-            <p>✨ Planos de bem-estar ilimitados</p>
-            <p>🎤 Transcrição por voz ilimitada</p>
-            <p>🤖 Assistente AI conversacional 24/7</p>
-            <p>📊 Análises avançadas com insights</p>
-            <p>📅 Relatórios semanais detalhados</p>
+            <p>✨ {t('subscription.features.unlimitedPlans')}</p>
+            <p>🎤 {t('subscription.features.voiceTranscription')}</p>
+            <p>🤖 {t('subscription.features.aiAssistant')}</p>
+            <p>📊 {t('subscription.features.advancedAnalysis')}</p>
+            <p>📅 {t('subscription.features.weeklyReports')}</p>
           </div>
         )}
       </CardContent>
@@ -117,7 +119,7 @@ export function SubscriptionCard() {
             disabled={loading}
             className="w-full"
           >
-            {loading ? "Abrindo..." : "Gerenciar Assinatura"}
+            {loading ? t("subscription.opening") : t("subscription.manageSubscription")}
             <ExternalLink className="ml-2 w-4 h-4" />
           </Button>
         ) : (
@@ -126,7 +128,7 @@ export function SubscriptionCard() {
             variant="hero"
             className="w-full"
           >
-            Fazer Upgrade
+            {t('subscription.upgrade')}
             <Sparkles className="ml-2 w-4 h-4" />
           </Button>
         )}

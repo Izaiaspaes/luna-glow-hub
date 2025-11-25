@@ -75,7 +75,7 @@ export function useWorkTracking(selectedDate?: Date) {
       setWorkData([]);
       setLoading(false);
     }
-  }, [user, selectedDate]);
+  }, [user, selectedDate?.toISOString().split('T')[0]]);
 
   const loadWorkData = async () => {
     if (!user) return;
