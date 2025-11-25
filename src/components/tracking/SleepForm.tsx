@@ -12,16 +12,7 @@ import { toast } from "sonner";
 import { Moon } from "lucide-react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
-
-const sleepSchema = z.object({
-  sleep_date: z.string().min(1, "Data obrigatória"),
-  bedtime: z.string().optional(),
-  wake_time: z.string().optional(),
-  sleep_quality: z.number().min(1).max(5),
-  notes: z.string().optional(),
-});
-
-type SleepFormData = z.infer<typeof sleepSchema>;
+import { useTranslation } from "react-i18next";
 
 interface SleepFormProps {
   userId: string;
@@ -29,11 +20,22 @@ interface SleepFormProps {
 }
 
 export function SleepForm({ userId, onSuccess }: SleepFormProps) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [sleepQuality, setSleepQuality] = useState(3);
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+
+  const sleepSchema = z.object({
+    sleep_date: z.string().min(1, t('forms.sleep.dateRequired')),
+    bedtime: z.string().optional(),
+    wake_time: z.string().optional(),
+    sleep_quality: z.number().min(1).max(5),
+    notes: z.string().optional(),
+  });
+
+  type SleepFormData = z.infer<typeof sleepSchema>;
   
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<SleepFormData>({
     resolver: zodResolver(sleepSchema),
@@ -71,10 +73,10 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
       }
       
       setAnalysis(analysisData);
-      toast.success("Análise concluída! Qualidade ajustada automaticamente.");
+      toast.success(t('forms.sleep.analysisComplete'));
     } catch (error) {
       console.error('Error analyzing description:', error);
-      toast.error("Erro ao analisar descrição");
+      toast.error(t('forms.sleep.analysisError'));
     } finally {
       setIsAnalyzing(false);
     }
@@ -112,9 +114,9 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
     setLoading(false);
 
     if (error) {
-      toast.error("Erro ao salvar dados: " + error.message);
+      toast.error(t('forms.sleep.errorMessage') + error.message);
     } else {
-      toast.success("Sono registrado com sucesso!");
+      toast.success(t('forms.sleep.successMessage'));
       onSuccess();
     }
   };
@@ -124,7 +126,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
       <div className="space-y-2">
         <Label htmlFor="sleep_date">
           <Moon className="w-4 h-4 inline mr-2" />
-          Data do sono *
+          {t('forms.sleep.date')}
         </Label>
         <Input
           id="sleep_date"
@@ -138,7 +140,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="bedtime">Hora de dormir</Label>
+          <Label htmlFor="bedtime">{t('forms.sleep.bedtime')}</Label>
           <Input
             id="bedtime"
             type="time"
@@ -147,7 +149,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="wake_time">Hora de acordar</Label>
+          <Label htmlFor="wake_time">{t('forms.sleep.wakeTime')}</Label>
           <Input
             id="wake_time"
             type="time"
@@ -157,7 +159,9 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label>Qualidade do sono: {sleepQuality}/5 {analysis && "✓ Ajustado pela IA"}</Label>
+        <Label>
+          {t('forms.sleep.quality', { quality: sleepQuality })} {analysis && t('forms.sleep.qualityAdjusted')}
+        </Label>
         <Slider
           value={[sleepQuality]}
           onValueChange={(value) => !analysis && setSleepQuality(value[0])}
@@ -168,16 +172,16 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
           disabled={!!analysis}
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Muito ruim</span>
-          <span>Excelente</span>
+          <span>{t('forms.sleep.qualityVeryBad')}</span>
+          <span>{t('forms.sleep.qualityExcellent')}</span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes">Observações</Label>
+        <Label htmlFor="notes">{t('forms.sleep.notes')}</Label>
         <Textarea
           id="notes"
-          placeholder="Como você se sentiu ao acordar..."
+          placeholder={t('forms.sleep.notesPlaceholder')}
           {...register("notes")}
           onChange={(e) => setValue("notes", e.target.value)}
         />
@@ -197,7 +201,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
               onClick={() => handleAnalyzeDescription(notesValue)}
               disabled={isAnalyzing}
             >
-              {isAnalyzing ? "Analisando..." : "Analisar com IA"}
+              {isAnalyzing ? t('forms.sleep.analyzing') : t('forms.sleep.analyzeAI')}
             </Button>
           )}
         </div>
@@ -207,7 +211,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
         <>
           <HealthAnalysis analysis={analysis} />
           <div className="pt-2 pb-1 text-center text-sm text-muted-foreground">
-            ⬇️ Clique em "Registrar Sono" abaixo para salvar
+            {t('forms.sleep.scrollHint')}
           </div>
         </>
       )}
@@ -219,7 +223,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
         variant="hero" 
         disabled={loading}
       >
-        {loading ? "Salvando..." : "Registrar Sono"}
+        {loading ? t('forms.sleep.saving') : t('forms.sleep.save')}
       </Button>
     </form>
   );
