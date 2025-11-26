@@ -1,51 +1,54 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import Joyride, { CallBackProps, STATUS, Step } from "react-joyride";
 import { useProfile } from "@/hooks/useProfile";
 
+const tourSteps: Step[] = [
+  {
+    target: "body",
+    content: "Bem-vinda ao Luna! Vamos fazer um tour rápido para você conhecer as principais funcionalidades. Você pode pular este tour a qualquer momento.",
+    placement: "center",
+    disableBeacon: true,
+  },
+  {
+    target: '[data-tour="overview"]',
+    content: "Aqui você encontra sua visão geral diária: resumo do seu bem-estar, planos ativos e mensagens personalizadas.",
+    placement: "bottom",
+  },
+  {
+    target: '[data-tour="tracking"]',
+    content: "Na aba de Rastreamento você pode registrar seu ciclo, sono, humor, energia e rotina de trabalho.",
+    placement: "bottom",
+  },
+  {
+    target: '[data-tour="plans"]',
+    content: "Os Planos de Bem-Estar são gerados pela IA com base nos seus registros, oferecendo recomendações personalizadas.",
+    placement: "bottom",
+  },
+  {
+    target: '[data-tour="calendar"]',
+    content: "No Calendário você visualiza todos os seus registros e planos de forma organizada.",
+    placement: "bottom",
+  },
+  {
+    target: '[data-tour="partner"]',
+    content: "Luna a Dois permite compartilhar seu ciclo com seu parceiro(a) de forma segura e educativa.",
+    placement: "bottom",
+  },
+  {
+    target: '[data-tour="settings"]',
+    content: "Nas Configurações você pode editar seu perfil, dados pessoais do onboarding e preferências de privacidade.",
+    placement: "bottom",
+  },
+  {
+    target: '[data-tour="avatar"]',
+    content: "Clique no seu avatar para acessar rapidamente suas configurações e fazer logout.",
+    placement: "left",
+  },
+];
+
 export function AppTour() {
-  const { t } = useTranslation();
   const { profile, updateProfile } = useProfile();
   const [run, setRun] = useState(false);
-
-  const tourSteps: Step[] = [
-    {
-      target: "body",
-      content: t("tour.welcome"),
-      placement: "center",
-      disableBeacon: true,
-    },
-    {
-      target: '[data-tour="overview"]',
-      content: t("tour.overview"),
-      placement: "bottom",
-    },
-    {
-      target: '[data-tour="tracking"]',
-      content: t("tour.tracking"),
-      placement: "bottom",
-    },
-    {
-      target: '[data-tour="plans"]',
-      content: t("tour.plans"),
-      placement: "bottom",
-    },
-    {
-      target: '[data-tour="calendar"]',
-      content: t("tour.calendar"),
-      placement: "bottom",
-    },
-    {
-      target: '[data-tour="settings"]',
-      content: t("tour.settings"),
-      placement: "bottom",
-    },
-    {
-      target: '[data-tour="avatar"]',
-      content: t("tour.avatar"),
-      placement: "left",
-    },
-  ];
 
   useEffect(() => {
     // Show tour only if user hasn't completed it and profile is loaded
@@ -108,11 +111,11 @@ export function AppTour() {
         },
       }}
       locale={{
-        back: t("tour.back"),
-        close: t("tour.close"),
-        last: t("tour.last"),
-        next: t("tour.next"),
-        skip: t("tour.skip"),
+        back: "Voltar",
+        close: "Fechar",
+        last: "Finalizar",
+        next: "Próximo",
+        skip: "Pular tour",
       }}
       callback={handleJoyrideCallback}
     />

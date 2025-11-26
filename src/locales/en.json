@@ -412,20 +412,6 @@
       "moodImpact": "Mood Impact"
     }
   },
-  "tour": {
-    "welcome": "Welcome to Luna! Let's take a quick tour to get you familiar with the main features. You can skip this tour at any time.",
-    "overview": "Here you'll find your daily overview: wellness summary, active plans, and personalized messages.",
-    "tracking": "In the Tracking tab you can log your cycle, sleep, mood, energy, and work routine.",
-    "plans": "Wellness Plans are AI-generated based on your tracking data, offering personalized recommendations.",
-    "calendar": "In the Calendar you can view all your logs and plans in an organized way.",
-    "settings": "In Settings you can edit your profile, onboarding data, and privacy preferences.",
-    "avatar": "Click the logout or settings button to quickly access your account options.",
-    "back": "Back",
-    "close": "Close",
-    "last": "Finish",
-    "next": "Next",
-    "skip": "Skip tour"
-  },
   "subscription": {
     "free": "Free Plan",
     "premium": "Premium Plan",
