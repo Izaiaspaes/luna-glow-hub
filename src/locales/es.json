@@ -412,6 +412,20 @@
       "moodImpact": "Impacto en el Humor"
     }
   },
+  "tour": {
+    "welcome": "¡Bienvenida a Luna! Hagamos un recorrido rápido para que conozcas las principales funcionalidades. Puedes omitir este tour en cualquier momento.",
+    "overview": "Aquí encontrarás tu visión general diaria: resumen de tu bienestar, planes activos y mensajes personalizados.",
+    "tracking": "En la pestaña de Seguimiento puedes registrar tu ciclo, sueño, humor, energía y rutina de trabajo.",
+    "plans": "Los Planes de Bienestar son generados por IA basándose en tus registros, ofreciendo recomendaciones personalizadas.",
+    "calendar": "En el Calendario puedes visualizar todos tus registros y planes de forma organizada.",
+    "settings": "En Configuraciones puedes editar tu perfil, datos personales del onboarding y preferencias de privacidad.",
+    "avatar": "Haz clic en el botón de cerrar sesión o configuraciones para acceder rápidamente a las opciones de tu cuenta.",
+    "back": "Volver",
+    "close": "Cerrar",
+    "last": "Finalizar",
+    "next": "Siguiente",
+    "skip": "Omitir tour"
+  },
   "subscription": {
     "free": "Plan Gratuito",
     "premium": "Plan Premium",
