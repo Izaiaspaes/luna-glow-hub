@@ -20,7 +20,6 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [inviteCode, setInviteCode] = useState("");
   const [loading, setLoading] = useState(false);
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
@@ -56,46 +55,6 @@ export default function Auth() {
 
     setLoading(true);
 
-    // Validate invite code for signup
-    if (!isLogin) {
-      if (!inviteCode.trim()) {
-        toast.error(t("auth.errors.inviteRequired"));
-        setLoading(false);
-        return;
-      }
-
-      const { data: invite, error: inviteError } = await supabase
-        .from("invites")
-        .select("*")
-        .eq("code", inviteCode)
-        .eq("is_active", true)
-        .single();
-
-      if (inviteError || !invite) {
-        toast.error(t("auth.errors.inviteInvalid"));
-        setLoading(false);
-        return;
-      }
-
-      if (new Date(invite.expires_at) < new Date()) {
-        toast.error(t("auth.errors.inviteExpired"));
-        setLoading(false);
-        return;
-      }
-
-      if (invite.current_uses >= invite.max_uses) {
-        toast.error(t("auth.errors.inviteMaxUses"));
-        setLoading(false);
-        return;
-      }
-
-      if (invite.email && invite.email !== email) {
-        toast.error(t("auth.errors.inviteWrongEmail"));
-        setLoading(false);
-        return;
-      }
-    }
-
     if (isLogin) {
       const { error } = await signIn(email, password);
       if (error) {
@@ -117,23 +76,6 @@ export default function Auth() {
           toast.error(t("auth.errors.signupError") + error.message);
         }
       } else {
-        // Update invite usage - increment current_uses
-        const { data: currentInvite } = await supabase
-          .from("invites")
-          .select("current_uses")
-          .eq("code", inviteCode)
-          .single();
-        
-        if (currentInvite) {
-          await supabase
-            .from("invites")
-            .update({
-              current_uses: currentInvite.current_uses + 1,
-              used_at: new Date().toISOString(),
-            })
-            .eq("code", inviteCode);
-        }
-        
         toast.success(t("auth.success.accountCreated"));
         navigate("/dashboard");
       }
@@ -314,23 +256,6 @@ export default function Auth() {
                   required
                 />
               </div>
-              
-              {!isLogin && (
-                <div className="space-y-2">
-                  <Label htmlFor="invite">{t("auth.inviteCode")}</Label>
-                  <Input
-                    id="invite"
-                    type="text"
-                    placeholder={t("auth.inviteCodePlaceholder")}
-                    value={inviteCode}
-                    onChange={(e) => setInviteCode(e.target.value)}
-                    required
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    {t("auth.inviteCodeRequired")}
-                  </p>
-                </div>
-              )}
               
               <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
                 {loading 
