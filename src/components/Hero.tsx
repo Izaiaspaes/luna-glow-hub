@@ -3,51 +3,41 @@ import { NavLink } from "@/components/NavLink";
 import { ArrowRight, LogIn, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import heroImage from "@/assets/hero-wellness.jpg";
 import logoLuna from "@/assets/logo-luna.png";
-
 export const Hero = () => {
-  const { user, signOut, isAdmin } = useAuth();
+  const {
+    user,
+    signOut,
+    isAdmin
+  } = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation();
-
+  const {
+    t
+  } = useTranslation();
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
-
   const getInitials = (email: string) => {
     return email.charAt(0).toUpperCase();
   };
-
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-soft">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-soft">
       {/* Navigation Bar */}
       <nav className="absolute top-0 left-0 right-0 z-10 border-b border-border/50 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <img 
-            src={logoLuna} 
-            alt="Luna Logo" 
-            className="h-14 w-auto"
-          />
+          <img src={logoLuna} alt="Luna Logo" className="h-14 w-auto" />
           
           <div className="flex items-center gap-2">
             <div className="hidden md:block">
               <LanguageSelector />
             </div>
-            {user ? (
-            <DropdownMenu>
+            {user ? <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                   <Avatar className="h-10 w-10">
@@ -68,27 +58,22 @@ export const Hero = () => {
                   <LayoutDashboard className="mr-2 h-4 w-4" />
                   {t('nav.dashboard')}
                 </DropdownMenuItem>
-                {isAdmin && (
-                  <DropdownMenuItem onClick={() => navigate("/admin")}>
+                {isAdmin && <DropdownMenuItem onClick={() => navigate("/admin")}>
                     <Shield className="mr-2 h-4 w-4" />
                     {t('nav.admin')}
-                  </DropdownMenuItem>
-                )}
+                  </DropdownMenuItem>}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />
                   {t('common.logout')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <NavLink to="/auth" className="hidden md:block">
+            </DropdownMenu> : <NavLink to="/auth" className="hidden md:block">
               <Button variant="outline" size="sm" className="gap-2">
                 <LogIn className="h-4 w-4" />
                 {t('common.login')}
               </Button>
-            </NavLink>
-          )}
+            </NavLink>}
             <MobileNav />
           </div>
         </div>
@@ -98,9 +83,7 @@ export const Hero = () => {
           {/* Text Content */}
           <div className="space-y-8 text-center lg:text-left">
             <div className="inline-block">
-              <span className="px-4 py-2 bg-gradient-colorful text-white rounded-full text-sm font-medium shadow-colorful">
-                {t('hero.badge')}
-              </span>
+              
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -146,11 +129,7 @@ export const Hero = () => {
           {/* Hero Image */}
           <div className="relative lg:order-last">
             <div className="relative rounded-3xl overflow-hidden shadow-hover">
-              <img 
-                src={heroImage} 
-                alt="Mulher praticando bem-estar" 
-                className="w-full h-auto object-cover"
-              />
+              <img src={heroImage} alt="Mulher praticando bem-estar" className="w-full h-auto object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
             </div>
             
@@ -162,6 +141,5 @@ export const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
