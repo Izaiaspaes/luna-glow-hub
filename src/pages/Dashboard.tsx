@@ -47,6 +47,8 @@ import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
+import { PushNotificationPrompt } from "@/components/PushNotificationPrompt";
+
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition' | null;
 
 export default function Dashboard() {
@@ -387,6 +389,13 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Column - Tracking */}
           <div className="lg:col-span-2 space-y-4 md:space-y-6">
+            {/* Push Notifications Prompt */}
+            {activeTab === 'overview' && (
+              <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                <PushNotificationPrompt />
+              </div>
+            )}
+            
             {/* Tabs */}
             <div className="flex flex-wrap gap-2 pb-2 scrollbar-hide">
               <Button
