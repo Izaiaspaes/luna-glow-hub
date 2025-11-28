@@ -48,9 +48,11 @@ export default defineConfig(({ mode }) => ({
       strategies: 'injectManifest',
       srcDir: 'public',
       filename: 'sw.js',
-      workbox: {
+      injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
-        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3 MB
+        maximumFileSizeToCacheInBytes: 25 * 1024 * 1024, // 25 MB
+      },
+      workbox: {
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

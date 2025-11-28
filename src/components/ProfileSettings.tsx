@@ -23,6 +23,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PartnerSharing } from "@/components/PartnerSharing";
 import { OnboardingDataView } from "@/components/OnboardingDataView";
 import { WearableIntegration } from "@/components/WearableIntegration";
+import { PushNotificationPrompt } from './PushNotificationPrompt';
+import { NotificationSettings } from './NotificationSettings';
 
 interface ProfileSettingsProps {
   open: boolean;
@@ -297,7 +299,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
 
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="profile">
               <User className="h-4 w-4 mr-2" />
               Perfil
@@ -554,7 +556,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           </TabsContent>
 
           {/* Privacy Tab */}
-          <TabsContent value="privacy" className="space-y-4 py-4">
+          <TabsContent value="privacy" className="space-y-6 py-4">
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <Shield className="h-4 w-4" />
@@ -608,6 +610,14 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                 </div>
               )}
             </div>
+
+            <Separator />
+
+            <PushNotificationPrompt />
+            
+            <Separator />
+
+            <NotificationSettings />
           </TabsContent>
         </Tabs>
       </DialogContent>

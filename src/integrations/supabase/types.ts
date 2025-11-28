@@ -350,6 +350,7 @@ export type Database = {
           encryption_enabled: boolean | null
           full_name: string | null
           id: string
+          notification_preferences: Json | null
           phone: string | null
           privacy_mode: boolean | null
           subscription_plan: string | null
@@ -364,6 +365,7 @@ export type Database = {
           encryption_enabled?: boolean | null
           full_name?: string | null
           id?: string
+          notification_preferences?: Json | null
           phone?: string | null
           privacy_mode?: boolean | null
           subscription_plan?: string | null
@@ -378,6 +380,7 @@ export type Database = {
           encryption_enabled?: boolean | null
           full_name?: string | null
           id?: string
+          notification_preferences?: Json | null
           phone?: string | null
           privacy_mode?: boolean | null
           subscription_plan?: string | null
