@@ -46,8 +46,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-
 import { PushNotificationPrompt } from "@/components/PushNotificationPrompt";
+import { Layout } from "@/components/Layout";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition' | null;
 
@@ -226,7 +226,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <Layout>
+      <div className="min-h-screen bg-background">
       <PlanLimitModal 
         open={showPlanLimitModal} 
         onOpenChange={setShowPlanLimitModal} 
@@ -784,5 +785,6 @@ export default function Dashboard() {
       
       <WhatsAppButton />
     </div>
+    </Layout>
   );
 }

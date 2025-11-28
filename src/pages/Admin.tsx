@@ -15,6 +15,7 @@ import { TestimonialsManagement } from "@/components/admin/TestimonialsManagemen
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Layout } from "@/components/Layout";
 
 export default function Admin() {
   const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
@@ -58,9 +59,11 @@ export default function Admin() {
 
   if (loading || !adminChecked) {
     return (
+      <Layout>
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-muted-foreground">Carregando...</p>
       </div>
+      </Layout>
     );
   }
 
@@ -69,6 +72,7 @@ export default function Admin() {
   }
 
   return (
+    <Layout>
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -167,5 +171,6 @@ export default function Admin() {
       
       <WhatsAppButton />
     </div>
+    </Layout>
   );
 }

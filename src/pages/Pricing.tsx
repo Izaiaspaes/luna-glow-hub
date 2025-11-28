@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
+import { Layout } from "@/components/Layout";
 
 const STRIPE_PRICES = {
   brl: {
@@ -165,6 +166,7 @@ export default function Pricing() {
   };
 
   return (
+    <Layout>
     <div className="min-h-screen bg-background">
       {/* Header/Nav */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -537,5 +539,6 @@ export default function Pricing() {
       
       <WhatsAppButton />
     </div>
+    </Layout>
   );
 }

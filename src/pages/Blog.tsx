@@ -11,6 +11,7 @@ import { blogPosts } from "@/data/blogPosts";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useTranslation } from "react-i18next";
+import { Layout } from "@/components/Layout";
 
 const Blog = () => {
   const { t } = useTranslation();
@@ -36,6 +37,7 @@ const Blog = () => {
   });
 
   return (
+    <Layout>
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -130,6 +132,7 @@ const Blog = () => {
       
       <WhatsAppButton />
     </div>
+    </Layout>
   );
 };
 

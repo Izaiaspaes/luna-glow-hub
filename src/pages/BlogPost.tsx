@@ -8,6 +8,7 @@ import { getBlogPostBySlug, getRelatedPosts } from "@/data/blogPosts";
 import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Layout } from "@/components/Layout";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -69,6 +70,7 @@ const BlogPost = () => {
   };
 
   return (
+    <Layout>
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -196,6 +198,7 @@ const BlogPost = () => {
       
       <WhatsAppButton />
     </div>
+    </Layout>
   );
 };
 
