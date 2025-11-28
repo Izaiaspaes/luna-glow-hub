@@ -27,10 +27,12 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
+import { Layout } from "@/components/Layout";
 
 export default function Features() {
   const { t } = useTranslation();
   return (
+    <Layout>
     <div className="min-h-screen bg-background">
       {/* Header/Nav */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -747,5 +749,6 @@ export default function Features() {
       
       <WhatsAppButton />
     </div>
+    </Layout>
   );
 }
