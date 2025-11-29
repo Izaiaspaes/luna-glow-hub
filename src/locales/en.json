@@ -71,6 +71,49 @@
     "satisfaction": "Satisfaction",
     "privacy": "Privacy Guaranteed"
   },
+  "featuredHighlights": {
+    "badge": "Premium Features",
+    "title": "Tools that",
+    "titleHighlight": "transform",
+    "titleEnd": "your well-being",
+    "subtitle": "Cutting-edge technology combined with empathy and privacy to support all dimensions of your health",
+    "lunaSense": {
+      "title": "Luna Sense - Smart Assistant",
+      "description": "Your wellness companion that understands you. Talk freely about cycle, symptoms, nutrition and emotions with empathetic and personalized responses.",
+      "feature1": "Natural conversations 24/7",
+      "feature2": "Adapts to your cycle",
+      "feature3": "Emotional support"
+    },
+    "diary": {
+      "title": "Women's Journal with AI",
+      "description": "Write freely about your day and receive powerful insights. AI identifies patterns, correlates mood with cycle and offers practical suggestions.",
+      "feature1": "Automatic analysis",
+      "feature2": "Recurring patterns",
+      "feature3": "Complete history"
+    },
+    "tracking": {
+      "title": "Smart Tracking",
+      "description": "Monitor cycle, sleep, mood and energy with voice analysis. AI generates personalized nutrition, exercise and self-care plans.",
+      "feature1": "Voice transcription",
+      "feature2": "Personalized plans",
+      "feature3": "Daily insights"
+    },
+    "sos": {
+      "title": "Women's SOS",
+      "description": "Immediate support for difficult moments with relaxation techniques and care."
+    },
+    "partner": {
+      "title": "Luna for Two",
+      "description": "Share your cycle with your partner in an educational and respectful way."
+    },
+    "privacy": {
+      "title": "Total Privacy",
+      "description": "End-to-end encryption and full control over your data."
+    },
+    "ctaButton": "Try Free",
+    "ctaSecondary": "View All Features",
+    "ctaNote": "No credit card required • Cancel anytime"
+  },
   "testimonials": {
     "title": "What our users say"
   },

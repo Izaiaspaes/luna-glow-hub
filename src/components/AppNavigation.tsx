@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Settings, LogOut, Home, LayoutDashboard, Sparkles, DollarSign, ShieldCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
 
 export const AppNavigation = () => {
@@ -107,6 +108,7 @@ export const AppNavigation = () => {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-2">
+          <LanguageSelector />
           {user ? (
             <>
               <Button
