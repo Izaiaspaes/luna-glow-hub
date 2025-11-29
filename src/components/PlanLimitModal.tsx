@@ -123,7 +123,7 @@ export function PlanLimitModal({ open, onOpenChange }: PlanLimitModalProps) {
             className="w-full sm:w-auto bg-gradient-to-r from-luna-pink via-luna-purple to-luna-orange hover:opacity-90"
           >
             <Sparkles className="mr-2 h-4 w-4" />
-            Fazer Upgrade
+            Gerenciar Assinatura
           </Button>
         </DialogFooter>
       </DialogContent>
