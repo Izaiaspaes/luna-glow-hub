@@ -28,7 +28,7 @@ const STRIPE_PRICES = {
     },
     premiumPlus: {
       monthly: "price_1SYebkIEVFZTiFWxFUKducJE",
-      yearly: "price_1SYebkIEVFZTiFWxFUKducJE_yearly", // TODO: Replace with actual Stripe price ID
+      yearly: "price_1SYghcIEVFZTiFWxxqiCmWth",
     }
   },
   usd: {
@@ -38,7 +38,7 @@ const STRIPE_PRICES = {
     },
     premiumPlus: {
       monthly: "price_1SYeblIEVFZTiFWxuoxqWS4o",
-      yearly: "price_1SYeblIEVFZTiFWxuoxqWS4o_yearly", // TODO: Replace with actual Stripe price ID
+      yearly: "price_1SYghdIEVFZTiFWx6jTEbMet",
     }
   }
 };
