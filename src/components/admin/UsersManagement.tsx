@@ -83,6 +83,9 @@ export const UsersManagement = () => {
   };
 
   const handleChangePlan = async (userId: string, newPlan: string) => {
+    const currentUser = users.find(u => u.user_id === userId);
+    const oldPlan = currentUser?.subscription_plan || 'free';
+
     const { error } = await supabase
       .from('profiles')
       .update({ subscription_plan: newPlan })
@@ -93,6 +96,23 @@ export const UsersManagement = () => {
       console.error(error);
     } else {
       toast.success(`Plano alterado para ${newPlan} com sucesso`);
+      
+      // Send notification to user
+      try {
+        const { error: notifyError } = await supabase.functions.invoke('notify-plan-change', {
+          body: { userId, newPlan, oldPlan }
+        });
+
+        if (notifyError) {
+          console.error("Error sending notification:", notifyError);
+          toast.error("Plano alterado, mas falha ao enviar notificação");
+        } else {
+          toast.success("Notificação enviada ao usuário");
+        }
+      } catch (notifyError) {
+        console.error("Error sending notification:", notifyError);
+      }
+      
       loadUsers();
     }
   };
