@@ -273,6 +273,10 @@
   "dashboard": {
     "welcome": "Olá{{name}}, bem-vinda! 👋",
     "subtitle": "Acompanhe sua jornada de bem-estar e receba insights personalizados",
+    "quickAccess": {
+      "title": "Acesso Rápido",
+      "description": "Registre seus dados de bem-estar facilmente"
+    },
     "tracking": "Rastreamento",
     "cycle": "Ciclo",
     "sleep": "Sono",

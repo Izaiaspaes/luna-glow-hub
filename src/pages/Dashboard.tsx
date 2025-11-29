@@ -320,6 +320,82 @@ export default function Dashboard() {
                 <PushNotificationPrompt />
               </div>
             )}
+
+            {/* Quick Access Buttons for Premium/Premium Plus Users */}
+            {activeTab === 'overview' && (profile?.subscription_plan === 'premium' || profile?.subscription_plan === 'premium_plus') && (
+              <Card className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+                <CardHeader>
+                  <CardTitle className="text-lg md:text-xl flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    {t('dashboard.quickAccess.title')}
+                  </CardTitle>
+                  <CardDescription>{t('dashboard.quickAccess.description')}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => setActiveTab('cycle')}
+                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
+                    >
+                      <Heart className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">{t('dashboard.tabs.cycle')}</span>
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => setActiveTab('sleep')}
+                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
+                    >
+                      <Moon className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">{t('dashboard.tabs.sleep')}</span>
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => setActiveTab('mood')}
+                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
+                    >
+                      <Smile className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">{t('dashboard.tabs.mood')}</span>
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => setActiveTab('energy')}
+                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
+                    >
+                      <Zap className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">{t('dashboard.tabs.energy')}</span>
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => setActiveTab('nutrition')}
+                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
+                    >
+                      <Apple className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">{t('dashboard.tabs.nutrition')}</span>
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => setActiveTab('predictions')}
+                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
+                    >
+                      <Sparkles className="w-6 h-6 text-primary" />
+                      <span className="text-sm font-medium">{t('dashboard.tabs.predictions')}</span>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
             
             {/* Tabs */}
             <div className="flex flex-wrap gap-2 pb-2 scrollbar-hide">
