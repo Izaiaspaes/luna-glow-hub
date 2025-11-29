@@ -25,10 +25,6 @@ const step1Schema = z.object({
     .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
       message: "Nome contém caracteres inválidos"
     }),
-  social_name: z.string()
-    .max(50, "Nome social muito longo (máximo 50 caracteres)")
-    .optional()
-    .or(z.literal("")),
   age: z.number({
     required_error: "Idade é obrigatória",
     invalid_type_error: "Digite um número válido"
@@ -64,7 +60,6 @@ export function OnboardingStep1({ data, onNext, onAutoSave }: OnboardingStep1Pro
     defaultValues: {
       full_name: data.full_name || "",
       preferred_name: data.preferred_name || "",
-      social_name: data.social_name || "",
       age: data.age || undefined,
       profession: data.profession || "",
       current_city: data.current_city || "",
@@ -141,23 +136,6 @@ export function OnboardingStep1({ data, onNext, onAutoSave }: OnboardingStep1Pro
           <p className="text-xs text-muted-foreground">
             Nome e sobrenome para personalizar sua experiência
           </p>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="social_name">Nome Social / Como gosta de ser chamada</Label>
-          <Input
-            id="social_name"
-            {...register("social_name")}
-            placeholder="Apelido ou nome social"
-            className={errors.social_name ? "border-destructive focus-visible:ring-destructive" : ""}
-            maxLength={50}
-          />
-          {errors.social_name && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
-              {errors.social_name.message}
-            </p>
-          )}
         </div>
 
         <div className="space-y-2">
