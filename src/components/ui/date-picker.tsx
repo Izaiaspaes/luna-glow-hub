@@ -88,6 +88,8 @@ export function DatePicker({
         placeholder="dd/mm/aaaa"
         className="flex-1"
         maxLength={10}
+        inputMode="numeric"
+        pattern="[0-3][0-9]/[0-1][0-9]/[0-9]{4}"
       />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
