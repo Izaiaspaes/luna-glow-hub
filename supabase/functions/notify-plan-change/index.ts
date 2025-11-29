@@ -6,8 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const ALLOWED_TEST_EMAIL = "izaias.paes31@gmail.com";
+const ZEPTOMAIL_API_TOKEN = Deno.env.get("ZEPTOMAIL_API_TOKEN");
 
 interface NotifyPlanChangeRequest {
   userId: string;
@@ -73,40 +72,33 @@ serve(async (req) => {
     const oldPlanName = planNames[oldPlan] || oldPlan;
     const newPlanName = planNames[newPlan] || newPlan;
 
-    if (!RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured");
+    if (!ZEPTOMAIL_API_TOKEN) {
+      console.error("ZEPTOMAIL_API_TOKEN is not configured");
       throw new Error("Email service not configured");
     }
 
-    if (userEmail !== ALLOWED_TEST_EMAIL) {
-      console.log(
-        "Skipping email send because recipient is not the allowed test email.",
-        "Target email:",
-        userEmail
-      );
-
-      return new Response(
-        JSON.stringify({
-          success: true,
-          message:
-            "Plan change processed. Email not sent in sandbox mode for this recipient.",
-        }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // Send email notification via Resend (sandbox: only to allowed test email)
-    const emailResponse = await fetch("https://api.resend.com/emails", {
+    // Send email notification via ZeptoMail
+    const emailResponse = await fetch("https://api.zeptomail.com/v1.1/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
+        Authorization: `Zoho-enczapikey ${ZEPTOMAIL_API_TOKEN}`,
       },
       body: JSON.stringify({
-        from: "Luna <onboarding@resend.dev>",
-        to: [userEmail],
+        from: {
+          address: "noreply@lunaglow.com.br",
+          name: "Luna"
+        },
+        to: [
+          {
+            email_address: {
+              address: userEmail,
+              name: userName
+            }
+          }
+        ],
         subject: "Seu plano Luna foi atualizado! 🎉",
-        html: `
+        htmlbody: `
           <!DOCTYPE html>
           <html>
             <head>
@@ -163,12 +155,12 @@ serve(async (req) => {
 
     if (!emailResponse.ok) {
       const errorText = await emailResponse.text();
-      console.error("Resend API error:", errorText);
+      console.error("ZeptoMail API error:", errorText);
       throw new Error(`Failed to send email: ${errorText}`);
     }
 
     const emailData = await emailResponse.json();
-    console.log("Email sent successfully via Resend:", emailData);
+    console.log("Email sent successfully via ZeptoMail:", emailData);
 
     return new Response(
       JSON.stringify({ success: true, message: "Notification processed" }),
