@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Shield, User, Trash2, CheckCircle, Search, X } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -79,6 +80,21 @@ export const UsersManagement = () => {
       loadUsers();
     }
     setDeleteUserId(null);
+  };
+
+  const handleChangePlan = async (userId: string, newPlan: string) => {
+    const { error } = await supabase
+      .from('profiles')
+      .update({ subscription_plan: newPlan })
+      .eq('user_id', userId);
+
+    if (error) {
+      toast.error("Erro ao alterar plano");
+      console.error(error);
+    } else {
+      toast.success(`Plano alterado para ${newPlan} com sucesso`);
+      loadUsers();
+    }
   };
 
   const handleToggleRole = async (userId: string, role: 'admin' | 'moderator' | 'user') => {
@@ -219,11 +235,19 @@ export const UsersManagement = () => {
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.phone || 'Não informado'}</TableCell>
                       <TableCell>
-                        {user.subscription_plan === 'premium' ? (
-                          <Badge variant="premium">✨ Premium</Badge>
-                        ) : (
-                          <Badge variant="free">Free</Badge>
-                        )}
+                        <Select
+                          value={user.subscription_plan || 'free'}
+                          onValueChange={(value) => handleChangePlan(user.user_id, value)}
+                        >
+                          <SelectTrigger className="w-[160px]">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="free">Free</SelectItem>
+                            <SelectItem value="premium">✨ Premium</SelectItem>
+                            <SelectItem value="premium_plus">💎 Premium Plus</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-1">
