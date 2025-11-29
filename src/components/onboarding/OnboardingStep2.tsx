@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { OnboardingData } from "@/hooks/useOnboarding";
 import { DatePicker } from "@/components/ui/date-picker";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const step2Schema = z.object({
   birth_date: z.string()
@@ -42,14 +42,15 @@ interface OnboardingStep2Props {
   data: OnboardingData;
   onNext: (data: Partial<OnboardingData>) => void;
   onBack: () => void;
+  onAutoSave: (data: Partial<OnboardingData>) => void;
 }
 
-export function OnboardingStep2({ data, onNext, onBack }: OnboardingStep2Props) {
+export function OnboardingStep2({ data, onNext, onBack, onAutoSave }: OnboardingStep2Props) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     data.birth_date ? new Date(data.birth_date) : undefined
   );
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<Step2Data>({
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Step2Data>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
       birth_date: data.birth_date || "",
@@ -58,6 +59,14 @@ export function OnboardingStep2({ data, onNext, onBack }: OnboardingStep2Props) 
       birth_country: data.birth_country || "",
     },
   });
+
+  // Auto-save on field changes
+  useEffect(() => {
+    const subscription = watch((value) => {
+      onAutoSave(value as Partial<OnboardingData>);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, onAutoSave]);
 
   const onSubmit = (formData: Step2Data) => {
     onNext(formData);

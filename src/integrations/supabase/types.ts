@@ -728,6 +728,7 @@ export type Database = {
           nail_preference: string | null
           notification_frequency: string | null
           personal_interests: string | null
+          preferred_name: string | null
           profession: string | null
           self_love_notes: string | null
           skin_tone: string | null
@@ -768,6 +769,7 @@ export type Database = {
           nail_preference?: string | null
           notification_frequency?: string | null
           personal_interests?: string | null
+          preferred_name?: string | null
           profession?: string | null
           self_love_notes?: string | null
           skin_tone?: string | null
@@ -808,6 +810,7 @@ export type Database = {
           nail_preference?: string | null
           notification_frequency?: string | null
           personal_interests?: string | null
+          preferred_name?: string | null
           profession?: string | null
           self_love_notes?: string | null
           skin_tone?: string | null

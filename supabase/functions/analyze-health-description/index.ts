@@ -26,14 +26,20 @@ serve(async (req) => {
         const token = authHeader.replace('Bearer ', '');
         const { data: { user } } = await supabase.auth.getUser(token);
         if (user) {
-          // Fetch user profile from profiles table
+          // Fetch preferred name from onboarding data first, then profile
+          const { data: onboardingData } = await supabase
+            .from('user_onboarding_data')
+            .select('preferred_name')
+            .eq('user_id', user.id)
+            .maybeSingle();
+
           const { data: profile } = await supabase
             .from('profiles')
             .select('full_name')
             .eq('user_id', user.id)
             .single();
           
-          userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
+          userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || user.email?.split('@')[0] || 'usuária';
         }
       } catch (error) {
         console.log('Could not fetch user info, using default name');

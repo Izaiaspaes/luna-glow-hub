@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +15,13 @@ const step1Schema = z.object({
     .refine(val => val.trim().split(' ').length >= 2, {
       message: "Por favor, informe nome e sobrenome"
     })
+    .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
+      message: "Nome contém caracteres inválidos"
+    }),
+  preferred_name: z.string()
+    .min(1, "Nome preferido é obrigatório")
+    .min(2, "Nome deve ter pelo menos 2 caracteres")
+    .max(50, "Nome muito longo (máximo 50 caracteres)")
     .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
       message: "Nome contém caracteres inválidos"
     }),
@@ -47,13 +55,15 @@ type Step1Data = z.infer<typeof step1Schema>;
 interface OnboardingStep1Props {
   data: OnboardingData;
   onNext: (data: Partial<OnboardingData>) => void;
+  onAutoSave: (data: Partial<OnboardingData>) => void;
 }
 
-export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
-  const { register, handleSubmit, formState: { errors } } = useForm<Step1Data>({
+export function OnboardingStep1({ data, onNext, onAutoSave }: OnboardingStep1Props) {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
       full_name: data.full_name || "",
+      preferred_name: data.preferred_name || "",
       social_name: data.social_name || "",
       age: data.age || undefined,
       profession: data.profession || "",
@@ -61,6 +71,15 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
       current_country: data.current_country || "",
     },
   });
+
+  // Auto-save on field changes
+  const watchedFields = watch();
+  useEffect(() => {
+    const subscription = watch((value) => {
+      onAutoSave(value as Partial<OnboardingData>);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, onAutoSave]);
 
   const onSubmit = (formData: Step1Data) => {
     onNext(formData);
@@ -71,9 +90,37 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold text-foreground">Sobre Você</h2>
         <p className="text-muted-foreground">Vamos começar com suas informações básicas</p>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <span>Auto-salvamento ativo</span>
+          </div>
+        </div>
       </div>
 
       <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="preferred_name" className="flex items-center gap-1">
+            Como gostaria de ser chamada? <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="preferred_name"
+            {...register("preferred_name")}
+            placeholder="Ex: Maria, Mari, Má..."
+            className={errors.preferred_name ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={50}
+          />
+          {errors.preferred_name && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.preferred_name.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            💬 Este será o nome que usaremos para te chamar no app
+          </p>
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="full_name" className="flex items-center gap-1">
             Nome Completo <span className="text-destructive">*</span>

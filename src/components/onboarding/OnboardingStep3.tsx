@@ -1,6 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -47,6 +48,7 @@ interface OnboardingStep3Props {
   data: OnboardingData;
   onNext: (data: Partial<OnboardingData>) => void;
   onBack: () => void;
+  onAutoSave: (data: Partial<OnboardingData>) => void;
 }
 
 const bodyShapes = ["Retângulo", "Ampulheta", "Pêra/Triangular", "Triângulo Invertido", "Oval/Redondo"];
@@ -56,7 +58,7 @@ const eyeColors = ["Castanhos Claros", "Castanhos Escuros", "Verdes", "Azuis", "
 const hairTypes = ["Liso", "Ondulado", "Cacheado", "Crespo"];
 const hairLengths = ["Curto", "Médio", "Longo"];
 
-export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) {
+export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: OnboardingStep3Props) {
   const { register, handleSubmit, control, watch, setValue, formState: { errors } } = useForm<Step3Data>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
@@ -72,6 +74,14 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
       nail_preference: data.nail_preference || "",
     },
   });
+
+  // Auto-save on field changes
+  useEffect(() => {
+    const subscription = watch((value) => {
+      onAutoSave(value as Partial<OnboardingData>);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, onAutoSave]);
 
   const selectedBodyShapes = watch("body_shapes") || [];
   const selectedSkinTypes = watch("skin_types") || [];

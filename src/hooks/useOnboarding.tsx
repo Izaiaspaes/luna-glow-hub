@@ -9,6 +9,7 @@ export interface OnboardingData {
   
   // Dados básicos
   full_name?: string;
+  preferred_name?: string;
   social_name?: string;
   age?: number;
   profession?: string;
@@ -62,6 +63,7 @@ export function useOnboarding() {
   const [onboardingData, setOnboardingData] = useState<OnboardingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
+  const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -71,6 +73,13 @@ export function useOnboarding() {
       setLoading(false);
       setHasCompletedOnboarding(false);
     }
+    
+    // Cleanup auto-save timer on unmount
+    return () => {
+      if (autoSaveTimer) {
+        clearTimeout(autoSaveTimer);
+      }
+    };
   }, [user]);
 
   const loadOnboardingData = async () => {
@@ -125,11 +134,42 @@ export function useOnboarding() {
     }
   };
 
+  // Auto-save function with debounce
+  const autoSaveOnboardingData = (data: Partial<OnboardingData>) => {
+    if (!user) return;
+
+    // Clear existing timer
+    if (autoSaveTimer) {
+      clearTimeout(autoSaveTimer);
+    }
+
+    // Set new timer for auto-save (3 seconds after last change)
+    const timer = setTimeout(async () => {
+      try {
+        const updateData = {
+          ...data,
+          user_id: user.id,
+        };
+
+        await supabase
+          .from("user_onboarding_data")
+          .upsert(updateData, { onConflict: 'user_id' });
+
+        console.log("Auto-save completed");
+      } catch (error) {
+        console.error("Auto-save error:", error);
+      }
+    }, 3000);
+
+    setAutoSaveTimer(timer);
+  };
+
   return {
     onboardingData,
     loading,
     hasCompletedOnboarding,
     saveOnboardingData,
+    autoSaveOnboardingData,
     refreshOnboardingData: loadOnboardingData,
   };
 }

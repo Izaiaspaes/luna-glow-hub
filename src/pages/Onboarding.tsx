@@ -12,7 +12,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export default function Onboarding() {
   const navigate = useNavigate();
-  const { onboardingData, saveOnboardingData } = useOnboarding();
+  const { onboardingData, saveOnboardingData, autoSaveOnboardingData } = useOnboarding();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingData>(onboardingData || {});
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,12 @@ export default function Onboarding() {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
+  };
+
+  const handleAutoSave = (stepData: Partial<OnboardingData>) => {
+    const updatedData = { ...formData, ...stepData };
+    setFormData(updatedData);
+    autoSaveOnboardingData(updatedData);
   };
 
   const handleBack = () => {
@@ -74,13 +80,27 @@ export default function Onboarding() {
         <Card>
           <CardContent className="pt-6">
             {currentStep === 1 && (
-              <OnboardingStep1 data={formData} onNext={handleNext} />
+              <OnboardingStep1 
+                data={formData} 
+                onNext={handleNext}
+                onAutoSave={handleAutoSave}
+              />
             )}
             {currentStep === 2 && (
-              <OnboardingStep2 data={formData} onNext={handleNext} onBack={handleBack} />
+              <OnboardingStep2 
+                data={formData} 
+                onNext={handleNext} 
+                onBack={handleBack}
+                onAutoSave={handleAutoSave}
+              />
             )}
             {currentStep === 3 && (
-              <OnboardingStep3 data={formData} onNext={handleNext} onBack={handleBack} />
+              <OnboardingStep3 
+                data={formData} 
+                onNext={handleNext} 
+                onBack={handleBack}
+                onAutoSave={handleAutoSave}
+              />
             )}
             {currentStep === 4 && (
               <OnboardingStep4
@@ -88,6 +108,7 @@ export default function Onboarding() {
                 onComplete={handleComplete}
                 onBack={handleBack}
                 loading={loading}
+                onAutoSave={handleAutoSave}
               />
             )}
           </CardContent>

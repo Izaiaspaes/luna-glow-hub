@@ -254,7 +254,7 @@ export default function Dashboard() {
         <div className="mb-8 animate-fade-in flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-              {t('dashboard.welcome', { name: profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : '' })}
+              {t('dashboard.welcome', { name: profile?.preferred_name ? `, ${profile.preferred_name}` : profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : '' })}
             </h1>
             <p className="text-sm md:text-base text-muted-foreground">
               {t('dashboard.subtitle')}

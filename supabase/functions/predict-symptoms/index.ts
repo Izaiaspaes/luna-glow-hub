@@ -67,14 +67,20 @@ serve(async (req) => {
       );
     }
 
-    // Get user profile for personalization
+    // Get user preferred name for personalization
+    const { data: onboardingData } = await supabase
+      .from("user_onboarding_data")
+      .select("preferred_name")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
     const { data: profile } = await supabase
       .from("profiles")
       .select("full_name")
       .eq("user_id", user.id)
       .single();
 
-    const userName = profile?.full_name || "usuária";
+    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || "usuária";
 
     // Prepare data summary for AI
     const dataSummary = {

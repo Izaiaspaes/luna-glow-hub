@@ -53,14 +53,20 @@ serve(async (req) => {
 
     const userEmail = userData.user.email;
 
-    // Get user profile for name
+    // Get user preferred name for personalization
+    const { data: onboardingData } = await supabaseClient
+      .from("user_onboarding_data")
+      .select("preferred_name")
+      .eq("user_id", userId)
+      .maybeSingle();
+
     const { data: profile } = await supabaseClient
       .from("profiles")
       .select("full_name")
       .eq("user_id", userId)
       .single();
 
-    const userName = profile?.full_name || userEmail.split("@")[0];
+    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || userEmail.split("@")[0];
 
     // Translate plan names
     const planNames: Record<string, string> = {
