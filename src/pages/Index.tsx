@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
+import { FeaturedHighlights } from "@/components/FeaturedHighlights";
 import { Statistics } from "@/components/Statistics";
 import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
@@ -39,6 +40,7 @@ const Index = () => {
       <div className="min-h-screen">
         <Hero />
         <Statistics />
+        <FeaturedHighlights />
         <Testimonials />
         <FAQ />
         <Privacy />
