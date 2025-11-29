@@ -9,7 +9,6 @@ import { Footer } from "@/components/Footer";
 import { MobileNav } from "@/components/MobileNav";
 import { blogPosts } from "@/data/blogPosts";
 import logoLuna from "@/assets/logo-luna.png";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useTranslation } from "react-i18next";
 import { Layout } from "@/components/Layout";
 
@@ -111,8 +110,6 @@ const Blog = () => {
       </section>
 
       <Footer />
-      
-      <WhatsAppButton />
     </div>
     </Layout>
   );

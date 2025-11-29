@@ -7,7 +7,6 @@ import { RelatedArticles } from "@/components/RelatedArticles";
 import { getBlogPostBySlug, getRelatedPosts } from "@/data/blogPosts";
 import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
 import { toast } from "sonner";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Layout } from "@/components/Layout";
 
 const BlogPost = () => {
@@ -179,8 +178,6 @@ const BlogPost = () => {
       {relatedPosts.length > 0 && <RelatedArticles posts={relatedPosts} />}
 
       <Footer />
-      
-      <WhatsAppButton />
     </div>
     </Layout>
   );

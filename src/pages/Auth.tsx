@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import logoLuna from "@/assets/logo-luna.png";
 import { useTranslation } from "react-i18next";
 
@@ -312,8 +311,6 @@ export default function Auth() {
           )}
         </CardContent>
       </Card>
-      
-      <WhatsAppButton />
     </div>
   );
 }
