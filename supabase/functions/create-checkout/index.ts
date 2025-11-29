@@ -64,10 +64,10 @@ serve(async (req) => {
 
     const origin = req.headers.get("origin") || "http://localhost:8080";
     
-    // Use only card payment method (universally supported)
-    // To enable boleto and PIX, activate them in Stripe Dashboard:
-    // https://dashboard.stripe.com/settings/payment_methods
-    logStep("Creating checkout session");
+    // Explicitly set payment method types to card only
+    // This avoids errors when no default payment methods are configured in Stripe
+    const paymentMethodTypes: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = ["card"];
+    logStep("Creating checkout session", { paymentMethodTypes });
     
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
@@ -79,6 +79,7 @@ serve(async (req) => {
         },
       ],
       mode: "subscription",
+      payment_method_types: paymentMethodTypes,
       success_url: `${origin}/dashboard?success=true`,
       cancel_url: `${origin}/pricing?canceled=true`,
     });
