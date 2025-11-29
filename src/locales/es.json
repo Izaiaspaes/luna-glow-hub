@@ -114,6 +114,22 @@
     "ctaSecondary": "Ver Todas las Funcionalidades",
     "ctaNote": "Sin tarjeta de crédito • Cancela cuando quieras"
   },
+  "videoDemo": {
+    "badge": "Míralo en acción",
+    "title": "Descubre cómo Luna",
+    "titleHighlight": "transforma tu bienestar",
+    "subtitle": "Mira una demostración rápida de cómo nuestras funcionalidades premium pueden revolucionar tu viaje de autocuidado.",
+    "benefit1": "Asistente de IA que realmente te entiende",
+    "benefit2": "Diario inteligente con análisis profundos",
+    "benefit3": "Seguimiento completo con insights personalizados",
+    "benefit4": "Privacidad y seguridad primero",
+    "ctaButton": "Comenzar Gratis",
+    "ctaSecondary": "Ver Planes",
+    "note": "Prueba gratis por 14 días • Sin compromiso",
+    "duration": "3:42 min",
+    "statUsers": "Mujeres activas",
+    "statSatisfaction": "Satisfacción"
+  },
   "testimonials": {
     "title": "Lo que dicen nuestras usuarias"
   },
