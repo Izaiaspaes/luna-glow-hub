@@ -71,6 +71,49 @@
     "satisfaction": "Satisfacción",
     "privacy": "Privacidad Garantizada"
   },
+  "featuredHighlights": {
+    "badge": "Funcionalidades Premium",
+    "title": "Herramientas que",
+    "titleHighlight": "transforman",
+    "titleEnd": "tu bienestar",
+    "subtitle": "Tecnología de punta combinada con empatía y privacidad para apoyar todas las dimensiones de tu salud",
+    "lunaSense": {
+      "title": "Luna Sense - Asistente Inteligente",
+      "description": "Tu compañera de bienestar que te entiende. Conversa libremente sobre ciclo, síntomas, alimentación y emociones con respuestas empáticas y personalizadas.",
+      "feature1": "Conversaciones naturales 24/7",
+      "feature2": "Se adapta a tu ciclo",
+      "feature3": "Apoyo emocional"
+    },
+    "diary": {
+      "title": "Diario de la Mujer con IA",
+      "description": "Escribe libremente sobre tu día y recibe insights poderosos. La IA identifica patrones, correlaciona humor con ciclo y ofrece sugerencias prácticas.",
+      "feature1": "Análisis automático",
+      "feature2": "Patrones recurrentes",
+      "feature3": "Historial completo"
+    },
+    "tracking": {
+      "title": "Seguimiento Inteligente",
+      "description": "Monitorea ciclo, sueño, humor y energía con análisis por voz. La IA genera planes personalizados de nutrición, ejercicios y autocuidado.",
+      "feature1": "Transcripción por voz",
+      "feature2": "Planes personalizados",
+      "feature3": "Insights diarios"
+    },
+    "sos": {
+      "title": "SOS Femenino",
+      "description": "Apoyo inmediato para momentos difíciles con técnicas de relajación y acogida."
+    },
+    "partner": {
+      "title": "Luna para Dos",
+      "description": "Comparte tu ciclo con tu pareja de forma educativa y respetuosa."
+    },
+    "privacy": {
+      "title": "Privacidad Total",
+      "description": "Cifrado de extremo a extremo y control total sobre tus datos."
+    },
+    "ctaButton": "Prueba Gratis",
+    "ctaSecondary": "Ver Todas las Funcionalidades",
+    "ctaNote": "Sin tarjeta de crédito • Cancela cuando quieras"
+  },
   "testimonials": {
     "title": "Lo que dicen nuestras usuarias"
   },

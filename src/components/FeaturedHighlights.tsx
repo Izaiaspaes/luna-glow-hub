@@ -13,29 +13,41 @@ export const FeaturedHighlights = () => {
   const highlights = [
     {
       icon: Brain,
-      title: "Luna Sense - Assistente Inteligente",
-      description: "Sua companheira de bem-estar que entende você. Converse livremente sobre ciclo, sintomas, alimentação e emoções com respostas empáticas e personalizadas.",
+      title: t("featuredHighlights.lunaSense.title"),
+      description: t("featuredHighlights.lunaSense.description"),
       image: featureHealth,
       color: "luna-purple",
-      features: ["Conversas naturais 24/7", "Adapta-se ao seu ciclo", "Suporte emocional"],
+      features: [
+        t("featuredHighlights.lunaSense.feature1"),
+        t("featuredHighlights.lunaSense.feature2"),
+        t("featuredHighlights.lunaSense.feature3")
+      ],
       gradient: "from-luna-purple/20 to-transparent"
     },
     {
       icon: Heart,
-      title: "Diário da Mulher com IA",
-      description: "Escreva livremente sobre seu dia e receba insights poderosos. A IA identifica padrões, correlaciona humor com ciclo e oferece sugestões práticas.",
+      title: t("featuredHighlights.diary.title"),
+      description: t("featuredHighlights.diary.description"),
       image: featureCommunity,
       color: "luna-pink",
-      features: ["Análise automática", "Padrões recorrentes", "Histórico completo"],
+      features: [
+        t("featuredHighlights.diary.feature1"),
+        t("featuredHighlights.diary.feature2"),
+        t("featuredHighlights.diary.feature3")
+      ],
       gradient: "from-luna-pink/20 to-transparent"
     },
     {
       icon: Sparkles,
-      title: "Rastreamento Inteligente",
-      description: "Monitore ciclo, sono, humor e energia com análises por voz. A IA gera planos personalizados de nutrição, exercícios e autocuidado.",
+      title: t("featuredHighlights.tracking.title"),
+      description: t("featuredHighlights.tracking.description"),
       image: featureShop,
       color: "luna-blue",
-      features: ["Transcrição por voz", "Planos personalizados", "Insights diários"],
+      features: [
+        t("featuredHighlights.tracking.feature1"),
+        t("featuredHighlights.tracking.feature2"),
+        t("featuredHighlights.tracking.feature3")
+      ],
       gradient: "from-luna-blue/20 to-transparent"
     }
   ];
@@ -43,20 +55,20 @@ export const FeaturedHighlights = () => {
   const miniFeatures = [
     {
       icon: MessageCircle,
-      title: "SOS Feminino",
-      description: "Suporte imediato para momentos difíceis com técnicas de relaxamento e acolhimento.",
+      title: t("featuredHighlights.sos.title"),
+      description: t("featuredHighlights.sos.description"),
       color: "luna-orange"
     },
     {
       icon: Calendar,
-      title: "Luna a Dois",
-      description: "Compartilhe seu ciclo com seu parceiro(a) de forma educativa e respeitosa.",
+      title: t("featuredHighlights.partner.title"),
+      description: t("featuredHighlights.partner.description"),
       color: "luna-green"
     },
     {
       icon: Shield,
-      title: "Privacidade Total",
-      description: "Criptografia de ponta a ponta e controle total sobre seus dados.",
+      title: t("featuredHighlights.privacy.title"),
+      description: t("featuredHighlights.privacy.description"),
       color: "luna-purple"
     }
   ];
@@ -68,17 +80,17 @@ export const FeaturedHighlights = () => {
         <div className="text-center mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium mb-4">
             <Sparkles className="h-4 w-4" />
-            <span>Funcionalidades Premium</span>
+            <span>{t("featuredHighlights.badge")}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold">
-            Ferramentas que{" "}
+            {t("featuredHighlights.title")}{" "}
             <span className="bg-gradient-colorful bg-clip-text text-transparent">
-              transformam
+              {t("featuredHighlights.titleHighlight")}
             </span>{" "}
-            seu bem-estar
+            {t("featuredHighlights.titleEnd")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Tecnologia de ponta combinada com empatia e privacidade para apoiar todas as dimensões da sua saúde
+            {t("featuredHighlights.subtitle")}
           </p>
         </div>
 
@@ -159,18 +171,18 @@ export const FeaturedHighlights = () => {
           <div className="inline-flex flex-col sm:flex-row gap-4">
             <NavLink to="/auth">
               <Button variant="colorful" size="lg" className="group">
-                Experimente Grátis
+                {t("featuredHighlights.ctaButton")}
                 <Sparkles className="ml-2 h-5 w-5 transition-transform group-hover:rotate-12" />
               </Button>
             </NavLink>
             <NavLink to="/features">
               <Button variant="outline" size="lg">
-                Ver Todas as Funcionalidades
+                {t("featuredHighlights.ctaSecondary")}
               </Button>
             </NavLink>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
-            Sem cartão de crédito • Cancele quando quiser
+            {t("featuredHighlights.ctaNote")}
           </p>
         </div>
       </div>
