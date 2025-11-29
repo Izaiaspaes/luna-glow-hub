@@ -273,6 +273,10 @@
   "dashboard": {
     "welcome": "Hello{{name}}, welcome! 👋",
     "subtitle": "Track your wellness journey and receive personalized insights",
+    "quickAccess": {
+      "title": "Quick Access",
+      "description": "Track your wellness data easily"
+    },
     "tracking": "Tracking",
     "cycle": "Cycle",
     "sleep": "Sleep",
