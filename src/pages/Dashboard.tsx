@@ -72,6 +72,11 @@ export default function Dashboard() {
   const lunaSenseRef = useRef<HTMLDivElement>(null);
   const sosFemininoRef = useRef<HTMLDivElement>(null);
   const { profile } = useProfile();
+  
+  // Check if user is Premium Plus
+  const isPremiumPlusUser = profile?.subscription_plan === 'premium_plus' || 
+    subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' || 
+    subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN';
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -241,12 +246,7 @@ export default function Dashboard() {
   };
 
   const scrollToPremiumSection = (ref: React.RefObject<HTMLDivElement>) => {
-    if (activeTab !== 'premiumPlus') {
-      setActiveTab('premiumPlus');
-    }
-    setTimeout(() => {
-      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   if (loading || !adminChecked) {
@@ -414,23 +414,22 @@ export default function Dashboard() {
                 <Calendar className="w-3 h-3 md:w-4 md:h-4 md:mr-1 lg:mr-2" />
                 <span className="hidden md:inline">{t('dashboard.tabs.calendar')}</span>
               </Button>
-              <Button
-                variant={activeTab === 'premiumPlus' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('premiumPlus')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm bg-gradient-to-r from-luna-purple/10 to-luna-pink/10 hover:from-luna-purple/20 hover:to-luna-pink/20 border-luna-purple"
-                data-tour="premium-plus-tab"
-              >
-                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                Premium Plus
-              </Button>
+              {/* Premium Plus Tab - only show for non-premium-plus users */}
+              {!isPremiumPlusUser && (
+                <Button
+                  variant={activeTab === 'premiumPlus' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('premiumPlus')}
+                  className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm bg-gradient-to-r from-luna-purple/10 to-luna-pink/10 hover:from-luna-purple/20 hover:to-luna-pink/20 border-luna-purple"
+                  data-tour="premium-plus-tab"
+                >
+                  <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                  Premium Plus
+                </Button>
+              )}
               
-              {/* Premium Plus Shortcuts - only visible when in Premium Plus tab */}
-              {activeTab === 'premiumPlus' && (
-                profile?.subscription_plan === 'premium_plus' || 
-                subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' || 
-                subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN'
-              ) && (
+              {/* Premium Plus Shortcuts - always visible for premium plus users */}
+              {isPremiumPlusUser && (
                 <>
                   <Button
                     variant="outline"
@@ -794,6 +793,76 @@ export default function Dashboard() {
             </Card>
           </div>
         </div>
+        
+        {/* Premium Plus Content - always visible for premium plus users */}
+        {isPremiumPlusUser && (
+          <div className="space-y-6 mt-8">
+            <Card className="bg-gradient-to-r from-luna-purple/10 via-luna-pink/10 to-luna-orange/10 border-2 border-luna-purple/30">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Sparkles className="w-6 h-6 text-luna-purple" />
+                  <div>
+                    <CardTitle className="text-2xl">✨ Premium Plus</CardTitle>
+                    <CardDescription>Recursos avançados exclusivos</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Aqui você encontra funcionalidades exclusivas para uma experiência ainda mais completa de autocuidado e bem-estar.
+                </p>
+              </CardContent>
+            </Card>
+            
+            {/* Women Journal */}
+            <div ref={womenJournalRef} className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }} data-tour="womens-journal">
+              <WomenJournal />
+            </div>
+            
+            {/* Luna Sense */}
+            <div ref={lunaSenseRef} className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }} data-tour="luna-sense">
+              <LunaSense />
+            </div>
+            
+            {/* SOS Info Card */}
+            <Card ref={sosFemininoRef} className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }} data-tour="sos-feminino">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white">
+                    <Heart className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <CardTitle>🆘 SOS Feminino</CardTitle>
+                    <CardDescription>Suporte imediato quando você mais precisa</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  Clique no botão vermelho flutuante no canto inferior direito da tela para acesso rápido a técnicas de relaxamento, suporte emocional e cuidados imediatos.
+                </p>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <span className="text-red-500">•</span>
+                    Dores físicas e cólicas
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-red-500">•</span>
+                    Ansiedade e estresse
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-red-500">•</span>
+                    Cansaço extremo
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-red-500">•</span>
+                    Irritação e TPM
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </main>
 
       {/* Tracking Dialog */}
