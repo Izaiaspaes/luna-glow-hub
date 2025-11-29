@@ -11,7 +11,6 @@ import { FAQ } from "@/components/FAQ";
 import { Privacy } from "@/components/Privacy";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Layout } from "@/components/Layout";
 
 const Index = () => {
@@ -48,7 +47,6 @@ const Index = () => {
         <Privacy />
         <CTA />
         <Footer />
-        <WhatsAppButton />
       </div>
     </Layout>
   );

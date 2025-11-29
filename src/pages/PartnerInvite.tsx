@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Heart, Check, X, Loader2 } from "lucide-react";
 import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export default function PartnerInvite() {
   const [searchParams] = useSearchParams();
@@ -210,8 +209,6 @@ export default function PartnerInvite() {
       </main>
 
       <Footer />
-      
-      <WhatsAppButton />
     </div>
   );
 }
