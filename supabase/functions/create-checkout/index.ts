@@ -64,14 +64,10 @@ serve(async (req) => {
 
     const origin = req.headers.get("origin") || "http://localhost:8080";
     
-    // Determine payment methods based on price currency
-    const price = await stripe.prices.retrieve(priceId);
-    const currency = price.currency;
-    const paymentMethodTypes = currency === 'brl' 
-      ? ['card', 'boleto', 'pix'] 
-      : ['card'];
-    
-    logStep("Creating checkout session", { currency, paymentMethodTypes });
+    // Use only card payment method (universally supported)
+    // To enable boleto and PIX, activate them in Stripe Dashboard:
+    // https://dashboard.stripe.com/settings/payment_methods
+    logStep("Creating checkout session");
     
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
@@ -83,7 +79,6 @@ serve(async (req) => {
         },
       ],
       mode: "subscription",
-      payment_method_types: paymentMethodTypes,
       success_url: `${origin}/dashboard?success=true`,
       cancel_url: `${origin}/pricing?canceled=true`,
     });
