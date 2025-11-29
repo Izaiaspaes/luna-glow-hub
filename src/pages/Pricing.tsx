@@ -28,6 +28,7 @@ const STRIPE_PRICES = {
     },
     premiumPlus: {
       monthly: "price_1SYebkIEVFZTiFWxFUKducJE",
+      yearly: "price_1SYebkIEVFZTiFWxFUKducJE_yearly", // TODO: Replace with actual Stripe price ID
     }
   },
   usd: {
@@ -37,6 +38,7 @@ const STRIPE_PRICES = {
     },
     premiumPlus: {
       monthly: "price_1SYeblIEVFZTiFWxuoxqWS4o",
+      yearly: "price_1SYeblIEVFZTiFWxuoxqWS4o_yearly", // TODO: Replace with actual Stripe price ID
     }
   }
 };
@@ -353,6 +355,11 @@ export default function Pricing() {
                   </span>
                   <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
                 </div>
+                <p className="text-sm text-muted-foreground pt-2">
+                  {currency === 'brl' 
+                    ? 'ou R$ 450,00/ano (2 meses grátis)' 
+                    : 'ou $199.00/ano (2 meses grátis)'}
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground pb-4 border-b border-border">
@@ -367,15 +374,24 @@ export default function Pricing() {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex-col gap-2">
                 <Button 
                   className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
                   size="lg"
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.monthly)}
                   disabled={loading}
                 >
-                  {loading ? t('pricing.processing') : `Assinar Premium Plus (${currency === 'brl' ? 'R$ 45,00' : '$19.90'})`}
+                  {loading ? t('pricing.processing') : `Assinar Mensal (${currency === 'brl' ? 'R$ 45,00' : '$19.90'})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="w-full hover:bg-luna-purple/10 border-luna-purple"
+                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.yearly)}
+                  disabled={loading}
+                >
+                  {loading ? t('pricing.processing') : `Assinar Anual (${currency === 'brl' ? 'R$ 450,00' : '$199.00'})`}
                 </Button>
               </CardFooter>
             </Card>
