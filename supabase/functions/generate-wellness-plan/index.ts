@@ -46,7 +46,7 @@ serve(async (req) => {
       .eq('user_id', user.id)
       .single();
 
-    const isPremium = profile?.subscription_plan === 'premium';
+    const isPremium = profile?.subscription_plan === 'premium' || profile?.subscription_plan === 'premium_plus';
     const userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
 
     // If user is free, check active wellness plans limit
