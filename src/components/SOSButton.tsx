@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -8,12 +8,34 @@ import { useProfile } from "@/hooks/useProfile";
 import { toast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 
-export function SOSButton() {
+interface SOSButtonProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps = {}) {
   const { t } = useTranslation();
   const { subscriptionStatus, userProfile } = useAuth();
   const { profile } = useProfile();
-  const [showDialog, setShowDialog] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  // Use external control if provided, otherwise use internal state
+  const showDialog = externalOpen !== undefined ? externalOpen : internalOpen;
+  const setShowDialog = (value: boolean) => {
+    if (onOpenChange) {
+      onOpenChange(value);
+    } else {
+      setInternalOpen(value);
+    }
+  };
+
+  // Reset selection when dialog closes
+  useEffect(() => {
+    if (!showDialog) {
+      setSelectedOption(null);
+    }
+  }, [showDialog]);
 
   const sosOptions = [
     {
@@ -59,15 +81,23 @@ export function SOSButton() {
   const getSelectedOptionData = () => {
     if (!selectedOption) return null;
     
+    // Get all technique keys for the selected option
+    const techniques: string[] = [];
+    const techniqueKeys = ['breathe', 'compress', 'massage', 'tea', 'grounding', 'breathing', 'walk', 'music', 'nap', 'water', 'stretch', 'fresh', 'write', 'meditate', 'bath', 'laugh'];
+    
+    for (const key of techniqueKeys) {
+      const translationKey = `sos.options.${selectedOption}.techniques.${key}`;
+      const translated = t(translationKey);
+      // Only add if the translation exists (i.e., not the same as the key)
+      if (translated !== translationKey) {
+        techniques.push(translated);
+      }
+    }
+    
     return {
       title: t(`sos.options.${selectedOption}.title`),
       message: t(`sos.options.${selectedOption}.message`),
-      techniques: [
-        t(`sos.options.${selectedOption}.techniques.breathe` || `sos.options.${selectedOption}.techniques.grounding`),
-        t(`sos.options.${selectedOption}.techniques.compress` || `sos.options.${selectedOption}.techniques.breathing`),
-        t(`sos.options.${selectedOption}.techniques.massage` || `sos.options.${selectedOption}.techniques.walk`),
-        t(`sos.options.${selectedOption}.techniques.tea` || `sos.options.${selectedOption}.techniques.music`),
-      ].filter(Boolean),
+      techniques,
     };
   };
 
@@ -75,14 +105,17 @@ export function SOSButton() {
 
   return (
     <>
-      <Button
-        onClick={handleSOSClick}
-        className="fixed bottom-24 right-6 z-50 h-16 w-16 rounded-full bg-gradient-to-r from-red-500 to-pink-500 hover:opacity-90 shadow-lg hover:shadow-xl transition-all animate-pulse"
-        size="icon"
-        aria-label={t('sos.title')}
-      >
-        <AlertCircle className="w-8 h-8 text-white" />
-      </Button>
+      {/* Only render floating button when not externally controlled */}
+      {externalOpen === undefined && (
+        <Button
+          onClick={handleSOSClick}
+          className="fixed bottom-24 right-6 z-50 h-16 w-16 rounded-full bg-gradient-to-r from-red-500 to-pink-500 hover:opacity-90 shadow-lg hover:shadow-xl transition-all animate-pulse"
+          size="icon"
+          aria-label={t('sos.title')}
+        >
+          <AlertCircle className="w-8 h-8 text-white" />
+        </Button>
+      )}
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
