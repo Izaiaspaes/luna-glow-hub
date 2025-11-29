@@ -325,7 +325,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           <TabsList className="flex w-full flex-wrap gap-1 h-auto p-2">
             <TabsTrigger value="profile" className="flex-1 min-w-[120px]">
               <User className="h-4 w-4 mr-2" />
-              Perfil
+              Foto de Perfil
             </TabsTrigger>
             <TabsTrigger value="account" className="flex-1 min-w-[120px]">
               <Lock className="h-4 w-4 mr-2" />
@@ -406,39 +406,6 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                     JPG, PNG ou GIF. Máximo 2MB.
                   </p>
                 </div>
-              </div>
-
-              <Separator />
-
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Nome Completo</Label>
-                <Input
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Seu nome completo"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">
-                  <Phone className="h-4 w-4 inline mr-2" />
-                  Telefone
-                </Label>
-                <Input
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="(00) 00000-0000"
-                  type="tel"
-                />
-              </div>
-
-              <div className="flex justify-end pt-4">
-                <Button onClick={handleSaveProfile} disabled={saving}>
-                  {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Salvar Perfil
-                </Button>
               </div>
             </div>
           </TabsContent>
