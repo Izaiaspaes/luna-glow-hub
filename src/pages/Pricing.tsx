@@ -22,12 +22,22 @@ import { Layout } from "@/components/Layout";
 
 const STRIPE_PRICES = {
   brl: {
-    monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
-    yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
+    premium: {
+      monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
+      yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
+    },
+    premiumPlus: {
+      monthly: "price_1SYebkIEVFZTiFWxFUKducJE",
+    }
   },
   usd: {
-    monthly: "price_1SXPuTIEVFZTiFWxVohXH8xe",
-    yearly: "price_1SXPucIEVFZTiFWxAaZO1YyI",
+    premium: {
+      monthly: "price_1SXPuTIEVFZTiFWxVohXH8xe",
+      yearly: "price_1SXPucIEVFZTiFWxAaZO1YyI",
+    },
+    premiumPlus: {
+      monthly: "price_1SYeblIEVFZTiFWxuoxqWS4o",
+    }
   }
 };
 
@@ -111,6 +121,19 @@ export default function Pricing() {
     t('pricing.premiumFeatures.guidedPrograms'),
     t('pricing.premiumFeatures.exclusiveLives'),
     t('pricing.premiumFeatures.prioritySupport'),
+  ];
+
+  const premiumPlusFeatures = [
+    "Tudo do Premium",
+    "🌟 Diário da Mulher com IA — Análise profunda do seu dia",
+    "🆘 SOS Feminino — Suporte imediato em momentos difíceis",
+    "💬 Luna Sense — Assistente Inteligente 24/7 com empatia adaptativa",
+    "📊 Insights avançados com correlação humor ↔ sintomas ↔ ciclo",
+    "🎯 Sugestões práticas e personalizadas em tempo real",
+    "🌙 Modo 'Estou mal hoje' com respostas humanizadas",
+    "✨ Personalidade adaptativa baseada na fase do ciclo",
+    "🔥 Técnicas de relaxamento instantâneas",
+    "💜 Frases de acolhimento e apoio emocional",
   ];
 
   // Detect user's country on mount
@@ -203,7 +226,7 @@ export default function Pricing() {
       {/* Pricing Cards */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* Freemium Plan */}
             <Card className="bg-gradient-card border-2 relative animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
               <CardHeader>
@@ -290,7 +313,7 @@ export default function Pricing() {
                   variant="colorful" 
                   size="lg" 
                   className="w-full group"
-                  onClick={() => handleCheckout(STRIPE_PRICES[currency].monthly)}
+                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.monthly)}
                   disabled={loading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 29,90' : '$9.90'})`}
@@ -300,10 +323,59 @@ export default function Pricing() {
                   variant="outline" 
                   size="lg" 
                   className="w-full hover:bg-primary/10"
-                  onClick={() => handleCheckout(STRIPE_PRICES[currency].yearly)}
+                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.yearly)}
                   disabled={loading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 299,00' : '$99.00'})`}
+                </Button>
+              </CardFooter>
+            </Card>
+
+            {/* Premium Plus Plan */}
+            <Card className="bg-gradient-card border-2 border-luna-purple relative shadow-lg animate-fade-in hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange text-white text-sm font-medium rounded-full shadow-lg">
+                ✨ Completo
+              </div>
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-r from-luna-purple to-luna-pink text-white shadow-lg">
+                    <Zap className="w-6 h-6" />
+                  </div>
+                  <Badge className="bg-gradient-to-r from-luna-purple to-luna-pink text-white">Premium Plus</Badge>
+                </div>
+                <CardTitle className="text-3xl">Premium Plus</CardTitle>
+                <CardDescription className="text-lg">
+                  Experiência completa com Diário Inteligente, SOS Feminino e Luna Sense
+                </CardDescription>
+                <div className="pt-4">
+                  <span className="text-5xl font-bold">
+                    {currency === 'brl' ? 'R$ 45,00' : '$19.90'}
+                  </span>
+                  <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground pb-4 border-b border-border">
+                  🚀 Todos os recursos avançados
+                </p>
+                <ul className="space-y-3">
+                  {premiumPlusFeatures.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-luna-purple flex-shrink-0 mt-0.5" />
+                      <span className="text-sm font-medium">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
+                  size="lg"
+                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.monthly)}
+                  disabled={loading}
+                >
+                  {loading ? t('pricing.processing') : `Assinar Premium Plus (${currency === 'brl' ? 'R$ 45,00' : '$19.90'})`}
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </CardFooter>
             </Card>
@@ -346,10 +418,11 @@ export default function Pricing() {
 
           <div className="max-w-5xl mx-auto bg-card rounded-2xl border-2 overflow-hidden">
             {/* Table Header */}
-            <div className="grid grid-cols-3 gap-4 p-6 border-b border-border bg-muted/20">
+            <div className="grid grid-cols-4 gap-4 p-6 border-b border-border bg-muted/20">
               <div className="font-semibold">Recursos</div>
               <div className="text-center font-semibold">Gratuito</div>
               <div className="text-center font-semibold text-primary">Premium</div>
+              <div className="text-center font-semibold text-luna-purple">Premium Plus</div>
             </div>
 
             {/* Table Body */}
@@ -365,7 +438,7 @@ export default function Pricing() {
                 {section.features.map((feature, featureIndex) => (
                   <div
                     key={featureIndex}
-                    className="grid grid-cols-3 gap-4 p-6 border-b border-border last:border-0 hover:bg-muted/5 transition-smooth"
+                    className="grid grid-cols-4 gap-4 p-6 border-b border-border last:border-0 hover:bg-muted/5 transition-smooth"
                   >
                     <div className="text-sm">{feature.name}</div>
                     <div className="flex justify-center">
@@ -385,6 +458,9 @@ export default function Pricing() {
                       ) : (
                         <span className="text-xs text-center font-medium text-primary">{feature.premium}</span>
                       )}
+                    </div>
+                    <div className="flex justify-center">
+                      <Check className="w-5 h-5 text-luna-purple" />
                     </div>
                   </div>
                 ))}
@@ -474,7 +550,7 @@ export default function Pricing() {
                 variant="secondary" 
                 size="lg" 
                 className="group"
-                onClick={() => handleCheckout(STRIPE_PRICES[currency].monthly)}
+                onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.monthly)}
                 disabled={loading}
               >
                 {loading ? "Processando..." : "Começar agora"}

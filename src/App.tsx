@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSessionTimeout } from "./hooks/useSessionTimeout";
 import { SessionTimeoutModal } from "./components/SessionTimeoutModal";
+import { SOSButton } from "./components/SOSButton";
 import Index from "./pages/Index";
 import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
@@ -31,6 +32,7 @@ const AppContent = () => {
     <>
       <Toaster />
       <Sonner />
+      <SOSButton />
       <SessionTimeoutModal
         open={showWarning}
         onRenew={handleRenewSession}
