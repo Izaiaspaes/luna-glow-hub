@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -14,6 +14,7 @@ import { NewsletterManagement } from "@/components/admin/NewsletterManagement";
 import { TestimonialsManagement } from "@/components/admin/TestimonialsManagement";
 import { BannersManagement } from "@/components/admin/BannersManagement";
 import { SuggestionsManagement } from "@/components/admin/SuggestionsManagement";
+import { CouponsManagement } from "@/components/admin/CouponsManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -87,7 +88,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-8 lg:w-[1280px]">
+          <TabsList className="grid w-full grid-cols-9 lg:w-[1440px]">
             <TabsTrigger value="statistics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">Estatísticas</span>
@@ -115,6 +116,10 @@ export default function Admin() {
             <TabsTrigger value="plans" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
               <span className="hidden sm:inline">Pacotes</span>
+            </TabsTrigger>
+            <TabsTrigger value="coupons" className="flex items-center gap-2">
+              <Ticket className="w-4 h-4" />
+              <span className="hidden sm:inline">Cupons</span>
             </TabsTrigger>
             <TabsTrigger value="suggestions" className="flex items-center gap-2">
               <Lightbulb className="w-4 h-4" />
@@ -146,13 +151,17 @@ export default function Admin() {
             <InvitesManagement />
           </TabsContent>
 
-          <TabsContent value="plans" className="space-y-4">
-            <PlansManagement />
-          </TabsContent>
+              <TabsContent value="plans" className="space-y-4">
+                <PlansManagement />
+              </TabsContent>
 
-          <TabsContent value="suggestions" className="space-y-4">
-            <SuggestionsManagement />
-          </TabsContent>
+              <TabsContent value="coupons" className="space-y-4">
+                <CouponsManagement />
+              </TabsContent>
+
+              <TabsContent value="suggestions" className="space-y-4">
+                <SuggestionsManagement />
+              </TabsContent>
         </Tabs>
       </main>
       
