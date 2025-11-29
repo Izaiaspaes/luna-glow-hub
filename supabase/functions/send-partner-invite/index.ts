@@ -45,7 +45,7 @@ const handler = async (req: Request): Promise<Response> => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Zoho-enczapikey ${ZEPTOMAIL_API_TOKEN}`,
+        "Authorization": `Zoho-enczapikey ${ZEPTOMAIL_API_TOKEN}`,
       },
       body: JSON.stringify({
         from: {
