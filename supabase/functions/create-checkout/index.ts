@@ -80,7 +80,7 @@ serve(async (req) => {
       ],
       mode: "subscription",
       payment_method_types: paymentMethodTypes,
-      success_url: `${origin}/dashboard?success=true`,
+      success_url: `${origin}/pricing/success`,
       cancel_url: `${origin}/pricing?canceled=true`,
     });
 
