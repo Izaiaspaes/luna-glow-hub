@@ -50,6 +50,54 @@ export type Database = {
         }
         Relationships: []
       }
+      announcement_banners: {
+        Row: {
+          banner_type: string
+          created_at: string
+          created_by: string | null
+          display_order: number
+          end_date: string | null
+          id: string
+          is_active: boolean
+          link_text: string | null
+          link_url: string | null
+          message: string
+          start_date: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          banner_type?: string
+          created_at?: string
+          created_by?: string | null
+          display_order?: number
+          end_date?: string | null
+          id?: string
+          is_active?: boolean
+          link_text?: string | null
+          link_url?: string | null
+          message: string
+          start_date?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          banner_type?: string
+          created_at?: string
+          created_by?: string | null
+          display_order?: number
+          end_date?: string | null
+          id?: string
+          is_active?: boolean
+          link_text?: string | null
+          link_url?: string | null
+          message?: string
+          start_date?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cycle_tracking: {
         Row: {
           created_at: string

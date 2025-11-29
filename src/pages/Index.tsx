@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { FeaturedHighlights } from "@/components/FeaturedHighlights";
@@ -38,6 +39,7 @@ const Index = () => {
   return (
     <Layout>
       <div className="min-h-screen">
+        <AnnouncementBanner />
         <Hero />
         <Statistics />
         <FeaturedHighlights />
