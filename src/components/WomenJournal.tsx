@@ -20,7 +20,7 @@ interface JournalEntry {
 }
 
 export function WomenJournal() {
-  const { subscriptionStatus } = useAuth();
+  const { subscriptionStatus, userProfile } = useAuth();
   const [journalEntry, setJournalEntry] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiInsights, setAiInsights] = useState<any>(null);
@@ -28,8 +28,10 @@ export function WomenJournal() {
   const [showHistory, setShowHistory] = useState(false);
 
   // Check if user has Premium Plus (product_id should match one of the Premium Plus products)
-  const hasPremiumPlus = subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
-                         subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN";
+  const hasPremiumPlus = 
+    subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
+    subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
+    userProfile?.subscription_plan === "premium_plus";
 
   useEffect(() => {
     if (hasPremiumPlus) {
