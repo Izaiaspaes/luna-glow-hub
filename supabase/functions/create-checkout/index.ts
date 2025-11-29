@@ -68,7 +68,7 @@ serve(async (req) => {
     const price = await stripe.prices.retrieve(priceId);
     const currency = price.currency;
     const paymentMethodTypes = currency === 'brl' 
-      ? ['card', 'boleto'] 
+      ? ['card', 'boleto', 'pix'] 
       : ['card'];
     
     logStep("Creating checkout session", { currency, paymentMethodTypes });
