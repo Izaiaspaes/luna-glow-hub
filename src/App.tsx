@@ -20,6 +20,8 @@ import PartnerInvite from "./pages/PartnerInvite";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import Onboarding from "./pages/Onboarding";
 import Install from "./pages/Install";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import "./i18n";
 
@@ -53,6 +55,8 @@ const AppContent = () => {
           <Route path="/partner-dashboard" element={<PartnerDashboard />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/install" element={<Install />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
