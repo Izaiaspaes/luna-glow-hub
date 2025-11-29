@@ -41,6 +41,7 @@ import { PlanLimitModal } from "@/components/PlanLimitModal";
 import { WeeklySummary } from "@/components/WeeklySummary";
 import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { AppTour } from "@/components/AppTour";
+import { PremiumPlusTour } from "@/components/PremiumPlusTour";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
 import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
@@ -246,6 +247,7 @@ export default function Dashboard() {
         onOpenChange={setShowPlanLimitModal} 
       />
       <AppTour />
+      <PremiumPlusTour />
 
       <main className="container mx-auto px-4 py-8">
         {/* Welcome Section */}
@@ -402,6 +404,7 @@ export default function Dashboard() {
                 size="sm"
                 onClick={() => setActiveTab('premiumPlus')}
                 className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm bg-gradient-to-r from-luna-purple/10 to-luna-pink/10 hover:from-luna-purple/20 hover:to-luna-pink/20 border-luna-purple"
+                data-tour="premium-plus-tab"
               >
                 <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Premium Plus
@@ -437,17 +440,17 @@ export default function Dashboard() {
                 </Card>
                 
                 {/* Women Journal */}
-                <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }} data-tour="womens-journal">
                   <WomenJournal />
                 </div>
                 
                 {/* Luna Sense */}
-                <div className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+                <div className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }} data-tour="luna-sense">
                   <LunaSense />
                 </div>
                 
                 {/* SOS Info Card */}
-                <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
+                <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }} data-tour="sos-feminino">
                   <CardHeader>
                     <div className="flex items-center gap-3">
                       <div className="p-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white">

@@ -553,6 +553,32 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                 </div>
               </RadioGroup>
 
+              <Separator />
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Heart className="h-4 w-4 text-luna-purple" />
+                  <h3 className="text-sm font-semibold">Tour Interativo Premium Plus</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Reveja o tutorial sobre os recursos exclusivos Premium Plus
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={async () => {
+                    await updateProfile({ tour_completed: false });
+                    toast({
+                      title: "Tour reiniciado!",
+                      description: "Acesse a aba Premium Plus para ver o tour novamente.",
+                    });
+                  }}
+                  className="w-full"
+                >
+                  <Heart className="h-4 w-4 mr-2" />
+                  Rever Tour Premium Plus
+                </Button>
+              </div>
+
               <div className="flex justify-end pt-4">
                 <Button onClick={handleSaveProfile} disabled={saving}>
                   {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
