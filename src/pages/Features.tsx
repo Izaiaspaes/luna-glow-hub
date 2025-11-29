@@ -34,33 +34,6 @@ export default function Features() {
   return (
     <Layout>
     <div className="min-h-screen bg-background">
-      {/* Header/Nav */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <NavLink to="/" className="flex items-center gap-2">
-              <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
-            </NavLink>
-            <div className="flex items-center gap-2">
-              <nav className="hidden md:flex items-center gap-6">
-                <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
-                  {t('nav.features')}
-                </NavLink>
-                <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth">
-                  {t('nav.pricing')}
-                </NavLink>
-                <LanguageSelector />
-                <NavLink to="/auth">
-                  <Button variant="hero" size="sm">
-                    {t('common.login')}
-                  </Button>
-                </NavLink>
-              </nav>
-              <MobileNav />
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gradient-soft">
