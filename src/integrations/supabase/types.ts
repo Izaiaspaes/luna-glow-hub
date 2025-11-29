@@ -790,6 +790,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_suggestions: {
+        Row: {
+          admin_notes: string | null
+          category: string | null
+          created_at: string
+          email: string
+          id: string
+          is_reviewed: boolean | null
+          status: string | null
+          suggestion: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          category?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          is_reviewed?: boolean | null
+          status?: string | null
+          suggestion: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          category?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          is_reviewed?: boolean | null
+          status?: string | null
+          suggestion?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       wellness_plans: {
         Row: {
           ai_recommendations: string

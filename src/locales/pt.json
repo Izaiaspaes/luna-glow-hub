@@ -175,6 +175,53 @@
         "dates": "Período",
         "actions": "Ações"
       }
+    },
+    "suggestions": {
+      "title": "Gerenciar Sugestões",
+      "fetchError": "Erro ao carregar sugestões",
+      "updateSuccess": "Sugestão atualizada com sucesso!",
+      "updateError": "Erro ao atualizar sugestão",
+      "deleteSuccess": "Sugestão excluída com sucesso!",
+      "deleteError": "Erro ao excluir sugestão",
+      "deleteConfirm": "Tem certeza que deseja excluir esta sugestão?",
+      "noSuggestions": "Nenhuma sugestão encontrada",
+      "filter": {
+        "all": "Todas",
+        "pending": "Pendentes",
+        "reviewed": "Revisadas",
+        "implemented": "Implementadas",
+        "rejected": "Rejeitadas"
+      },
+      "status": {
+        "pending": "Pendente",
+        "reviewed": "Revisada",
+        "implemented": "Implementada",
+        "rejected": "Rejeitada"
+      },
+      "table": {
+        "date": "Data",
+        "email": "E-mail",
+        "suggestion": "Sugestão",
+        "category": "Categoria",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "dialog": {
+        "title": "Detalhes da Sugestão",
+        "description": "Revise e gerencie a sugestão do usuário",
+        "email": "E-mail",
+        "date": "Data",
+        "suggestion": "Sugestão",
+        "category": "Categoria",
+        "categoryPlaceholder": "Ex: Feature, Bug, Design",
+        "status": "Status",
+        "notes": "Notas do Admin",
+        "notesPlaceholder": "Adicione observações internas...",
+        "save": "Salvar Alterações"
+      }
+    },
+    "tabs": {
+      "suggestions": "Sugestões"
     }
   },
   "testimonials": {
@@ -650,6 +697,19 @@
     "errorGeneric": "Erro ao se inscrever. Tente novamente mais tarde.",
     "errorInvalidEmail": "E-mail inválido",
     "errorEmailTooLong": "E-mail muito longo"
+  },
+  "suggestions": {
+    "title": "Sugestões e Ideias",
+    "description": "Tem alguma sugestão ou ideia para melhorar a Luna? Adoraríamos ouvir você!",
+    "emailPlaceholder": "Seu e-mail",
+    "suggestionPlaceholder": "Compartilhe sua sugestão ou ideia...",
+    "submit": "Enviar Sugestão",
+    "sending": "Enviando...",
+    "success": "Sugestão enviada com sucesso!",
+    "error": "Erro ao enviar sugestão. Tente novamente.",
+    "invalidEmail": "E-mail inválido",
+    "minLength": "A sugestão deve ter pelo menos 10 caracteres",
+    "maxLength": "A sugestão deve ter no máximo 1000 caracteres"
   },
   "blogPage": {
     "title": "Conteúdo Educativo sobre Saúde Feminina",

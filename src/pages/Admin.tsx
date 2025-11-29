@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2, Megaphone } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -13,6 +13,7 @@ import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NewsletterManagement } from "@/components/admin/NewsletterManagement";
 import { TestimonialsManagement } from "@/components/admin/TestimonialsManagement";
 import { BannersManagement } from "@/components/admin/BannersManagement";
+import { SuggestionsManagement } from "@/components/admin/SuggestionsManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -86,7 +87,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 lg:w-[1200px]">
+          <TabsList className="grid w-full grid-cols-8 lg:w-[1280px]">
             <TabsTrigger value="statistics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">Estatísticas</span>
@@ -114,6 +115,10 @@ export default function Admin() {
             <TabsTrigger value="plans" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
               <span className="hidden sm:inline">Pacotes</span>
+            </TabsTrigger>
+            <TabsTrigger value="suggestions" className="flex items-center gap-2">
+              <Lightbulb className="w-4 h-4" />
+              <span className="hidden sm:inline">Sugestões</span>
             </TabsTrigger>
           </TabsList>
 
@@ -143,6 +148,10 @@ export default function Admin() {
 
           <TabsContent value="plans" className="space-y-4">
             <PlansManagement />
+          </TabsContent>
+
+          <TabsContent value="suggestions" className="space-y-4">
+            <SuggestionsManagement />
           </TabsContent>
         </Tabs>
       </main>

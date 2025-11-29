@@ -1,6 +1,7 @@
 import { Heart, Mail, Phone, Share2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { SuggestionsForm } from "@/components/SuggestionsForm";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -32,9 +33,10 @@ export const Footer = () => {
   return (
     <footer className="bg-muted/30 border-t border-border py-12">
       <div className="container mx-auto px-4">
-        {/* Newsletter Section */}
-        <div className="mb-12">
+        {/* Newsletter and Suggestions Section */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
           <NewsletterSignup />
+          <SuggestionsForm />
         </div>
 
         <div className="grid md:grid-cols-4 gap-8 mb-8">
