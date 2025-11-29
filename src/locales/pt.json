@@ -15,7 +15,9 @@
     "email": "E-mail",
     "password": "Senha",
     "name": "Nome",
-    "copied": "Link copiado!"
+    "copied": "Link copiado!",
+    "learnMore": "Saiba Mais",
+    "create": "Criar"
   },
   "nav": {
     "features": "Funcionalidades",
@@ -129,6 +131,51 @@
     "duration": "3:42 min",
     "statUsers": "Mulheres ativas",
     "statSatisfaction": "Satisfação"
+  },
+  "admin": {
+    "banners": {
+      "title": "Gerenciar Banners",
+      "description": "Crie e gerencie banners de anúncios para a página inicial",
+      "addNew": "Novo Banner",
+      "noBanners": "Nenhum banner cadastrado",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "fetchError": "Erro ao carregar banners",
+      "createSuccess": "Banner criado com sucesso",
+      "createError": "Erro ao criar banner",
+      "updateSuccess": "Banner atualizado com sucesso",
+      "updateError": "Erro ao atualizar banner",
+      "deleteSuccess": "Banner excluído com sucesso",
+      "deleteError": "Erro ao excluir banner",
+      "deleteConfirm": "Tem certeza que deseja excluir este banner?",
+      "toggleError": "Erro ao alterar status do banner",
+      "form": {
+        "title": "Título",
+        "message": "Mensagem",
+        "type": "Tipo",
+        "linkUrl": "URL do Link (opcional)",
+        "linkText": "Texto do Link",
+        "startDate": "Data de Início",
+        "endDate": "Data de Término (opcional)",
+        "order": "Ordem de Exibição",
+        "active": "Banner Ativo"
+      },
+      "types": {
+        "info": "Informação",
+        "warning": "Aviso",
+        "success": "Sucesso",
+        "promo": "Promoção"
+      },
+      "table": {
+        "title": "Título",
+        "type": "Tipo",
+        "status": "Status",
+        "dates": "Período",
+        "actions": "Ações"
+      }
+    }
   },
   "testimonials": {
     "title": "O que nossas usuárias dizem"

@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2 } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2, Megaphone } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -12,6 +12,7 @@ import { PlansManagement } from "@/components/admin/PlansManagement";
 import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NewsletterManagement } from "@/components/admin/NewsletterManagement";
 import { TestimonialsManagement } from "@/components/admin/TestimonialsManagement";
+import { BannersManagement } from "@/components/admin/BannersManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -85,7 +86,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 lg:w-[1100px]">
+          <TabsList className="grid w-full grid-cols-7 lg:w-[1200px]">
             <TabsTrigger value="statistics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">Estatísticas</span>
@@ -93,6 +94,10 @@ export default function Admin() {
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
               <span className="hidden sm:inline">Usuários</span>
+            </TabsTrigger>
+            <TabsTrigger value="banners" className="flex items-center gap-2">
+              <Megaphone className="w-4 h-4" />
+              <span className="hidden sm:inline">Banners</span>
             </TabsTrigger>
             <TabsTrigger value="testimonials" className="flex items-center gap-2">
               <MessageSquareQuote className="w-4 h-4" />
@@ -118,6 +123,10 @@ export default function Admin() {
 
           <TabsContent value="users" className="space-y-4">
             <UsersManagement />
+          </TabsContent>
+
+          <TabsContent value="banners" className="space-y-4">
+            <BannersManagement />
           </TabsContent>
 
           <TabsContent value="testimonials" className="space-y-4">

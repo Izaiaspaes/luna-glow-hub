@@ -15,7 +15,9 @@
     "email": "Email",
     "password": "Password",
     "name": "Name",
-    "copied": "Link copied!"
+    "copied": "Link copied!",
+    "learnMore": "Learn More",
+    "create": "Create"
   },
   "nav": {
     "features": "Features",
@@ -129,6 +131,51 @@
     "duration": "3:42 min",
     "statUsers": "Active women",
     "statSatisfaction": "Satisfaction"
+  },
+  "admin": {
+    "banners": {
+      "title": "Manage Banners",
+      "description": "Create and manage announcement banners for the home page",
+      "addNew": "New Banner",
+      "noBanners": "No banners registered",
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "fetchError": "Error loading banners",
+      "createSuccess": "Banner created successfully",
+      "createError": "Error creating banner",
+      "updateSuccess": "Banner updated successfully",
+      "updateError": "Error updating banner",
+      "deleteSuccess": "Banner deleted successfully",
+      "deleteError": "Error deleting banner",
+      "deleteConfirm": "Are you sure you want to delete this banner?",
+      "toggleError": "Error changing banner status",
+      "form": {
+        "title": "Title",
+        "message": "Message",
+        "type": "Type",
+        "linkUrl": "Link URL (optional)",
+        "linkText": "Link Text",
+        "startDate": "Start Date",
+        "endDate": "End Date (optional)",
+        "order": "Display Order",
+        "active": "Active Banner"
+      },
+      "types": {
+        "info": "Information",
+        "warning": "Warning",
+        "success": "Success",
+        "promo": "Promotion"
+      },
+      "table": {
+        "title": "Title",
+        "type": "Type",
+        "status": "Status",
+        "dates": "Period",
+        "actions": "Actions"
+      }
+    }
   },
   "testimonials": {
     "title": "What our users say"
