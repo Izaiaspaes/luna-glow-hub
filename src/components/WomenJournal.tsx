@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Sparkles, BookOpen, TrendingUp, History, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -21,6 +22,7 @@ interface JournalEntry {
 
 export function WomenJournal() {
   const { subscriptionStatus, userProfile } = useAuth();
+  const { profile } = useProfile();
   const [journalEntry, setJournalEntry] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiInsights, setAiInsights] = useState<any>(null);
@@ -31,7 +33,8 @@ export function WomenJournal() {
   const hasPremiumPlus = 
     subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
     subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
-    userProfile?.subscription_plan === "premium_plus";
+    userProfile?.subscription_plan === "premium_plus" ||
+    profile?.subscription_plan === "premium_plus";
 
   useEffect(() => {
     if (hasPremiumPlus) {
@@ -141,7 +144,7 @@ export function WomenJournal() {
             Escreva livremente e receba insights poderosos da IA sobre seu dia, padrões recorrentes e correlações entre humor, sintomas e ciclo.
           </p>
           <Button variant="outline" disabled className="w-full">
-            Fazer upgrade para Premium Plus
+            Gerenciar Assinatura
           </Button>
         </CardContent>
       </Card>

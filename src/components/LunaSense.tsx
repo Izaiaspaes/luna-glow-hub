@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sparkles, Send, MessageCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -16,6 +17,7 @@ interface Message {
 
 export function LunaSense() {
   const { subscriptionStatus, userProfile } = useAuth();
+  const { profile } = useProfile();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -30,7 +32,8 @@ export function LunaSense() {
   const hasPremiumPlus = 
     subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
     subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
-    userProfile?.subscription_plan === "premium_plus";
+    userProfile?.subscription_plan === "premium_plus" ||
+    profile?.subscription_plan === "premium_plus";
 
   useEffect(() => {
     if (scrollRef.current) {
