@@ -91,8 +91,8 @@ export function SubscriptionCard() {
             <CardTitle>{t('subscription.currentPlan')}</CardTitle>
           </div>
           <Badge variant={effectiveSubscribed ? "premium" : "free"}>
-            {effectiveSubscribed ? t('subscription.subscribed') : t('subscription.notSubscribed')}
-          </Badge>
+             {effectiveSubscribed ? (displayedPlanName || t('subscription.subscribed')) : t('subscription.notSubscribed')}
+           </Badge>
         </div>
         <CardDescription>
           {effectiveSubscribed
