@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useTheme } from "@/hooks/useTheme";
@@ -53,6 +53,7 @@ type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition'
 
 export default function Dashboard() {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'nutrition' | 'predictions' | 'calendar'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
@@ -87,6 +88,16 @@ export default function Dashboard() {
       loadWellnessPlans();
     }
   }, [user, activeTab]);
+
+  // Check for settings query param and open settings if present
+  useEffect(() => {
+    const settingsParam = searchParams.get('settings');
+    if (settingsParam === 'true') {
+      setSettingsOpen(true);
+      // Remove the query param after opening settings
+      setSearchParams({});
+    }
+  }, [searchParams, setSearchParams]);
 
   const loadRecentData = async () => {
     if (!user || activeTab === 'overview') return;

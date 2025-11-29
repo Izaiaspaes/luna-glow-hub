@@ -112,7 +112,7 @@ export const AppNavigation = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate("/dashboard?settings=true")}
                 title="Configurações"
               >
                 <Settings className="h-5 w-5" />
