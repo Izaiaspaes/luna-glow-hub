@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertCircle, Heart, Wind, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { toast } from "@/hooks/use-toast";
 
 const sosOptions = [
@@ -59,13 +60,15 @@ const sosOptions = [
 
 export function SOSButton() {
   const { subscriptionStatus, userProfile } = useAuth();
+  const { profile } = useProfile();
   const [showDialog, setShowDialog] = useState(false);
   const [selectedOption, setSelectedOption] = useState<typeof sosOptions[0] | null>(null);
 
   const hasPremiumPlus = 
     subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
     subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
-    userProfile?.subscription_plan === "premium_plus";
+    userProfile?.subscription_plan === "premium_plus" ||
+    profile?.subscription_plan === "premium_plus";
 
   const handleSOSClick = () => {
     if (!hasPremiumPlus) {
