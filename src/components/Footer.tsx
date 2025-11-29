@@ -80,14 +80,14 @@ export const Footer = () => {
                 </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/privacy-policy" className="hover:text-primary transition-smooth">
                   {t('privacy.title')}
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/features" className="hover:text-primary transition-smooth">
                   {t('footer.security') || 'Segurança'}
-                </a>
+                </NavLink>
               </li>
               <li>
                 <NavLink to="/pricing" className="hover:text-primary transition-smooth">
@@ -107,19 +107,19 @@ export const Footer = () => {
                 </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/blog" className="hover:text-primary transition-smooth">
                   {t('footer.stories') || 'Histórias'}
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/features" className="hover:text-primary transition-smooth">
                   {t('footer.events') || 'Eventos'}
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/features" className="hover:text-primary transition-smooth">
                   {t('footer.partners') || 'Parceiros'}
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -129,14 +129,14 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">{t('footer.company') || 'Empresa'}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/features" className="hover:text-primary transition-smooth">
                   {t('footer.about') || 'Sobre nós'}
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/features" className="hover:text-primary transition-smooth">
                   {t('footer.careers') || 'Carreiras'}
-                </a>
+                </NavLink>
               </li>
               <li>
                 <a href="mailto:contato@lunaglow.com.br" className="hover:text-primary transition-smooth">
@@ -144,9 +144,9 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-smooth">
+                <NavLink to="/blog" className="hover:text-primary transition-smooth">
                   {t('footer.press') || 'Imprensa'}
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -169,15 +169,15 @@ export const Footer = () => {
             </Button>
           </div>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-smooth">
+            <NavLink to="/terms" className="hover:text-primary transition-smooth">
               {t('footer.terms') || 'Termos de Uso'}
-            </a>
-            <a href="#" className="hover:text-primary transition-smooth">
+            </NavLink>
+            <NavLink to="/privacy-policy" className="hover:text-primary transition-smooth">
               {t('footer.privacyPolicy') || 'Política de Privacidade'}
-            </a>
-            <a href="#" className="hover:text-primary transition-smooth">
+            </NavLink>
+            <NavLink to="/privacy-policy" className="hover:text-primary transition-smooth">
               {t('footer.cookies') || 'Cookies'}
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

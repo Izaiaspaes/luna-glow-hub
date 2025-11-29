@@ -1065,5 +1065,58 @@
       "features": "Funcionalidades",
       "pricing": "Preços"
     }
+  },
+  "sos": {
+    "title": "SOS Feminino",
+    "description": "Estou aqui para te ajudar. O que você está sentindo agora?",
+    "premiumRequired": "Recurso Premium Plus",
+    "premiumMessage": "O SOS Feminino está disponível apenas no plano Premium Plus",
+    "backButton": "Voltar",
+    "feelingBetter": "Estou melhor agora",
+    "successTitle": "💜 Você consegue!",
+    "successMessage": "Lembre-se: você é forte e merece cuidado",
+    "options": {
+      "physicalPain": {
+        "title": "Dor Física",
+        "message": "Eu sei que está doendo. Você é forte e vai passar por isso. Que tal tentar uma dessas técnicas para aliviar?",
+        "techniques": {
+          "breathe": "Respire profundamente por 5 minutos",
+          "compress": "Aplique uma compressa morna na região",
+          "massage": "Faça uma leve massagem circular",
+          "tea": "Tome um chá de camomila"
+        }
+      },
+      "anxiety": {
+        "title": "Ansiedade/Estresse",
+        "message": "Está tudo bem sentir isso. Você não está sozinha. Vamos tentar acalmar juntas?",
+        "techniques": {
+          "grounding": "Técnica 5-4-3-2-1: Identifique 5 coisas que vê, 4 que toca, 3 que ouve, 2 que cheira, 1 que saboreia",
+          "breathing": "Respiração 4-7-8: Inspire por 4s, segure 7s, expire por 8s",
+          "walk": "Caminhe por 10 minutos",
+          "music": "Ouça uma música relaxante"
+        }
+      },
+      "fatigue": {
+        "title": "Cansaço Extremo",
+        "message": "Seu corpo está pedindo descanso. Não há problema em pausar. Você merece esse cuidado.",
+        "techniques": {
+          "nap": "Tire um cochilo de 20 minutos",
+          "water": "Beba um copo de água gelada",
+          "stretch": "Faça alongamentos suaves",
+          "fresh": "Saia para tomar um ar fresco"
+        }
+      },
+      "irritation": {
+        "title": "Irritação/TPM",
+        "message": "Seus sentimentos são válidos. É normal se sentir assim nesta fase. Vamos encontrar uma forma de te ajudar?",
+        "techniques": {
+          "write": "Escreva seus sentimentos em um papel",
+          "meditate": "Faça uma meditação guiada de 5 minutos",
+          "bath": "Tome um banho relaxante",
+          "laugh": "Assista algo que te faça rir"
+        }
+      }
+    },
+    "techniquesTitle": "Técnicas para ajudar agora"
   }
 }

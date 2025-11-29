@@ -11,6 +11,7 @@ export const NewsletterSignup = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const emailSchema = z.object({
     email: z
@@ -23,10 +24,12 @@ export const NewsletterSignup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
 
     // Client-side validation
     const validation = emailSchema.safeParse({ email });
     if (!validation.success) {
+      setError(validation.error.errors[0].message);
       toast.error(validation.error.errors[0].message);
       return;
     }
@@ -65,13 +68,16 @@ export const NewsletterSignup = () => {
         // Don't fail the subscription if email fails
         toast.success(t('newsletter.successNoEmail'));
       } else {
-        toast.success(t('newsletter.successSubscribed'));
+      toast.success(t('newsletter.successSubscribed'));
       }
 
       setEmail("");
+      setError(""); // Clear error on success
     } catch (error: any) {
       console.error("Newsletter subscription error:", error);
-      toast.error(t('newsletter.errorGeneric'));
+      const errorMsg = t('newsletter.errorGeneric');
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -86,23 +92,35 @@ export const NewsletterSignup = () => {
       <p className="text-sm text-muted-foreground mb-4">
         {t('newsletter.description')}
       </p>
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <div className="flex-1 relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            type="email"
-            placeholder={t('newsletter.placeholder')}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="pl-10"
-            disabled={isLoading}
-            maxLength={255}
-            required
-          />
+      <form onSubmit={handleSubmit} className="space-y-2">
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="email"
+              placeholder={t('newsletter.placeholder')}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError("");
+              }}
+              className={`pl-10 ${error ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+              disabled={isLoading}
+              maxLength={255}
+              required
+              aria-invalid={!!error}
+              aria-describedby={error ? "newsletter-email-error" : undefined}
+            />
+          </div>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? t('newsletter.buttonLoading') : t('newsletter.button')}
+          </Button>
         </div>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? t('newsletter.buttonLoading') : t('newsletter.button')}
-        </Button>
+        {error && (
+          <p id="newsletter-email-error" className="text-red-500 text-xs flex items-center gap-1">
+            <span>⚠️</span> {error}
+          </p>
+        )}
       </form>
       <p className="text-xs text-muted-foreground mt-2">
         {t('newsletter.disclaimer')}
