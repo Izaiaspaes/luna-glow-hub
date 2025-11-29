@@ -72,10 +72,27 @@ export const usePushNotifications = () => {
     try {
       const registration = await navigator.serviceWorker.ready;
       
-      // Simple subscription without VAPID for now
-      // In production, you would configure VAPID keys
+      // Generate VAPID public key (base64url)
+      const vapidPublicKey = 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U';
+      
+      function urlBase64ToUint8Array(base64String: string) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+          .replace(/\-/g, '+')
+          .replace(/_/g, '/');
+
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+      }
+
       const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
       });
 
       // Store subscription in database
@@ -84,18 +101,31 @@ export const usePushNotifications = () => {
 
       const { error } = await supabase
         .from('push_subscriptions')
-        .insert({
+        .upsert({
           user_id: user.id,
           subscription_data: subscription.toJSON() as any
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) throw error;
 
       setState(prev => ({ ...prev, isSubscribed: true }));
-      toast.success('Notificações push ativadas com sucesso!');
-    } catch (error) {
+      toast.success('Notificações push ativadas! 🔔');
+    } catch (error: any) {
       console.error('Error subscribing to push:', error);
-      toast.error('Erro ao ativar notificações push');
+      
+      // Better error messages
+      let errorMessage = 'Erro ao ativar notificações push';
+      if (error.name === 'NotSupportedError') {
+        errorMessage = 'Seu navegador não suporta notificações push';
+      } else if (error.name === 'NotAllowedError') {
+        errorMessage = 'Permissão para notificações foi negada';
+      } else if (error.message?.includes('not authenticated')) {
+        errorMessage = 'Você precisa estar logada para ativar notificações';
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

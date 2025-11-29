@@ -81,15 +81,27 @@ export const PushNotificationPrompt = () => {
           </ul>
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-3">
         <Button
           onClick={requestPermission}
           disabled={loading}
-          className="w-full sm:w-auto bg-gradient-to-r from-luna-pink to-luna-purple hover:opacity-90"
+          className="w-full bg-gradient-to-r from-luna-pink to-luna-purple hover:opacity-90"
         >
-          <Bell className="h-4 w-4 mr-2" />
-          Ativar Notificações Push
+          {loading ? (
+            <>
+              <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              Ativando...
+            </>
+          ) : (
+            <>
+              <Bell className="h-4 w-4 mr-2" />
+              Ativar Notificações Push
+            </>
+          )}
         </Button>
+        <p className="text-xs text-muted-foreground text-center">
+          Você pode gerenciar suas preferências de notificação a qualquer momento
+        </p>
       </CardContent>
     </Card>
   );
