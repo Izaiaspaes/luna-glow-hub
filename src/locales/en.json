@@ -277,6 +277,11 @@
       "title": "Quick Access",
       "description": "Track your wellness data easily"
     },
+    "premiumShortcuts": {
+      "journal": "Women's Journal",
+      "lunaSense": "Luna Sense",
+      "sos": "SOS Support"
+    },
     "tracking": "Tracking",
     "cycle": "Cycle",
     "sleep": "Sleep",

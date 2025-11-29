@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings, Menu, Apple } from "lucide-react";
+import { Heart, Calendar, Moon, Smile, Zap, Sparkles, TrendingUp, Archive, CheckCircle, MoreVertical, Settings, Menu, Apple, BookHeart, MessageCircle, AlertCircle } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -66,6 +66,11 @@ export default function Dashboard() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showPlanLimitModal, setShowPlanLimitModal] = useState(false);
   const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
+  
+  // Refs for Premium Plus sections
+  const womenJournalRef = useRef<HTMLDivElement>(null);
+  const lunaSenseRef = useRef<HTMLDivElement>(null);
+  const sosFemininoRef = useRef<HTMLDivElement>(null);
   const { profile } = useProfile();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -235,6 +240,15 @@ export default function Dashboard() {
     loadRecentData();
   };
 
+  const scrollToPremiumSection = (ref: React.RefObject<HTMLDivElement>) => {
+    if (activeTab !== 'premiumPlus') {
+      setActiveTab('premiumPlus');
+    }
+    setTimeout(() => {
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
   if (loading || !adminChecked) {
     return null;
   }
@@ -321,81 +335,6 @@ export default function Dashboard() {
               </div>
             )}
 
-            {/* Quick Access Buttons for Premium/Premium Plus Users */}
-            {activeTab === 'overview' && (profile?.subscription_plan === 'premium' || profile?.subscription_plan === 'premium_plus') && (
-              <Card className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-                <CardHeader>
-                  <CardTitle className="text-lg md:text-xl flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    {t('dashboard.quickAccess.title')}
-                  </CardTitle>
-                  <CardDescription>{t('dashboard.quickAccess.description')}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setActiveTab('cycle')}
-                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
-                    >
-                      <Heart className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">{t('dashboard.tabs.cycle')}</span>
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setActiveTab('sleep')}
-                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
-                    >
-                      <Moon className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">{t('dashboard.tabs.sleep')}</span>
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setActiveTab('mood')}
-                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
-                    >
-                      <Smile className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">{t('dashboard.tabs.mood')}</span>
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setActiveTab('energy')}
-                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
-                    >
-                      <Zap className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">{t('dashboard.tabs.energy')}</span>
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setActiveTab('nutrition')}
-                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
-                    >
-                      <Apple className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">{t('dashboard.tabs.nutrition')}</span>
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setActiveTab('predictions')}
-                      className="h-auto flex flex-col items-center justify-center p-4 gap-2 hover:border-primary hover:bg-primary/5"
-                    >
-                      <Sparkles className="w-6 h-6 text-primary" />
-                      <span className="text-sm font-medium">{t('dashboard.tabs.predictions')}</span>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
             
             {/* Tabs */}
             <div className="flex flex-wrap gap-2 pb-2 scrollbar-hide">
@@ -485,6 +424,39 @@ export default function Dashboard() {
                 <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Premium Plus
               </Button>
+              
+              {/* Premium Plus Shortcuts - only visible when in Premium Plus tab */}
+              {activeTab === 'premiumPlus' && profile?.subscription_plan === 'premium_plus' && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => scrollToPremiumSection(womenJournalRef)}
+                    className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-pink/50 hover:border-luna-pink hover:bg-luna-pink/10"
+                  >
+                    <BookHeart className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                    {t('dashboard.premiumShortcuts.journal')}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => scrollToPremiumSection(lunaSenseRef)}
+                    className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-purple/50 hover:border-luna-purple hover:bg-luna-purple/10"
+                  >
+                    <MessageCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                    {t('dashboard.premiumShortcuts.lunaSense')}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => scrollToPremiumSection(sosFemininoRef)}
+                    className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-red-500/50 hover:border-red-500 hover:bg-red-500/10"
+                  >
+                    <AlertCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                    {t('dashboard.premiumShortcuts.sos')}
+                  </Button>
+                </>
+              )}
             </div>
 
             {/* Content Area */}
@@ -516,17 +488,17 @@ export default function Dashboard() {
                 </Card>
                 
                 {/* Women Journal */}
-                <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }} data-tour="womens-journal">
+                <div ref={womenJournalRef} className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }} data-tour="womens-journal">
                   <WomenJournal />
                 </div>
                 
                 {/* Luna Sense */}
-                <div className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }} data-tour="luna-sense">
+                <div ref={lunaSenseRef} className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }} data-tour="luna-sense">
                   <LunaSense />
                 </div>
                 
                 {/* SOS Info Card */}
-                <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }} data-tour="sos-feminino">
+                <Card ref={sosFemininoRef} className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }} data-tour="sos-feminino">
                   <CardHeader>
                     <div className="flex items-center gap-3">
                       <div className="p-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white">
