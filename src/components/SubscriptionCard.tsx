@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { useTranslation } from "react-i18next";
 
 const PRODUCT_TIERS = {
@@ -18,7 +19,8 @@ const PRODUCT_TIERS = {
 
 export function SubscriptionCard() {
   const { t } = useTranslation();
-  const { subscriptionStatus, userProfile, checkSubscription } = useAuth();
+  const { subscriptionStatus, checkSubscription } = useAuth();
+  const { profile } = useProfile();
   const [loading, setLoading] = useState(false);
 
   const handleManageSubscription = async () => {
@@ -63,12 +65,12 @@ export function SubscriptionCard() {
 
   const effectiveSubscribed =
     !!subscriptionStatus?.subscribed ||
-    userProfile?.subscription_plan === "premium" ||
-    userProfile?.subscription_plan === "premium_plus";
+    profile?.subscription_plan === "premium" ||
+    profile?.subscription_plan === "premium_plus";
 
   const displayedPlanName = (() => {
-    if (userProfile?.subscription_plan === "premium_plus") return "Premium Plus";
-    if (userProfile?.subscription_plan === "premium") return "Premium";
+    if (profile?.subscription_plan === "premium_plus") return "Premium Plus";
+    if (profile?.subscription_plan === "premium") return "Premium";
     if (subscriptionStatus?.product_id) {
       const tier = PRODUCT_TIERS[subscriptionStatus.product_id as keyof typeof PRODUCT_TIERS];
       return tier?.name || null;
