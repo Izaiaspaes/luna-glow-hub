@@ -11,16 +11,32 @@ import { OnboardingData } from "@/hooks/useOnboarding";
 
 const step4Schema = z.object({
   work_routine_type: z.enum(['fixed', 'variable', 'shift']).optional(),
-  favorite_color: z.string().optional(),
-  hobbies: z.array(z.string()).optional(),
-  personal_interests: z.string().optional(),
-  self_love_notes: z.string().optional(),
+  favorite_color: z.string()
+    .max(50, "Nome da cor muito longo")
+    .optional()
+    .or(z.literal("")),
+  hobbies: z.array(z.string())
+    .max(7, "Selecione no máximo 7 hobbies")
+    .optional(),
+  personal_interests: z.string()
+    .max(500, "Descrição muito longa (máximo 500 caracteres)")
+    .optional()
+    .or(z.literal("")),
+  self_love_notes: z.string()
+    .max(500, "Descrição muito longa (máximo 500 caracteres)")
+    .optional()
+    .or(z.literal("")),
   current_care_routines: z.array(z.string()).optional(),
   care_improvement_goals: z.array(z.string()).optional(),
   most_explored_life_area: z.string().optional(),
   life_area_to_improve: z.string().optional(),
-  main_app_goal: z.string().optional(),
-  content_preferences: z.array(z.string()).optional(),
+  main_app_goal: z.string()
+    .max(500, "Descrição muito longa (máximo 500 caracteres)")
+    .optional()
+    .or(z.literal("")),
+  content_preferences: z.array(z.string())
+    .min(1, "Selecione pelo menos uma preferência de conteúdo")
+    .optional(),
   notification_frequency: z.string().optional(),
 });
 
@@ -41,7 +57,7 @@ const contentPrefs = ["Textos curtos", "Textos profundos", "Vídeos", "Áudios",
 const notificationFreqs = ["Quase todo dia", "Algumas vezes na semana", "Raramente", "Não quero notificações"];
 
 export function OnboardingStep4({ data, onComplete, onBack, loading }: OnboardingStep4Props) {
-  const { register, handleSubmit, control, watch, setValue } = useForm<Step4Data>({
+  const { register, handleSubmit, control, watch, setValue, formState: { errors } } = useForm<Step4Data>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
       work_routine_type: (data.work_routine_type as 'fixed' | 'variable' | 'shift') || undefined,
@@ -103,8 +119,16 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
           <Input
             id="favorite_color"
             {...register("favorite_color")}
-            placeholder="Qual sua cor favorita?"
+            placeholder="Ex: Rosa, Azul, Verde..."
+            className={errors.favorite_color ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={50}
           />
+          {errors.favorite_color && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.favorite_color.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -115,11 +139,12 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
                 <Checkbox
                   id={`hobby-${hobby}`}
                   checked={selectedHobbies.includes(hobby)}
+                  disabled={selectedHobbies.length >= 7 && !selectedHobbies.includes(hobby)}
                   onCheckedChange={(checked) => {
                     const newHobbies = checked
                       ? [...selectedHobbies, hobby]
                       : selectedHobbies.filter((h) => h !== hobby);
-                    setValue("hobbies", newHobbies);
+                    setValue("hobbies", newHobbies, { shouldValidate: true });
                   }}
                 />
                 <Label htmlFor={`hobby-${hobby}`} className="font-normal cursor-pointer">
@@ -128,6 +153,15 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
               </div>
             ))}
           </div>
+          {errors.hobbies && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.hobbies.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Selecione até 7 hobbies
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -136,7 +170,19 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
             id="personal_interests"
             {...register("personal_interests")}
             placeholder="Música, livros, filmes, lugares..."
+            className={errors.personal_interests ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={500}
+            rows={3}
           />
+          {errors.personal_interests && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.personal_interests.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground text-right">
+            {watch("personal_interests")?.length || 0}/500 caracteres
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -145,7 +191,19 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
             id="self_love_notes"
             {...register("self_love_notes")}
             placeholder="Pode ser algo físico ou emocional..."
+            className={errors.self_love_notes ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={500}
+            rows={3}
           />
+          {errors.self_love_notes && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.self_love_notes.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground text-right">
+            {watch("self_love_notes")?.length || 0}/500 caracteres
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -244,11 +302,25 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
             id="main_app_goal"
             {...register("main_app_goal")}
             placeholder="Ex: Quero me organizar melhor, me cuidar mais..."
+            className={errors.main_app_goal ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={500}
+            rows={3}
           />
+          {errors.main_app_goal && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.main_app_goal.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground text-right">
+            {watch("main_app_goal")?.length || 0}/500 caracteres
+          </p>
         </div>
 
         <div className="space-y-2">
-          <Label>Como prefere receber conteúdo</Label>
+          <Label className="flex items-center gap-1">
+            Como prefere receber conteúdo <span className="text-destructive">*</span>
+          </Label>
           <div className="grid grid-cols-2 gap-2">
             {contentPrefs.map((pref) => (
               <div key={pref} className="flex items-center space-x-2">
@@ -259,7 +331,7 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
                     const newPrefs = checked
                       ? [...selectedContentPrefs, pref]
                       : selectedContentPrefs.filter((p) => p !== pref);
-                    setValue("content_preferences", newPrefs);
+                    setValue("content_preferences", newPrefs, { shouldValidate: true });
                   }}
                 />
                 <Label htmlFor={`content-${pref}`} className="font-normal cursor-pointer text-sm">
@@ -268,6 +340,15 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
               </div>
             ))}
           </div>
+          {errors.content_preferences && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.content_preferences.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Selecione pelo menos uma preferência
+          </p>
         </div>
 
         <div className="space-y-2">

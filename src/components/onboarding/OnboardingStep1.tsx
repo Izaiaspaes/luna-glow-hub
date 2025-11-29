@@ -7,12 +7,39 @@ import { Label } from "@/components/ui/label";
 import { OnboardingData } from "@/hooks/useOnboarding";
 
 const step1Schema = z.object({
-  full_name: z.string().min(1, "Nome completo é obrigatório"),
-  social_name: z.string().optional(),
-  age: z.number().min(13, "Idade mínima: 13 anos").max(120),
-  profession: z.string().optional(),
-  current_city: z.string().optional(),
-  current_country: z.string().optional(),
+  full_name: z.string()
+    .min(1, "Nome completo é obrigatório")
+    .min(3, "Nome deve ter pelo menos 3 caracteres")
+    .max(100, "Nome muito longo (máximo 100 caracteres)")
+    .refine(val => val.trim().split(' ').length >= 2, {
+      message: "Por favor, informe nome e sobrenome"
+    })
+    .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
+      message: "Nome contém caracteres inválidos"
+    }),
+  social_name: z.string()
+    .max(50, "Nome social muito longo (máximo 50 caracteres)")
+    .optional()
+    .or(z.literal("")),
+  age: z.number({
+    required_error: "Idade é obrigatória",
+    invalid_type_error: "Digite um número válido"
+  })
+    .int("Idade deve ser um número inteiro")
+    .min(13, "Você deve ter pelo menos 13 anos para usar o Luna")
+    .max(120, "Por favor, verifique a idade digitada"),
+  profession: z.string()
+    .max(100, "Profissão muito longa (máximo 100 caracteres)")
+    .optional()
+    .or(z.literal("")),
+  current_city: z.string()
+    .max(100, "Nome da cidade muito longo")
+    .optional()
+    .or(z.literal("")),
+  current_country: z.string()
+    .max(100, "Nome do país muito longo")
+    .optional()
+    .or(z.literal("")),
 });
 
 type Step1Data = z.infer<typeof step1Schema>;
@@ -48,15 +75,25 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="full_name">Nome Completo *</Label>
+          <Label htmlFor="full_name" className="flex items-center gap-1">
+            Nome Completo <span className="text-destructive">*</span>
+          </Label>
           <Input
             id="full_name"
             {...register("full_name")}
-            placeholder="Seu nome completo"
+            placeholder="Ex: Maria Silva Santos"
+            className={errors.full_name ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={100}
           />
           {errors.full_name && (
-            <p className="text-sm text-destructive">{errors.full_name.message}</p>
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.full_name.message}
+            </p>
           )}
+          <p className="text-xs text-muted-foreground">
+            Nome e sobrenome para personalizar sua experiência
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -65,20 +102,39 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
             id="social_name"
             {...register("social_name")}
             placeholder="Apelido ou nome social"
+            className={errors.social_name ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={50}
           />
+          {errors.social_name && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.social_name.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="age">Idade *</Label>
+          <Label htmlFor="age" className="flex items-center gap-1">
+            Idade <span className="text-destructive">*</span>
+          </Label>
           <Input
             id="age"
             type="number"
             {...register("age", { valueAsNumber: true })}
-            placeholder="Sua idade"
+            placeholder="Digite sua idade"
+            className={errors.age ? "border-destructive focus-visible:ring-destructive" : ""}
+            min={13}
+            max={120}
           />
           {errors.age && (
-            <p className="text-sm text-destructive">{errors.age.message}</p>
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.age.message}
+            </p>
           )}
+          <p className="text-xs text-muted-foreground">
+            Idade mínima: 13 anos
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -86,8 +142,16 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
           <Input
             id="profession"
             {...register("profession")}
-            placeholder="Sua profissão"
+            placeholder="Ex: Professora, Designer, Estudante..."
+            className={errors.profession ? "border-destructive focus-visible:ring-destructive" : ""}
+            maxLength={100}
           />
+          {errors.profession && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.profession.message}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -96,8 +160,16 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
             <Input
               id="current_city"
               {...register("current_city")}
-              placeholder="Sua cidade"
+              placeholder="Ex: São Paulo"
+              className={errors.current_city ? "border-destructive focus-visible:ring-destructive" : ""}
+              maxLength={100}
             />
+            {errors.current_city && (
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.current_city.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -105,8 +177,16 @@ export function OnboardingStep1({ data, onNext }: OnboardingStep1Props) {
             <Input
               id="current_country"
               {...register("current_country")}
-              placeholder="Seu país"
+              placeholder="Ex: Brasil"
+              className={errors.current_country ? "border-destructive focus-visible:ring-destructive" : ""}
+              maxLength={100}
             />
+            {errors.current_country && (
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.current_country.message}
+              </p>
+            )}
           </div>
         </div>
       </div>
