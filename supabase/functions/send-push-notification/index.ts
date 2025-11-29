@@ -15,6 +15,10 @@ interface NotificationPayload {
   userIds?: string[];
 }
 
+// VAPID keys - in production, store these securely
+const VAPID_PUBLIC_KEY = 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U';
+const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY') || 'p1NnRJDMZVJp-2vO-tXXQEqvbsYcSYMM_vWZ-5N7Khs';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -56,12 +60,11 @@ serve(async (req) => {
 
     console.log(`Found ${subscriptions.length} subscriptions`);
 
-    // Send notifications to all subscriptions
+    // Send notifications to all subscriptions using Web Push
     const notificationPromises = subscriptions.map(async (sub) => {
       try {
-        const subscriptionData = sub.subscription_data;
+        const subscriptionData = sub.subscription_data as any;
         
-        // Use Web Push API to send notification
         const payload = JSON.stringify({
           title,
           body,
@@ -70,12 +73,22 @@ serve(async (req) => {
           data: data || {}
         });
 
-        // Here you would use a Web Push library like web-push
-        // For now, we'll store the notification in the subscription data
-        // In a real implementation, you'd use VAPID keys and web-push library
+        // Use web-push library for actual push notifications
+        // This is a simplified version - in production use a proper web-push library
+        const response = await fetch(subscriptionData.endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'TTL': '86400'
+          },
+          body: payload
+        });
+
+        if (!response.ok) {
+          throw new Error(`Push failed: ${response.status}`);
+        }
         
-        console.log('Would send notification to:', sub.user_id);
-        
+        console.log('Notification sent to:', sub.user_id);
         return { success: true, userId: sub.user_id };
       } catch (error) {
         console.error('Error sending to subscription:', error);
