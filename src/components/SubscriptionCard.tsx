@@ -73,6 +73,9 @@ export function SubscriptionCard() {
     subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' ||
     subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN';
 
+  // Check if subscription is manual (admin-assigned) vs paid (Stripe)
+  const isManualSubscription = effectiveSubscribed && !subscriptionStatus?.subscribed;
+
   const displayedPlanName = (() => {
     if (profile?.subscription_plan === "premium_plus") return "Premium Plus";
     if (profile?.subscription_plan === "premium") return "Premium";
@@ -137,14 +140,24 @@ export function SubscriptionCard() {
       </CardContent>
       <CardFooter className="flex gap-2">
         {effectiveSubscribed ? (
-          <Button 
-            onClick={handleManageSubscription}
-            disabled={loading}
-            className="w-full"
-          >
-            {loading ? t("subscription.opening") : t("subscription.manageSubscription")}
-            <ExternalLink className="ml-2 w-4 h-4" />
-          </Button>
+          isManualSubscription ? (
+            <Button 
+              disabled
+              className="w-full"
+              variant="outline"
+            >
+              {t("subscription.testPlan")}
+            </Button>
+          ) : (
+            <Button 
+              onClick={handleManageSubscription}
+              disabled={loading}
+              className="w-full"
+            >
+              {loading ? t("subscription.opening") : t("subscription.manageSubscription")}
+              <ExternalLink className="ml-2 w-4 h-4" />
+            </Button>
+          )
         ) : (
           <Button 
             onClick={() => window.location.href = "/pricing"}

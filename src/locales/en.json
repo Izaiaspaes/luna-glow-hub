@@ -586,7 +586,30 @@
     "currentPlan": "Your Current Plan",
     "upgrade": "Upgrade",
     "manageSubscription": "Manage Subscription",
-    "benefits": "Benefits"
+    "benefits": "Benefits",
+    "subscribed": "Premium",
+    "notSubscribed": "Free",
+    "hasAccess": "You have access to all premium features",
+    "upgradeDesc": "Upgrade to unlock exclusive features",
+    "renewsOn": "Renews on:",
+    "package": "Package:",
+    "opening": "Opening...",
+    "testPlan": "Test Plan",
+    "refreshing": "Refreshing...",
+    "features": {
+      "unlimitedPlans": "Unlimited wellness plans",
+      "voiceTranscription": "Unlimited voice transcription",
+      "aiAssistant": "24/7 AI conversational assistant",
+      "advancedAnalysis": "Advanced analysis with insights",
+      "weeklyReports": "Detailed weekly reports"
+    },
+    "messages": {
+      "errorOpening": "Error opening portal",
+      "errorRefreshing": "Error refreshing",
+      "statusUpdated": "Status updated",
+      "statusUpdatedDesc": "Your subscription status has been verified",
+      "tryAgain": "Please try again"
+    }
   },
   "statistics": {
     "title": "Numbers that speak for themselves",

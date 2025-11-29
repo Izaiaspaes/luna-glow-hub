@@ -586,7 +586,30 @@
     "currentPlan": "Tu Plan Actual",
     "upgrade": "Mejorar Plan",
     "manageSubscription": "Gestionar Suscripción",
-    "benefits": "Beneficios"
+    "benefits": "Beneficios",
+    "subscribed": "Premium",
+    "notSubscribed": "Gratuito",
+    "hasAccess": "Tienes acceso a todas las funciones premium",
+    "upgradeDesc": "Mejora tu plan para desbloquear funciones exclusivas",
+    "renewsOn": "Se renueva el:",
+    "package": "Paquete:",
+    "opening": "Abriendo...",
+    "testPlan": "Plan de Prueba",
+    "refreshing": "Actualizando...",
+    "features": {
+      "unlimitedPlans": "Planes de bienestar ilimitados",
+      "voiceTranscription": "Transcripción por voz ilimitada",
+      "aiAssistant": "Asistente de IA conversacional 24/7",
+      "advancedAnalysis": "Análisis avanzado con perspectivas",
+      "weeklyReports": "Informes semanales detallados"
+    },
+    "messages": {
+      "errorOpening": "Error al abrir el portal",
+      "errorRefreshing": "Error al actualizar",
+      "statusUpdated": "Estado actualizado",
+      "statusUpdatedDesc": "El estado de tu suscripción ha sido verificado",
+      "tryAgain": "Por favor, inténtalo de nuevo"
+    }
   },
   "statistics": {
     "title": "Números que hablan por sí mismos",
