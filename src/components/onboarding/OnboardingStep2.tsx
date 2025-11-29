@@ -10,10 +10,30 @@ import { format } from "date-fns";
 import { useState } from "react";
 
 const step2Schema = z.object({
-  birth_date: z.string().min(1, "Data de nascimento é obrigatória"),
-  birth_time: z.string().optional(),
-  birth_city: z.string().min(1, "Cidade de nascimento é obrigatória"),
-  birth_country: z.string().min(1, "País de nascimento é obrigatório"),
+  birth_date: z.string()
+    .min(1, "Data de nascimento é obrigatória")
+    .refine(val => {
+      const date = new Date(val);
+      const now = new Date();
+      const minDate = new Date("1900-01-01");
+      return date <= now && date >= minDate;
+    }, {
+      message: "Data de nascimento inválida"
+    }),
+  birth_time: z.string()
+    .optional()
+    .refine(val => !val || /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(val), {
+      message: "Horário inválido (use formato HH:MM)"
+    })
+    .or(z.literal("")),
+  birth_city: z.string()
+    .min(1, "Cidade de nascimento é obrigatória")
+    .min(2, "Nome da cidade deve ter pelo menos 2 caracteres")
+    .max(100, "Nome da cidade muito longo"),
+  birth_country: z.string()
+    .min(1, "País de nascimento é obrigatório")
+    .min(2, "Nome do país deve ter pelo menos 2 caracteres")
+    .max(100, "Nome do país muito longo"),
 });
 
 type Step2Data = z.infer<typeof step2Schema>;
@@ -54,13 +74,15 @@ export function OnboardingStep2({ data, onNext, onBack }: OnboardingStep2Props) 
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label>Data de Nascimento *</Label>
+          <Label className="flex items-center gap-1">
+            Data de Nascimento <span className="text-destructive">*</span>
+          </Label>
           <DatePicker
             date={selectedDate}
             onDateChange={(date) => {
               setSelectedDate(date);
               if (date) {
-                setValue("birth_date", format(date, "yyyy-MM-dd"));
+                setValue("birth_date", format(date, "yyyy-MM-dd"), { shouldValidate: true });
               }
             }}
             disabled={(date) =>
@@ -68,12 +90,15 @@ export function OnboardingStep2({ data, onNext, onBack }: OnboardingStep2Props) 
             }
             placeholder="Selecione sua data de nascimento"
           />
-          <p className="text-xs text-muted-foreground">
-            Digite manualmente (dd/mm/aaaa) ou clique no calendário
-          </p>
           {errors.birth_date && (
-            <p className="text-sm text-destructive">{errors.birth_date.message}</p>
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.birth_date.message}
+            </p>
           )}
+          <p className="text-xs text-muted-foreground">
+            💡 Digite manualmente (dd/mm/aaaa) ou clique no calendário
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -82,34 +107,55 @@ export function OnboardingStep2({ data, onNext, onBack }: OnboardingStep2Props) 
             id="birth_time"
             type="time"
             {...register("birth_time")}
+            className={errors.birth_time ? "border-destructive focus-visible:ring-destructive" : ""}
           />
+          {errors.birth_time && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.birth_time.message}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground">
-            Opcional, mas recomendado para um mapa mais preciso
+            ✨ Opcional, mas recomendado para um mapa astral mais preciso
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="birth_city">Cidade de Nascimento *</Label>
+            <Label htmlFor="birth_city" className="flex items-center gap-1">
+              Cidade de Nascimento <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="birth_city"
               {...register("birth_city")}
-              placeholder="Cidade onde nasceu"
+              placeholder="Ex: Rio de Janeiro"
+              className={errors.birth_city ? "border-destructive focus-visible:ring-destructive" : ""}
+              maxLength={100}
             />
             {errors.birth_city && (
-              <p className="text-sm text-destructive">{errors.birth_city.message}</p>
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.birth_city.message}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="birth_country">País de Nascimento *</Label>
+            <Label htmlFor="birth_country" className="flex items-center gap-1">
+              País de Nascimento <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="birth_country"
               {...register("birth_country")}
-              placeholder="País onde nasceu"
+              placeholder="Ex: Brasil"
+              className={errors.birth_country ? "border-destructive focus-visible:ring-destructive" : ""}
+              maxLength={100}
             />
             {errors.birth_country && (
-              <p className="text-sm text-destructive">{errors.birth_country.message}</p>
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.birth_country.message}
+              </p>
             )}
           </div>
         </div>

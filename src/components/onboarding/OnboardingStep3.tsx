@@ -9,13 +9,33 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { OnboardingData } from "@/hooks/useOnboarding";
 
 const step3Schema = z.object({
-  weight: z.number().optional(),
-  height: z.number().optional(),
-  body_shapes: z.array(z.string()).optional(),
+  weight: z.number({
+    invalid_type_error: "Digite um número válido"
+  })
+    .min(30, "Peso deve ser no mínimo 30kg")
+    .max(300, "Peso deve ser no máximo 300kg")
+    .optional()
+    .or(z.nan()),
+  height: z.number({
+    invalid_type_error: "Digite um número válido"
+  })
+    .int("Altura deve ser um número inteiro")
+    .min(100, "Altura deve ser no mínimo 100cm")
+    .max(250, "Altura deve ser no máximo 250cm")
+    .optional()
+    .or(z.nan()),
+  body_shapes: z.array(z.string())
+    .max(3, "Selecione no máximo 3 formatos de corpo")
+    .optional(),
   skin_tone: z.string().optional(),
-  skin_types: z.array(z.string()).optional(),
+  skin_types: z.array(z.string())
+    .max(4, "Selecione no máximo 4 tipos de pele")
+    .optional(),
   eye_color: z.string().optional(),
-  hair_color: z.string().optional(),
+  hair_color: z.string()
+    .max(50, "Descrição muito longa")
+    .optional()
+    .or(z.literal("")),
   hair_type: z.string().optional(),
   hair_length: z.string().optional(),
   nail_preference: z.string().optional(),
@@ -37,7 +57,7 @@ const hairTypes = ["Liso", "Ondulado", "Cacheado", "Crespo"];
 const hairLengths = ["Curto", "Médio", "Longo"];
 
 export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) {
-  const { register, handleSubmit, control, watch, setValue } = useForm<Step3Data>({
+  const { register, handleSubmit, control, watch, setValue, formState: { errors } } = useForm<Step3Data>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
       weight: data.weight,
@@ -78,8 +98,20 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
               type="number"
               step="0.1"
               {...register("weight", { valueAsNumber: true })}
-              placeholder="Opcional"
+              placeholder="Ex: 65.5"
+              className={errors.weight ? "border-destructive focus-visible:ring-destructive" : ""}
+              min={30}
+              max={300}
             />
+            {errors.weight && (
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.weight.message}
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground">
+              Opcional (30-300kg)
+            </p>
           </div>
 
           <div className="space-y-2">
@@ -88,8 +120,20 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
               id="height"
               type="number"
               {...register("height", { valueAsNumber: true })}
-              placeholder="Opcional"
+              placeholder="Ex: 165"
+              className={errors.height ? "border-destructive focus-visible:ring-destructive" : ""}
+              min={100}
+              max={250}
             />
+            {errors.height && (
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.height.message}
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground">
+              Opcional (100-250cm)
+            </p>
           </div>
         </div>
 
@@ -101,11 +145,12 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
                 <Checkbox
                   id={`body-${shape}`}
                   checked={selectedBodyShapes.includes(shape)}
+                  disabled={selectedBodyShapes.length >= 3 && !selectedBodyShapes.includes(shape)}
                   onCheckedChange={(checked) => {
                     const newShapes = checked
                       ? [...selectedBodyShapes, shape]
                       : selectedBodyShapes.filter((s) => s !== shape);
-                    setValue("body_shapes", newShapes);
+                    setValue("body_shapes", newShapes, { shouldValidate: true });
                   }}
                 />
                 <Label htmlFor={`body-${shape}`} className="font-normal cursor-pointer">
@@ -114,6 +159,15 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
               </div>
             ))}
           </div>
+          {errors.body_shapes && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.body_shapes.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Opcional - Selecione até 3 opções
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -139,18 +193,19 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
         </div>
 
         <div className="space-y-2">
-          <Label>Tipo de Pele (pode selecionar mais de um)</Label>
+          <Label>Tipo de Pele</Label>
           <div className="grid grid-cols-2 gap-2">
             {skinTypes.map((type) => (
               <div key={type} className="flex items-center space-x-2">
                 <Checkbox
                   id={`skin-${type}`}
                   checked={selectedSkinTypes.includes(type)}
+                  disabled={selectedSkinTypes.length >= 4 && !selectedSkinTypes.includes(type)}
                   onCheckedChange={(checked) => {
                     const newTypes = checked
                       ? [...selectedSkinTypes, type]
                       : selectedSkinTypes.filter((t) => t !== type);
-                    setValue("skin_types", newTypes);
+                    setValue("skin_types", newTypes, { shouldValidate: true });
                   }}
                 />
                 <Label htmlFor={`skin-${type}`} className="font-normal cursor-pointer">
@@ -159,6 +214,15 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
               </div>
             ))}
           </div>
+          {errors.skin_types && (
+            <p className="text-sm text-destructive flex items-center gap-1">
+              <span className="text-base">⚠️</span>
+              {errors.skin_types.message}
+            </p>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Opcional - Selecione até 4 opções
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -190,7 +254,15 @@ export function OnboardingStep3({ data, onNext, onBack }: OnboardingStep3Props) 
               id="hair_color"
               {...register("hair_color")}
               placeholder="Ex: castanho, loiro..."
+              className={errors.hair_color ? "border-destructive focus-visible:ring-destructive" : ""}
+              maxLength={50}
             />
+            {errors.hair_color && (
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <span className="text-base">⚠️</span>
+                {errors.hair_color.message}
+              </p>
+            )}
           </div>
         </div>
 
