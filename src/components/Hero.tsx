@@ -28,56 +28,6 @@ export const Hero = () => {
     return email.charAt(0).toUpperCase();
   };
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-soft">
-      {/* Navigation Bar */}
-      <nav className="absolute top-0 left-0 right-0 z-10 border-b border-border/50 bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <img src={logoLuna} alt="Luna Logo" className="h-14 w-auto" />
-          
-          <div className="flex items-center gap-2">
-            <div className="hidden md:block">
-              <LanguageSelector />
-            </div>
-            {user ? <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                  <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      {getInitials(user.email || "U")}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">{user.email}</p>
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                 <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                  <LayoutDashboard className="mr-2 h-4 w-4" />
-                  {t('nav.dashboard')}
-                </DropdownMenuItem>
-                {isAdmin && <DropdownMenuItem onClick={() => navigate("/admin")}>
-                    <Shield className="mr-2 h-4 w-4" />
-                    {t('nav.admin')}
-                  </DropdownMenuItem>}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  {t('common.logout')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu> : <NavLink to="/auth" className="hidden md:block">
-              <Button variant="outline" size="sm" className="gap-2">
-                <LogIn className="h-4 w-4" />
-                {t('common.login')}
-              </Button>
-            </NavLink>}
-            <MobileNav />
-          </div>
-        </div>
-      </nav>
       <div className="container mx-auto px-4 py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}

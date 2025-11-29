@@ -74,37 +74,6 @@ export default function Admin() {
   return (
     <Layout>
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-2">
-                <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
-                <span className="text-xl font-semibold">Luna Admin</span>
-              </div>
-              <nav className="hidden md:flex gap-6 items-center">
-                <NavLink to="/">Início</NavLink>
-                <Button 
-                  onClick={handleShare} 
-                  variant="ghost" 
-                  size="sm"
-                  className="gap-2"
-                >
-                  <Share2 className="h-4 w-4" />
-                  Compartilhar
-                </Button>
-              </nav>
-            </div>
-            <div className="flex items-center gap-2">
-              <NotificationsBell />
-              <Button onClick={handleSignOut} variant="outline">
-                Sair
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">

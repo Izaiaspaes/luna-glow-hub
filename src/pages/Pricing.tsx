@@ -144,20 +144,34 @@ export default function Pricing() {
 
     setLoading(true);
     try {
+      console.log('Starting checkout process with priceId:', priceId);
+      console.log('User session:', session?.user?.email);
+      console.log('Session access token exists:', !!session?.access_token);
+      
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { priceId },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
 
-      if (error) throw error;
+      console.log('Checkout response:', { data, error });
+
+      if (error) {
+        console.error('Checkout error:', error);
+        throw error;
+      }
 
       if (data?.url) {
         window.open(data.url, '_blank');
+      } else {
+        throw new Error('No checkout URL returned');
       }
     } catch (error: any) {
       console.error('Error creating checkout:', error);
       toast({
         title: "Erro ao processar",
-        description: error.message || "Tente novamente",
+        description: error.message || "Tente novamente. Verifique os logs do console para mais detalhes.",
         variant: "destructive",
       });
     } finally {
@@ -168,35 +182,6 @@ export default function Pricing() {
   return (
     <Layout>
     <div className="min-h-screen bg-background">
-      {/* Header/Nav */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <NavLink to="/" className="flex items-center gap-2">
-              <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
-            </NavLink>
-            <div className="flex items-center gap-2">
-              <div className="hidden md:block mr-2">
-                <LanguageSelector />
-              </div>
-              <nav className="hidden md:flex items-center gap-6">
-                <NavLink to="/features" className="text-sm font-medium hover:text-primary transition-smooth">
-                  {t('nav.features')}
-                </NavLink>
-                <NavLink to="/pricing" className="text-sm font-medium hover:text-primary transition-smooth" activeClassName="text-primary">
-                  {t('nav.pricing')}
-                </NavLink>
-                <NavLink to="/auth">
-                  <Button variant="hero" size="sm">
-                    {t('common.login')}
-                  </Button>
-                </NavLink>
-              </nav>
-              <MobileNav />
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gradient-soft">

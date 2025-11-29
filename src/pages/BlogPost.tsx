@@ -72,22 +72,6 @@ const BlogPost = () => {
   return (
     <Layout>
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/blog")}
-            className="gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar ao Blog
-          </Button>
-          <Button variant="ghost" size="icon" onClick={handleShare}>
-            <Share2 className="w-4 h-4" />
-          </Button>
-        </div>
-      </header>
 
       {/* Hero Image */}
       <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden">

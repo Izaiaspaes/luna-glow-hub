@@ -39,24 +39,6 @@ const Blog = () => {
   return (
     <Layout>
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            <img src={logoLuna} alt="Luna Logo" className="h-8 w-auto" />
-            <span className="font-bold text-xl">Luna Blog</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button onClick={() => navigate("/")} variant="ghost" className="hidden md:flex">
-              {t('blogPage.backToHome')}
-            </Button>
-            <MobileNav />
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="py-16 px-4 bg-gradient-to-b from-primary/5 to-background">
