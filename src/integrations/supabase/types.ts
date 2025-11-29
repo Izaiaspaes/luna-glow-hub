@@ -164,6 +164,42 @@ export type Database = {
         }
         Relationships: []
       }
+      journal_entries: {
+        Row: {
+          ai_correlations: string | null
+          ai_patterns: string | null
+          ai_suggestions: Json | null
+          ai_summary: string | null
+          created_at: string
+          entry_text: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_correlations?: string | null
+          ai_patterns?: string | null
+          ai_suggestions?: Json | null
+          ai_summary?: string | null
+          created_at?: string
+          entry_text: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_correlations?: string | null
+          ai_patterns?: string | null
+          ai_suggestions?: Json | null
+          ai_summary?: string | null
+          created_at?: string
+          entry_text?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       mood_tracking: {
         Row: {
           created_at: string
