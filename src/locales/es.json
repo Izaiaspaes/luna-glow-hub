@@ -19,6 +19,15 @@
     "learnMore": "Saber Más",
     "create": "Crear"
   },
+  "cookies": {
+    "title": "Cookies y Privacidad",
+    "lgpdBadge": "RGPD Conforme",
+    "description": "Utilizamos cookies esenciales para garantizar el correcto funcionamiento de la plataforma Luna. Sus datos personales están protegidos de acuerdo con el RGPD (Reglamento General de Protección de Datos). Tiene control total sobre su información y puede solicitar la eliminación en cualquier momento.",
+    "accept": "Aceptar y Continuar",
+    "decline": "Solo Esenciales",
+    "privacyPolicy": "Política de Privacidad",
+    "terms": "Términos de Uso"
+  },
   "nav": {
     "features": "Funcionalidades",
     "pricing": "Precios",
