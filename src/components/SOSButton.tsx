@@ -58,12 +58,14 @@ const sosOptions = [
 ];
 
 export function SOSButton() {
-  const { subscriptionStatus } = useAuth();
+  const { subscriptionStatus, userProfile } = useAuth();
   const [showDialog, setShowDialog] = useState(false);
   const [selectedOption, setSelectedOption] = useState<typeof sosOptions[0] | null>(null);
 
-  const hasPremiumPlus = subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
-                         subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN";
+  const hasPremiumPlus = 
+    subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
+    subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
+    userProfile?.subscription_plan === "premium_plus";
 
   const handleSOSClick = () => {
     if (!hasPremiumPlus) {

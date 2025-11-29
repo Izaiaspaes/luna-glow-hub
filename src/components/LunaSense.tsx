@@ -15,7 +15,7 @@ interface Message {
 }
 
 export function LunaSense() {
-  const { subscriptionStatus } = useAuth();
+  const { subscriptionStatus, userProfile } = useAuth();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -27,8 +27,10 @@ export function LunaSense() {
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const hasPremiumPlus = subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
-                         subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN";
+  const hasPremiumPlus = 
+    subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
+    subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
+    userProfile?.subscription_plan === "premium_plus";
 
   useEffect(() => {
     if (scrollRef.current) {

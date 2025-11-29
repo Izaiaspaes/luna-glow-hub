@@ -8,6 +8,10 @@ interface SubscriptionStatus {
   subscription_end: string | null;
 }
 
+interface UserProfile {
+  subscription_plan: string | null;
+}
+
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -15,17 +19,31 @@ export function useAuth() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminChecked, setAdminChecked] = useState(false);
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   const checkSubscription = async () => {
     if (!session) {
       setSubscriptionStatus({ subscribed: false, product_id: null, subscription_end: null });
+      setUserProfile(null);
       return;
     }
 
     try {
+      // Check Stripe subscription
       const { data, error } = await supabase.functions.invoke('check-subscription');
       if (error) throw error;
       setSubscriptionStatus(data);
+
+      // Also get user profile subscription_plan
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('subscription_plan')
+        .eq('user_id', session.user.id)
+        .single();
+
+      if (!profileError && profileData) {
+        setUserProfile(profileData);
+      }
     } catch (error) {
       console.error('Error checking subscription:', error);
       setSubscriptionStatus({ subscribed: false, product_id: null, subscription_end: null });
@@ -121,6 +139,7 @@ export function useAuth() {
     isAdmin,
     adminChecked,
     subscriptionStatus,
+    userProfile,
     checkSubscription,
     signUp,
     signIn,
