@@ -4,12 +4,11 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Mail, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
 import { PlansManagement } from "@/components/admin/PlansManagement";
-import { InvitesManagement } from "@/components/admin/InvitesManagement";
 import { NewsletterManagement } from "@/components/admin/NewsletterManagement";
 import { TestimonialsManagement } from "@/components/admin/TestimonialsManagement";
 import { BannersManagement } from "@/components/admin/BannersManagement";
@@ -88,7 +87,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-9 lg:w-[1440px]">
+          <TabsList className="grid w-full grid-cols-8 lg:w-[1280px]">
             <TabsTrigger value="statistics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">Estatísticas</span>
@@ -108,10 +107,6 @@ export default function Admin() {
             <TabsTrigger value="newsletter" className="flex items-center gap-2">
               <Newspaper className="w-4 h-4" />
               <span className="hidden sm:inline">Newsletter</span>
-            </TabsTrigger>
-            <TabsTrigger value="invites" className="flex items-center gap-2">
-              <Mail className="w-4 h-4" />
-              <span className="hidden sm:inline">Convites</span>
             </TabsTrigger>
             <TabsTrigger value="plans" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
@@ -145,10 +140,6 @@ export default function Admin() {
 
           <TabsContent value="newsletter" className="space-y-4">
             <NewsletterManagement />
-          </TabsContent>
-
-          <TabsContent value="invites" className="space-y-4">
-            <InvitesManagement />
           </TabsContent>
 
               <TabsContent value="plans" className="space-y-4">
