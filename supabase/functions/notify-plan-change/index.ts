@@ -80,7 +80,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Luna <contato.luna@topdigitais.net>",
+        from: "Luna <onboarding@resend.dev>",
         to: [userEmail],
         subject: "Seu plano Luna foi atualizado! 🎉",
         html: `
