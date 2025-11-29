@@ -45,6 +45,7 @@ import { PremiumPlusTour } from "@/components/PremiumPlusTour";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
 import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
+import { SOSButton } from "@/components/SOSButton";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
@@ -65,6 +66,7 @@ export default function Dashboard() {
   const [generatingPlan, setGeneratingPlan] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showPlanLimitModal, setShowPlanLimitModal] = useState(false);
+  const [sosDialogOpen, setSOSDialogOpen] = useState(false);
   const { user, loading, isAdmin, adminChecked, signOut, subscriptionStatus } = useAuth();
   
   // Refs for Premium Plus sections
@@ -247,6 +249,10 @@ export default function Dashboard() {
 
   const scrollToPremiumSection = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const openSOSDialog = () => {
+    setSOSDialogOpen(true);
   };
 
   if (loading || !adminChecked) {
@@ -452,7 +458,7 @@ export default function Dashboard() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => scrollToPremiumSection(sosFemininoRef)}
+                    onClick={openSOSDialog}
                     className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-red-500/50 hover:border-red-500 hover:bg-red-500/10"
                   >
                     <AlertCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
@@ -904,6 +910,9 @@ export default function Dashboard() {
 
       {/* Profile Settings Dialog */}
       <ProfileSettings open={settingsOpen} onOpenChange={setSettingsOpen} />
+      
+      {/* SOS Button with external control */}
+      <SOSButton open={sosDialogOpen} onOpenChange={setSOSDialogOpen} />
     </div>
     </Layout>
   );
