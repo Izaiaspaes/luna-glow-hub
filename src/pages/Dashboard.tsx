@@ -47,6 +47,8 @@ import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import logoLuna from "@/assets/logo-luna.png";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { PushNotificationPrompt } from "@/components/PushNotificationPrompt";
 import { Layout } from "@/components/Layout";
 
@@ -225,16 +227,6 @@ export default function Dashboard() {
   const openTrackingDialog = (type: TrackingType) => {
     setTrackingType(type);
     setDialogOpen(true);
-  };
-
-  const handlePremiumShortcut = (section: 'journal' | 'lunaSense' | 'sos') => {
-    setActiveTab('premiumPlus');
-    setTimeout(() => {
-      const element = document.getElementById(`premium-${section}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
   };
 
   const handleTrackingSuccess = () => {
@@ -867,7 +859,9 @@ export default function Dashboard() {
 
       {/* Profile Settings Dialog */}
       <ProfileSettings open={settingsOpen} onOpenChange={setSettingsOpen} />
+      
+      <WhatsAppButton />
     </div>
-  </Layout>
+    </Layout>
   );
 }
