@@ -277,6 +277,11 @@
       "title": "Acesso Rápido",
       "description": "Registre seus dados de bem-estar facilmente"
     },
+    "premiumShortcuts": {
+      "journal": "Diário da Mulher",
+      "lunaSense": "Luna Sense",
+      "sos": "SOS Feminino"
+    },
     "tracking": "Rastreamento",
     "cycle": "Ciclo",
     "sleep": "Sono",
