@@ -16,7 +16,7 @@ import { SuggestionsManagement } from "@/components/admin/SuggestionsManagement"
 import { CouponsManagement } from "@/components/admin/CouponsManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+
 import { Layout } from "@/components/Layout";
 
 export default function Admin() {
@@ -155,8 +155,6 @@ export default function Admin() {
               </TabsContent>
         </Tabs>
       </main>
-      
-      <WhatsAppButton />
     </div>
     </Layout>
   );

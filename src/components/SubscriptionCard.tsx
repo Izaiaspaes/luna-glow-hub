@@ -67,6 +67,11 @@ export function SubscriptionCard() {
     !!subscriptionStatus?.subscribed ||
     profile?.subscription_plan === "premium" ||
     profile?.subscription_plan === "premium_plus";
+  
+  const isPremiumPlus = 
+    profile?.subscription_plan === "premium_plus" ||
+    subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' ||
+    subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN';
 
   const displayedPlanName = (() => {
     if (profile?.subscription_plan === "premium_plus") return "Premium Plus";
@@ -131,7 +136,7 @@ export function SubscriptionCard() {
         )}
       </CardContent>
       <CardFooter className="flex gap-2">
-        {subscriptionStatus?.subscribed ? (
+        {effectiveSubscribed ? (
           <Button 
             onClick={handleManageSubscription}
             disabled={loading}

@@ -10,7 +10,7 @@ import {
   Zap
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
@@ -630,8 +630,6 @@ export default function Pricing() {
           </div>
         </div>
       </footer>
-      
-      <WhatsAppButton />
     </div>
     </Layout>
   );
