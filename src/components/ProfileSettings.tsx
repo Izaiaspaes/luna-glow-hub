@@ -299,36 +299,36 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
 
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-8">
-            <TabsTrigger value="profile">
+          <TabsList className="flex w-full flex-wrap gap-1 h-auto p-2">
+            <TabsTrigger value="profile" className="flex-1 min-w-[120px]">
               <User className="h-4 w-4 mr-2" />
               Perfil
             </TabsTrigger>
-            <TabsTrigger value="account">
+            <TabsTrigger value="account" className="flex-1 min-w-[120px]">
               <Lock className="h-4 w-4 mr-2" />
               Conta
             </TabsTrigger>
-            <TabsTrigger value="onboarding">
+            <TabsTrigger value="onboarding" className="flex-1 min-w-[140px]">
               <FileText className="h-4 w-4 mr-2" />
               Dados Pessoais
             </TabsTrigger>
-            <TabsTrigger value="sharing" data-tour="partner">
+            <TabsTrigger value="sharing" data-tour="partner" className="flex-1 min-w-[140px]">
               <Heart className="h-4 w-4 mr-2" />
               Compartilhar
             </TabsTrigger>
-            <TabsTrigger value="appearance">
+            <TabsTrigger value="appearance" className="flex-1 min-w-[130px]">
               <Palette className="h-4 w-4 mr-2" />
               Aparência
             </TabsTrigger>
-            <TabsTrigger value="wearables">
+            <TabsTrigger value="wearables" className="flex-1 min-w-[130px]">
               <Watch className="h-4 w-4 mr-2" />
               Wearables
             </TabsTrigger>
-            <TabsTrigger value="language">
+            <TabsTrigger value="language" className="flex-1 min-w-[120px]">
               <Globe className="h-4 w-4 mr-2" />
               Idioma
             </TabsTrigger>
-            <TabsTrigger value="privacy">
+            <TabsTrigger value="privacy" className="flex-1 min-w-[130px]">
               <Shield className="h-4 w-4 mr-2" />
               Privacidade
             </TabsTrigger>
