@@ -114,6 +114,22 @@
     "ctaSecondary": "View All Features",
     "ctaNote": "No credit card required • Cancel anytime"
   },
+  "videoDemo": {
+    "badge": "See it in action",
+    "title": "Discover how Luna",
+    "titleHighlight": "transforms your wellness",
+    "subtitle": "Watch a quick demonstration of how our premium features can revolutionize your self-care journey.",
+    "benefit1": "AI assistant that truly understands you",
+    "benefit2": "Smart journal with deep analysis",
+    "benefit3": "Complete tracking with personalized insights",
+    "benefit4": "Privacy and security first",
+    "ctaButton": "Start Free",
+    "ctaSecondary": "View Plans",
+    "note": "14-day free trial • No commitment",
+    "duration": "3:42 min",
+    "statUsers": "Active women",
+    "statSatisfaction": "Satisfaction"
+  },
   "testimonials": {
     "title": "What our users say"
   },
