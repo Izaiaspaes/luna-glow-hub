@@ -42,6 +42,8 @@ import { WeeklySummary } from "@/components/WeeklySummary";
 import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { AppTour } from "@/components/AppTour";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
+import { WomenJournal } from "@/components/WomenJournal";
+import { LunaSense } from "@/components/LunaSense";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
@@ -54,7 +56,7 @@ type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition'
 export default function Dashboard() {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'nutrition' | 'predictions' | 'calendar'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'nutrition' | 'predictions' | 'calendar' | 'premiumPlus'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trackingType, setTrackingType] = useState<TrackingType>(null);
   const [recentData, setRecentData] = useState<any[]>([]);
@@ -395,6 +397,15 @@ export default function Dashboard() {
                 <Calendar className="w-3 h-3 md:w-4 md:h-4 md:mr-1 lg:mr-2" />
                 <span className="hidden md:inline">{t('dashboard.tabs.calendar')}</span>
               </Button>
+              <Button
+                variant={activeTab === 'premiumPlus' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setActiveTab('premiumPlus')}
+                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm bg-gradient-to-r from-luna-purple/10 to-luna-pink/10 hover:from-luna-purple/20 hover:to-luna-pink/20 border-luna-purple"
+              >
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                Premium Plus
+              </Button>
             </div>
 
             {/* Content Area */}
@@ -406,6 +417,73 @@ export default function Dashboard() {
               />
             ) : activeTab === 'predictions' ? (
               <SymptomPredictions userId={user!.id} />
+            ) : activeTab === 'premiumPlus' ? (
+              <div className="space-y-6">
+                <Card className="bg-gradient-to-r from-luna-purple/10 via-luna-pink/10 to-luna-orange/10 border-2 border-luna-purple/30">
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <Sparkles className="w-6 h-6 text-luna-purple" />
+                      <div>
+                        <CardTitle className="text-2xl">✨ Premium Plus</CardTitle>
+                        <CardDescription>Recursos avançados exclusivos</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      Aqui você encontra funcionalidades exclusivas para uma experiência ainda mais completa de autocuidado e bem-estar.
+                    </p>
+                  </CardContent>
+                </Card>
+                
+                {/* Women Journal */}
+                <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
+                  <WomenJournal />
+                </div>
+                
+                {/* Luna Sense */}
+                <div className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+                  <LunaSense />
+                </div>
+                
+                {/* SOS Info Card */}
+                <Card className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white">
+                        <Heart className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <CardTitle>🆘 SOS Feminino</CardTitle>
+                        <CardDescription>Suporte imediato quando você mais precisa</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      Clique no botão vermelho flutuante no canto inferior direito da tela para acesso rápido a técnicas de relaxamento, suporte emocional e cuidados imediatos.
+                    </p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center gap-2">
+                        <span className="text-red-500">•</span>
+                        Dores físicas e cólicas
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-red-500">•</span>
+                        Ansiedade e estresse
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-red-500">•</span>
+                        Cansaço extremo
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="text-red-500">•</span>
+                        Irritação e TPM
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
             ) : (
               <Card className="bg-gradient-card">
                 <CardHeader>
