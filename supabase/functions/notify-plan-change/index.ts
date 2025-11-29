@@ -154,9 +154,22 @@ serve(async (req) => {
     });
 
     if (!emailResponse.ok) {
-      const errorText = await emailResponse.text();
-      console.error("ZeptoMail API error:", errorText);
-      throw new Error(`Failed to send email: ${errorText}`);
+      let errorBody: string | null = null;
+      try {
+        errorBody = await emailResponse.text();
+      } catch (e) {
+        console.error("Failed to read ZeptoMail error body", e);
+      }
+
+      console.error("ZeptoMail API error:", {
+        status: emailResponse.status,
+        statusText: emailResponse.statusText,
+        body: errorBody,
+      });
+
+      throw new Error(
+        `Failed to send email: status=${emailResponse.status} ${emailResponse.statusText} body=${errorBody ?? "<empty>"}`,
+      );
     }
 
     const emailData = await emailResponse.json();
