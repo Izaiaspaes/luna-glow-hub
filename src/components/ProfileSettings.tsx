@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch, Globe } from "lucide-react";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch, Globe, CreditCard } from "lucide-react";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
@@ -84,6 +84,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
   const [avatarPreview, setAvatarPreview] = useState(profile?.avatar_url || "");
   const [privacyMode, setPrivacyMode] = useState(profile?.privacy_mode || false);
   const [encryptionPassword, setEncryptionPasswordLocal] = useState("");
+  const [loadingPortal, setLoadingPortal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -246,6 +247,28 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
     }
   };
 
+  const handleOpenCustomerPortal = async () => {
+    setLoadingPortal(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      
+      if (error) throw error;
+      
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erro ao abrir portal",
+        description: error.message || "Não foi possível acessar o portal de assinatura",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingPortal(false);
+    }
+  };
+
   const handlePrivacyModeToggle = async (enabled: boolean) => {
     if (enabled && !encryptionPassword) {
       toast({
@@ -327,6 +350,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
             <TabsTrigger value="language" className="flex-1 min-w-[120px]">
               <Globe className="h-4 w-4 mr-2" />
               Idioma
+            </TabsTrigger>
+            <TabsTrigger value="subscription" className="flex-1 min-w-[130px]">
+              <CreditCard className="h-4 w-4 mr-2" />
+              Assinatura
             </TabsTrigger>
             <TabsTrigger value="privacy" className="flex-1 min-w-[130px]">
               <Shield className="h-4 w-4 mr-2" />
@@ -552,6 +579,54 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
               </p>
               
               <LanguageSelector />
+            </div>
+          </TabsContent>
+
+          {/* Subscription Tab */}
+          <TabsContent value="subscription" className="space-y-4 py-4">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <CreditCard className="h-4 w-4" />
+                <h3 className="text-sm font-semibold">Gerenciar Assinatura</h3>
+              </div>
+
+              <div className="p-4 border rounded-lg space-y-4">
+                <div>
+                  <p className="font-medium">Plano Atual</p>
+                  <p className="text-2xl font-bold mt-1">
+                    {profile?.subscription_plan === 'premium_plus' && '💎 Premium Plus'}
+                    {profile?.subscription_plan === 'premium' && '✨ Premium'}
+                    {(!profile?.subscription_plan || profile?.subscription_plan === 'free') && 'Free'}
+                  </p>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    Use o Portal Stripe para:
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                    <li>• Fazer upgrade ou downgrade do seu plano</li>
+                    <li>• Atualizar método de pagamento</li>
+                    <li>• Ver histórico de cobranças</li>
+                    <li>• Cancelar assinatura</li>
+                  </ul>
+                </div>
+
+                <Button 
+                  onClick={handleOpenCustomerPortal} 
+                  disabled={loadingPortal}
+                  className="w-full"
+                >
+                  {loadingPortal && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {loadingPortal ? "Abrindo Portal..." : "Abrir Portal de Assinatura"}
+                </Button>
+
+                <p className="text-xs text-muted-foreground text-center">
+                  Você será redirecionado para uma página segura do Stripe
+                </p>
+              </div>
             </div>
           </TabsContent>
 
