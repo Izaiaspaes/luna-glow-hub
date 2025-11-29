@@ -23,7 +23,7 @@ import {
   Leaf,
   ArrowRight
 } from "lucide-react";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import logoLuna from "@/assets/logo-luna.png";
@@ -719,8 +719,6 @@ export default function Features() {
           </div>
         </div>
       </footer>
-      
-      <WhatsAppButton />
     </div>
     </Layout>
   );

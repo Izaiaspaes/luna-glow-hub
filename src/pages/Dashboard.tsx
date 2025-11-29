@@ -48,7 +48,7 @@ import { LunaSense } from "@/components/LunaSense";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+
 import { PushNotificationPrompt } from "@/components/PushNotificationPrompt";
 import { Layout } from "@/components/Layout";
 
@@ -65,7 +65,7 @@ export default function Dashboard() {
   const [generatingPlan, setGeneratingPlan] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showPlanLimitModal, setShowPlanLimitModal] = useState(false);
-  const { user, loading, isAdmin, adminChecked, signOut } = useAuth();
+  const { user, loading, isAdmin, adminChecked, signOut, subscriptionStatus } = useAuth();
   
   // Refs for Premium Plus sections
   const womenJournalRef = useRef<HTMLDivElement>(null);
@@ -426,7 +426,11 @@ export default function Dashboard() {
               </Button>
               
               {/* Premium Plus Shortcuts - only visible when in Premium Plus tab */}
-              {activeTab === 'premiumPlus' && profile?.subscription_plan === 'premium_plus' && (
+              {activeTab === 'premiumPlus' && (
+                profile?.subscription_plan === 'premium_plus' || 
+                subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' || 
+                subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN'
+              ) && (
                 <>
                   <Button
                     variant="outline"
@@ -831,8 +835,6 @@ export default function Dashboard() {
 
       {/* Profile Settings Dialog */}
       <ProfileSettings open={settingsOpen} onOpenChange={setSettingsOpen} />
-      
-      <WhatsAppButton />
     </div>
     </Layout>
   );
