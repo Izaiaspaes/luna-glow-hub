@@ -68,7 +68,7 @@ export default function Auth() {
         navigate("/dashboard");
       }
     } else {
-      const { error } = await signUp(email, password);
+      const { error, data } = await signUp(email, password);
       if (error) {
         if (error.message.includes("already registered")) {
           toast.error(t("auth.errors.alreadyRegistered"));
@@ -77,6 +77,23 @@ export default function Auth() {
         }
       } else {
         toast.success(t("auth.success.accountCreated"));
+        
+        // Notify admins about new user registration
+        if (data.user) {
+          try {
+            await supabase.functions.invoke("notify-admin-new-user", {
+              body: {
+                userId: data.user.id,
+                userEmail: data.user.email,
+                userName: data.user.user_metadata?.full_name || data.user.user_metadata?.name,
+              },
+            });
+          } catch (notifyError) {
+            // Log error but don't show to user - admin notifications are not critical for signup flow
+            console.error("Failed to send admin notification:", notifyError);
+          }
+        }
+        
         navigate("/dashboard");
       }
     }
