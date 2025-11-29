@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import heroImage from "@/assets/hero-wellness.jpg";
+import heroImage from "@/assets/hero-woman-phone.jpg";
 import logoLuna from "@/assets/logo-luna.png";
 export const Hero = () => {
   const {
@@ -79,7 +79,7 @@ export const Hero = () => {
           {/* Hero Image */}
           <div className="relative lg:order-last">
             <div className="relative rounded-3xl overflow-hidden shadow-hover">
-              <img src={heroImage} alt="Mulher praticando bem-estar" className="w-full h-auto object-cover" />
+              <img src={heroImage} alt="Mulher feliz usando o aplicativo Luna" className="w-full h-auto object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
             </div>
             
