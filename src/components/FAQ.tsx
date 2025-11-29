@@ -85,7 +85,7 @@ export const FAQ = () => {
           <p className="text-muted-foreground">
             {t('faq.contact')}{" "}
             <a
-              href="mailto:suporte@topdigitais.net"
+              href="mailto:suporte@lunaglow.com.br"
               className="text-primary font-semibold hover:underline"
             >
               {t('faq.contactLink')}
