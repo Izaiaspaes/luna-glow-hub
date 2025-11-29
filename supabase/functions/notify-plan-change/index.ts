@@ -144,7 +144,7 @@ serve(async (req) => {
                 
                 <div class="footer">
                   <p>Luna - Sua jornada de bem-estar personalizada</p>
-                  <p>Suporte: suporte@topdigitais.net | WhatsApp: +55 11 96369-7488</p>
+                  <p>Suporte: suporte@lunaglow.com.br | WhatsApp: +55 11 96369-7488</p>
                 </div>
               </div>
             </body>
