@@ -1,14 +1,13 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
-import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const ZOHO_EMAIL = Deno.env.get("ZOHO_EMAIL");
-const ZOHO_APP_PASSWORD = Deno.env.get("ZOHO_APP_PASSWORD");
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const ALLOWED_TEST_EMAIL = "izaias.paes31@gmail.com";
 
 interface NotifyPlanChangeRequest {
   userId: string;
@@ -74,82 +73,105 @@ serve(async (req) => {
     const oldPlanName = planNames[oldPlan] || oldPlan;
     const newPlanName = planNames[newPlan] || newPlan;
 
-    // Send email notification via Zoho SMTP
-    const client = new SMTPClient({
-      connection: {
-        hostname: "smtp.zoho.com",
-        port: 465,
-        tls: true,
-        auth: {
-          username: ZOHO_EMAIL!,
-          password: ZOHO_APP_PASSWORD!,
-        },
+    if (!RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      throw new Error("Email service not configured");
+    }
+
+    if (userEmail !== ALLOWED_TEST_EMAIL) {
+      console.log(
+        "Skipping email send because recipient is not the allowed test email.",
+        "Target email:",
+        userEmail
+      );
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message:
+            "Plan change processed. Email not sent in sandbox mode for this recipient.",
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Send email notification via Resend (sandbox: only to allowed test email)
+    const emailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
       },
-    });
-
-    await client.send({
-      from: `Luna <${ZOHO_EMAIL}>`,
-      to: userEmail,
-      subject: "Seu plano Luna foi atualizado! 🎉",
-      html: `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: linear-gradient(135deg, #FF6B9D 0%, #C084FC 50%, #60A5FA 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-              .header h1 { color: white; margin: 0; }
-              .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-              .plan-box { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #C084FC; }
-              .button { display: inline-block; background: linear-gradient(135deg, #FF6B9D, #C084FC); color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
-              .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1>🎉 Plano Atualizado!</h1>
-              </div>
-              <div class="content">
-                <p>Olá <strong>${userName}</strong>,</p>
-                
-                <p>Temos uma ótima notícia! Seu plano Luna foi atualizado:</p>
-                
-                <div class="plan-box">
-                  <p style="margin: 0;"><strong>Plano Anterior:</strong> ${oldPlanName}</p>
-                  <p style="margin: 10px 0 0 0;"><strong>Novo Plano:</strong> ${newPlanName}</p>
+      body: JSON.stringify({
+        from: "Luna <onboarding@resend.dev>",
+        to: [userEmail],
+        subject: "Seu plano Luna foi atualizado! 🎉",
+        html: `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #FF6B9D 0%, #C084FC 50%, #60A5FA 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                .header h1 { color: white; margin: 0; }
+                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                .plan-box { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #C084FC; }
+                .button { display: inline-block; background: linear-gradient(135deg, #FF6B9D, #C084FC); color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>🎉 Plano Atualizado!</h1>
+                </div>
+                <div class="content">
+                  <p>Olá <strong>${userName}</strong>,</p>
+                  
+                  <p>Temos uma ótima notícia! Seu plano Luna foi atualizado:</p>
+                  
+                  <div class="plan-box">
+                    <p style="margin: 0;"><strong>Plano Anterior:</strong> ${oldPlanName}</p>
+                    <p style="margin: 10px 0 0 0;"><strong>Novo Plano:</strong> ${newPlanName}</p>
+                  </div>
+                  
+                  <p>Agora você tem acesso a todas as funcionalidades exclusivas do seu novo plano!</p>
+                  
+                  <p>Entre no app para explorar tudo o que está disponível para você:</p>
+                  
+                  <div style="text-align: center;">
+                    <a href="https://luna-app.lovable.app/dashboard" class="button">Acessar Dashboard</a>
+                  </div>
+                  
+                  <p style="margin-top: 30px;">Se você tiver alguma dúvida, estamos sempre à disposição!</p>
+                  
+                  <p>Com carinho,<br><strong>Equipe Luna</strong> 💜</p>
                 </div>
                 
-                <p>Agora você tem acesso a todas as funcionalidades exclusivas do seu novo plano!</p>
-                
-                <p>Entre no app para explorar tudo o que está disponível para você:</p>
-                
-                <div style="text-align: center;">
-                  <a href="https://luna-app.lovable.app/dashboard" class="button">Acessar Dashboard</a>
+                <div class="footer">
+                  <p>Luna - Sua jornada de bem-estar personalizada</p>
+                  <p>Suporte: suporte@topdigitais.net | WhatsApp: +55 11 96369-7488</p>
                 </div>
-                
-                <p style="margin-top: 30px;">Se você tiver alguma dúvida, estamos sempre à disposição!</p>
-                
-                <p>Com carinho,<br><strong>Equipe Luna</strong> 💜</p>
               </div>
-              
-              <div class="footer">
-                <p>Luna - Sua jornada de bem-estar personalizada</p>
-                <p>Suporte: suporte@topdigitais.net | WhatsApp: +55 11 96369-7488</p>
-              </div>
-            </div>
-          </body>
-        </html>
-      `,
+            </body>
+          </html>
+        `,
+      }),
     });
 
-    await client.close();
-    console.log("Email sent successfully via Zoho SMTP to:", userEmail);
+    if (!emailResponse.ok) {
+      const errorText = await emailResponse.text();
+      console.error("Resend API error:", errorText);
+      throw new Error(`Failed to send email: ${errorText}`);
+    }
+
+    const emailData = await emailResponse.json();
+    console.log("Email sent successfully via Resend:", emailData);
 
     return new Response(
-      JSON.stringify({ success: true, message: "Email sent successfully" }),
+      JSON.stringify({ success: true, message: "Notification processed" }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
