@@ -5,12 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OnboardingData } from "@/hooks/useOnboarding";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import { DatePicker } from "@/components/ui/date-picker";
 import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const step2Schema = z.object({
@@ -59,41 +55,22 @@ export function OnboardingStep2({ data, onNext, onBack }: OnboardingStep2Props) 
       <div className="space-y-4">
         <div className="space-y-2">
           <Label>Data de Nascimento *</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-full justify-start text-left font-normal",
-                  !selectedDate && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {selectedDate ? (
-                  format(selectedDate, "PPP", { locale: ptBR })
-                ) : (
-                  <span>Selecione a data</span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={(date) => {
-                  setSelectedDate(date);
-                  if (date) {
-                    setValue("birth_date", format(date, "yyyy-MM-dd"));
-                  }
-                }}
-                disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
-                }
-                initialFocus
-                className="pointer-events-auto"
-              />
-            </PopoverContent>
-          </Popover>
+          <DatePicker
+            date={selectedDate}
+            onDateChange={(date) => {
+              setSelectedDate(date);
+              if (date) {
+                setValue("birth_date", format(date, "yyyy-MM-dd"));
+              }
+            }}
+            disabled={(date) =>
+              date > new Date() || date < new Date("1900-01-01")
+            }
+            placeholder="Selecione sua data de nascimento"
+          />
+          <p className="text-xs text-muted-foreground">
+            Digite manualmente (dd/mm/aaaa) ou clique no calendário
+          </p>
           {errors.birth_date && (
             <p className="text-sm text-destructive">{errors.birth_date.message}</p>
           )}
