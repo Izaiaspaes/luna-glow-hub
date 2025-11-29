@@ -1015,5 +1015,58 @@
       "features": "Funcionalidades",
       "pricing": "Precios"
     }
+  },
+  "sos": {
+    "title": "SOS Femenino",
+    "description": "Estoy aquí para ayudarte. ¿Cómo te sientes ahora?",
+    "premiumRequired": "Función Premium Plus",
+    "premiumMessage": "El SOS Femenino solo está disponible en el plan Premium Plus",
+    "backButton": "Volver",
+    "feelingBetter": "Me siento mejor ahora",
+    "successTitle": "💜 ¡Tú puedes!",
+    "successMessage": "Recuerda: eres fuerte y mereces cuidado",
+    "options": {
+      "physicalPain": {
+        "title": "Dolor Físico",
+        "message": "Sé que duele. Eres fuerte y superarás esto. ¿Qué tal intentar una de estas técnicas para aliviar?",
+        "techniques": {
+          "breathe": "Respira profundamente durante 5 minutos",
+          "compress": "Aplica una compresa tibia en la zona",
+          "massage": "Haz un suave masaje circular",
+          "tea": "Toma una infusión de manzanilla"
+        }
+      },
+      "anxiety": {
+        "title": "Ansiedad/Estrés",
+        "message": "Está bien sentir esto. No estás sola. ¿Intentamos calmarnos juntas?",
+        "techniques": {
+          "grounding": "Técnica 5-4-3-2-1: Identifica 5 cosas que ves, 4 que tocas, 3 que oyes, 2 que hueles, 1 que saboreas",
+          "breathing": "Respiración 4-7-8: Inspira por 4s, retén 7s, espira por 8s",
+          "walk": "Camina durante 10 minutos",
+          "music": "Escucha música relajante"
+        }
+      },
+      "fatigue": {
+        "title": "Fatiga Extrema",
+        "message": "Tu cuerpo pide descanso. No hay problema en pausar. Mereces este cuidado.",
+        "techniques": {
+          "nap": "Toma una siesta de 20 minutos",
+          "water": "Bebe un vaso de agua fría",
+          "stretch": "Haz estiramientos suaves",
+          "fresh": "Sal a tomar aire fresco"
+        }
+      },
+      "irritation": {
+        "title": "Irritación/SPM",
+        "message": "Tus sentimientos son válidos. Es normal sentirse así en esta fase. ¿Encontramos una forma de ayudarte?",
+        "techniques": {
+          "write": "Escribe tus sentimientos en papel",
+          "meditate": "Haz una meditación guiada de 5 minutos",
+          "bath": "Toma un baño relajante",
+          "laugh": "Mira algo que te haga reír"
+        }
+      }
+    },
+    "techniquesTitle": "Técnicas para ayudar ahora"
   }
 }

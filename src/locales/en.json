@@ -1015,5 +1015,58 @@
       "features": "Features",
       "pricing": "Pricing"
     }
+  },
+  "sos": {
+    "title": "Women's SOS",
+    "description": "I'm here to help you. How are you feeling right now?",
+    "premiumRequired": "Premium Plus Feature",
+    "premiumMessage": "Women's SOS is only available on Premium Plus plan",
+    "backButton": "Back",
+    "feelingBetter": "I'm feeling better now",
+    "successTitle": "💜 You can do it!",
+    "successMessage": "Remember: you are strong and deserve care",
+    "options": {
+      "physicalPain": {
+        "title": "Physical Pain",
+        "message": "I know it hurts. You are strong and will get through this. How about trying one of these techniques for relief?",
+        "techniques": {
+          "breathe": "Breathe deeply for 5 minutes",
+          "compress": "Apply a warm compress to the area",
+          "massage": "Do a light circular massage",
+          "tea": "Have a cup of chamomile tea"
+        }
+      },
+      "anxiety": {
+        "title": "Anxiety/Stress",
+        "message": "It's okay to feel this way. You're not alone. Let's try to calm down together?",
+        "techniques": {
+          "grounding": "5-4-3-2-1 Technique: Identify 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste",
+          "breathing": "4-7-8 Breathing: Inhale for 4s, hold 7s, exhale for 8s",
+          "walk": "Walk for 10 minutes",
+          "music": "Listen to relaxing music"
+        }
+      },
+      "fatigue": {
+        "title": "Extreme Fatigue",
+        "message": "Your body is asking for rest. It's okay to pause. You deserve this care.",
+        "techniques": {
+          "nap": "Take a 20-minute nap",
+          "water": "Drink a glass of cold water",
+          "stretch": "Do gentle stretches",
+          "fresh": "Go outside for fresh air"
+        }
+      },
+      "irritation": {
+        "title": "Irritation/PMS",
+        "message": "Your feelings are valid. It's normal to feel this way at this stage. Let's find a way to help you?",
+        "techniques": {
+          "write": "Write your feelings on paper",
+          "meditate": "Do a 5-minute guided meditation",
+          "bath": "Take a relaxing bath",
+          "laugh": "Watch something that makes you laugh"
+        }
+      }
+    },
+    "techniquesTitle": "Techniques to help now"
   }
 }

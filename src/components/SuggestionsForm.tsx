@@ -13,6 +13,8 @@ export const SuggestionsForm = () => {
   const [email, setEmail] = useState("");
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [suggestionError, setSuggestionError] = useState("");
 
   const suggestionSchema = z.object({
     email: z.string().trim().email({ message: t('suggestions.invalidEmail') || "E-mail inválido" }),
@@ -22,6 +24,8 @@ export const SuggestionsForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setEmailError("");
+    setSuggestionError("");
 
     try {
       // Validate input
@@ -36,9 +40,17 @@ export const SuggestionsForm = () => {
       toast.success(t('suggestions.success') || "Sugestão enviada com sucesso!");
       setEmail("");
       setSuggestion("");
+      setEmailError("");
+      setSuggestionError("");
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast.error(error.errors[0].message);
+        const firstError = error.errors[0];
+        if (firstError.path[0] === 'email') {
+          setEmailError(firstError.message);
+        } else if (firstError.path[0] === 'suggestion') {
+          setSuggestionError(firstError.message);
+        }
+        toast.error(firstError.message);
       } else {
         console.error('Error submitting suggestion:', error);
         toast.error(t('suggestions.error') || "Erro ao enviar sugestão. Tente novamente.");
@@ -58,23 +70,53 @@ export const SuggestionsForm = () => {
         {t('suggestions.description') || "Tem alguma sugestão ou ideia para melhorar a Luna? Adoraríamos ouvir você!"}
       </p>
       <form onSubmit={handleSubmit} className="space-y-3">
-        <Input
-          type="email"
-          placeholder={t('suggestions.emailPlaceholder') || "Seu e-mail"}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          disabled={loading}
-        />
-        <Textarea
-          placeholder={t('suggestions.suggestionPlaceholder') || "Compartilhe sua sugestão ou ideia..."}
-          value={suggestion}
-          onChange={(e) => setSuggestion(e.target.value)}
-          required
-          disabled={loading}
-          className="min-h-[100px] resize-none"
-          maxLength={1000}
-        />
+        <div>
+          <Input
+            type="email"
+            placeholder={t('suggestions.emailPlaceholder') || "Seu e-mail"}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError("");
+            }}
+            required
+            disabled={loading}
+            className={emailError ? 'border-red-500 focus-visible:ring-red-500' : ''}
+            aria-invalid={!!emailError}
+            aria-describedby={emailError ? "email-error-suggestions" : undefined}
+          />
+          {emailError && (
+            <p id="email-error-suggestions" className="text-red-500 text-xs mt-1 flex items-center gap-1">
+              <span>⚠️</span> {emailError}
+            </p>
+          )}
+        </div>
+        <div>
+          <Textarea
+            placeholder={t('suggestions.suggestionPlaceholder') || "Compartilhe sua sugestão ou ideia..."}
+            value={suggestion}
+            onChange={(e) => {
+              setSuggestion(e.target.value);
+              setSuggestionError("");
+            }}
+            required
+            disabled={loading}
+            className={`min-h-[100px] resize-none ${suggestionError ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+            maxLength={1000}
+            aria-invalid={!!suggestionError}
+            aria-describedby={suggestionError ? "suggestion-error" : undefined}
+          />
+          <div className="flex justify-between items-center mt-1">
+            {suggestionError && (
+              <p id="suggestion-error" className="text-red-500 text-xs flex items-center gap-1">
+                <span>⚠️</span> {suggestionError}
+              </p>
+            )}
+            <p className={`text-xs ml-auto ${suggestion.length > 950 ? 'text-orange-500' : 'text-muted-foreground'}`}>
+              {suggestion.length}/1000
+            </p>
+          </div>
+        </div>
         <Button 
           type="submit" 
           className="w-full"
