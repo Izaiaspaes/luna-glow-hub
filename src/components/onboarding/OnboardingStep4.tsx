@@ -1,6 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -47,6 +48,7 @@ interface OnboardingStep4Props {
   onComplete: (data: Partial<OnboardingData>) => void;
   onBack: () => void;
   loading: boolean;
+  onAutoSave: (data: Partial<OnboardingData>) => void;
 }
 
 const hobbiesOptions = ["Ler", "Séries/Filmes", "Academia", "Dança", "Viagens", "Jogos", "Artes"];
@@ -56,7 +58,7 @@ const lifeAreas = ["Trabalho/carreira", "Estudos", "Relacionamentos amorosos", "
 const contentPrefs = ["Textos curtos", "Textos profundos", "Vídeos", "Áudios", "Listas/Checklists"];
 const notificationFreqs = ["Quase todo dia", "Algumas vezes na semana", "Raramente", "Não quero notificações"];
 
-export function OnboardingStep4({ data, onComplete, onBack, loading }: OnboardingStep4Props) {
+export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave }: OnboardingStep4Props) {
   const { register, handleSubmit, control, watch, setValue, formState: { errors } } = useForm<Step4Data>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
@@ -74,6 +76,14 @@ export function OnboardingStep4({ data, onComplete, onBack, loading }: Onboardin
       notification_frequency: data.notification_frequency || "",
     },
   });
+
+  // Auto-save on field changes
+  useEffect(() => {
+    const subscription = watch((value) => {
+      onAutoSave(value as Partial<OnboardingData>);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, onAutoSave]);
 
   const selectedHobbies = watch("hobbies") || [];
   const selectedCareRoutines = watch("current_care_routines") || [];

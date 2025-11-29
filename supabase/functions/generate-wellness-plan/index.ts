@@ -39,7 +39,13 @@ serve(async (req) => {
 
     console.log(`Generating ${planType} wellness plan for user ${user.id}`);
 
-    // Check subscription status and get user profile
+    // Check subscription status and get user name
+    const { data: onboardingData } = await supabase
+      .from('user_onboarding_data')
+      .select('preferred_name')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
     const { data: profile } = await supabase
       .from('profiles')
       .select('subscription_plan, full_name')
@@ -47,7 +53,7 @@ serve(async (req) => {
       .single();
 
     const isPremium = profile?.subscription_plan === 'premium' || profile?.subscription_plan === 'premium_plus';
-    const userName = profile?.full_name || user.email?.split('@')[0] || 'usuária';
+    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || user.email?.split('@')[0] || 'usuária';
 
     // If user is free, check active wellness plans limit
     if (!isPremium) {

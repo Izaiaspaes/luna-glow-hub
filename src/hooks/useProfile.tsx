@@ -7,6 +7,7 @@ export interface Profile {
   id: string;
   user_id: string;
   full_name: string | null;
+  preferred_name?: string | null;
   avatar_url: string | null;
   phone: string | null;
   theme: string | null;
@@ -36,14 +37,25 @@ export function useProfile() {
     if (!user) return;
 
     try {
-      const { data, error } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("*")
         .eq("user_id", user.id)
         .single();
 
-      if (error) throw error;
-      setProfile(data);
+      if (profileError) throw profileError;
+
+      // Fetch preferred_name from onboarding data
+      const { data: onboardingData } = await supabase
+        .from("user_onboarding_data")
+        .select("preferred_name")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      setProfile({
+        ...profileData,
+        preferred_name: onboardingData?.preferred_name || null,
+      });
     } catch (error) {
       console.error("Error loading profile:", error);
     } finally {

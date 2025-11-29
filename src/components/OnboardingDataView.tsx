@@ -63,11 +63,17 @@ export function OnboardingDataView() {
       </div>
 
       {/* Dados Básicos */}
-      {(onboardingData.full_name || onboardingData.social_name || onboardingData.age || onboardingData.profession) && (
+      {(onboardingData.preferred_name || onboardingData.full_name || onboardingData.social_name || onboardingData.age || onboardingData.profession) && (
         <>
           <div className="space-y-3">
             <h4 className="text-sm font-medium text-muted-foreground">Informações Básicas</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {onboardingData.preferred_name && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">Como gosta de ser chamada</p>
+                  <p className="text-sm font-medium">{onboardingData.preferred_name}</p>
+                </div>
+              )}
               {onboardingData.full_name && (
                 <div className="space-y-1">
                   <p className="text-xs text-muted-foreground">Nome Completo</p>

@@ -33,14 +33,20 @@ serve(async (req) => {
       throw new Error('Message is required');
     }
 
-    // Get user's profile for personalization
+    // Get user's preferred name for personalization
+    const { data: onboardingData } = await supabase
+      .from('user_onboarding_data')
+      .select('preferred_name')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
     const { data: profile } = await supabase
       .from('profiles')
       .select('full_name')
       .eq('user_id', user.id)
       .single();
 
-    const userName = profile?.full_name || 'querida';
+    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || 'querida';
 
     // Get user's recent cycle data to understand current phase
     const { data: cycleData } = await supabase
