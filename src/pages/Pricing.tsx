@@ -47,48 +47,59 @@ const comparisonFeatures = [
   {
     category: "Planos de Bem-Estar",
     features: [
-      { name: "Planos ativos simultâneos", free: "1 por vez", premium: "Ilimitado" },
-      { name: "Plano de sono", free: true, premium: true },
-      { name: "Plano de meditação", free: true, premium: true },
-      { name: "Plano de nutrição", free: true, premium: true },
-      { name: "Plano geral de bem-estar", free: true, premium: true },
+      { name: "Planos ativos simultâneos", free: "1 por vez", premium: "Ilimitado", premiumPlus: "Ilimitado" },
+      { name: "Plano de sono", free: true, premium: true, premiumPlus: true },
+      { name: "Plano de meditação", free: true, premium: true, premiumPlus: true },
+      { name: "Plano de nutrição", free: true, premium: true, premiumPlus: true },
+      { name: "Plano geral de bem-estar", free: true, premium: true, premiumPlus: true },
     ]
   },
   {
     category: "Rastreamento & IA",
     features: [
-      { name: "Rastreamento de ciclo", free: true, premium: true },
-      { name: "Registro de sintomas", free: true, premium: true },
-      { name: "Transcrição por voz", free: false, premium: true },
-      { name: "Integração com wearables", free: false, premium: true },
-      { name: "Assistente AI 24/7", free: false, premium: true },
-      { name: "Programas guiados", free: false, premium: true },
+      { name: "Rastreamento de ciclo", free: true, premium: true, premiumPlus: true },
+      { name: "Registro de sintomas", free: true, premium: true, premiumPlus: true },
+      { name: "Transcrição por voz", free: false, premium: true, premiumPlus: true },
+      { name: "Integração com wearables", free: false, premium: true, premiumPlus: true },
+      { name: "Assistente AI 24/7", free: false, premium: true, premiumPlus: true },
+      { name: "Programas guiados", free: false, premium: true, premiumPlus: true },
     ]
   },
   {
     category: "Análises & Relatórios",
     features: [
-      { name: "Relatórios mensais", free: true, premium: true },
-      { name: "Relatórios semanais", free: false, premium: true },
-      { name: "Insights avançados", free: false, premium: true },
-      { name: "Histórico completo", free: "3 meses", premium: "Ilimitado" },
+      { name: "Relatórios mensais", free: true, premium: true, premiumPlus: true },
+      { name: "Relatórios semanais", free: false, premium: true, premiumPlus: true },
+      { name: "Insights avançados", free: false, premium: true, premiumPlus: true },
+      { name: "Histórico completo", free: "3 meses", premium: "Ilimitado", premiumPlus: "Ilimitado" },
+    ]
+  },
+  {
+    category: "Premium Plus Exclusivos",
+    features: [
+      { name: "🌟 Diário da Mulher com IA", free: false, premium: false, premiumPlus: true },
+      { name: "🆘 SOS Feminino", free: false, premium: false, premiumPlus: true },
+      { name: "💬 Luna Sense 24/7", free: false, premium: false, premiumPlus: true },
+      { name: "📊 Correlações avançadas", free: false, premium: false, premiumPlus: true },
+      { name: "🌙 Modo 'Estou mal hoje'", free: false, premium: false, premiumPlus: true },
+      { name: "✨ IA com empatia adaptativa", free: false, premium: false, premiumPlus: true },
     ]
   },
   {
     category: "Comunidade",
     features: [
-      { name: "Comunidades públicas", free: true, premium: true },
-      { name: "Comunidades privadas", free: false, premium: true },
-      { name: "Lives com especialistas", free: "Limitado", premium: true },
-      { name: "Eventos exclusivos", free: false, premium: true },
+      { name: "Comunidades públicas", free: true, premium: true, premiumPlus: true },
+      { name: "Comunidades privadas", free: false, premium: true, premiumPlus: true },
+      { name: "Lives com especialistas", free: "Limitado", premium: true, premiumPlus: true },
+      { name: "Eventos exclusivos", free: false, premium: true, premiumPlus: true },
     ]
   },
   {
     category: "Marketplace",
     features: [
-      { name: "Acesso ao marketplace", free: true, premium: true },
-      { name: "Reviews e avaliações", free: true, premium: true },
-      { name: "Ofertas exclusivas", free: false, premium: true },
+      { name: "Acesso ao marketplace", free: true, premium: true, premiumPlus: true },
+      { name: "Reviews e avaliações", free: true, premium: true, premiumPlus: true },
+      { name: "Ofertas exclusivas", free: false, premium: true, premiumPlus: true },
     ]
   },
 ];
@@ -476,7 +487,13 @@ export default function Pricing() {
                       )}
                     </div>
                     <div className="flex justify-center">
-                      <Check className="w-5 h-5 text-luna-purple" />
+                      {feature.premiumPlus === true ? (
+                        <Check className="w-5 h-5 text-luna-purple" />
+                      ) : feature.premiumPlus === false ? (
+                        <span className="text-muted-foreground">—</span>
+                      ) : (
+                        <span className="text-xs text-center font-medium text-luna-purple">{feature.premiumPlus}</span>
+                      )}
                     </div>
                   </div>
                 ))}
