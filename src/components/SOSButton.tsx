@@ -60,14 +60,16 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
     },
   ];
 
-  const hasPremiumPlus = 
+  const hasPremiumAccess = 
     subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
     subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
     userProfile?.subscription_plan === "premium_plus" ||
-    profile?.subscription_plan === "premium_plus";
+    profile?.subscription_plan === "premium_plus" ||
+    userProfile?.subscription_plan === "premium" ||
+    profile?.subscription_plan === "premium";
 
   const handleSOSClick = () => {
-    if (!hasPremiumPlus) {
+    if (!hasPremiumAccess) {
       toast({
         title: t('sos.premiumRequired'),
         description: t('sos.premiumMessage'),
@@ -105,8 +107,8 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
 
   return (
     <>
-      {/* Only render floating button when not externally controlled */}
-      {externalOpen === undefined && (
+      {/* Only render floating button when not externally controlled and user has premium access */}
+      {externalOpen === undefined && hasPremiumAccess && (
         <Button
           onClick={handleSOSClick}
           className="fixed bottom-24 right-6 z-50 h-16 w-16 rounded-full bg-gradient-to-r from-red-500 to-pink-500 hover:opacity-90 shadow-lg hover:shadow-xl transition-all animate-pulse"

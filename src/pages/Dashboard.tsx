@@ -79,7 +79,13 @@ export default function Dashboard() {
   const sosFemininoRef = useRef<HTMLDivElement>(null);
   const { profile } = useProfile();
   
-  // Check if user is Premium Plus
+  // Check if user has Premium or Premium Plus access
+  const hasPremiumAccess = profile?.subscription_plan === 'premium' || 
+    profile?.subscription_plan === 'premium_plus' || 
+    subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' || 
+    subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN';
+  
+  // Check if user is Premium Plus (for exclusive features)
   const isPremiumPlusUser = profile?.subscription_plan === 'premium_plus' || 
     subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' || 
     subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN';
@@ -424,8 +430,8 @@ export default function Dashboard() {
                 <Calendar className="w-3 h-3 md:w-4 md:h-4 md:mr-1 lg:mr-2" />
                 <span className="hidden md:inline">{t('dashboard.tabs.calendar')}</span>
               </Button>
-              {/* Premium Plus Tab - only show for non-premium-plus users */}
-              {!isPremiumPlusUser && (
+              {/* Premium/Premium Plus Tab - only show for non-premium users */}
+              {!hasPremiumAccess && (
                 <Button
                   variant={activeTab === 'premiumPlus' ? 'default' : 'outline'}
                   size="sm"
@@ -434,12 +440,12 @@ export default function Dashboard() {
                   data-tour="premium-plus-tab"
                 >
                   <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                  Premium Plus
+                  Premium
                 </Button>
               )}
               
-              {/* Premium Plus Shortcuts - always visible for premium plus users */}
-              {isPremiumPlusUser && (
+              {/* Premium Shortcuts - visible for premium and premium plus users */}
+              {hasPremiumAccess && (
                 <>
                   <Button
                     variant="outline"
@@ -453,39 +459,44 @@ export default function Dashboard() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => scrollToPremiumSection(lunaSenseRef)}
-                    className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-purple/50 hover:border-luna-purple hover:bg-luna-purple/10"
-                  >
-                    <MessageCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                    {t('dashboard.premiumShortcuts.lunaSense')}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => scrollToPremiumSection(beautyAnalysisRef)}
-                    className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-orange/50 hover:border-luna-orange hover:bg-luna-orange/10"
-                  >
-                    <Wand2 className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                    Análise de Beleza AI
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => scrollToPremiumSection(virtualClosetRef)}
-                    className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-green/50 hover:border-luna-green hover:bg-luna-green/10"
-                  >
-                    <Shirt className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                    Meu Closet Virtual
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={openSOSDialog}
+                    onClick={() => scrollToPremiumSection(sosFemininoRef)}
                     className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-red-500/50 hover:border-red-500 hover:bg-red-500/10"
                   >
                     <AlertCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                     {t('dashboard.premiumShortcuts.sos')}
                   </Button>
+                  {/* Premium Plus exclusive shortcuts */}
+                  {isPremiumPlusUser && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => scrollToPremiumSection(lunaSenseRef)}
+                        className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-purple/50 hover:border-luna-purple hover:bg-luna-purple/10"
+                      >
+                        <MessageCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                        {t('dashboard.premiumShortcuts.lunaSense')}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => scrollToPremiumSection(beautyAnalysisRef)}
+                        className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-orange/50 hover:border-luna-orange hover:bg-luna-orange/10"
+                      >
+                        <Wand2 className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                        Análise de Beleza AI
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => scrollToPremiumSection(virtualClosetRef)}
+                        className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm border-luna-green/50 hover:border-luna-green hover:bg-luna-green/10"
+                      >
+                        <Shirt className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                        Meu Closet Virtual
+                      </Button>
+                    </>
+                  )}
                 </>
               )}
             </div>
@@ -822,15 +833,15 @@ export default function Dashboard() {
           </div>
         </div>
         
-        {/* Premium Plus Content - always visible for premium plus users */}
-        {isPremiumPlusUser && (
+        {/* Premium Content - always visible for premium and premium plus users */}
+        {hasPremiumAccess && (
           <div className="space-y-6 mt-8">
             <Card className="bg-gradient-to-r from-luna-purple/10 via-luna-pink/10 to-luna-orange/10 border-2 border-luna-purple/30">
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <Sparkles className="w-6 h-6 text-luna-purple" />
                   <div>
-                    <CardTitle className="text-2xl">✨ Premium Plus</CardTitle>
+                    <CardTitle className="text-2xl">✨ {isPremiumPlusUser ? 'Premium Plus' : 'Premium'}</CardTitle>
                     <CardDescription>Recursos avançados exclusivos</CardDescription>
                   </div>
                 </div>
@@ -842,27 +853,32 @@ export default function Dashboard() {
               </CardContent>
             </Card>
             
-            {/* Women Journal */}
+            {/* Women Journal - available for Premium and Premium Plus */}
             <div ref={womenJournalRef} className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }} data-tour="womens-journal">
               <WomenJournal />
             </div>
             
-            {/* Luna Sense */}
-            <div ref={lunaSenseRef} className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }} data-tour="luna-sense">
-              <LunaSense />
-            </div>
+            {/* Premium Plus exclusive features */}
+            {isPremiumPlusUser && (
+              <>
+                {/* Luna Sense */}
+                <div ref={lunaSenseRef} className="animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }} data-tour="luna-sense">
+                  <LunaSense />
+                </div>
+                
+                {/* Beauty Analysis AI */}
+                <div ref={beautyAnalysisRef} className="animate-fade-in" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
+                  <BeautyAnalysis />
+                </div>
+                
+                {/* Virtual Closet AI */}
+                <div ref={virtualClosetRef} className="animate-fade-in" style={{ animationDelay: '0.28s', animationFillMode: 'both' }}>
+                  <VirtualCloset />
+                </div>
+              </>
+            )}
             
-            {/* Beauty Analysis AI */}
-            <div ref={beautyAnalysisRef} className="animate-fade-in" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
-              <BeautyAnalysis />
-            </div>
-            
-            {/* Virtual Closet AI */}
-            <div ref={virtualClosetRef} className="animate-fade-in" style={{ animationDelay: '0.28s', animationFillMode: 'both' }}>
-              <VirtualCloset />
-            </div>
-            
-            {/* SOS Info Card */}
+            {/* SOS Info Card - available for Premium and Premium Plus */}
             <Card ref={sosFemininoRef} className="border-2 border-red-500/30 bg-gradient-to-br from-red-500/5 to-pink-500/5 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }} data-tour="sos-feminino">
               <CardHeader>
                 <div className="flex items-center gap-3">

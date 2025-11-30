@@ -29,18 +29,20 @@ export function WomenJournal() {
   const [history, setHistory] = useState<JournalEntry[]>([]);
   const [showHistory, setShowHistory] = useState(false);
 
-  // Check if user has Premium Plus (product_id should match one of the Premium Plus products)
-  const hasPremiumPlus = 
+  // Check if user has Premium or Premium Plus
+  const hasPremiumAccess = 
     subscriptionStatus?.product_id === "prod_TVfx4bH4H0okVe" || 
     subscriptionStatus?.product_id === "prod_TVfxAziuEOC4QN" ||
     userProfile?.subscription_plan === "premium_plus" ||
-    profile?.subscription_plan === "premium_plus";
+    profile?.subscription_plan === "premium_plus" ||
+    userProfile?.subscription_plan === "premium" ||
+    profile?.subscription_plan === "premium";
 
   useEffect(() => {
-    if (hasPremiumPlus) {
+    if (hasPremiumAccess) {
       loadHistory();
     }
-  }, [hasPremiumPlus]);
+  }, [hasPremiumAccess]);
 
   const loadHistory = async () => {
     try {
@@ -125,7 +127,7 @@ export function WomenJournal() {
     }
   };
 
-  if (!hasPremiumPlus) {
+  if (!hasPremiumAccess) {
     return (
       <Card className="border-2 border-luna-purple/20">
         <CardHeader>
@@ -136,7 +138,7 @@ export function WomenJournal() {
             <CardTitle>🌟 Diário da Mulher com IA</CardTitle>
           </div>
           <CardDescription>
-            Disponível apenas no Premium Plus
+            Disponível no Premium e Premium Plus
           </CardDescription>
         </CardHeader>
         <CardContent>
