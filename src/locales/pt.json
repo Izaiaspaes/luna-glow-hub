@@ -424,17 +424,19 @@
     }
   },
   "privacy": {
-    "title": "Política de Privacidade",
-    "lastUpdated": "Última atualização: {{date}}",
-    "intro": "Na Luna, sua privacidade é nossa prioridade. Esta política explica como coletamos, usamos e protegemos seus dados.",
-    "dataCollection": "Coleta de Dados",
-    "dataCollectionDesc": "Coletamos apenas os dados necessários para fornecer nossos serviços.",
-    "dataUsage": "Uso de Dados",
-    "dataUsageDesc": "Seus dados são usados exclusivamente para personalizar sua experiência.",
-    "dataSecurity": "Segurança",
-    "dataSecurityDesc": "Utilizamos criptografia de ponta a ponta para proteger suas informações.",
-    "yourRights": "Seus Direitos",
-    "yourRightsDesc": "Você tem direito a acessar, corrigir ou excluir seus dados a qualquer momento."
+    "title": "A privacidade não é",
+    "titleHighlight": "negociável",
+    "subtitle": "Em um mundo onde os dados reprodutivos estão cada vez mais expostos, a Luna foi construída com privacidade desde o primeiro dia. Seus dados de saúde são seus — e sempre serão.",
+    "encrypted": "Dados Criptografados",
+    "encryptedDesc": "Toda a sua informação está protegida com criptografia de ponta a ponta.",
+    "control": "Controle Total",
+    "controlDesc": "Você decide o que compartilhar e pode excluir seus dados a qualquer momento.",
+    "transparency": "Transparência Completa",
+    "transparencyDesc": "Registros de auditoria disponíveis para você ver exatamente como seus dados são usados.",
+    "yourData": "Seus Dados, Suas Regras",
+    "yourDataDesc": "Exporte ou exclua suas informações quando quiser, sem complicações.",
+    "commitment": "Compromisso de transparência:",
+    "commitmentText": "Trabalhamos com auditorias independentes e seguimos as melhores práticas de segurança. Dados agregados e anônimos são compartilhados apenas para pesquisa com seu consentimento explícito e opt-in."
   },
   "blog": {
     "title": "Blog Luna",
