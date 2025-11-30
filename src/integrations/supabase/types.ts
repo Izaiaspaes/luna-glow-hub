@@ -98,6 +98,45 @@ export type Database = {
         }
         Relationships: []
       }
+      beauty_analyses: {
+        Row: {
+          ai_analysis: Json
+          analysis_type: string
+          created_at: string
+          face_shape: string | null
+          id: string
+          photo_url: string
+          recommendations: Json | null
+          skin_tone_detected: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_analysis: Json
+          analysis_type: string
+          created_at?: string
+          face_shape?: string | null
+          id?: string
+          photo_url: string
+          recommendations?: Json | null
+          skin_tone_detected?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_analysis?: Json
+          analysis_type?: string
+          created_at?: string
+          face_shape?: string | null
+          id?: string
+          photo_url?: string
+          recommendations?: Json | null
+          skin_tone_detected?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       cycle_tracking: {
         Row: {
           created_at: string
