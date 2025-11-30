@@ -284,6 +284,20 @@
       "lifestyle": "Estilo de Vida"
     }
   },
+  "blogPage": {
+    "title": "Conteúdo Educativo sobre Saúde Feminina",
+    "subtitle": "Aprenda mais sobre seu corpo, ciclo menstrual, bem-estar e saúde hormonal com conteúdo baseado em ciência e experiências reais.",
+    "searchPlaceholder": "Buscar artigos...",
+    "backToHome": "Voltar ao início",
+    "noResults": "Nenhum artigo encontrado. Tente outra busca ou categoria.",
+    "categories": {
+      "all": "Todos",
+      "menstrualCycle": "Ciclo Menstrual",
+      "nutrition": "Nutrição",
+      "sleep": "Sono",
+      "mentalHealth": "Saúde Mental"
+    }
+  },
   "pricing": {
     "packagesForAll": "Pacotes para todas as mulheres",
     "title": "Escolha o plano ideal para você",
