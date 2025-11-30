@@ -137,6 +137,51 @@ export type Database = {
         }
         Relationships: []
       }
+      closet_items: {
+        Row: {
+          ai_description: string | null
+          ai_tags: string[] | null
+          category: string | null
+          colors: string[] | null
+          created_at: string | null
+          id: string
+          item_type: string
+          occasion: string[] | null
+          photo_url: string
+          season: string[] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_description?: string | null
+          ai_tags?: string[] | null
+          category?: string | null
+          colors?: string[] | null
+          created_at?: string | null
+          id?: string
+          item_type: string
+          occasion?: string[] | null
+          photo_url: string
+          season?: string[] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_description?: string | null
+          ai_tags?: string[] | null
+          category?: string | null
+          colors?: string[] | null
+          created_at?: string | null
+          id?: string
+          item_type?: string
+          occasion?: string[] | null
+          photo_url?: string
+          season?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       cycle_tracking: {
         Row: {
           created_at: string
@@ -430,6 +475,42 @@ export type Database = {
           nutrition_quality?: number | null
           portion_size?: string | null
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      outfit_suggestions: {
+        Row: {
+          ai_description: string | null
+          ai_styling_tips: string | null
+          created_at: string | null
+          id: string
+          item_ids: string[] | null
+          occasion: string | null
+          outfit_name: string | null
+          season: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_description?: string | null
+          ai_styling_tips?: string | null
+          created_at?: string | null
+          id?: string
+          item_ids?: string[] | null
+          occasion?: string | null
+          outfit_name?: string | null
+          season?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_description?: string | null
+          ai_styling_tips?: string | null
+          created_at?: string | null
+          id?: string
+          item_ids?: string[] | null
+          occasion?: string | null
+          outfit_name?: string | null
+          season?: string | null
           user_id?: string
         }
         Relationships: []
