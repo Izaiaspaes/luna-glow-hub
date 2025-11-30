@@ -80,9 +80,11 @@ const comparisonFeatures = [
       { name: "🌟 Diário da Mulher com IA", free: false, premium: false, premiumPlus: true },
       { name: "🆘 SOS Feminino", free: false, premium: false, premiumPlus: true },
       { name: "💬 Luna Sense 24/7", free: false, premium: false, premiumPlus: true },
+      { name: "✨ Análise de Beleza AI", free: false, premium: false, premiumPlus: true },
+      { name: "👗 Meu Closet Virtual", free: false, premium: false, premiumPlus: true },
       { name: "📊 Correlações avançadas", free: false, premium: false, premiumPlus: true },
       { name: "🌙 Modo 'Estou mal hoje'", free: false, premium: false, premiumPlus: true },
-      { name: "✨ IA com empatia adaptativa", free: false, premium: false, premiumPlus: true },
+      { name: "🎯 IA com empatia adaptativa", free: false, premium: false, premiumPlus: true },
     ]
   },
   {
@@ -141,10 +143,11 @@ export default function Pricing() {
     "🌟 Diário da Mulher com IA — Análise profunda do seu dia",
     "🆘 SOS Feminino — Suporte imediato em momentos difíceis",
     "💬 Luna Sense — Assistente Inteligente 24/7 com empatia adaptativa",
+    "✨ Análise de Beleza AI — Recomendações personalizadas de maquiagem e skincare",
+    "👗 Meu Closet Virtual — Sugestões inteligentes de looks do seu guarda-roupa",
     "📊 Insights avançados com correlação humor ↔ sintomas ↔ ciclo",
     "🎯 Sugestões práticas e personalizadas em tempo real",
     "🌙 Modo 'Estou mal hoje' com respostas humanizadas",
-    "✨ Personalidade adaptativa baseada na fase do ciclo",
     "🔥 Técnicas de relaxamento instantâneas",
     "💜 Frases de acolhimento e apoio emocional",
   ];
