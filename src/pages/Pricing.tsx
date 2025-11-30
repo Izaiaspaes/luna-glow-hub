@@ -306,7 +306,7 @@ export default function Pricing() {
                 </div>
                 <CardTitle className="text-3xl">{t('pricing.premiumTitle')}</CardTitle>
                 <CardDescription className="text-lg">
-                  Completo para bem-estar + Diário IA e SOS Feminino
+                  {t('pricing.premiumDescription2')}
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
@@ -368,25 +368,25 @@ export default function Pricing() {
                   </div>
                   <Badge className="bg-gradient-to-r from-luna-purple to-luna-pink text-white">Premium Plus</Badge>
                 </div>
-                <CardTitle className="text-3xl">Premium Plus</CardTitle>
+                <CardTitle className="text-3xl">{t('pricing.premiumPlusTitle')}</CardTitle>
                 <CardDescription className="text-lg">
-                  Tudo do Premium + Luna Sense, Análise de Beleza e Closet Virtual
+                  {t('pricing.premiumPlusDescription')}
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
-                    {currency === 'brl' ? 'R$ 45,00' : '$19.90'}
+                    {currency === 'brl' ? t('pricing.premiumPlusPrice') : t('pricing.premiumPlusPriceUSD')}
                   </span>
                   <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
                 </div>
                 <p className="text-sm text-muted-foreground pt-2">
                   {currency === 'brl' 
-                    ? 'ou R$ 450,00/ano (2 meses grátis)' 
-                    : 'ou $199.00/ano (2 meses grátis)'}
+                    ? t('pricing.premiumPlusYearlyPrice') 
+                    : t('pricing.premiumPlusYearlyPriceUSD')}
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-sm text-muted-foreground pb-4 border-b border-border">
-                  🚀 Todos os recursos avançados
+                  {t('pricing.allAdvancedFeatures')}
                 </p>
                 <ul className="space-y-3">
                   {premiumPlusFeatures.map((feature, index) => (
@@ -404,7 +404,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.monthly)}
                   disabled={loading}
                 >
-                  {loading ? t('pricing.processing') : `Assinar Mensal (${currency === 'brl' ? 'R$ 45,00' : '$19.90'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthlyPremiumPlus')} (${currency === 'brl' ? t('pricing.premiumPlusPrice') : t('pricing.premiumPlusPriceUSD')})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
@@ -414,7 +414,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.yearly)}
                   disabled={loading}
                 >
-                  {loading ? t('pricing.processing') : `Assinar Anual (${currency === 'brl' ? 'R$ 450,00' : '$199.00'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${currency === 'brl' ? 'R$ 450,00' : '$199.00'})`}
                 </Button>
               </CardFooter>
             </Card>
@@ -423,20 +423,20 @@ export default function Pricing() {
           {/* Trust Badges */}
           <div className="mt-16 text-center">
             <p className="text-sm text-muted-foreground mb-6">
-              Por que escolher o Premium?
+              {t('pricing.whyPremium')}
             </p>
             <div className="flex flex-wrap justify-center gap-8">
               <div className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium">7 dias grátis</span>
+                <span className="text-sm font-medium">{t('pricing.freeTrial')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Heart className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium">Cancele quando quiser</span>
+                <span className="text-sm font-medium">{t('pricing.cancelAnytime')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium">Suporte prioritário</span>
+                <span className="text-sm font-medium">{t('pricing.prioritySupport')}</span>
               </div>
             </div>
           </div>
@@ -448,20 +448,20 @@ export default function Pricing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Compare os pacotes
+              {t('pricing.compareTitle')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Veja todos os recursos detalhados de cada pacote
+              {t('pricing.compareSubtitle')}
             </p>
           </div>
 
           <div className="max-w-5xl mx-auto bg-card rounded-2xl border-2 overflow-hidden">
             {/* Table Header */}
             <div className="grid grid-cols-4 gap-4 p-6 border-b border-border bg-muted/20">
-              <div className="font-semibold">Recursos</div>
-              <div className="text-center font-semibold">Gratuito</div>
-              <div className="text-center font-semibold text-primary">Premium</div>
-              <div className="text-center font-semibold text-luna-purple">Premium Plus</div>
+              <div className="font-semibold">{t('pricing.resources')}</div>
+              <div className="text-center font-semibold">{t('pricing.freeColumn')}</div>
+              <div className="text-center font-semibold text-primary">{t('pricing.premiumColumn')}</div>
+              <div className="text-center font-semibold text-luna-purple">{t('pricing.premiumPlusColumn')}</div>
             </div>
 
             {/* Table Body */}
@@ -520,58 +520,49 @@ export default function Pricing() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              Perguntas frequentes
+              {t('pricing.faqTitle')}
             </h2>
             <div className="space-y-6">
               <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg">Posso mudar de pacote depois?</CardTitle>
+                  <CardTitle className="text-lg">{t('pricing.faqQ1')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Sim! Você pode fazer upgrade ou downgrade do seu pacote a qualquer momento. 
-                    Se fizer upgrade, terá acesso imediato aos recursos Premium. Se fizer downgrade, 
-                    os recursos Premium permanecerão até o fim do período pago.
+                    {t('pricing.faqA1')}
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg">Como funciona o teste gratuito?</CardTitle>
+                  <CardTitle className="text-lg">{t('pricing.faqQ2')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Você tem 7 dias de acesso completo aos recursos Premium sem custo. 
-                    Cancele antes do fim do período de teste e não será cobrado. 
-                    Não é necessário cartão de crédito para começar.
+                    {t('pricing.faqA2')}
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg">O que acontece se eu cancelar?</CardTitle>
+                  <CardTitle className="text-lg">{t('pricing.faqQ3')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Seus dados permanecem salvos e você mantém acesso aos recursos gratuitos. 
-                    Você pode reativar o Premium a qualquer momento e retomar de onde parou. 
-                    Seus insights e histórico não serão perdidos.
+                    {t('pricing.faqA3')}
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
                 <CardHeader>
-                  <CardTitle className="text-lg">Meus dados estão seguros?</CardTitle>
+                  <CardTitle className="text-lg">{t('pricing.faqQ4')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Sim! Seus dados são criptografados e armazenados com segurança. 
-                    Você tem controle total sobre suas informações e pode exportar ou 
-                    excluir seus dados a qualquer momento. Nunca compartilhamos ou vendemos 
-                    suas informações pessoais.
+                    {t('pricing.faqA4')}
                   </p>
                 </CardContent>
               </Card>
@@ -584,10 +575,10 @@ export default function Pricing() {
       <section className="py-20 bg-gradient-hero text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Pronta para transformar seu bem-estar?
+            {t('pricing.ctaReady')}
           </h2>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Junte-se a milhares de mulheres que já estão cuidando melhor de si mesmas com a Luna.
+            {t('pricing.ctaJoin')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {user ? (
@@ -598,20 +589,20 @@ export default function Pricing() {
                 onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.monthly)}
                 disabled={loading}
               >
-                {loading ? "Processando..." : "Começar agora"}
+                {loading ? t('pricing.processing') : t('pricing.ctaStartNow')}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             ) : (
               <NavLink to="/auth">
                 <Button variant="secondary" size="lg" className="group">
-                  Começar teste gratuito
+                  {t('pricing.ctaStartFreeTrial')}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </NavLink>
             )}
             <NavLink to="/features">
               <Button variant="outline" size="lg" className="bg-white/10 hover:bg-white/20 border-white/20">
-                Ver funcionalidades
+                {t('pricing.ctaViewFeatures')}
               </Button>
             </NavLink>
           </div>
@@ -630,13 +621,13 @@ export default function Pricing() {
             </NavLink>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <NavLink to="/" className="hover:text-primary transition-smooth">
-                Home
+                {t('nav.home')}
               </NavLink>
               <NavLink to="/features" className="hover:text-primary transition-smooth">
-                Funcionalidades
+                {t('nav.features')}
               </NavLink>
               <NavLink to="/pricing" className="hover:text-primary transition-smooth" activeClassName="text-primary">
-                Preços
+                {t('nav.pricing')}
               </NavLink>
             </div>
           </div>
