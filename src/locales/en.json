@@ -66,7 +66,19 @@
     "title": "Your cycle, your strength",
     "subtitle": "Track your cycle, understand your body and receive AI-powered personalized plans for each phase",
     "cta": "Start Free",
-    "watchDemo": "Watch demo"
+    "ctaSecondary": "Learn More",
+    "watchDemo": "Watch demo",
+    "stats": {
+      "private": "Private",
+      "free": "Free",
+      "freeDesc": "To start",
+      "ai": "24/7",
+      "aiDesc": "AI Assistant"
+    },
+    "floatingCard": {
+      "lastAnalysis": "Last analysis",
+      "sleepImprovement": "Your sleep patterns improved 23%"
+    }
   },
   "features": {
     "badge": "🌟 Complete features",
