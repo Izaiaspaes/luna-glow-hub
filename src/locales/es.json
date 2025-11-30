@@ -219,6 +219,14 @@
       "title": "Privacidad Total",
       "description": "Cifrado de extremo a extremo y control total sobre tus datos."
     },
+    "beautyAnalysis": {
+      "title": "Análisis de Belleza AI",
+      "description": "Análisis facial y corporal con IA para recomendaciones personalizadas de maquillaje, cuidado de la piel y estilo adaptadas a tu ciclo"
+    },
+    "virtualCloset": {
+      "title": "Mi Closet Virtual",
+      "description": "Fotografía tu ropa y recibe sugerencias inteligentes de looks basadas en tu guardarropa existente"
+    },
     "ctaButton": "Prueba Gratis",
     "ctaSecondary": "Ver Todas las Funcionalidades",
     "ctaNote": "Sin tarjeta de crédito • Cancela cuando quieras"
