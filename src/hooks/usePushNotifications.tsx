@@ -66,11 +66,17 @@ export const usePushNotifications = () => {
   };
 
   const subscribe = async () => {
-    if (!state.isSupported) return;
+    if (!state.isSupported) {
+      toast.error('Notificações push não são suportadas neste navegador');
+      return;
+    }
 
     setLoading(true);
     try {
+      // Wait for service worker to be ready
+      console.log('Waiting for service worker...');
       const registration = await navigator.serviceWorker.ready;
+      console.log('Service worker ready:', registration);
       
       // Generate VAPID public key (base64url)
       const vapidPublicKey = 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U';
@@ -90,14 +96,20 @@ export const usePushNotifications = () => {
         return outputArray;
       }
 
+      console.log('Subscribing to push manager...');
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
       });
+      console.log('Push subscription created:', subscription);
 
       // Store subscription in database
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
+      if (!user) {
+        console.error('User not authenticated');
+        throw new Error('User not authenticated');
+      }
+      console.log('Storing subscription for user:', user.id);
 
       const { error } = await supabase
         .from('push_subscriptions')
@@ -108,8 +120,12 @@ export const usePushNotifications = () => {
           onConflict: 'user_id'
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Database error:', error);
+        throw error;
+      }
 
+      console.log('Push subscription stored successfully');
       setState(prev => ({ ...prev, isSubscribed: true }));
       toast.success('Notificações push ativadas! 🔔');
     } catch (error: any) {
