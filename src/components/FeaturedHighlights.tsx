@@ -61,14 +61,14 @@ export const FeaturedHighlights = () => {
     },
     {
       icon: Wand2,
-      title: "Análise de Beleza AI",
-      description: "Análise facial e corporal com IA para recomendações personalizadas de maquiagem, skincare e estilo adaptadas ao seu ciclo",
+      title: t("featuredHighlights.beautyAnalysis.title"),
+      description: t("featuredHighlights.beautyAnalysis.description"),
       color: "luna-orange"
     },
     {
       icon: Shirt,
-      title: "Meu Closet Virtual",
-      description: "Fotografe suas roupas e receba sugestões inteligentes de looks baseadas no seu guarda-roupa existente",
+      title: t("featuredHighlights.virtualCloset.title"),
+      description: t("featuredHighlights.virtualCloset.description"),
       color: "luna-green"
     },
     {

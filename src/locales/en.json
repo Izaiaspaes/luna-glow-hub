@@ -980,6 +980,14 @@
       "title": "Total Privacy",
       "description": "End-to-end encryption and full control over your data."
     },
+    "beautyAnalysis": {
+      "title": "Beauty Analysis AI",
+      "description": "Facial and body analysis with AI for personalized makeup, skincare and style recommendations adapted to your cycle"
+    },
+    "virtualCloset": {
+      "title": "My Virtual Closet",
+      "description": "Photograph your clothes and receive intelligent outfit suggestions based on your existing wardrobe"
+    },
     "ctaButton": "Try for free",
     "ctaSecondary": "View all features",
     "ctaNote": "No credit card • Cancel anytime"
