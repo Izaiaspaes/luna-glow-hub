@@ -428,6 +428,12 @@
       "stress": "Estrés",
       "general": "General"
     },
+    "planMenu": {
+      "general": "Plan General",
+      "sleep": "Plan de Sueño",
+      "meditation": "Plan de Meditación",
+      "nutrition": "Plan de Alimentación"
+    },
     "planStatus": {
       "markComplete": "Marcar como completado",
       "archive": "Archivar",

@@ -257,6 +257,114 @@
     "privacyPolicy": "Privacy Policy",
     "cookies": "Cookies"
   },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "subtitle": "Track your wellness journey and receive personalized insights",
+    "quickAccess": {
+      "title": "Quick Access",
+      "description": "Easily log your wellness data"
+    },
+    "premiumShortcuts": {
+      "journal": "Women's Journal",
+      "lunaSense": "Luna Sense",
+      "sos": "SOS Feminine"
+    },
+    "tracking": "Tracking",
+    "cycle": "Cycle",
+    "sleep": "Sleep",
+    "mood": "Mood",
+    "energy": "Energy",
+    "nutrition": "Nutrition",
+    "food": "Food",
+    "work": "Work",
+    "plans": "Wellness Plans",
+    "calendar": "Calendar",
+    "profile": "Profile",
+    "settings": "Settings",
+    "menu": "Menu",
+    "menuDescription": "Navigate through the Luna platform",
+    "close": "Close",
+    "controlPanel": "Control Panel",
+    "quickStats": {
+      "cycle": "Cycle",
+      "cycleDay": "Day 14",
+      "cyclePhase": "Follicular phase",
+      "sleep": "Sleep",
+      "sleepAvg": "7.2h",
+      "sleepWeek": "Weekly average",
+      "mood": "Mood",
+      "moodScore": "4.2/5",
+      "moodToday": "Today you feel good",
+      "energy": "Energy",
+      "energyScore": "3.8/5",
+      "energyLevel": "Moderate level"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "overviewShort": "General",
+      "cycle": "Cycle",
+      "sleep": "Sleep",
+      "mood": "Mood",
+      "energy": "Energy",
+      "nutrition": "Nutrition",
+      "predictions": "Predictions",
+      "calendar": "Calendar"
+    },
+    "planTypes": {
+      "sleep": "Sleep",
+      "exercise": "Exercise",
+      "nutrition": "Nutrition",
+      "stress": "Stress",
+      "general": "General"
+    },
+    "planMenu": {
+      "general": "General Plan",
+      "sleep": "Sleep Plan",
+      "meditation": "Meditation Plan",
+      "nutrition": "Nutrition Plan"
+    },
+    "planStatus": {
+      "markComplete": "Mark as completed",
+      "archive": "Archive",
+      "reactivate": "Reactivate"
+    },
+    "messages": {
+      "generating": "Generating wellness plan...",
+      "planGenerated": "Wellness Plan generated successfully!",
+      "planGeneratedDesc": "Your personalized plan is ready.",
+      "planError": "Error generating plan",
+      "planErrorRetry": "Please try again later.",
+      "planUpdated": "Wellness Plan updated!",
+      "planCompleted": "Plan marked as completed.",
+      "planArchived": "Plan archived.",
+      "planReactivated": "Plan reactivated.",
+      "planUpdateError": "Error updating plan"
+    },
+    "content": {
+      "overviewTitle": "Overview",
+      "overviewDesc": "Summary of your wellness data",
+      "cycleTitle": "Cycle Tracking",
+      "cycleDesc": "Track your menstrual cycle and symptoms",
+      "sleepTitle": "Sleep Tracking",
+      "sleepDesc": "Monitor your sleep quality and duration",
+      "moodTitle": "Mood Tracking",
+      "moodDesc": "Record how you're feeling",
+      "energyTitle": "Energy Tracking",
+      "energyDesc": "Track your energy levels throughout the day",
+      "nutritionTitle": "Nutrition Tracking",
+      "nutritionDesc": "Log your meals and receive nutritional guidance",
+      "plansTitle": "Personalized Wellness Plans",
+      "plansDesc": "Generate plans based on your tracking data",
+      "generateButton": "Generate Plan",
+      "generating": "Generating...",
+      "noPlans": "No plans generated yet. Add tracking data and generate your first plan!",
+      "quickStart": "Start by selecting a category above to log your data",
+      "noRecords": "You don't have records in this category yet",
+      "addFirstRecord": "Add First Record",
+      "recentRecords": "Recent Records",
+      "addNew": "Add New"
+    }
+  },
   "pricing": {
     "packagesForAll": "Plans for all women",
     "title": "Choose the perfect plan for you",
