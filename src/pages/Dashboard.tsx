@@ -47,6 +47,7 @@ import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
 import { SOSButton } from "@/components/SOSButton";
 import { BeautyAnalysis } from "@/components/BeautyAnalysis";
+import VirtualCloset from "@/components/VirtualCloset";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
@@ -834,6 +835,11 @@ export default function Dashboard() {
             {/* Beauty Analysis AI */}
             <div className="animate-fade-in" style={{ animationDelay: '0.25s', animationFillMode: 'both' }}>
               <BeautyAnalysis />
+            </div>
+            
+            {/* Virtual Closet AI */}
+            <div className="animate-fade-in" style={{ animationDelay: '0.28s', animationFillMode: 'both' }}>
+              <VirtualCloset />
             </div>
             
             {/* SOS Info Card */}
