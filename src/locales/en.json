@@ -280,5 +280,133 @@
     "ctaStartNow": "Start now",
     "ctaStartFreeTrial": "Start free trial",
     "ctaViewFeatures": "View features"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personalInfo": "Personal Information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "subscriptionPlan": "Subscription Plan",
+    "accountSettings": "Account Settings",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "language": "Language",
+    "theme": "Theme",
+    "deleteAccount": "Delete Account",
+    "updateSuccess": "Profile updated successfully!",
+    "updateError": "Error updating profile"
+  },
+  "onboarding": {
+    "welcome": "Welcome to Luna!",
+    "letsStart": "Let's start your journey",
+    "step": "Step {{current}} of {{total}}",
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip",
+    "finish": "Finish",
+    "personalData": "Personal Data",
+    "cycleInfo": "Cycle Information",
+    "healthGoals": "Health Goals",
+    "preferences": "Preferences"
+  },
+  "tracking": {
+    "cycle": {
+      "title": "Cycle Tracking",
+      "lastPeriod": "Last Period",
+      "cycleLength": "Cycle Length",
+      "periodLength": "Period Length",
+      "symptoms": "Symptoms"
+    },
+    "mood": {
+      "title": "Mood",
+      "great": "Great",
+      "good": "Good",
+      "neutral": "Neutral",
+      "bad": "Bad",
+      "terrible": "Terrible"
+    },
+    "sleep": {
+      "title": "Sleep",
+      "duration": "Duration",
+      "quality": "Quality",
+      "bedtime": "Bedtime",
+      "wakeTime": "Wake Time"
+    },
+    "energy": {
+      "title": "Energy",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
+  },
+  "plans": {
+    "wellness": "Wellness Plans",
+    "sleep": "Sleep Plan",
+    "meditation": "Meditation Plan",
+    "nutrition": "Nutrition Plan",
+    "general": "General Plan",
+    "active": "Active",
+    "archived": "Archived",
+    "create": "Create New Plan",
+    "generating": "Generating personalized plan...",
+    "recommendations": "Recommendations"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "users": "Users",
+    "statistics": "Statistics",
+    "content": "Content",
+    "settings": "Settings",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "premiumUsers": "Premium Users",
+    "revenue": "Revenue"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Connection error. Check your internet.",
+    "unauthorized": "You don't have permission to access this area.",
+    "notFound": "Page not found.",
+    "serverError": "Server error. Please try again later."
+  },
+  "success": {
+    "saved": "Saved successfully!",
+    "updated": "Updated successfully!",
+    "deleted": "Deleted successfully!",
+    "created": "Created successfully!"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email",
+    "minLength": "Minimum {{min}} characters",
+    "maxLength": "Maximum {{max}} characters",
+    "passwordMatch": "Passwords don't match"
+  },
+  "cookieConsent": {
+    "message": "We use cookies to improve your experience. By continuing to browse, you agree to our",
+    "policyLink": "Cookie Policy",
+    "acceptAll": "Accept and Continue",
+    "essentialOnly": "Essential Only"
+  },
+  "featuresPage": {
+    "hero": {
+      "title": "Features That Transform Your Self-Care",
+      "subtitle": "Discover all the tools Luna offers to take care of your health intelligently and personally"
+    },
+    "tracking": {
+      "title": "Smart & Complete Tracking",
+      "description": "Record and track all important aspects of your health in one place",
+      "cycleTracking": "Cycle Tracking",
+      "cycleTrackingDesc": "Monitor your menstrual cycle accurately, receive personalized predictions and alerts",
+      "symptomLog": "Symptom Log",
+      "symptomLogDesc": "Document physical and emotional symptoms to identify patterns over time",
+      "moodTracking": "Mood Tracking",
+      "moodTrackingDesc": "Record your emotions and see how they relate to your hormonal cycle",
+      "sleepMonitoring": "Sleep Monitoring",
+      "sleepMonitoringDesc": "Track the quality and duration of your sleep to improve your rest",
+      "wearableIntegration": "Wearable Integration",
+      "wearableIntegrationDesc": "Connect your health devices for more accurate data"
+    }
   }
 }
