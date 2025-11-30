@@ -879,6 +879,49 @@
     "yourRights": "Your Rights",
     "yourRightsDesc": "You have the right to access, correct or delete your data at any time."
   },
+  "featuredHighlights": {
+    "badge": "Premium Features",
+    "title": "Tools that",
+    "titleHighlight": "transform",
+    "titleEnd": "your wellness",
+    "subtitle": "Cutting-edge technology combined with empathy and privacy to support every dimension of your health",
+    "lunaSense": {
+      "title": "Luna Sense - Smart Assistant",
+      "description": "Your wellness companion that truly understands you. Talk freely about cycle, symptoms, food and emotions with empathetic, personalized answers.",
+      "feature1": "24/7 natural conversations",
+      "feature2": "Adapts to your cycle",
+      "feature3": "Emotional support"
+    },
+    "diary": {
+      "title": "Women's Journal with AI",
+      "description": "Write about your day and receive powerful insights. AI identifies patterns, correlates mood with cycle and offers practical suggestions.",
+      "feature1": "Automatic analysis",
+      "feature2": "Recurring patterns",
+      "feature3": "Complete history"
+    },
+    "tracking": {
+      "title": "Smart Tracking",
+      "description": "Track cycle, sleep, mood and energy with voice analysis. AI generates personalized plans for nutrition, exercise and self-care.",
+      "feature1": "Voice transcription",
+      "feature2": "Personalized plans",
+      "feature3": "Daily insights"
+    },
+    "sos": {
+      "title": "SOS Feminine",
+      "description": "Immediate support for difficult moments with relaxation and grounding techniques."
+    },
+    "partner": {
+      "title": "Luna for Two",
+      "description": "Share your cycle with your partner in an educational and respectful way."
+    },
+    "privacy": {
+      "title": "Total Privacy",
+      "description": "End-to-end encryption and full control over your data."
+    },
+    "ctaButton": "Try for free",
+    "ctaSecondary": "View all features",
+    "ctaNote": "No credit card • Cancel anytime"
+  },
   "lunaSense": {
     "title": "Luna Sense",
     "subtitle": "Your 24/7 AI assistant with adaptive empathy",

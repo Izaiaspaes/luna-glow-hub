@@ -906,6 +906,49 @@
       }
     }
   },
+  "featuredHighlights": {
+    "badge": "Funcionalidades Premium",
+    "title": "Ferramentas que",
+    "titleHighlight": "transformam",
+    "titleEnd": "seu bem-estar",
+    "subtitle": "Tecnologia avançada combinada com empatia e privacidade para apoiar todas as dimensões da sua saúde",
+    "lunaSense": {
+      "title": "Luna Sense - Assistente Inteligente",
+      "description": "Sua companheira de bem-estar que te entende de verdade. Converse livremente sobre ciclo, sintomas, alimentação e emoções com respostas empáticas e personalizadas.",
+      "feature1": "Conversas naturais 24/7",
+      "feature2": "Se adapta ao seu ciclo",
+      "feature3": "Apoio emocional"
+    },
+    "diary": {
+      "title": "Diário da Mulher com IA",
+      "description": "Escreva sobre o seu dia e receba insights poderosos. A IA identifica padrões, correlaciona humor com o ciclo e oferece sugestões práticas.",
+      "feature1": "Análise automática",
+      "feature2": "Padrões recorrentes",
+      "feature3": "Histórico completo"
+    },
+    "tracking": {
+      "title": "Rastreamento Inteligente",
+      "description": "Acompanhe ciclo, sono, humor e energia com análises por voz. A IA gera planos personalizados de nutrição, exercícios e autocuidado.",
+      "feature1": "Transcrição por voz",
+      "feature2": "Planos personalizados",
+      "feature3": "Insights diários"
+    },
+    "sos": {
+      "title": "SOS Feminino",
+      "description": "Apoio imediato para momentos difíceis com técnicas de relaxamento e acolhimento."
+    },
+    "partner": {
+      "title": "Luna a Dois",
+      "description": "Compartilhe seu ciclo com sua parceria de forma educativa e respeitosa."
+    },
+    "privacy": {
+      "title": "Privacidade Total",
+      "description": "Criptografia de ponta a ponta e controle total sobre seus dados."
+    },
+    "ctaButton": "Experimentar grátis",
+    "ctaSecondary": "Ver todas as funcionalidades",
+    "ctaNote": "Sem cartão de crédito • Cancele quando quiser"
+  },
   "lunaSense": {
     "title": "Luna Sense",
     "subtitle": "Sua assistente de IA 24/7 com empatia adaptativa",
