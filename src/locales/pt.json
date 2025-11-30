@@ -66,7 +66,19 @@
     "title": "Seu ciclo, sua força",
     "subtitle": "Rastreie seu ciclo, entenda seu corpo e receba planos personalizados com IA para cada fase",
     "cta": "Começar Gratuitamente",
-    "watchDemo": "Ver demonstração"
+    "ctaSecondary": "Saiba Mais",
+    "watchDemo": "Ver demonstração",
+    "stats": {
+      "private": "Privado",
+      "free": "Grátis",
+      "freeDesc": "Para começar",
+      "ai": "24/7",
+      "aiDesc": "Assistente IA"
+    },
+    "floatingCard": {
+      "lastAnalysis": "Última análise",
+      "sleepImprovement": "Seus padrões de sono melhoraram 23%"
+    }
   },
   "features": {
     "badge": "🌟 Funcionalidades completas",
