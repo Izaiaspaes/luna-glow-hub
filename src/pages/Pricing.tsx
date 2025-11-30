@@ -75,16 +75,23 @@ const comparisonFeatures = [
     ]
   },
   {
-    category: "Premium Plus Exclusivos",
+    category: "Recursos Avançados de IA",
     features: [
-      { name: "🌟 Diário da Mulher com IA", free: false, premium: false, premiumPlus: true },
-      { name: "🆘 SOS Feminino", free: false, premium: false, premiumPlus: true },
+      { name: "🌟 Diário da Mulher com IA", free: false, premium: true, premiumPlus: true },
+      { name: "🆘 SOS Feminino", free: false, premium: true, premiumPlus: true },
       { name: "💬 Luna Sense 24/7", free: false, premium: false, premiumPlus: true },
-      { name: "✨ Análise de Beleza AI", free: false, premium: false, premiumPlus: true },
-      { name: "👗 Meu Closet Virtual", free: false, premium: false, premiumPlus: true },
       { name: "📊 Correlações avançadas", free: false, premium: false, premiumPlus: true },
       { name: "🌙 Modo 'Estou mal hoje'", free: false, premium: false, premiumPlus: true },
       { name: "🎯 IA com empatia adaptativa", free: false, premium: false, premiumPlus: true },
+    ]
+  },
+  {
+    category: "Estilo & Beleza AI (Premium Plus)",
+    features: [
+      { name: "✨ Análise de Beleza AI", free: false, premium: false, premiumPlus: true },
+      { name: "👗 Meu Closet Virtual", free: false, premium: false, premiumPlus: true },
+      { name: "💄 Recomendações personalizadas", free: false, premium: false, premiumPlus: true },
+      { name: "👔 Sugestões de looks inteligentes", free: false, premium: false, premiumPlus: true },
     ]
   },
   {
@@ -128,6 +135,8 @@ export default function Pricing() {
     t('pricing.premiumFeatures.unlimitedPlans'),
     t('pricing.premiumFeatures.voiceTranscription'),
     t('pricing.premiumFeatures.aiAssistant'),
+    "🌟 Diário da Mulher com IA — Registro e análise inteligente do seu dia",
+    "🆘 SOS Feminino — Suporte imediato em momentos difíceis",
     t('pricing.premiumFeatures.personalizedPlans'),
     t('pricing.premiumFeatures.advancedAnalysis'),
     t('pricing.premiumFeatures.weeklyReports'),
@@ -139,17 +148,17 @@ export default function Pricing() {
   ];
 
   const premiumPlusFeatures = [
-    "Tudo do Premium",
-    "🌟 Diário da Mulher com IA — Análise profunda do seu dia",
-    "🆘 SOS Feminino — Suporte imediato em momentos difíceis",
+    "Tudo do Premium +",
     "💬 Luna Sense — Assistente Inteligente 24/7 com empatia adaptativa",
     "✨ Análise de Beleza AI — Recomendações personalizadas de maquiagem e skincare",
     "👗 Meu Closet Virtual — Sugestões inteligentes de looks do seu guarda-roupa",
     "📊 Insights avançados com correlação humor ↔ sintomas ↔ ciclo",
     "🎯 Sugestões práticas e personalizadas em tempo real",
-    "🌙 Modo 'Estou mal hoje' com respostas humanizadas",
-    "🔥 Técnicas de relaxamento instantâneas",
-    "💜 Frases de acolhimento e apoio emocional",
+    "🌙 Modo 'Estou mal hoje' com respostas humanizadas e empáticas",
+    "🔥 Técnicas de relaxamento instantâneas personalizadas",
+    "💄 Análise facial e corporal com recomendações de beleza",
+    "👔 Closet virtual com combinações de looks inteligentes",
+    "💜 IA com personalidade adaptativa baseada no seu ciclo",
   ];
 
   // Detect user's country on mount
@@ -297,7 +306,7 @@ export default function Pricing() {
                 </div>
                 <CardTitle className="text-3xl">{t('pricing.premiumTitle')}</CardTitle>
                 <CardDescription className="text-lg">
-                  {t('pricing.premiumDescription')}
+                  Completo para bem-estar + Diário IA e SOS Feminino
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
@@ -361,7 +370,7 @@ export default function Pricing() {
                 </div>
                 <CardTitle className="text-3xl">Premium Plus</CardTitle>
                 <CardDescription className="text-lg">
-                  Experiência completa com Diário Inteligente, SOS Feminino e Luna Sense
+                  Tudo do Premium + Luna Sense, Análise de Beleza e Closet Virtual
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
