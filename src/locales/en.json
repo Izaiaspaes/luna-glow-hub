@@ -927,17 +927,19 @@
     }
   },
   "privacy": {
-    "title": "Privacy Policy",
-    "lastUpdated": "Last updated: {{date}}",
-    "intro": "At Luna, your privacy is our priority. This policy explains how we collect, use and protect your data.",
-    "dataCollection": "Data Collection",
-    "dataCollectionDesc": "We only collect data necessary to provide our services.",
-    "dataUsage": "Data Usage",
-    "dataUsageDesc": "Your data is used exclusively to personalize your experience.",
-    "dataSecurity": "Security",
-    "dataSecurityDesc": "We use end-to-end encryption to protect your information.",
-    "yourRights": "Your Rights",
-    "yourRightsDesc": "You have the right to access, correct or delete your data at any time."
+    "title": "Privacy is not",
+    "titleHighlight": "negotiable",
+    "subtitle": "In a world where reproductive data is increasingly exposed, Luna was built with privacy from day one. Your health data is yours — and always will be.",
+    "encrypted": "Encrypted Data",
+    "encryptedDesc": "All your information is protected with end-to-end encryption.",
+    "control": "Total Control",
+    "controlDesc": "You decide what to share and can delete your data at any time.",
+    "transparency": "Complete Transparency",
+    "transparencyDesc": "Audit logs available so you can see exactly how your data is used.",
+    "yourData": "Your Data, Your Rules",
+    "yourDataDesc": "Export or delete your information whenever you want, without complications.",
+    "commitment": "Transparency commitment:",
+    "commitmentText": "We work with independent audits and follow security best practices. Aggregated and anonymous data is only shared for research with your explicit opt-in consent."
   },
   "featuredHighlights": {
     "badge": "Premium Features",
