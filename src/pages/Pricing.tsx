@@ -43,72 +43,72 @@ const STRIPE_PRICES = {
   }
 };
 
-const comparisonFeatures = [
+const getComparisonFeatures = (t: any) => [
   {
-    category: "Planos de Bem-Estar",
+    category: t('pricing.comparisonTable.wellnessPlans'),
     features: [
-      { name: "Planos ativos simultâneos", free: "1 por vez", premium: "Ilimitado", premiumPlus: "Ilimitado" },
-      { name: "Plano de sono", free: true, premium: true, premiumPlus: true },
-      { name: "Plano de meditação", free: true, premium: true, premiumPlus: true },
-      { name: "Plano de nutrição", free: true, premium: true, premiumPlus: true },
-      { name: "Plano geral de bem-estar", free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.simultaneousPlans'), free: t('pricing.comparisonTable.oneAtTime'), premium: t('pricing.comparisonTable.unlimited'), premiumPlus: t('pricing.comparisonTable.unlimited') },
+      { name: t('pricing.comparisonTable.sleepPlan'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.meditationPlan'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.nutritionPlan'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.generalWellnessPlan'), free: true, premium: true, premiumPlus: true },
     ]
   },
   {
-    category: "Rastreamento & IA",
+    category: t('pricing.comparisonTable.trackingAI'),
     features: [
-      { name: "Rastreamento de ciclo", free: true, premium: true, premiumPlus: true },
-      { name: "Registro de sintomas", free: true, premium: true, premiumPlus: true },
-      { name: "Transcrição por voz", free: false, premium: true, premiumPlus: true },
-      { name: "Integração com wearables", free: false, premium: true, premiumPlus: true },
-      { name: "Assistente AI 24/7", free: false, premium: true, premiumPlus: true },
-      { name: "Programas guiados", free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.cycleTracking'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.symptomTracking'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.voiceTranscription'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.wearablesIntegration'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.aiAssistant'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.guidedPrograms'), free: false, premium: true, premiumPlus: true },
     ]
   },
   {
-    category: "Análises & Relatórios",
+    category: t('pricing.comparisonTable.analysisReports'),
     features: [
-      { name: "Relatórios mensais", free: true, premium: true, premiumPlus: true },
-      { name: "Relatórios semanais", free: false, premium: true, premiumPlus: true },
-      { name: "Insights avançados", free: false, premium: true, premiumPlus: true },
-      { name: "Histórico completo", free: "3 meses", premium: "Ilimitado", premiumPlus: "Ilimitado" },
+      { name: t('pricing.comparisonTable.monthlyReports'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.weeklyReports'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.advancedInsights'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.fullHistory'), free: t('pricing.comparisonTable.threeMonths'), premium: t('pricing.comparisonTable.unlimited'), premiumPlus: t('pricing.comparisonTable.unlimited') },
     ]
   },
   {
-    category: "Recursos Avançados de IA",
+    category: t('pricing.comparisonTable.advancedAIFeatures'),
     features: [
-      { name: "🌟 Diário da Mulher com IA", free: false, premium: true, premiumPlus: true },
-      { name: "🆘 SOS Feminino", free: false, premium: true, premiumPlus: true },
-      { name: "💬 Luna Sense 24/7", free: false, premium: false, premiumPlus: true },
-      { name: "📊 Correlações avançadas", free: false, premium: false, premiumPlus: true },
-      { name: "🌙 Modo 'Estou mal hoje'", free: false, premium: false, premiumPlus: true },
-      { name: "🎯 IA com empatia adaptativa", free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.diaryAI'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.sosFeminine'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.lunaSense'), free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.advancedCorrelations'), free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.badDayMode'), free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.adaptiveEmpathy'), free: false, premium: false, premiumPlus: true },
     ]
   },
   {
-    category: "Estilo & Beleza AI (Premium Plus)",
+    category: t('pricing.comparisonTable.styleBeautyAI'),
     features: [
-      { name: "✨ Análise de Beleza AI", free: false, premium: false, premiumPlus: true },
-      { name: "👗 Meu Closet Virtual", free: false, premium: false, premiumPlus: true },
-      { name: "💄 Recomendações personalizadas", free: false, premium: false, premiumPlus: true },
-      { name: "👔 Sugestões de looks inteligentes", free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.beautyAnalysis'), free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.virtualCloset'), free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.personalizedRecommendations'), free: false, premium: false, premiumPlus: true },
+      { name: t('pricing.comparisonTable.smartOutfitSuggestions'), free: false, premium: false, premiumPlus: true },
     ]
   },
   {
-    category: "Comunidade",
+    category: t('pricing.comparisonTable.community'),
     features: [
-      { name: "Comunidades públicas", free: true, premium: true, premiumPlus: true },
-      { name: "Comunidades privadas", free: false, premium: true, premiumPlus: true },
-      { name: "Lives com especialistas", free: "Limitado", premium: true, premiumPlus: true },
-      { name: "Eventos exclusivos", free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.publicCommunities'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.privateCommunities'), free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.expertLives'), free: t('pricing.comparisonTable.limited'), premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.exclusiveEvents'), free: false, premium: true, premiumPlus: true },
     ]
   },
   {
-    category: "Marketplace",
+    category: t('pricing.comparisonTable.marketplace'),
     features: [
-      { name: "Acesso ao marketplace", free: true, premium: true, premiumPlus: true },
-      { name: "Reviews e avaliações", free: true, premium: true, premiumPlus: true },
-      { name: "Ofertas exclusivas", free: false, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.marketplaceAccess'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.reviews'), free: true, premium: true, premiumPlus: true },
+      { name: t('pricing.comparisonTable.exclusiveOffers'), free: false, premium: true, premiumPlus: true },
     ]
   },
 ];
@@ -135,8 +135,8 @@ export default function Pricing() {
     t('pricing.premiumFeatures.unlimitedPlans'),
     t('pricing.premiumFeatures.voiceTranscription'),
     t('pricing.premiumFeatures.aiAssistant'),
-    "🌟 Diário da Mulher com IA — Registro e análise inteligente do seu dia",
-    "🆘 SOS Feminino — Suporte imediato em momentos difíceis",
+    t('pricing.premiumFeatures.diaryAI'),
+    t('pricing.premiumFeatures.sosFeminine'),
     t('pricing.premiumFeatures.personalizedPlans'),
     t('pricing.premiumFeatures.advancedAnalysis'),
     t('pricing.premiumFeatures.weeklyReports'),
@@ -148,18 +148,20 @@ export default function Pricing() {
   ];
 
   const premiumPlusFeatures = [
-    "Tudo do Premium +",
-    "💬 Luna Sense — Assistente Inteligente 24/7 com empatia adaptativa",
-    "✨ Análise de Beleza AI — Recomendações personalizadas de maquiagem e skincare",
-    "👗 Meu Closet Virtual — Sugestões inteligentes de looks do seu guarda-roupa",
-    "📊 Insights avançados com correlação humor ↔ sintomas ↔ ciclo",
-    "🎯 Sugestões práticas e personalizadas em tempo real",
-    "🌙 Modo 'Estou mal hoje' com respostas humanizadas e empáticas",
-    "🔥 Técnicas de relaxamento instantâneas personalizadas",
-    "💄 Análise facial e corporal com recomendações de beleza",
-    "👔 Closet virtual com combinações de looks inteligentes",
-    "💜 IA com personalidade adaptativa baseada no seu ciclo",
+    t('pricing.premiumPlusFeatures.everythingPremium'),
+    t('pricing.premiumPlusFeatures.lunaSense'),
+    t('pricing.premiumPlusFeatures.beautyAnalysis'),
+    t('pricing.premiumPlusFeatures.virtualCloset'),
+    t('pricing.premiumPlusFeatures.advancedInsights'),
+    t('pricing.premiumPlusFeatures.realTimeSuggestions'),
+    t('pricing.premiumPlusFeatures.badDayMode'),
+    t('pricing.premiumPlusFeatures.instantRelaxation'),
+    t('pricing.premiumPlusFeatures.facialAnalysis'),
+    t('pricing.premiumPlusFeatures.smartOutfits'),
+    t('pricing.premiumPlusFeatures.adaptiveAI'),
   ];
+
+  const comparisonFeatures = getComparisonFeatures(t);
 
   // Detect user's country on mount
   useEffect(() => {
