@@ -224,6 +224,20 @@
     "error": "Error submitting suggestion. Try again.",
     "description": "Your opinion matters! Share suggestions for new features or improvements."
   },
+  "blogPage": {
+    "title": "Educational Content on Women's Health",
+    "subtitle": "Learn more about your body, menstrual cycle, wellness and hormonal health with science-based content and real experiences.",
+    "searchPlaceholder": "Search articles...",
+    "backToHome": "Back to home",
+    "noResults": "No articles found. Try another search or category.",
+    "categories": {
+      "all": "All",
+      "menstrualCycle": "Menstrual Cycle",
+      "nutrition": "Nutrition",
+      "sleep": "Sleep",
+      "mentalHealth": "Mental Health"
+    }
+  },
   "footer": {
     "description": "Female wellness platform with AI",
     "product": "Product",
