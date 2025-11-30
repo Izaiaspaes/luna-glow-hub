@@ -848,5 +848,50 @@
     "stylingTips": "Dicas de Estilo",
     "outfit": "Look",
     "items": "peças"
+  },
+  "sos": {
+    "title": "SOS Feminino",
+    "description": "Estou aqui para te ajudar. Como você está se sentindo agora?",
+    "premiumRequired": "Recurso Premium",
+    "premiumMessage": "O SOS Feminino está disponível nos planos Premium e Premium Plus",
+    "techniquesTitle": "Técnicas para te ajudar",
+    "backButton": "Voltar",
+    "feelingBetter": "Estou me sentindo melhor",
+    "successTitle": "💜 Você consegue!",
+    "successMessage": "Lembre-se: você é forte e merece cuidado",
+    "options": {
+      "physicalPain": {
+        "title": "Dor Física",
+        "message": "Eu sei que dói. Você é forte e vai superar isso. Que tal tentar uma dessas técnicas para aliviar?",
+        "technique1": "Respire profundamente por 5 minutos",
+        "technique2": "Aplique uma compressa morna na área",
+        "technique3": "Faça uma massagem circular suave",
+        "technique4": "Tome um chá de camomila"
+      },
+      "anxiety": {
+        "title": "Ansiedade/Estresse",
+        "message": "Tudo bem sentir isso. Você não está sozinha. Vamos nos acalmar juntas?",
+        "technique1": "Técnica 5-4-3-2-1: Identifique 5 coisas que vê, 4 que toca, 3 que ouve, 2 que cheira, 1 que prova",
+        "technique2": "Respiração 4-7-8: Inspire por 4s, segure por 7s, expire por 8s",
+        "technique3": "Caminhe por 10 minutos",
+        "technique4": "Ouça música relaxante"
+      },
+      "fatigue": {
+        "title": "Fadiga Extrema",
+        "message": "Seu corpo está pedindo descanso. Não há problema em fazer uma pausa. Você merece esse cuidado.",
+        "technique1": "Tire uma soneca de 20 minutos",
+        "technique2": "Beba um copo de água gelada",
+        "technique3": "Faça alongamentos suaves",
+        "technique4": "Saia para tomar ar fresco"
+      },
+      "irritation": {
+        "title": "Irritação/TPM",
+        "message": "Seus sentimentos são válidos. É normal se sentir assim nesta fase. Vamos encontrar uma forma de te ajudar?",
+        "technique1": "Escreva seus sentimentos no papel",
+        "technique2": "Faça uma meditação guiada de 5 minutos",
+        "technique3": "Tome um banho relaxante",
+        "technique4": "Assista algo que te faça rir"
+      }
+    }
   }
 }
