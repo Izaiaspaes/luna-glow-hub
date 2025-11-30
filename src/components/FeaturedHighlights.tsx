@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
-import { Sparkles, Heart, Brain, Calendar, MessageCircle, Shield } from "lucide-react";
+import { Sparkles, Heart, Brain, Calendar, MessageCircle, Shield, Wand2, Shirt } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import featureHealth from "@/assets/feature-health.jpg";
 import featureCommunity from "@/assets/feature-community.jpg";
@@ -58,6 +58,18 @@ export const FeaturedHighlights = () => {
       title: t("featuredHighlights.sos.title"),
       description: t("featuredHighlights.sos.description"),
       color: "luna-orange"
+    },
+    {
+      icon: Wand2,
+      title: "Análise de Beleza AI",
+      description: "Análise facial e corporal com IA para recomendações personalizadas de maquiagem, skincare e estilo adaptadas ao seu ciclo",
+      color: "luna-orange"
+    },
+    {
+      icon: Shirt,
+      title: "Meu Closet Virtual",
+      description: "Fotografe suas roupas e receba sugestões inteligentes de looks baseadas no seu guarda-roupa existente",
+      color: "luna-green"
     },
     {
       icon: Calendar,
@@ -141,7 +153,7 @@ export const FeaturedHighlights = () => {
         </div>
 
         {/* Mini Features */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {miniFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
