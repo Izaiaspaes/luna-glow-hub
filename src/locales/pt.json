@@ -905,5 +905,47 @@
         "technique4": "Assista algo que te faça rir"
       }
     }
+  },
+  "lunaSense": {
+    "title": "Luna Sense",
+    "subtitle": "Sua assistente de IA 24/7 com empatia adaptativa",
+    "premiumRequired": "Recurso exclusivo Premium Plus",
+    "premiumMessage": "O Luna Sense está disponível apenas para assinantes Premium Plus. Faça upgrade para desbloquear sua companheira inteligente de bem-estar!",
+    "chatPlaceholder": "Como você está se sentindo hoje?",
+    "send": "Enviar",
+    "listening": "Ouvindo...",
+    "thinking": "Pensando...",
+    "errorSending": "Erro ao enviar mensagem",
+    "errorLoading": "Erro ao carregar conversa",
+    "newConversation": "Nova Conversa",
+    "conversationHistory": "Histórico de Conversas",
+    "emptyState": "Oi! Eu sou a Luna Sense 💜",
+    "emptyStateDesc": "Estou aqui para te apoiar na sua jornada de bem-estar. Pergunte-me qualquer coisa!",
+    "exampleQuestions": "Perguntas exemplo:",
+    "example1": "Como posso melhorar meu sono?",
+    "example2": "Estou me sentindo ansiosa, pode me ajudar?",
+    "example3": "Dicas para lidar com a TPM?"
+  },
+  "womenJournal": {
+    "title": "Diário da Mulher",
+    "subtitle": "Registre seu dia e receba insights com IA",
+    "premiumRequired": "Recurso Premium",
+    "premiumMessage": "O Diário da Mulher está disponível nos planos Premium e Premium Plus",
+    "newEntry": "Nova Entrada",
+    "history": "Histórico",
+    "writePlaceholder": "Como foi seu dia? Compartilhe seus pensamentos, sentimentos e experiências...",
+    "recordAudio": "Gravar Áudio",
+    "save": "Salvar",
+    "analyzing": "Analisando...",
+    "entrySaved": "Entrada salva! 📝",
+    "errorSaving": "Erro ao salvar entrada",
+    "errorLoading": "Erro ao carregar diário",
+    "aiInsights": "Insights da IA",
+    "summary": "Resumo",
+    "patterns": "Padrões Identificados",
+    "suggestions": "Sugestões",
+    "correlations": "Correlações",
+    "noEntries": "Ainda não há entradas",
+    "noEntriesMessage": "Comece sua primeira entrada para receber insights personalizados!"
   }
 }
