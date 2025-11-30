@@ -180,15 +180,11 @@ Forneça sua análise no seguinte formato JSON:
         model: 'google/gemini-2.5-flash',
         messages: [
           {
-            role: 'system',
-            content: systemPrompt,
-          },
-          {
             role: 'user',
             content: [
               {
                 type: 'text',
-                text: 'Analise esta imagem seguindo as instruções do sistema.',
+                text: systemPrompt + '\n\nAnalise esta imagem seguindo as instruções acima.',
               },
               {
                 type: 'image_url',
@@ -199,7 +195,6 @@ Forneça sua análise no seguinte formato JSON:
             ],
           },
         ],
-        temperature: 0.7,
       }),
     });
 
