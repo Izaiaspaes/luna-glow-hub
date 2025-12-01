@@ -57,30 +57,35 @@ export const FeaturedHighlights = () => {
       icon: MessageCircle,
       title: t("featuredHighlights.sos.title"),
       description: t("featuredHighlights.sos.description"),
+      image: featureHealth,
       color: "luna-orange"
     },
     {
       icon: Wand2,
       title: t("featuredHighlights.beautyAnalysis.title"),
       description: t("featuredHighlights.beautyAnalysis.description"),
+      image: featureCommunity,
       color: "luna-orange"
     },
     {
       icon: Shirt,
       title: t("featuredHighlights.virtualCloset.title"),
       description: t("featuredHighlights.virtualCloset.description"),
+      image: featureShop,
       color: "luna-green"
     },
     {
       icon: Calendar,
       title: t("featuredHighlights.partner.title"),
       description: t("featuredHighlights.partner.description"),
+      image: featureHealth,
       color: "luna-green"
     },
     {
       icon: Shield,
       title: t("featuredHighlights.privacy.title"),
       description: t("featuredHighlights.privacy.description"),
+      image: featureCommunity,
       color: "luna-purple"
     }
   ];
@@ -159,20 +164,30 @@ export const FeaturedHighlights = () => {
             return (
               <Card 
                 key={index}
-                className="p-6 hover:shadow-hover transition-all duration-300 border-2 hover:border-primary/30"
+                className="group overflow-hidden border-2 hover:border-primary/30 transition-all duration-300 hover:shadow-hover"
               >
-                <div className="flex items-start gap-4">
-                  <div className={`p-2.5 rounded-lg bg-${feature.color}/10`}>
-                    <Icon className={`h-5 w-5 text-${feature.color}`} />
+                <div className="relative h-32 overflow-hidden">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-${feature.color}/20 to-transparent`} />
+                  <div className="absolute top-3 left-3">
+                    <div className={`p-2 rounded-lg bg-${feature.color} shadow-lg`}>
+                      <Icon className="h-4 w-4 text-white" />
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">
-                      {feature.title}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
+                </div>
+                
+                <div className="p-4">
+                  <h4 className="font-semibold text-foreground mb-1">
+                    {feature.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
                 </div>
               </Card>
             );
