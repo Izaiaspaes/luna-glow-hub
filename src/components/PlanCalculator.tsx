@@ -5,6 +5,8 @@ import { Progress } from "@/components/ui/progress";
 import { Gift, Sparkles, Crown, Check, ArrowLeft, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "@/components/NavLink";
+import { useCurrency } from "@/hooks/useCurrency";
+import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
 
 interface Question {
   id: string;
@@ -13,9 +15,12 @@ interface Question {
 
 export const PlanCalculator = () => {
   const { t } = useTranslation();
+  const { currency } = useCurrency();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [showResult, setShowResult] = useState(false);
+  
+  const prices = PRICING_CONFIG[currency];
 
   const questions: Question[] = [
     { id: "aiRecommendations", weight: 10 },
@@ -74,7 +79,7 @@ export const PlanCalculator = () => {
       icon: Gift,
       color: "luna-blue",
       gradient: "from-luna-blue/20 to-transparent",
-      price: t("planCalculator.plans.free.price"),
+      price: formatPrice(prices.free.monthly, currency),
       features: [
         t("planCalculator.plans.free.feature1"),
         t("planCalculator.plans.free.feature2"),
@@ -86,7 +91,7 @@ export const PlanCalculator = () => {
       icon: Sparkles,
       color: "luna-purple",
       gradient: "from-luna-purple/20 to-transparent",
-      price: t("planCalculator.plans.premium.price"),
+      price: formatPrice(prices.premium.monthly, currency),
       features: [
         t("planCalculator.plans.premium.feature1"),
         t("planCalculator.plans.premium.feature2"),
@@ -99,7 +104,7 @@ export const PlanCalculator = () => {
       icon: Crown,
       color: "luna-pink",
       gradient: "from-luna-pink/20 to-transparent",
-      price: t("planCalculator.plans.premiumPlus.price"),
+      price: formatPrice(prices.premiumPlus.monthly, currency),
       features: [
         t("planCalculator.plans.premiumPlus.feature1"),
         t("planCalculator.plans.premiumPlus.feature2"),
@@ -144,9 +149,9 @@ export const PlanCalculator = () => {
                     </div>
                     <h4 className="text-3xl font-bold">{plan.name}</h4>
                   </div>
-                  <div className="text-center mb-6">
+                   <div className="text-center mb-6">
                     <div className="text-4xl font-bold text-primary">{plan.price}</div>
-                    {plan.price !== t("planCalculator.plans.free.price") && (
+                    {plan.name !== "Free" && (
                       <div className="text-muted-foreground">{t("planCalculator.perMonth")}</div>
                     )}
                   </div>

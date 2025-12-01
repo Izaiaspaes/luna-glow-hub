@@ -17,31 +17,10 @@ import logoLuna from "@/assets/logo-luna.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Layout } from "@/components/Layout";
-
-const STRIPE_PRICES = {
-  brl: {
-    premium: {
-      monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
-      yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
-    },
-    premiumPlus: {
-      monthly: "price_1SYebkIEVFZTiFWxFUKducJE",
-      yearly: "price_1SYghcIEVFZTiFWxxqiCmWth",
-    }
-  },
-  usd: {
-    premium: {
-      monthly: "price_1SXPuTIEVFZTiFWxVohXH8xe",
-      yearly: "price_1SXPucIEVFZTiFWxAaZO1YyI",
-    },
-    premiumPlus: {
-      monthly: "price_1SYeblIEVFZTiFWxuoxqWS4o",
-      yearly: "price_1SYghdIEVFZTiFWx6jTEbMet",
-    }
-  }
-};
+import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
+import { useCurrency } from "@/hooks/useCurrency";
 
 const getComparisonFeatures = (t: any) => [
   {
@@ -116,9 +95,10 @@ const getComparisonFeatures = (t: any) => [
 export default function Pricing() {
   const { user, session } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [currency, setCurrency] = useState<'brl' | 'usd'>('brl');
-  const [countryCode, setCountryCode] = useState<string>('BR');
+  const { currency, isLoading: currencyLoading } = useCurrency();
   const { t } = useTranslation();
+  
+  const prices = PRICING_CONFIG[currency];
   
   const freemiumFeatures = [
     t('pricing.freemiumFeatures.cycle'),
@@ -162,25 +142,6 @@ export default function Pricing() {
   ];
 
   const comparisonFeatures = getComparisonFeatures(t);
-
-  // Detect user's country on mount
-  useEffect(() => {
-    const detectCountry = async () => {
-      try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        const country = data.country_code || 'BR';
-        setCountryCode(country);
-        setCurrency(country === 'BR' ? 'brl' : 'usd');
-      } catch (error) {
-        console.error('Error detecting country:', error);
-        // Default to BRL if detection fails
-        setCurrency('brl');
-      }
-    };
-    
-    detectCountry();
-  }, []);
 
   const handleCheckout = async (priceId: string) => {
     if (!user || !session) {
@@ -312,14 +273,12 @@ export default function Pricing() {
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
-                    {currency === 'brl' ? t('pricing.monthlyPrice') : t('pricing.monthlyPriceUSD')}
+                    {formatPrice(prices.premium.monthly, currency)}
                   </span>
                   <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
                 </div>
                 <p className="text-sm text-muted-foreground pt-2">
-                  {currency === 'brl' 
-                    ? t('pricing.yearlyPrice') 
-                    : t('pricing.yearlyPriceUSD')}
+                  {t('pricing.or')} {formatPrice(prices.premium.yearly, currency)}/ano
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -340,20 +299,20 @@ export default function Pricing() {
                   variant="colorful" 
                   size="lg" 
                   className="w-full group"
-                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.monthly)}
-                  disabled={loading}
+                  onClick={() => handleCheckout(prices.premium.stripePriceId.monthly)}
+                  disabled={loading || currencyLoading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 19,90' : '$6.90'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly')} (${formatPrice(prices.premium.monthly, currency)})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
                   className="w-full hover:bg-primary/10"
-                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.yearly)}
-                  disabled={loading}
+                  onClick={() => handleCheckout(prices.premium.stripePriceId.yearly)}
+                  disabled={loading || currencyLoading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 199,00' : '$69.00'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly')} (${formatPrice(prices.premium.yearly, currency)})`}
                 </Button>
               </CardFooter>
             </Card>
@@ -376,14 +335,12 @@ export default function Pricing() {
                 </CardDescription>
                 <div className="pt-4">
                   <span className="text-5xl font-bold">
-                    {currency === 'brl' ? t('pricing.premiumPlusPrice') : t('pricing.premiumPlusPriceUSD')}
+                    {formatPrice(prices.premiumPlus.monthly, currency)}
                   </span>
                   <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
                 </div>
                 <p className="text-sm text-muted-foreground pt-2">
-                  {currency === 'brl' 
-                    ? t('pricing.premiumPlusYearlyPrice') 
-                    : t('pricing.premiumPlusYearlyPriceUSD')}
+                  {t('pricing.or')} {formatPrice(prices.premiumPlus.yearly, currency)}/ano
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -403,20 +360,20 @@ export default function Pricing() {
                 <Button 
                   className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
                   size="lg"
-                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.monthly)}
-                  disabled={loading}
+                  onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.monthly)}
+                  disabled={loading || currencyLoading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthlyPremiumPlus')} (${currency === 'brl' ? t('pricing.premiumPlusPrice') : t('pricing.premiumPlusPriceUSD')})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthlyPremiumPlus')} (${formatPrice(prices.premiumPlus.monthly, currency)})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
                   className="w-full hover:bg-luna-purple/10 border-luna-purple"
-                  onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.yearly)}
-                  disabled={loading}
+                  onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.yearly)}
+                  disabled={loading || currencyLoading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${currency === 'brl' ? 'R$ 299,00' : '$99.00'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${formatPrice(prices.premiumPlus.yearly, currency)})`}
                 </Button>
               </CardFooter>
             </Card>
@@ -588,8 +545,8 @@ export default function Pricing() {
                 variant="secondary" 
                 size="lg" 
                 className="group"
-                onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.monthly)}
-                disabled={loading}
+                onClick={() => handleCheckout(prices.premium.stripePriceId.monthly)}
+                disabled={loading || currencyLoading}
               >
                 {loading ? t('pricing.processing') : t('pricing.ctaStartNow')}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

@@ -3,9 +3,14 @@ import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
 import { Check, X, Sparkles, Crown, Gift } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useCurrency } from "@/hooks/useCurrency";
+import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
 
 export const PricingComparison = () => {
   const { t } = useTranslation();
+  const { currency } = useCurrency();
+  
+  const prices = PRICING_CONFIG[currency];
 
   const features = [
     {
@@ -41,7 +46,7 @@ export const PricingComparison = () => {
     {
       name: "Free",
       icon: Gift,
-      price: t("pricingComparison.plans.free.price"),
+      price: formatPrice(prices.free.monthly, currency),
       description: t("pricingComparison.plans.free.description"),
       color: "luna-blue",
       gradient: "from-luna-blue/10 to-transparent",
@@ -50,7 +55,7 @@ export const PricingComparison = () => {
     {
       name: "Premium",
       icon: Sparkles,
-      price: t("pricingComparison.plans.premium.price"),
+      price: formatPrice(prices.premium.monthly, currency),
       description: t("pricingComparison.plans.premium.description"),
       color: "luna-purple",
       gradient: "from-luna-purple/10 to-transparent",
@@ -59,7 +64,7 @@ export const PricingComparison = () => {
     {
       name: "Premium Plus",
       icon: Crown,
-      price: t("pricingComparison.plans.premiumPlus.price"),
+      price: formatPrice(prices.premiumPlus.monthly, currency),
       description: t("pricingComparison.plans.premiumPlus.description"),
       color: "luna-pink",
       gradient: "from-luna-pink/10 to-transparent",
@@ -124,7 +129,7 @@ export const PricingComparison = () => {
                     </div>
                     <div className="text-center mb-2">
                       <div className="text-3xl font-bold text-primary">{plan.price}</div>
-                      {plan.price !== t("pricingComparison.plans.free.price") && (
+                      {plan.name !== "Free" && (
                         <div className="text-sm text-muted-foreground">/mês</div>
                       )}
                     </div>
