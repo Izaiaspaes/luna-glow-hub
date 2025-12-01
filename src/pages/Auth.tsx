@@ -205,6 +205,7 @@ export default function Auth() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  showPasswordToggle
                 />
               </div>
               <div className="space-y-2">
@@ -216,6 +217,7 @@ export default function Auth() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
+                  showPasswordToggle
                 />
               </div>
               <Button type="submit" className="w-full" variant="colorful" disabled={loading}>
@@ -270,6 +272,7 @@ export default function Auth() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  showPasswordToggle
                 />
               </div>
               

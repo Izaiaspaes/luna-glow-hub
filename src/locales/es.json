@@ -774,32 +774,32 @@
   "subscription": {
     "free": "Plan Gratuito",
     "premium": "Plan Premium",
-    "currentPlan": "Tu Plan Actual",
-    "upgrade": "Mejorar Plan",
+    "currentPlan": "Plan Actual",
+    "upgrade": "Actualizar",
     "manageSubscription": "Gestionar Suscripción",
     "benefits": "Beneficios",
-    "subscribed": "Premium",
+    "subscribed": "Suscrito",
     "notSubscribed": "Gratuito",
-    "hasAccess": "Tienes acceso a todas las funciones premium",
-    "upgradeDesc": "Mejora tu plan para desbloquear funciones exclusivas",
-    "renewsOn": "Se renueva el:",
-    "package": "Paquete:",
+    "hasAccess": "Tienes acceso a funciones premium",
+    "upgradeDesc": "Actualiza para desbloquear funciones premium",
+    "renewsOn": "Se renueva el",
+    "package": "Paquete",
     "opening": "Abriendo...",
     "testPlan": "Plan de Prueba",
     "refreshing": "Actualizando...",
     "features": {
-      "unlimitedPlans": "Planes de bienestar ilimitados",
-      "voiceTranscription": "Transcripción por voz ilimitada",
-      "aiAssistant": "Asistente de IA conversacional 24/7",
-      "advancedAnalysis": "Análisis avanzado con perspectivas",
-      "weeklyReports": "Informes semanales detallados"
+      "unlimitedPlans": "Planes de Bienestar ilimitados",
+      "voiceTranscription": "Transcripción de voz",
+      "aiAssistant": "Asistente IA personalizado",
+      "advancedAnalysis": "Análisis avanzados",
+      "weeklyReports": "Informes semanales"
     },
     "messages": {
-      "errorOpening": "Error al abrir el portal",
+      "errorOpening": "Error al abrir portal",
       "errorRefreshing": "Error al actualizar",
       "statusUpdated": "Estado actualizado",
-      "statusUpdatedDesc": "El estado de tu suscripción ha sido verificado",
-      "tryAgain": "Por favor, inténtalo de nuevo"
+      "statusUpdatedDesc": "Información de suscripción actualizada",
+      "tryAgain": "Por favor, inténtalo de nuevo más tarde"
     }
   },
   "statistics": {
