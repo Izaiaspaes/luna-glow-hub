@@ -1048,6 +1048,45 @@ export type Database = {
         }
         Relationships: []
       }
+      wellness_plan_templates: {
+        Row: {
+          base_recommendations: Json
+          created_at: string
+          created_by: string | null
+          description: string
+          display_order: number
+          id: string
+          is_active: boolean
+          name: string
+          template_type: string
+          updated_at: string
+        }
+        Insert: {
+          base_recommendations?: Json
+          created_at?: string
+          created_by?: string | null
+          description: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          name: string
+          template_type: string
+          updated_at?: string
+        }
+        Update: {
+          base_recommendations?: Json
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          name?: string
+          template_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       wellness_plans: {
         Row: {
           ai_recommendations: string
