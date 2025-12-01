@@ -1505,14 +1505,14 @@
         "feature3": "1 plan de bienestar"
       },
       "premium": {
-        "price": "$6.90",
+        "price": "$9.90",
         "feature1": "Todas las funciones Free",
         "feature2": "Recomendaciones de IA personalizadas",
         "feature3": "Diario de la Mujer con análisis",
         "feature4": "SOS Femenino 24/7"
       },
       "premiumPlus": {
-        "price": "$9.90",
+        "price": "$19.90",
         "feature1": "Todas las funciones Premium",
         "feature2": "LunaSense - Chatbot inteligente",
         "feature3": "Análisis de belleza con IA",
@@ -1541,11 +1541,11 @@
         "description": "Comienza tu viaje de bienestar"
       },
       "premium": {
-        "price": "$6.90",
+        "price": "$9.90",
         "description": "Funciones avanzadas para cuidarte"
       },
       "premiumPlus": {
-        "price": "$9.90",
+        "price": "$19.90",
         "description": "Experiencia completa con IA avanzada"
       }
     },
