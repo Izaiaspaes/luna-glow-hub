@@ -6,6 +6,11 @@ import { useTranslation } from "react-i18next";
 import featureHealth from "@/assets/feature-health.jpg";
 import featureCommunity from "@/assets/feature-community.jpg";
 import featureShop from "@/assets/feature-shop.jpg";
+import featureSos from "@/assets/feature-sos.jpg";
+import featureBeauty from "@/assets/feature-beauty.jpg";
+import featureCloset from "@/assets/feature-closet.jpg";
+import featurePartner from "@/assets/feature-partner.jpg";
+import featurePrivacy from "@/assets/feature-privacy.jpg";
 
 export const FeaturedHighlights = () => {
   const { t } = useTranslation();
@@ -57,35 +62,35 @@ export const FeaturedHighlights = () => {
       icon: MessageCircle,
       title: t("featuredHighlights.sos.title"),
       description: t("featuredHighlights.sos.description"),
-      image: featureHealth,
+      image: featureSos,
       color: "luna-orange"
     },
     {
       icon: Wand2,
       title: t("featuredHighlights.beautyAnalysis.title"),
       description: t("featuredHighlights.beautyAnalysis.description"),
-      image: featureCommunity,
+      image: featureBeauty,
       color: "luna-orange"
     },
     {
       icon: Shirt,
       title: t("featuredHighlights.virtualCloset.title"),
       description: t("featuredHighlights.virtualCloset.description"),
-      image: featureShop,
+      image: featureCloset,
       color: "luna-green"
     },
     {
       icon: Calendar,
       title: t("featuredHighlights.partner.title"),
       description: t("featuredHighlights.partner.description"),
-      image: featureHealth,
+      image: featurePartner,
       color: "luna-green"
     },
     {
       icon: Shield,
       title: t("featuredHighlights.privacy.title"),
       description: t("featuredHighlights.privacy.description"),
-      image: featureCommunity,
+      image: featurePrivacy,
       color: "luna-purple"
     }
   ];
