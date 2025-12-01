@@ -1466,6 +1466,61 @@
       "weeklyReports": "Informes semanales"
     }
   },
+  "planCalculator": {
+    "badge": "Descubre tu plan",
+    "title": "¿Qué plan es",
+    "titleHighlight": "perfecto para ti?",
+    "subtitle": "Responde algunas preguntas rápidas y descubre tu plan ideal",
+    "question": "Pregunta",
+    "of": "de",
+    "yes": "¡Sí, lo necesito!",
+    "no": "No lo necesito",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "finish": "Ver resultado",
+    "perMonth": "/mes",
+    "questions": {
+      "aiRecommendations": "¿Quieres recomendaciones personalizadas de IA basadas en tu ciclo?",
+      "womenDiary": "¿Te gustaría tener un diario femenino con análisis de IA?",
+      "sosFeminino": "¿Necesitas un asistente SOS para emergencias femeninas?",
+      "lunaSense": "¿Quieres un chatbot inteligente para responder dudas sobre salud femenina?",
+      "beautyAnalysis": "¿Te interesa el análisis de belleza con IA para recomendaciones personalizadas?",
+      "virtualCloset": "¿Te gustaría tener un armario virtual con sugerencias de looks?",
+      "unlimitedPlans": "¿Necesitas crear planes de bienestar ilimitados?",
+      "prioritySupport": "¿Es importante para ti el soporte prioritario?"
+    },
+    "result": {
+      "badge": "Tu plan ideal",
+      "title": "¡Encontramos el plan perfecto para ti!",
+      "subtitle": "Basado en tus necesidades, recomendamos:",
+      "recommended": "✨ RECOMENDADO PARA TI",
+      "cta": "Empezar ahora",
+      "restart": "Repetir test"
+    },
+    "plans": {
+      "free": {
+        "price": "Gratis",
+        "feature1": "Seguimiento básico del ciclo",
+        "feature2": "Monitoreo de ánimo y sueño",
+        "feature3": "1 plan de bienestar"
+      },
+      "premium": {
+        "price": "$19.90",
+        "feature1": "Todas las funciones Free",
+        "feature2": "Recomendaciones de IA personalizadas",
+        "feature3": "Diario de la Mujer con análisis",
+        "feature4": "SOS Femenino 24/7"
+      },
+      "premiumPlus": {
+        "price": "$39.90",
+        "feature1": "Todas las funciones Premium",
+        "feature2": "LunaSense - Chatbot inteligente",
+        "feature3": "Análisis de belleza con IA",
+        "feature4": "Armario virtual con looks",
+        "feature5": "Soporte VIP prioritario"
+      }
+    }
+  },
   "pricingComparison": {
     "badge": "Comparar Planes",
     "title": "Elige el plan",

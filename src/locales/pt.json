@@ -1124,6 +1124,61 @@
       "weeklyReports": "Relatórios semanais"
     }
   },
+  "planCalculator": {
+    "badge": "Descubra seu plano",
+    "title": "Qual plano é",
+    "titleHighlight": "perfeito para você?",
+    "subtitle": "Responda algumas perguntas rápidas e descubra o plano ideal",
+    "question": "Pergunta",
+    "of": "de",
+    "yes": "Sim, preciso disso!",
+    "no": "Não preciso",
+    "back": "Voltar",
+    "next": "Próxima",
+    "finish": "Ver resultado",
+    "perMonth": "/mês",
+    "questions": {
+      "aiRecommendations": "Você quer recomendações personalizadas de IA baseadas no seu ciclo?",
+      "womenDiary": "Gostaria de ter um diário feminino com análise de IA?",
+      "sosFeminino": "Precisa de um assistente SOS para emergências femininas?",
+      "lunaSense": "Quer um chatbot inteligente para tirar dúvidas sobre saúde feminina?",
+      "beautyAnalysis": "Te interessa análise de beleza com IA para recomendações personalizadas?",
+      "virtualCloset": "Gostaria de ter um closet virtual com sugestões de looks?",
+      "unlimitedPlans": "Você precisa criar planos de bem-estar ilimitados?",
+      "prioritySupport": "Suporte prioritário é importante para você?"
+    },
+    "result": {
+      "badge": "Seu plano ideal",
+      "title": "Encontramos o plano perfeito para você!",
+      "subtitle": "Baseado nas suas necessidades, recomendamos:",
+      "recommended": "✨ RECOMENDADO PARA VOCÊ",
+      "cta": "Começar agora",
+      "restart": "Refazer teste"
+    },
+    "plans": {
+      "free": {
+        "price": "Grátis",
+        "feature1": "Rastreamento básico do ciclo",
+        "feature2": "Monitoramento de humor e sono",
+        "feature3": "1 plano de bem-estar"
+      },
+      "premium": {
+        "price": "R$ 19,90",
+        "feature1": "Todas as funcionalidades Free",
+        "feature2": "Recomendações de IA personalizadas",
+        "feature3": "Diário da Mulher com análise",
+        "feature4": "SOS Feminino 24/7"
+      },
+      "premiumPlus": {
+        "price": "R$ 39,90",
+        "feature1": "Todas as funcionalidades Premium",
+        "feature2": "LunaSense - Chatbot inteligente",
+        "feature3": "Análise de beleza com IA",
+        "feature4": "Closet virtual com looks",
+        "feature5": "Suporte VIP prioritário"
+      }
+    }
+  },
   "pricingComparison": {
     "badge": "Compare os Planos",
     "title": "Escolha o plano",
