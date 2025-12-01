@@ -11,7 +11,6 @@ import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import logoLuna from "@/assets/logo-luna.png";
 import { useTranslation } from "react-i18next";
-import { Chrome, Apple } from "lucide-react";
 
 export default function Auth() {
   const { t } = useTranslation();
@@ -165,26 +164,6 @@ export default function Auth() {
     setLoading(false);
   };
 
-  const handleSocialAuth = async (provider: 'google' | 'apple') => {
-    try {
-      setLoading(true);
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/dashboard`,
-        },
-      });
-
-      if (error) {
-        toast.error(t("auth.errors.socialAuthError") + error.message);
-      }
-    } catch (error: any) {
-      toast.error(t("auth.errors.socialAuthError") + error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-gradient-card">
@@ -306,39 +285,6 @@ export default function Auth() {
                     : t("auth.createButton")}
               </Button>
 
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <Separator />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">
-                    {t("auth.orContinueWith")}
-                  </span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => handleSocialAuth('google')}
-                  disabled={loading}
-                  className="w-full"
-                >
-                  <Chrome className="mr-2 h-4 w-4" />
-                  Google
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => handleSocialAuth('apple')}
-                  disabled={loading}
-                  className="w-full"
-                >
-                  <Apple className="mr-2 h-4 w-4" />
-                  Apple
-                </Button>
-              </div>
             </form>
           )}
 
