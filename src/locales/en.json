@@ -1097,6 +1097,61 @@
       "weeklyReports": "Weekly reports"
     }
   },
+  "planCalculator": {
+    "badge": "Find your plan",
+    "title": "Which plan is",
+    "titleHighlight": "perfect for you?",
+    "subtitle": "Answer a few quick questions and discover your ideal plan",
+    "question": "Question",
+    "of": "of",
+    "yes": "Yes, I need this!",
+    "no": "I don't need it",
+    "back": "Back",
+    "next": "Next",
+    "finish": "See result",
+    "perMonth": "/month",
+    "questions": {
+      "aiRecommendations": "Do you want personalized AI recommendations based on your cycle?",
+      "womenDiary": "Would you like to have a women's diary with AI analysis?",
+      "sosFeminino": "Do you need an SOS assistant for feminine emergencies?",
+      "lunaSense": "Do you want an intelligent chatbot to answer questions about women's health?",
+      "beautyAnalysis": "Are you interested in AI beauty analysis for personalized recommendations?",
+      "virtualCloset": "Would you like to have a virtual closet with outfit suggestions?",
+      "unlimitedPlans": "Do you need to create unlimited wellness plans?",
+      "prioritySupport": "Is priority support important to you?"
+    },
+    "result": {
+      "badge": "Your ideal plan",
+      "title": "We found the perfect plan for you!",
+      "subtitle": "Based on your needs, we recommend:",
+      "recommended": "✨ RECOMMENDED FOR YOU",
+      "cta": "Get started",
+      "restart": "Retake quiz"
+    },
+    "plans": {
+      "free": {
+        "price": "Free",
+        "feature1": "Basic cycle tracking",
+        "feature2": "Mood and sleep monitoring",
+        "feature3": "1 wellness plan"
+      },
+      "premium": {
+        "price": "$19.90",
+        "feature1": "All Free features",
+        "feature2": "Personalized AI recommendations",
+        "feature3": "Women's Diary with analysis",
+        "feature4": "24/7 Feminine SOS"
+      },
+      "premiumPlus": {
+        "price": "$39.90",
+        "feature1": "All Premium features",
+        "feature2": "LunaSense - Intelligent chatbot",
+        "feature3": "AI beauty analysis",
+        "feature4": "Virtual closet with outfits",
+        "feature5": "VIP priority support"
+      }
+    }
+  },
   "pricingComparison": {
     "badge": "Compare Plans",
     "title": "Choose the",
