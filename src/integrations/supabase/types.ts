@@ -598,6 +598,54 @@ export type Database = {
         }
         Relationships: []
       }
+      price_settings: {
+        Row: {
+          billing_period: string
+          created_at: string
+          created_by: string | null
+          currency: string
+          id: string
+          is_active: boolean
+          is_promotion: boolean
+          plan_type: string
+          price: number
+          promotion_end_date: string | null
+          promotion_start_date: string | null
+          stripe_price_id: string
+          updated_at: string
+        }
+        Insert: {
+          billing_period: string
+          created_at?: string
+          created_by?: string | null
+          currency: string
+          id?: string
+          is_active?: boolean
+          is_promotion?: boolean
+          plan_type: string
+          price: number
+          promotion_end_date?: string | null
+          promotion_start_date?: string | null
+          stripe_price_id: string
+          updated_at?: string
+        }
+        Update: {
+          billing_period?: string
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          id?: string
+          is_active?: boolean
+          is_promotion?: boolean
+          plan_type?: string
+          price?: number
+          promotion_end_date?: string | null
+          promotion_start_date?: string | null
+          stripe_price_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

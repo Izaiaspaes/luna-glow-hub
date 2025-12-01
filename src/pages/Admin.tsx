@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -14,6 +14,7 @@ import { TestimonialsManagement } from "@/components/admin/TestimonialsManagemen
 import { BannersManagement } from "@/components/admin/BannersManagement";
 import { SuggestionsManagement } from "@/components/admin/SuggestionsManagement";
 import { CouponsManagement } from "@/components/admin/CouponsManagement";
+import { PriceManagement } from "@/components/admin/PriceManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import logoLuna from "@/assets/logo-luna.png";
 
@@ -87,7 +88,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-8 lg:w-[1280px]">
+          <TabsList className="grid w-full grid-cols-9 lg:w-[1280px]">
             <TabsTrigger value="statistics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">Estatísticas</span>
@@ -119,6 +120,10 @@ export default function Admin() {
             <TabsTrigger value="suggestions" className="flex items-center gap-2">
               <Lightbulb className="w-4 h-4" />
               <span className="hidden sm:inline">Sugestões</span>
+            </TabsTrigger>
+            <TabsTrigger value="prices" className="flex items-center gap-2">
+              <DollarSign className="w-4 h-4" />
+              <span className="hidden sm:inline">Preços</span>
             </TabsTrigger>
           </TabsList>
 
@@ -152,6 +157,10 @@ export default function Admin() {
 
               <TabsContent value="suggestions" className="space-y-4">
                 <SuggestionsManagement />
+              </TabsContent>
+
+              <TabsContent value="prices" className="space-y-4">
+                <PriceManagement />
               </TabsContent>
         </Tabs>
       </main>
