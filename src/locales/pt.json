@@ -1060,5 +1060,32 @@
     "correlations": "Correlações",
     "noEntries": "Ainda não há entradas",
     "noEntriesMessage": "Comece sua primeira entrada para receber insights personalizados!"
+  },
+  "subscription": {
+    "currentPlan": "Plano Atual",
+    "notSubscribed": "Plano Gratuito",
+    "subscribed": "Assinante",
+    "upgradeDesc": "Faça upgrade para desbloquear recursos premium",
+    "hasAccess": "Você tem acesso a recursos premium",
+    "package": "Pacote",
+    "testPlan": "Plano de Teste",
+    "renewsOn": "Renova em",
+    "upgrade": "Fazer Upgrade",
+    "manageSubscription": "Gerenciar Assinatura",
+    "opening": "Abrindo...",
+    "messages": {
+      "errorOpening": "Erro ao abrir portal",
+      "tryAgain": "Tente novamente mais tarde",
+      "statusUpdated": "Status atualizado",
+      "statusUpdatedDesc": "Informações da assinatura atualizadas",
+      "errorRefreshing": "Erro ao atualizar"
+    },
+    "features": {
+      "unlimitedPlans": "Planos de Bem-Estar ilimitados",
+      "voiceTranscription": "Transcrição de voz",
+      "aiAssistant": "Assistente IA personalizado",
+      "advancedAnalysis": "Análises avançadas",
+      "weeklyReports": "Relatórios semanais"
+    }
   }
 }

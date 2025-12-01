@@ -1033,5 +1033,32 @@
     "correlations": "Correlations",
     "noEntries": "No entries yet",
     "noEntriesMessage": "Start your first entry to receive personalized insights!"
+  },
+  "subscription": {
+    "currentPlan": "Current Plan",
+    "notSubscribed": "Free Plan",
+    "subscribed": "Subscribed",
+    "upgradeDesc": "Upgrade to unlock premium features",
+    "hasAccess": "You have access to premium features",
+    "package": "Package",
+    "testPlan": "Test Plan",
+    "renewsOn": "Renews on",
+    "upgrade": "Upgrade",
+    "manageSubscription": "Manage Subscription",
+    "opening": "Opening...",
+    "messages": {
+      "errorOpening": "Error opening portal",
+      "tryAgain": "Please try again later",
+      "statusUpdated": "Status updated",
+      "statusUpdatedDesc": "Subscription information updated",
+      "errorRefreshing": "Error refreshing"
+    },
+    "features": {
+      "unlimitedPlans": "Unlimited Wellness Plans",
+      "voiceTranscription": "Voice transcription",
+      "aiAssistant": "Personalized AI assistant",
+      "advancedAnalysis": "Advanced analysis",
+      "weeklyReports": "Weekly reports"
+    }
   }
 }
