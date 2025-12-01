@@ -489,14 +489,14 @@
     "premiumPlusDescription": "Complete experience with advanced AI, beauty analysis, and virtual closet",
     "mostPopular": "Most Popular",
     "perMonth": "/month",
-    "monthlyPrice": "R$ 29.90",
-    "monthlyPriceUSD": "$9.90",
-    "yearlyPrice": "or R$ 299/year (2 months free)",
-    "yearlyPriceUSD": "or $99/year (2 months free)",
-    "premiumPlusPrice": "R$ 45.00",
-    "premiumPlusPriceUSD": "$19.90",
-    "premiumPlusYearlyPrice": "or R$ 450/year (2 months free)",
-    "premiumPlusYearlyPriceUSD": "or $199/year (2 months free)",
+    "monthlyPrice": "R$ 19.90",
+    "monthlyPriceUSD": "$6.90",
+    "yearlyPrice": "or R$ 199/year (2 months free)",
+    "yearlyPriceUSD": "or $69/year (2 months free)",
+    "premiumPlusPrice": "R$ 29.90",
+    "premiumPlusPriceUSD": "$9.90",
+    "premiumPlusYearlyPrice": "or R$ 299/year (2 months free)",
+    "premiumPlusYearlyPriceUSD": "or $99/year (2 months free)",
     "premiumPower": "Premium Power",
     "allAdvancedFeatures": "All advanced AI features",
     "startFree": "Start Free",
@@ -1172,11 +1172,11 @@
         "description": "Start your wellness journey"
       },
       "premium": {
-        "price": "$9.90",
+        "price": "$6.90",
         "description": "Advanced features to take care of you"
       },
       "premiumPlus": {
-        "price": "$19.90",
+        "price": "$9.90",
         "description": "Complete experience with advanced AI"
       }
     },

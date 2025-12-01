@@ -519,14 +519,14 @@
     "premiumPlusDescription": "Experiência completa com IA avançada, análise de beleza e closet virtual",
     "mostPopular": "Mais Popular",
     "perMonth": "/mês",
-    "monthlyPrice": "R$ 29,90",
-    "monthlyPriceUSD": "$9.90",
-    "yearlyPrice": "ou R$ 299/ano (2 meses grátis)",
-    "yearlyPriceUSD": "ou $99/ano (2 meses grátis)",
-    "premiumPlusPrice": "R$ 45,00",
-    "premiumPlusPriceUSD": "$19.90",
-    "premiumPlusYearlyPrice": "ou R$ 450/ano (2 meses grátis)",
-    "premiumPlusYearlyPriceUSD": "ou $199/ano (2 meses grátis)",
+    "monthlyPrice": "R$ 19,90",
+    "monthlyPriceUSD": "$6.90",
+    "yearlyPrice": "ou R$ 199/ano (2 meses grátis)",
+    "yearlyPriceUSD": "ou $69/ano (2 meses grátis)",
+    "premiumPlusPrice": "R$ 29,90",
+    "premiumPlusPriceUSD": "$9.90",
+    "premiumPlusYearlyPrice": "ou R$ 299/ano (2 meses grátis)",
+    "premiumPlusYearlyPriceUSD": "ou $99/ano (2 meses grátis)",
     "premiumPower": "Poder do Premium",
     "allAdvancedFeatures": "Todos os recursos avançados com IA",
     "startFree": "Começar Grátis",
@@ -1199,11 +1199,11 @@
         "description": "Comece sua jornada de bem-estar"
       },
       "premium": {
-        "price": "R$ 29,90",
+        "price": "R$ 19,90",
         "description": "Recursos avançados para cuidar de você"
       },
       "premiumPlus": {
-        "price": "R$ 45,00",
+        "price": "R$ 29,90",
         "description": "Experiência completa com IA avançada"
       }
     },

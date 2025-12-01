@@ -343,7 +343,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.monthly)}
                   disabled={loading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 29,90' : '$9.90'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 19,90' : '$6.90'})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
@@ -353,7 +353,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].premium.yearly)}
                   disabled={loading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 299,00' : '$99.00'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly' + (currency === 'usd' ? 'USD' : ''))} (${currency === 'brl' ? 'R$ 199,00' : '$69.00'})`}
                 </Button>
               </CardFooter>
             </Card>
@@ -416,7 +416,7 @@ export default function Pricing() {
                   onClick={() => handleCheckout(STRIPE_PRICES[currency].premiumPlus.yearly)}
                   disabled={loading}
                 >
-                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${currency === 'brl' ? 'R$ 450,00' : '$199.00'})`}
+                  {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${currency === 'brl' ? 'R$ 299,00' : '$99.00'})`}
                 </Button>
               </CardFooter>
             </Card>
