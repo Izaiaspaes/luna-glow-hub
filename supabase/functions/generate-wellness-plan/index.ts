@@ -164,12 +164,27 @@ serve(async (req) => {
       }
     }
 
-    // Create prompt based on plan type
+    // Fetch template for this plan type
+    const { data: template } = await supabase
+      .from('wellness_plan_templates')
+      .select('*')
+      .eq('template_type', planType)
+      .eq('is_active', true)
+      .maybeSingle();
+
+    // Create prompt based on plan type and template
     let systemPrompt = `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
 
 Sempre seja empática, acolhedora e forneça recomendações práticas e acionáveis. Use uma linguagem amigável e motivadora.
 
 IMPORTANTE: Sempre inicie os insights com "Olá ${userName}," (sem "querida" ou outros apelidos).
+
+${template ? `Use este template como BASE e PERSONALIZE as recomendações de acordo com os dados da usuária:
+Template: ${template.name}
+Descrição: ${template.description}
+Recomendações base: ${JSON.stringify(template.base_recommendations, null, 2)}
+
+IMPORTANTE: Não copie as recomendações base literalmente. Use-as como guia e personalize completamente com base nos dados reais da usuária.` : ''}
 
 Formato da resposta: Retorne um objeto JSON com a seguinte estrutura:
 {
