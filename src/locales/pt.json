@@ -1123,5 +1123,48 @@
       "advancedAnalysis": "Análises avançadas",
       "weeklyReports": "Relatórios semanais"
     }
+  },
+  "pricingComparison": {
+    "badge": "Compare os Planos",
+    "title": "Escolha o plano",
+    "titleHighlight": "perfeito",
+    "subtitle": "Compare os recursos de cada plano e escolha o que melhor se adapta às suas necessidades",
+    "mostPopular": "MAIS POPULAR",
+    "unlimited": "Ilimitado",
+    "basic": "Básico",
+    "priority": "Prioritário",
+    "vip": "VIP",
+    "cta": "Começar Agora",
+    "tracking": "Rastreamento",
+    "aiFeatures": "Recursos de IA",
+    "other": "Outros Recursos",
+    "plans": {
+      "free": {
+        "price": "Grátis",
+        "description": "Comece sua jornada de bem-estar"
+      },
+      "premium": {
+        "price": "R$ 29,90",
+        "description": "Recursos avançados para cuidar de você"
+      },
+      "premiumPlus": {
+        "price": "R$ 45,00",
+        "description": "Experiência completa com IA avançada"
+      }
+    },
+    "features": {
+      "cycleTracking": "Rastreamento de ciclo menstrual",
+      "moodSleep": "Registro de humor, sono e energia",
+      "wellnessPlans": "Planos de Bem-Estar personalizados",
+      "aiRecommendations": "Recomendações de IA",
+      "womenDiary": "Diário da Mulher com IA",
+      "sosFeminino": "SOS Feminino",
+      "lunaSense": "Luna Sense (Assistente IA)",
+      "beautyAnalysis": "Análise de Beleza AI",
+      "virtualCloset": "Meu Closet Virtual",
+      "partner": "Luna a Dois (Compartilhamento)",
+      "privacy": "Privacidade e segurança total",
+      "support": "Suporte"
+    }
   }
 }
