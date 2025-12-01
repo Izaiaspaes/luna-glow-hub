@@ -1096,5 +1096,48 @@
       "advancedAnalysis": "Advanced analysis",
       "weeklyReports": "Weekly reports"
     }
+  },
+  "pricingComparison": {
+    "badge": "Compare Plans",
+    "title": "Choose the",
+    "titleHighlight": "perfect plan",
+    "subtitle": "Compare features across plans and choose the one that best fits your needs",
+    "mostPopular": "MOST POPULAR",
+    "unlimited": "Unlimited",
+    "basic": "Basic",
+    "priority": "Priority",
+    "vip": "VIP",
+    "cta": "Get Started",
+    "tracking": "Tracking",
+    "aiFeatures": "AI Features",
+    "other": "Other Features",
+    "plans": {
+      "free": {
+        "price": "Free",
+        "description": "Start your wellness journey"
+      },
+      "premium": {
+        "price": "$9.90",
+        "description": "Advanced features to take care of you"
+      },
+      "premiumPlus": {
+        "price": "$19.90",
+        "description": "Complete experience with advanced AI"
+      }
+    },
+    "features": {
+      "cycleTracking": "Menstrual cycle tracking",
+      "moodSleep": "Mood, sleep and energy tracking",
+      "wellnessPlans": "Personalized Wellness Plans",
+      "aiRecommendations": "AI Recommendations",
+      "womenDiary": "Women's Journal with AI",
+      "sosFeminino": "SOS Feminino",
+      "lunaSense": "Luna Sense (AI Assistant)",
+      "beautyAnalysis": "Beauty Analysis AI",
+      "virtualCloset": "My Virtual Closet",
+      "partner": "Luna Together (Sharing)",
+      "privacy": "Complete privacy and security",
+      "support": "Support"
+    }
   }
 }

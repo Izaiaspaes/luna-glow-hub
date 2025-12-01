@@ -1438,5 +1438,75 @@
     "correlations": "Correlaciones",
     "noEntries": "Aún no hay entradas",
     "noEntriesMessage": "¡Comienza tu primera entrada para recibir insights personalizados!"
+  },
+  "subscription": {
+    "currentPlan": "Plan Actual",
+    "notSubscribed": "Plan Gratuito",
+    "subscribed": "Suscrito",
+    "upgradeDesc": "Actualiza para desbloquear funciones premium",
+    "hasAccess": "Tienes acceso a funciones premium",
+    "package": "Paquete",
+    "testPlan": "Plan de Prueba",
+    "renewsOn": "Renueva el",
+    "upgrade": "Actualizar",
+    "manageSubscription": "Gestionar Suscripción",
+    "opening": "Abriendo...",
+    "messages": {
+      "errorOpening": "Error al abrir portal",
+      "tryAgain": "Inténtalo de nuevo más tarde",
+      "statusUpdated": "Estado actualizado",
+      "statusUpdatedDesc": "Información de suscripción actualizada",
+      "errorRefreshing": "Error al actualizar"
+    },
+    "features": {
+      "unlimitedPlans": "Planes de Bienestar ilimitados",
+      "voiceTranscription": "Transcripción de voz",
+      "aiAssistant": "Asistente IA personalizado",
+      "advancedAnalysis": "Análisis avanzados",
+      "weeklyReports": "Informes semanales"
+    }
+  },
+  "pricingComparison": {
+    "badge": "Comparar Planes",
+    "title": "Elige el plan",
+    "titleHighlight": "perfecto",
+    "subtitle": "Compara características de cada plan y elige el que mejor se adapte a tus necesidades",
+    "mostPopular": "MÁS POPULAR",
+    "unlimited": "Ilimitado",
+    "basic": "Básico",
+    "priority": "Prioritario",
+    "vip": "VIP",
+    "cta": "Comenzar Ahora",
+    "tracking": "Seguimiento",
+    "aiFeatures": "Funciones de IA",
+    "other": "Otras Funciones",
+    "plans": {
+      "free": {
+        "price": "Gratis",
+        "description": "Comienza tu viaje de bienestar"
+      },
+      "premium": {
+        "price": "$9.90",
+        "description": "Funciones avanzadas para cuidarte"
+      },
+      "premiumPlus": {
+        "price": "$19.90",
+        "description": "Experiencia completa con IA avanzada"
+      }
+    },
+    "features": {
+      "cycleTracking": "Seguimiento del ciclo menstrual",
+      "moodSleep": "Registro de humor, sueño y energía",
+      "wellnessPlans": "Planes de Bienestar personalizados",
+      "aiRecommendations": "Recomendaciones de IA",
+      "womenDiary": "Diario de la Mujer con IA",
+      "sosFeminino": "SOS Femenino",
+      "lunaSense": "Luna Sense (Asistente IA)",
+      "beautyAnalysis": "Análisis de Belleza AI",
+      "virtualCloset": "Mi Closet Virtual",
+      "partner": "Luna en Pareja (Compartir)",
+      "privacy": "Privacidad y seguridad total",
+      "support": "Soporte"
+    }
   }
 }
