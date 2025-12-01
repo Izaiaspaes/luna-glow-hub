@@ -599,10 +599,10 @@
     "prioritySupport": "Soporte prioritario",
     "premiumPlusTitle": "Premium Plus",
     "premiumPlusDescription": "Todo de Premium + Luna Sense, Análisis de Belleza y Closet Virtual",
-    "premiumPlusPrice": "R$ 45,00",
-    "premiumPlusPriceUSD": "$19.90",
-    "premiumPlusYearlyPrice": "o R$ 450,00/año (2 meses gratis)",
-    "premiumPlusYearlyPriceUSD": "o $199.00/año (2 meses gratis)",
+    "premiumPlusPrice": "R$ 29,90",
+    "premiumPlusPriceUSD": "$9.90",
+    "premiumPlusYearlyPrice": "o R$ 299,00/año (2 meses gratis)",
+    "premiumPlusYearlyPriceUSD": "o $99.00/año (2 meses gratis)",
     "premiumDescription2": "Completo para bienestar + Diario IA y SOS Femenino",
     "premiumPlusFeature1": "Todo de Premium +",
     "subscribeMonthlyPremiumPlus": "Suscripción Mensual",
@@ -1505,14 +1505,14 @@
         "feature3": "1 plan de bienestar"
       },
       "premium": {
-        "price": "$19.90",
+        "price": "$6.90",
         "feature1": "Todas las funciones Free",
         "feature2": "Recomendaciones de IA personalizadas",
         "feature3": "Diario de la Mujer con análisis",
         "feature4": "SOS Femenino 24/7"
       },
       "premiumPlus": {
-        "price": "$39.90",
+        "price": "$9.90",
         "feature1": "Todas las funciones Premium",
         "feature2": "LunaSense - Chatbot inteligente",
         "feature3": "Análisis de belleza con IA",
@@ -1541,11 +1541,11 @@
         "description": "Comienza tu viaje de bienestar"
       },
       "premium": {
-        "price": "$9.90",
+        "price": "$6.90",
         "description": "Funciones avanzadas para cuidarte"
       },
       "premiumPlus": {
-        "price": "$19.90",
+        "price": "$9.90",
         "description": "Experiencia completa con IA avanzada"
       }
     },
