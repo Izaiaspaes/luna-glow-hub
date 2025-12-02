@@ -503,6 +503,59 @@
       "mentalHealth": "Saúde Mental"
     }
   },
+  "pricingSuccess": {
+    "title": "Bem-vinda ao {{plan}}! 🎉",
+    "subtitle": "Sua assinatura foi confirmada com sucesso. Agora você tem acesso a todos os recursos {{plan}} da Luna!",
+    "planActive": "Plano {{plan}} Ativo",
+    "featuresTitle": "O que você desbloqueou agora:",
+    "featuresSubtitle": "Explore todos os recursos exclusivos do plano {{plan}}",
+    "nextStepsTitle": "Próximos Passos",
+    "nextStepsSubtitle": "Comece a aproveitar sua experiência {{plan}}",
+    "step1Title": "Complete seu Onboarding",
+    "step1Desc": "Se ainda não fez, complete suas informações para receber recomendações mais personalizadas",
+    "step2Title": "Comece a Rastrear seus Dados",
+    "step2Desc": "Use os formulários de rastreamento para registrar ciclo, sono, humor e nutrição",
+    "step3Title": "Gere seus Planos Personalizados",
+    "step3Desc": "Crie múltiplos planos de bem-estar com IA e organize-os no calendário",
+    "step4Title": "Explore os Recursos Premium",
+    "step4Desc": "Descubra todas as funcionalidades exclusivas disponíveis para você",
+    "ctaButton": "Ir para o Dashboard",
+    "helpText": "Alguma dúvida? Entre em contato via e-mail ou WhatsApp",
+    "features": {
+      "unlimitedPlans": {
+        "title": "Planos Ilimitados",
+        "desc": "Crie quantos planos de bem-estar personalizados quiser simultaneamente"
+      },
+      "aiRecommendations": {
+        "title": "Recomendações com IA",
+        "desc": "Receba sugestões personalizadas baseadas em seus dados e fase do ciclo"
+      },
+      "womenJournal": {
+        "title": "Diário da Mulher com IA",
+        "desc": "Registre seus pensamentos e receba análises e insights personalizados"
+      },
+      "sosFeminino": {
+        "title": "SOS Feminino",
+        "desc": "Suporte imediato em momentos difíceis com técnicas de relaxamento"
+      },
+      "lunaSense": {
+        "title": "Luna Sense - Assistente IA",
+        "desc": "Converse com nossa IA especializada em saúde feminina e bem-estar"
+      },
+      "beautyAnalysis": {
+        "title": "Análise de Beleza IA",
+        "desc": "Recomendações personalizadas de maquiagem e skincare com IA visual"
+      },
+      "virtualCloset": {
+        "title": "Meu Closet Virtual",
+        "desc": "Organize suas roupas e receba sugestões de looks personalizados"
+      },
+      "predictions": {
+        "title": "Previsões Inteligentes",
+        "desc": "Receba previsões de sintomas baseadas em IA e histórico"
+      }
+    }
+  },
   "pricing": {
     "packagesForAll": "Pacotes para todas as mulheres",
     "title": "Escolha o plano ideal para você",

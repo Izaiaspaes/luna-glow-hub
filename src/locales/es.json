@@ -562,6 +562,59 @@
       "passwordReset": "¡Contraseña restablecida exitosamente!"
     }
   },
+  "pricingSuccess": {
+    "title": "¡Bienvenida a {{plan}}! 🎉",
+    "subtitle": "Tu suscripción fue confirmada con éxito. ¡Ahora tienes acceso a todas las funciones {{plan}} de Luna!",
+    "planActive": "Plan {{plan}} Activo",
+    "featuresTitle": "Lo que has desbloqueado ahora:",
+    "featuresSubtitle": "Explora todas las funciones exclusivas del plan {{plan}}",
+    "nextStepsTitle": "Próximos Pasos",
+    "nextStepsSubtitle": "Comienza a disfrutar de tu experiencia {{plan}}",
+    "step1Title": "Completa tu Incorporación",
+    "step1Desc": "Si aún no lo has hecho, completa tu información para recibir recomendaciones más personalizadas",
+    "step2Title": "Comienza a Rastrear tus Datos",
+    "step2Desc": "Usa los formularios de rastreo para registrar ciclo, sueño, estado de ánimo y nutrición",
+    "step3Title": "Genera tus Planes Personalizados",
+    "step3Desc": "Crea múltiples planes de bienestar con IA y organízalos en el calendario",
+    "step4Title": "Explora las Funciones Premium",
+    "step4Desc": "Descubre todas las funciones exclusivas disponibles para ti",
+    "ctaButton": "Ir al Panel",
+    "helpText": "¿Alguna pregunta? Contáctanos por correo electrónico o WhatsApp",
+    "features": {
+      "unlimitedPlans": {
+        "title": "Planes Ilimitados",
+        "desc": "Crea tantos planes de bienestar personalizados como quieras simultáneamente"
+      },
+      "aiRecommendations": {
+        "title": "Recomendaciones con IA",
+        "desc": "Recibe sugerencias personalizadas basadas en tus datos y fase del ciclo"
+      },
+      "womenJournal": {
+        "title": "Diario de la Mujer con IA",
+        "desc": "Registra tus pensamientos y recibe análisis e insights personalizados"
+      },
+      "sosFeminino": {
+        "title": "SOS Femenino",
+        "desc": "Apoyo inmediato en momentos difíciles con técnicas de relajación"
+      },
+      "lunaSense": {
+        "title": "Luna Sense - Asistente IA",
+        "desc": "Chatea con nuestra IA especializada en salud femenina y bienestar"
+      },
+      "beautyAnalysis": {
+        "title": "Análisis de Belleza IA",
+        "desc": "Recomendaciones personalizadas de maquillaje y skincare con IA visual"
+      },
+      "virtualCloset": {
+        "title": "Mi Closet Virtual",
+        "desc": "Organiza tu ropa y recibe sugerencias de looks personalizados"
+      },
+      "predictions": {
+        "title": "Predicciones Inteligentes",
+        "desc": "Recibe predicciones de síntomas basadas en IA e historial"
+      }
+    }
+  },
   "pricing": {
     "title": "Elige tu Plan",
     "free": "Gratis",
