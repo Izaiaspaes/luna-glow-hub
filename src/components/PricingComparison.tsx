@@ -5,12 +5,23 @@ import { Check, X, Sparkles, Crown, Gift } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useCurrency } from "@/hooks/useCurrency";
 import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const PricingComparison = () => {
   const { t } = useTranslation();
   const { currency } = useCurrency();
+  const navigate = useNavigate();
+  const [redirecting, setRedirecting] = useState(false);
   
   const prices = PRICING_CONFIG[currency];
+
+  const handleCTAClick = () => {
+    setRedirecting(true);
+    setTimeout(() => {
+      navigate('/auth');
+    }, 600);
+  };
 
   const features = [
     {
@@ -84,7 +95,19 @@ export const PricingComparison = () => {
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-background relative">
+      {/* Redirect Animation Overlay */}
+      {redirecting && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center animate-fade-in">
+          <div className="text-center space-y-4 animate-scale-in">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-colorful animate-pulse">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+            <p className="text-lg font-medium">{t('pricing.redirecting') || 'Redirecionando para login...'}</p>
+          </div>
+        </div>
+      )}
+      
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
@@ -171,15 +194,15 @@ export const PricingComparison = () => {
             <div className="col-span-1"></div>
             {plans.map((plan, index) => (
               <div key={index} className="flex justify-center">
-                <NavLink to="/auth">
-                  <Button 
-                    variant={plan.highlight ? "colorful" : "outline"}
-                    size="lg"
-                    className="w-full"
-                  >
-                    {t("pricingComparison.cta")}
-                  </Button>
-                </NavLink>
+                <Button 
+                  variant={plan.highlight ? "colorful" : "outline"}
+                  size="lg"
+                  className="w-full"
+                  onClick={handleCTAClick}
+                  disabled={redirecting}
+                >
+                  {redirecting ? t("pricing.redirecting") : t("pricingComparison.cta")}
+                </Button>
               </div>
             ))}
           </div>
