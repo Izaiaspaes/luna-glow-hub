@@ -145,11 +145,7 @@ export default function Pricing() {
 
   const handleCheckout = async (priceId: string) => {
     if (!user || !session) {
-      toast({
-        title: t('pricing.loginRequired') || "Login necessário",
-        description: t('pricing.loginRequiredDescription') || "Você precisa fazer login para assinar",
-        variant: "destructive",
-      });
+      window.location.href = '/auth';
       return;
     }
 
