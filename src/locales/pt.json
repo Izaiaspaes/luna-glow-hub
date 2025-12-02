@@ -538,6 +538,7 @@
     "subscribeMonthlyPremiumPlus": "Assinar Mensalmente",
     "subscribeYearlyPremiumPlus": "Assinar Anualmente",
     "processing": "Processando...",
+    "redirecting": "Redirecionando para login...",
     "loginRequired": "Login necessário",
     "loginRequiredDescription": "Você precisa fazer login para assinar",
     "freemiumFeatures": {

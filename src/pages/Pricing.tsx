@@ -10,6 +10,7 @@ import {
   Zap
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { MobileNav } from "@/components/MobileNav";
 import { LanguageSelector } from "@/components/LanguageSelector";
@@ -95,8 +96,10 @@ const getComparisonFeatures = (t: any) => [
 export default function Pricing() {
   const { user, session } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const { currency, isLoading: currencyLoading } = useCurrency();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   
   const prices = PRICING_CONFIG[currency];
   
@@ -145,7 +148,10 @@ export default function Pricing() {
 
   const handleCheckout = async (priceId: string) => {
     if (!user || !session) {
-      window.location.href = '/auth';
+      setRedirecting(true);
+      setTimeout(() => {
+        navigate('/auth');
+      }, 600);
       return;
     }
 
@@ -188,7 +194,18 @@ export default function Pricing() {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Redirect Animation Overlay */}
+      {redirecting && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center animate-fade-in">
+          <div className="text-center space-y-4 animate-scale-in">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-colorful animate-pulse">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+            <p className="text-lg font-medium">{t('pricing.redirecting') || 'Redirecionando para login...'}</p>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gradient-soft">

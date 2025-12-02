@@ -508,6 +508,7 @@
     "subscribeMonthlyPremiumPlus": "Subscribe Monthly",
     "subscribeYearlyPremiumPlus": "Subscribe Annually",
     "processing": "Processing...",
+    "redirecting": "Redirecting to login...",
     "loginRequired": "Login required",
     "loginRequiredDescription": "You need to log in to subscribe",
     "freemiumFeatures": {
