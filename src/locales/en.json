@@ -473,6 +473,59 @@
       "addNew": "Add New"
     }
   },
+  "pricingSuccess": {
+    "title": "Welcome to {{plan}}! 🎉",
+    "subtitle": "Your subscription was confirmed successfully. Now you have access to all {{plan}} features of Luna!",
+    "planActive": "{{plan}} Plan Active",
+    "featuresTitle": "What you've unlocked now:",
+    "featuresSubtitle": "Explore all exclusive features of the {{plan}} plan",
+    "nextStepsTitle": "Next Steps",
+    "nextStepsSubtitle": "Start enjoying your {{plan}} experience",
+    "step1Title": "Complete Your Onboarding",
+    "step1Desc": "If you haven't yet, complete your information to receive more personalized recommendations",
+    "step2Title": "Start Tracking Your Data",
+    "step2Desc": "Use tracking forms to record cycle, sleep, mood, and nutrition",
+    "step3Title": "Generate Your Personalized Plans",
+    "step3Desc": "Create multiple AI-powered wellness plans and organize them in the calendar",
+    "step4Title": "Explore Premium Features",
+    "step4Desc": "Discover all exclusive features available to you",
+    "ctaButton": "Go to Dashboard",
+    "helpText": "Any questions? Contact us via email or WhatsApp",
+    "features": {
+      "unlimitedPlans": {
+        "title": "Unlimited Plans",
+        "desc": "Create as many personalized wellness plans as you want simultaneously"
+      },
+      "aiRecommendations": {
+        "title": "AI Recommendations",
+        "desc": "Receive personalized suggestions based on your data and cycle phase"
+      },
+      "womenJournal": {
+        "title": "Women's Journal with AI",
+        "desc": "Record your thoughts and receive personalized analysis and insights"
+      },
+      "sosFeminino": {
+        "title": "SOS Feminino",
+        "desc": "Immediate support in difficult moments with relaxation techniques"
+      },
+      "lunaSense": {
+        "title": "Luna Sense - AI Assistant",
+        "desc": "Chat with our AI specialized in women's health and wellness"
+      },
+      "beautyAnalysis": {
+        "title": "Beauty Analysis AI",
+        "desc": "Personalized makeup and skincare recommendations with visual AI"
+      },
+      "virtualCloset": {
+        "title": "My Virtual Closet",
+        "desc": "Organize your clothes and receive personalized outfit suggestions"
+      },
+      "predictions": {
+        "title": "Smart Predictions",
+        "desc": "Receive AI-based symptom predictions based on your history"
+      }
+    }
+  },
   "pricing": {
     "packagesForAll": "Plans for all women",
     "title": "Choose the perfect plan for you",

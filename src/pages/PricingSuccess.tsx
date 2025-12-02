@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Layout } from "@/components/Layout";
@@ -9,8 +9,10 @@ import {
   CheckCircle2, 
   Sparkles, 
   Calendar,
-  Mic,
-  Users,
+  MessageSquare,
+  Heart,
+  Camera,
+  ShoppingBag,
   TrendingUp,
   ArrowRight
 } from "lucide-react";
@@ -19,7 +21,7 @@ import { useAuth } from "@/hooks/useAuth";
 const PricingSuccess = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, subscriptionStatus } = useAuth();
+  const { user, subscriptionStatus, userProfile } = useAuth();
 
   useEffect(() => {
     // If not logged in, redirect to auth
@@ -28,33 +30,66 @@ const PricingSuccess = () => {
     }
   }, [user, navigate]);
 
+  // Determine if user is Premium or Premium Plus
+  const isPremiumPlus = useMemo(() => {
+    // Check Stripe product_id or database subscription_plan
+    const stripeProductIds = ['prod_TVfx4bH4H0okVe', 'prod_TVfxAziuEOC4QN'];
+    const hasStripePremiumPlus = subscriptionStatus?.product_id && stripeProductIds.includes(subscriptionStatus.product_id);
+    const hasDbPremiumPlus = userProfile?.subscription_plan === 'premium_plus';
+    return hasStripePremiumPlus || hasDbPremiumPlus;
+  }, [subscriptionStatus, userProfile]);
+
+  const planName = isPremiumPlus ? "Premium Plus" : "Premium";
+
+  // Define features based on plan tier
   const premiumFeatures = [
     {
       icon: Sparkles,
-      title: "Planos Ilimitados",
-      description: "Crie quantos planos de bem-estar personalizados quiser simultaneamente"
-    },
-    {
-      icon: Mic,
-      title: "Transcrição por Voz",
-      description: "Registre seus dados usando voz em todos os formulários de rastreamento"
-    },
-    {
-      icon: Calendar,
-      title: "Previsões Inteligentes",
-      description: "Receba previsões de sintomas baseadas em IA e histórico"
-    },
-    {
-      icon: Users,
-      title: "Luna a Dois",
-      description: "Compartilhe seu ciclo com parceiro(a) e receba dicas de apoio"
+      title: t('pricingSuccess.features.unlimitedPlans.title'),
+      description: t('pricingSuccess.features.unlimitedPlans.desc')
     },
     {
       icon: TrendingUp,
-      title: "Análises Avançadas",
-      description: "Acesse relatórios detalhados e insights sobre sua saúde"
+      title: t('pricingSuccess.features.aiRecommendations.title'),
+      description: t('pricingSuccess.features.aiRecommendations.desc')
+    },
+    {
+      icon: MessageSquare,
+      title: t('pricingSuccess.features.womenJournal.title'),
+      description: t('pricingSuccess.features.womenJournal.desc')
+    },
+    {
+      icon: Heart,
+      title: t('pricingSuccess.features.sosFeminino.title'),
+      description: t('pricingSuccess.features.sosFeminino.desc')
     }
   ];
+
+  const premiumPlusFeatures = [
+    ...premiumFeatures,
+    {
+      icon: MessageSquare,
+      title: t('pricingSuccess.features.lunaSense.title'),
+      description: t('pricingSuccess.features.lunaSense.desc')
+    },
+    {
+      icon: Camera,
+      title: t('pricingSuccess.features.beautyAnalysis.title'),
+      description: t('pricingSuccess.features.beautyAnalysis.desc')
+    },
+    {
+      icon: ShoppingBag,
+      title: t('pricingSuccess.features.virtualCloset.title'),
+      description: t('pricingSuccess.features.virtualCloset.desc')
+    },
+    {
+      icon: Calendar,
+      title: t('pricingSuccess.features.predictions.title'),
+      description: t('pricingSuccess.features.predictions.desc')
+    }
+  ];
+
+  const displayedFeatures = isPremiumPlus ? premiumPlusFeatures : premiumFeatures;
 
   return (
     <Layout>
@@ -70,30 +105,32 @@ const PricingSuccess = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-luna-pink via-luna-purple to-luna-blue bg-clip-text text-transparent">
-              Bem-vinda ao Premium! 🎉
+              {t('pricingSuccess.title', { plan: planName })}
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Sua assinatura foi confirmada com sucesso. Agora você tem acesso a todos os recursos premium da Luna!
+              {t('pricingSuccess.subtitle', { plan: planName })}
             </p>
 
             <Badge variant="secondary" className="text-lg px-6 py-2">
               <Sparkles className="w-5 h-5 mr-2" />
-              Plano Premium Ativo
+              {t('pricingSuccess.planActive', { plan: planName })}
             </Badge>
           </div>
 
           {/* Premium Features Grid */}
           <Card className="border-luna-purple/20 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-2xl">O que você desbloqueia agora:</CardTitle>
+              <CardTitle className="text-2xl">
+                {t('pricingSuccess.featuresTitle')}
+              </CardTitle>
               <CardDescription>
-                Explore todos os recursos exclusivos do plano Premium
+                {t('pricingSuccess.featuresSubtitle', { plan: planName })}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-6">
-                {premiumFeatures.map((feature, index) => {
+                {displayedFeatures.map((feature, index) => {
                   const Icon = feature.icon;
                   return (
                     <div 
@@ -119,9 +156,11 @@ const PricingSuccess = () => {
           {/* Next Steps */}
           <Card className="border-luna-blue/20 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-2xl">Próximos Passos</CardTitle>
+              <CardTitle className="text-2xl">
+                {t('pricingSuccess.nextStepsTitle')}
+              </CardTitle>
               <CardDescription>
-                Comece a aproveitar sua experiência Premium
+                {t('pricingSuccess.nextStepsSubtitle', { plan: planName })}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -131,9 +170,9 @@ const PricingSuccess = () => {
                     <span className="text-luna-purple font-semibold">1</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Complete seu Onboarding</h4>
+                    <h4 className="font-semibold">{t('pricingSuccess.step1Title')}</h4>
                     <p className="text-sm text-muted-foreground">
-                      Se ainda não fez, complete suas informações para receber recomendações mais personalizadas
+                      {t('pricingSuccess.step1Desc')}
                     </p>
                   </div>
                 </div>
@@ -143,9 +182,9 @@ const PricingSuccess = () => {
                     <span className="text-luna-purple font-semibold">2</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Comece a Rastrear seus Dados</h4>
+                    <h4 className="font-semibold">{t('pricingSuccess.step2Title')}</h4>
                     <p className="text-sm text-muted-foreground">
-                      Use a transcrição por voz para registrar ciclo, sono, humor e nutrição de forma rápida
+                      {t('pricingSuccess.step2Desc')}
                     </p>
                   </div>
                 </div>
@@ -155,9 +194,9 @@ const PricingSuccess = () => {
                     <span className="text-luna-purple font-semibold">3</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Gere seus Planos Personalizados</h4>
+                    <h4 className="font-semibold">{t('pricingSuccess.step3Title')}</h4>
                     <p className="text-sm text-muted-foreground">
-                      Crie múltiplos planos de bem-estar com IA e organize-os no calendário
+                      {t('pricingSuccess.step3Desc')}
                     </p>
                   </div>
                 </div>
@@ -167,9 +206,9 @@ const PricingSuccess = () => {
                     <span className="text-luna-purple font-semibold">4</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Explore Luna a Dois</h4>
+                    <h4 className="font-semibold">{t('pricingSuccess.step4Title')}</h4>
                     <p className="text-sm text-muted-foreground">
-                      Convide seu/sua parceiro(a) para compartilhar insights e receber dicas de apoio
+                      {t('pricingSuccess.step4Desc')}
                     </p>
                   </div>
                 </div>
@@ -184,12 +223,12 @@ const PricingSuccess = () => {
               onClick={() => navigate("/dashboard")}
               className="bg-gradient-to-r from-luna-pink via-luna-purple to-luna-blue hover:opacity-90 text-white px-8 py-6 text-lg group"
             >
-              Ir para o Dashboard
+              {t('pricingSuccess.ctaButton')}
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             <p className="text-sm text-muted-foreground">
-              Alguma dúvida? Entre em contato via WhatsApp ou e-mail
+              {t('pricingSuccess.helpText')}
             </p>
           </div>
         </div>
