@@ -22,9 +22,6 @@ import Onboarding from "./pages/Onboarding";
 import Install from "./pages/Install";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
-import SalesPagePT from "./pages/SalesPagePT";
-import SalesPageEN from "./pages/SalesPageEN";
-import SalesPageES from "./pages/SalesPageES";
 import NotFound from "./pages/NotFound";
 import "./i18n";
 
@@ -60,10 +57,6 @@ const AppContent = () => {
           <Route path="/install" element={<Install />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
-          {/* Sales pages by language */}
-          <Route path="/venda-pt" element={<SalesPagePT />} />
-          <Route path="/venda-en" element={<SalesPageEN />} />
-          <Route path="/venda-es" element={<SalesPageES />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
