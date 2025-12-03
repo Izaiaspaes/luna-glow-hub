@@ -9,58 +9,58 @@ import { OnboardingData } from "@/hooks/useOnboarding";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const step1Schema = z.object({
+const createStep1Schema = (t: (key: string) => string) => z.object({
   email: z.string()
-    .min(1, "E-mail é obrigatório")
-    .email("E-mail inválido")
-    .max(255, "E-mail muito longo"),
+    .min(1, t('onboarding.form.emailRequired'))
+    .email(t('onboarding.form.emailInvalid'))
+    .max(255, t('onboarding.form.emailTooLong')),
   password: z.string()
-    .min(6, "Senha deve ter pelo menos 6 caracteres")
-    .max(72, "Senha muito longa"),
+    .min(6, t('onboarding.form.passwordRequired'))
+    .max(72, t('onboarding.form.passwordTooLong')),
   confirmPassword: z.string()
-    .min(1, "Confirme sua senha"),
+    .min(1, t('onboarding.form.confirmPasswordRequired')),
   full_name: z.string()
-    .min(1, "Nome completo é obrigatório")
-    .min(3, "Nome deve ter pelo menos 3 caracteres")
-    .max(100, "Nome muito longo (máximo 100 caracteres)")
+    .min(1, t('onboarding.form.fullNameRequired'))
+    .min(3, t('onboarding.form.fullNameMin'))
+    .max(100, t('onboarding.form.fullNameMax'))
     .refine(val => val.trim().split(' ').length >= 2, {
-      message: "Por favor, informe nome e sobrenome"
+      message: t('onboarding.form.fullNameTwoWords')
     })
     .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
-      message: "Nome contém caracteres inválidos"
+      message: t('onboarding.form.invalidCharacters')
     }),
   preferred_name: z.string()
-    .min(1, "Nome preferido é obrigatório")
-    .min(2, "Nome deve ter pelo menos 2 caracteres")
-    .max(50, "Nome muito longo (máximo 50 caracteres)")
+    .min(1, t('onboarding.form.preferredNameRequired'))
+    .min(2, t('onboarding.form.preferredNameMin'))
+    .max(50, t('onboarding.form.preferredNameMax'))
     .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
-      message: "Nome contém caracteres inválidos"
+      message: t('onboarding.form.invalidCharacters')
     }),
   age: z.number({
-    required_error: "Idade é obrigatória",
-    invalid_type_error: "Digite um número válido"
+    required_error: t('onboarding.form.ageRequired'),
+    invalid_type_error: t('onboarding.form.ageInvalid')
   })
-    .int("Idade deve ser um número inteiro")
-    .min(13, "Você deve ter pelo menos 13 anos para usar o Luna")
-    .max(120, "Por favor, verifique a idade digitada"),
+    .int(t('onboarding.form.ageInvalid'))
+    .min(13, t('onboarding.form.ageMin'))
+    .max(120, t('onboarding.form.ageMax')),
   profession: z.string()
-    .max(100, "Profissão muito longa (máximo 100 caracteres)")
+    .max(100, t('onboarding.form.professionMax'))
     .optional()
     .or(z.literal("")),
   current_city: z.string()
-    .max(100, "Nome da cidade muito longo")
+    .max(100, t('onboarding.form.currentCityMax'))
     .optional()
     .or(z.literal("")),
   current_country: z.string()
-    .max(100, "Nome do país muito longo")
+    .max(100, t('onboarding.form.currentCountryMax'))
     .optional()
     .or(z.literal("")),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "As senhas não coincidem",
+  message: t('onboarding.form.passwordsMismatch'),
   path: ["confirmPassword"],
 });
 
-type Step1Data = z.infer<typeof step1Schema>;
+type Step1Data = z.infer<ReturnType<typeof createStep1Schema>>;
 
 interface OnboardingStep1Props {
   data: OnboardingData;
@@ -74,6 +74,8 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const step1Schema = createStep1Schema(t);
   
   const { register, handleSubmit, watch, formState: { errors } } = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -91,7 +93,6 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
   });
 
   // Auto-save on field changes (excluding email/password)
-  const watchedFields = watch();
   useEffect(() => {
     const subscription = watch((value) => {
       const { email, password, confirmPassword, ...profileData } = value;
@@ -108,12 +109,12 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-foreground">Crie sua conta</h2>
-        <p className="text-muted-foreground">Comece sua jornada de bem-estar com a Luna</p>
+        <h2 className="text-2xl font-semibold text-foreground">{t('onboarding.form.createAccount')}</h2>
+        <p className="text-muted-foreground">{t('onboarding.form.startJourney')}</p>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span>Auto-salvamento ativo</span>
+            <span>{t('onboarding.form.autoSaveActive')}</span>
           </div>
         </div>
       </div>
@@ -133,19 +134,19 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
         <div className="p-4 rounded-lg bg-muted/30 border border-border/50 space-y-4">
           <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
             <Lock className="w-4 h-4" />
-            Dados de Acesso
+            {t('onboarding.form.accessData')}
           </h3>
           
           <div className="space-y-2">
             <Label htmlFor="email" className="flex items-center gap-1">
               <Mail className="w-3.5 h-3.5" />
-              E-mail <span className="text-destructive">*</span>
+              {t('onboarding.form.email')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="email"
               type="email"
               {...register("email")}
-              placeholder="seu@email.com"
+              placeholder={t('onboarding.form.emailPlaceholder')}
               className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
               maxLength={255}
               autoComplete="email"
@@ -162,14 +163,14 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
             <div className="space-y-2">
               <Label htmlFor="password" className="flex items-center gap-1">
                 <Lock className="w-3.5 h-3.5" />
-                Senha <span className="text-destructive">*</span>
+                {t('onboarding.form.password')} <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder={t('onboarding.form.passwordPlaceholder')}
                   className={`pr-10 ${errors.password ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   maxLength={72}
                   autoComplete="new-password"
@@ -192,14 +193,14 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="flex items-center gap-1">
-                Confirmar Senha <span className="text-destructive">*</span>
+                {t('onboarding.form.confirmPassword')} <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   {...register("confirmPassword")}
-                  placeholder="Digite a senha novamente"
+                  placeholder={t('onboarding.form.confirmPasswordPlaceholder')}
                   className={`pr-10 ${errors.confirmPassword ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   maxLength={72}
                   autoComplete="new-password"
@@ -224,16 +225,16 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
 
         {/* Profile Section */}
         <div className="p-4 rounded-lg bg-muted/30 border border-border/50 space-y-4">
-          <h3 className="text-sm font-medium text-foreground">Sobre Você</h3>
+          <h3 className="text-sm font-medium text-foreground">{t('onboarding.form.aboutYou')}</h3>
           
           <div className="space-y-2">
             <Label htmlFor="preferred_name" className="flex items-center gap-1">
-              Como gostaria de ser chamada? <span className="text-destructive">*</span>
+              {t('onboarding.form.preferredName')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="preferred_name"
               {...register("preferred_name")}
-              placeholder="Ex: Maria, Mari, Má..."
+              placeholder={t('onboarding.form.preferredNamePlaceholder')}
               className={errors.preferred_name ? "border-destructive focus-visible:ring-destructive" : ""}
               maxLength={50}
             />
@@ -244,18 +245,18 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
               </p>
             )}
             <p className="text-xs text-muted-foreground">
-              💬 Este será o nome que usaremos para te chamar no app
+              {t('onboarding.form.preferredNameHint')}
             </p>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="full_name" className="flex items-center gap-1">
-              Nome Completo <span className="text-destructive">*</span>
+              {t('onboarding.form.fullName')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="full_name"
               {...register("full_name")}
-              placeholder="Ex: Maria Silva Santos"
+              placeholder={t('onboarding.form.fullNamePlaceholder')}
               className={errors.full_name ? "border-destructive focus-visible:ring-destructive" : ""}
               maxLength={100}
             />
@@ -266,19 +267,19 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
               </p>
             )}
             <p className="text-xs text-muted-foreground">
-              Nome e sobrenome para personalizar sua experiência
+              {t('onboarding.form.fullNameHint')}
             </p>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="age" className="flex items-center gap-1">
-              Idade <span className="text-destructive">*</span>
+              {t('onboarding.form.age')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="age"
               type="number"
               {...register("age", { valueAsNumber: true })}
-              placeholder="Digite sua idade"
+              placeholder={t('onboarding.form.agePlaceholder')}
               className={errors.age ? "border-destructive focus-visible:ring-destructive" : ""}
               min={13}
               max={120}
@@ -290,16 +291,16 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
               </p>
             )}
             <p className="text-xs text-muted-foreground">
-              Idade mínima: 13 anos
+              {t('onboarding.form.ageHint')}
             </p>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="profession">Profissão / Área de Atuação</Label>
+            <Label htmlFor="profession">{t('onboarding.form.profession')}</Label>
             <Input
               id="profession"
               {...register("profession")}
-              placeholder="Ex: Professora, Designer, Estudante..."
+              placeholder={t('onboarding.form.professionPlaceholder')}
               className={errors.profession ? "border-destructive focus-visible:ring-destructive" : ""}
               maxLength={100}
             />
@@ -313,11 +314,11 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="current_city">Cidade Atual</Label>
+              <Label htmlFor="current_city">{t('onboarding.form.currentCity')}</Label>
               <Input
                 id="current_city"
                 {...register("current_city")}
-                placeholder="Ex: São Paulo"
+                placeholder={t('onboarding.form.currentCityPlaceholder')}
                 className={errors.current_city ? "border-destructive focus-visible:ring-destructive" : ""}
                 maxLength={100}
               />
@@ -330,11 +331,11 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="current_country">País Atual</Label>
+              <Label htmlFor="current_country">{t('onboarding.form.currentCountry')}</Label>
               <Input
                 id="current_country"
                 {...register("current_country")}
-                placeholder="Ex: Brasil"
+                placeholder={t('onboarding.form.currentCountryPlaceholder')}
                 className={errors.current_country ? "border-destructive focus-visible:ring-destructive" : ""}
                 maxLength={100}
               />
@@ -350,13 +351,13 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
       </div>
 
       <Button type="submit" className="w-full" variant="hero" disabled={isLoading}>
-        {isLoading ? "Criando conta..." : "Criar Conta e Continuar"}
+        {isLoading ? t('onboarding.form.creatingAccount') : t('onboarding.form.createAccountButton')}
       </Button>
       
       <p className="text-xs text-center text-muted-foreground">
-        Já tem uma conta?{" "}
+        {t('onboarding.form.alreadyHaveAccount')}{" "}
         <a href="/auth" className="text-primary hover:underline">
-          Faça login
+          {t('onboarding.form.loginLink')}
         </a>
       </p>
     </form>
