@@ -69,53 +69,53 @@ export default function OnboardingSuccess() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-luna-pink-light/30 to-luna-peach/30 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Decorative elements - hidden on mobile for performance */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
         <motion.div 
-          className="absolute top-20 right-20 w-72 h-72 bg-luna-pink/10 rounded-full blur-3xl"
+          className="absolute top-20 right-10 md:right-20 w-48 md:w-72 h-48 md:h-72 bg-luna-pink/10 rounded-full blur-3xl"
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute bottom-32 left-20 w-96 h-96 bg-luna-purple/10 rounded-full blur-3xl"
+          className="absolute bottom-32 left-10 md:left-20 w-64 md:w-96 h-64 md:h-96 bg-luna-purple/10 rounded-full blur-3xl"
           animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
         />
       </div>
 
-      <div className="container mx-auto px-4 py-12 relative z-10">
+      <div className="container mx-auto px-4 py-6 sm:py-12 relative z-10">
         {/* Success Header */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : -20 }}
           transition={{ duration: 0.6 }}
         >
           <motion.div
-            className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-luna-green to-luna-blue mb-6"
+            className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-luna-green to-luna-blue mb-4 sm:mb-6"
             initial={{ scale: 0 }}
             animate={{ scale: showContent ? 1 : 0 }}
             transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
           >
-            <CheckCircle2 className="w-10 h-10 text-white" />
+            <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </motion.div>
           
-          <Badge className="bg-gradient-to-r from-luna-pink via-luna-purple to-primary text-white border-0 px-4 py-2 text-sm font-medium shadow-lg mb-4">
-            <Sparkles className="w-4 h-4 mr-2" />
+          <Badge className="bg-gradient-to-r from-luna-pink via-luna-purple to-primary text-white border-0 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium shadow-lg mb-3 sm:mb-4">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
             {t('onboardingSuccess.badge')}
           </Badge>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
             {t('onboardingSuccess.welcome')} <span className="gradient-text">{userName}</span>! 🎉
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             {t('onboardingSuccess.subtitle')}
           </p>
         </motion.div>
 
         {/* Benefits Grid */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: showContent ? 1 : 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -128,12 +128,12 @@ export default function OnboardingSuccess() {
               transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
             >
               <Card className="h-full border-2 border-transparent hover:border-primary/20 transition-all duration-300 hover:shadow-lg">
-                <CardContent className="p-6 text-center">
-                  <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${benefit.color} mb-4`}>
-                    <benefit.icon className="w-7 h-7 text-white" />
+                <CardContent className="p-3 sm:p-6 text-center">
+                  <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${benefit.color} mb-2 sm:mb-4`}>
+                    <benefit.icon className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
                   </div>
-                  <h3 className="font-bold text-lg mb-2">{benefit.title}</h3>
-                  <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                  <h3 className="font-bold text-sm sm:text-lg mb-1 sm:mb-2">{benefit.title}</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 sm:line-clamp-none">{benefit.description}</p>
                 </CardContent>
               </Card>
             </motion.div>
@@ -148,13 +148,13 @@ export default function OnboardingSuccess() {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <Card className="border-2 border-primary/30 bg-gradient-to-br from-card via-card to-primary/5 shadow-2xl overflow-hidden">
-            <CardContent className="p-8 md:p-10">
-              <div className="flex flex-col md:flex-row items-center gap-8">
+            <CardContent className="p-5 sm:p-8 md:p-10">
+              <div className="flex flex-col md:flex-row items-center gap-5 sm:gap-8">
                 {/* Left side - Icon and badge */}
                 <div className="flex flex-col items-center">
                   <div className="relative">
                     <motion.div
-                      className="w-24 h-24 rounded-full bg-gradient-to-br from-luna-orange via-luna-pink to-luna-purple flex items-center justify-center"
+                      className="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-luna-orange via-luna-pink to-luna-purple flex items-center justify-center"
                       animate={{ 
                         boxShadow: [
                           "0 0 20px rgba(236, 72, 153, 0.3)",
@@ -164,14 +164,14 @@ export default function OnboardingSuccess() {
                       }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      <Crown className="w-12 h-12 text-white" />
+                      <Crown className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
                     </motion.div>
                     <motion.div
-                      className="absolute -top-2 -right-2 bg-luna-orange text-white text-xs font-bold px-2 py-1 rounded-full"
+                      className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-luna-orange text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full whitespace-nowrap"
                       animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
-                      <Gift className="w-3 h-3 inline mr-1" />
+                      <Gift className="w-2.5 h-2.5 sm:w-3 sm:h-3 inline mr-0.5 sm:mr-1" />
                       {t('onboardingSuccess.specialBadge')}
                     </motion.div>
                   </div>
@@ -179,15 +179,15 @@ export default function OnboardingSuccess() {
 
                 {/* Right side - Content */}
                 <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">
                     {t('onboardingSuccess.unlockTitle')} <span className="gradient-text">Luna</span>
                   </h2>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
                     {t('onboardingSuccess.unlockDescription')}
                   </p>
 
                   {/* Features list */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-5 sm:mb-8">
                     {premiumFeatures.map((feature, index) => (
                       <motion.div
                         key={feature}
@@ -196,32 +196,32 @@ export default function OnboardingSuccess() {
                         animate={{ opacity: showContent ? 1 : 0, x: showContent ? 0 : -10 }}
                         transition={{ duration: 0.3, delay: 1 + index * 0.1 }}
                       >
-                        <div className="w-5 h-5 rounded-full bg-luna-green/20 flex items-center justify-center flex-shrink-0">
-                          <CheckCircle2 className="w-3 h-3 text-luna-green" />
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-luna-green/20 flex items-center justify-center flex-shrink-0">
+                          <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-luna-green" />
                         </div>
-                        <span className="text-sm">{feature}</span>
+                        <span className="text-xs sm:text-sm text-left">{feature}</span>
                       </motion.div>
                     ))}
                   </div>
 
                   {/* CTA Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <Button 
-                      size="xl" 
+                      size="lg" 
                       variant="cta"
-                      className="group flex-1"
+                      className="group flex-1 text-sm sm:text-base"
                       onClick={() => navigate('/pricing')}
                     >
                       {t('onboardingSuccess.viewPlans')}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                     <Button 
-                      size="xl" 
+                      size="lg" 
                       variant="outline"
-                      className="flex-1"
+                      className="flex-1 text-sm sm:text-base"
                       onClick={() => navigate('/dashboard')}
                     >
-                      <Heart className="w-5 h-5 mr-2" />
+                      <Heart className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                       {t('onboardingSuccess.exploreFree')}
                     </Button>
                   </div>
@@ -232,21 +232,21 @@ export default function OnboardingSuccess() {
 
           {/* Trust indicators */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-muted-foreground"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 mt-6 sm:mt-8 text-xs sm:text-sm text-muted-foreground"
             initial={{ opacity: 0 }}
             animate={{ opacity: showContent ? 1 : 0 }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-luna-green" />
+            <div className="flex items-center justify-center gap-2">
+              <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luna-green" />
               <span>{t('onboardingSuccess.trust.securePayment')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Gift className="w-4 h-4 text-luna-orange" />
+            <div className="flex items-center justify-center gap-2">
+              <Gift className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luna-orange" />
               <span>{t('onboardingSuccess.trust.guarantee')}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-luna-purple" />
+            <div className="flex items-center justify-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-luna-purple" />
               <span>{t('onboardingSuccess.trust.cancelAnytime')}</span>
             </div>
           </motion.div>
