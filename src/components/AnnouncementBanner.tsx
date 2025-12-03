@@ -12,21 +12,35 @@ interface Banner {
   link_url?: string;
   link_text?: string;
   image_url?: string;
+  updated_at?: string;
+}
+
+interface DismissedBanner {
+  id: string;
+  dismissedAt: string;
 }
 
 export const AnnouncementBanner = () => {
   const { t } = useTranslation();
   const [banners, setBanners] = useState<Banner[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dismissedBanners, setDismissedBanners] = useState<Set<string>>(new Set());
+  const [dismissedBanners, setDismissedBanners] = useState<Map<string, string>>(new Map());
 
   useEffect(() => {
     fetchBanners();
     
-    // Load dismissed banners from localStorage
-    const dismissed = localStorage.getItem("dismissedBanners");
+    // Load dismissed banners from localStorage (with dismissal timestamps)
+    const dismissed = localStorage.getItem("dismissedBannersV2");
     if (dismissed) {
-      setDismissedBanners(new Set(JSON.parse(dismissed)));
+      try {
+        const parsed: DismissedBanner[] = JSON.parse(dismissed);
+        const map = new Map<string, string>();
+        parsed.forEach(item => map.set(item.id, item.dismissedAt));
+        setDismissedBanners(map);
+      } catch {
+        // Clear old format if exists
+        localStorage.removeItem("dismissedBanners");
+      }
     }
   }, []);
 
@@ -47,7 +61,17 @@ export const AnnouncementBanner = () => {
     }
   };
 
-  const activeBanners = banners.filter(banner => !dismissedBanners.has(banner.id));
+  // Filter banners: show if not dismissed OR if updated after being dismissed
+  const activeBanners = banners.filter(banner => {
+    const dismissedAt = dismissedBanners.get(banner.id);
+    if (!dismissedAt) return true; // Never dismissed
+    
+    // Show again if banner was updated after being dismissed
+    if (banner.updated_at) {
+      return new Date(banner.updated_at) > new Date(dismissedAt);
+    }
+    return false;
+  });
 
   // Auto-rotate banners
   useEffect(() => {
@@ -61,10 +85,16 @@ export const AnnouncementBanner = () => {
   }, [activeBanners.length]);
 
   const handleDismiss = (bannerId: string) => {
-    const newDismissed = new Set(dismissedBanners);
-    newDismissed.add(bannerId);
+    const newDismissed = new Map(dismissedBanners);
+    newDismissed.set(bannerId, new Date().toISOString());
     setDismissedBanners(newDismissed);
-    localStorage.setItem("dismissedBanners", JSON.stringify([...newDismissed]));
+    
+    // Save as array of DismissedBanner objects
+    const toSave: DismissedBanner[] = Array.from(newDismissed.entries()).map(([id, dismissedAt]) => ({
+      id,
+      dismissedAt
+    }));
+    localStorage.setItem("dismissedBannersV2", JSON.stringify(toSave));
     
     // Adjust current index if needed
     if (currentIndex >= activeBanners.length - 1) {
