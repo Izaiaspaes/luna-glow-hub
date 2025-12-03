@@ -14,6 +14,7 @@ import { Privacy } from "@/components/Privacy";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 import { Layout } from "@/components/Layout";
+import { HeroSkeleton, FeaturesSkeleton } from "@/components/skeletons";
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -26,12 +27,13 @@ const Index = () => {
     }
   }, [user, loading, navigate]);
 
-  // Show loading while checking auth
+  // Show skeleton loading while checking auth
   if (loading) {
     return (
       <Layout>
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="min-h-screen">
+          <HeroSkeleton />
+          <FeaturesSkeleton />
         </div>
       </Layout>
     );
