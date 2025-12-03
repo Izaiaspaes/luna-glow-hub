@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, Upload, Wand2, Loader2, Image as ImageIcon, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
@@ -25,6 +25,7 @@ interface Banner {
   start_date: string;
   end_date?: string;
   display_order: number;
+  image_url?: string;
 }
 
 export const BannersManagement = () => {
@@ -34,6 +35,9 @@ export const BannersManagement = () => {
   const [loading, setLoading] = useState(true);
   const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -45,6 +49,7 @@ export const BannersManagement = () => {
     start_date: new Date().toISOString().split("T")[0],
     end_date: "",
     display_order: 0,
+    image_url: "",
   });
 
   useEffect(() => {
@@ -70,6 +75,120 @@ export const BannersManagement = () => {
     setLoading(false);
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "Erro",
+        description: "A imagem deve ter no máximo 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('banners')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('banners')
+        .getPublicUrl(fileName);
+
+      setFormData({ ...formData, image_url: publicUrl });
+      toast({
+        title: "Sucesso",
+        description: "Imagem enviada com sucesso!",
+      });
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Erro",
+        description: error.message || "Erro ao enviar imagem",
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  const handleGenerateImage = async () => {
+    if (!formData.title && !formData.message) {
+      toast({
+        title: "Erro",
+        description: "Preencha o título ou mensagem para gerar a imagem",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-banner-image', {
+        body: {
+          title: formData.title,
+          message: formData.message,
+          bannerType: formData.banner_type,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.imageData) {
+        // Convert base64 to file and upload to storage
+        const base64Data = data.imageData.split(',')[1];
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'image/png' });
+        
+        const fileName = `ai-${Date.now()}.png`;
+        const { error: uploadError } = await supabase.storage
+          .from('banners')
+          .upload(fileName, blob);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('banners')
+          .getPublicUrl(fileName);
+
+        setFormData({ ...formData, image_url: publicUrl });
+        toast({
+          title: "Sucesso",
+          description: "Imagem gerada com IA com sucesso!",
+        });
+      }
+    } catch (error: any) {
+      console.error('AI generation error:', error);
+      toast({
+        title: "Erro",
+        description: error.message || "Erro ao gerar imagem com IA",
+        variant: "destructive",
+      });
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  const removeImage = () => {
+    setFormData({ ...formData, image_url: "" });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -78,6 +197,7 @@ export const BannersManagement = () => {
       end_date: formData.end_date || null,
       link_url: formData.link_url || null,
       link_text: formData.link_text || null,
+      image_url: formData.image_url || null,
     };
 
     if (editingBanner) {
@@ -132,6 +252,7 @@ export const BannersManagement = () => {
       start_date: banner.start_date.split("T")[0],
       end_date: banner.end_date ? banner.end_date.split("T")[0] : "",
       display_order: banner.display_order,
+      image_url: banner.image_url || "",
     });
     setShowForm(true);
   };
@@ -186,6 +307,7 @@ export const BannersManagement = () => {
       start_date: new Date().toISOString().split("T")[0],
       end_date: "",
       display_order: 0,
+      image_url: "",
     });
     setEditingBanner(null);
     setShowForm(false);
@@ -256,6 +378,76 @@ export const BannersManagement = () => {
                 required
                 rows={3}
               />
+            </div>
+
+            {/* Image Section */}
+            <div className="space-y-2">
+              <Label>{t("admin.banners.form.image")}</Label>
+              
+              {formData.image_url ? (
+                <div className="relative w-full max-w-md">
+                  <img 
+                    src={formData.image_url} 
+                    alt="Banner preview" 
+                    className="w-full h-32 object-cover rounded-lg border"
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    className="absolute top-2 right-2 h-6 w-6"
+                    onClick={removeImage}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                  >
+                    {uploading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        {t("admin.banners.form.uploading")}
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="h-4 w-4 mr-2" />
+                        {t("admin.banners.form.uploadImage")}
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleGenerateImage}
+                    disabled={generating || (!formData.title && !formData.message)}
+                  >
+                    {generating ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        {t("admin.banners.form.generating")}
+                      </>
+                    ) : (
+                      <>
+                        <Wand2 className="h-4 w-4 mr-2" />
+                        {t("admin.banners.form.generateImage")}
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -360,7 +552,18 @@ export const BannersManagement = () => {
               ) : (
                 banners.map((banner) => (
                   <TableRow key={banner.id}>
-                    <TableCell className="font-medium">{banner.title}</TableCell>
+                    <TableCell className="font-medium">
+                      <div className="flex items-center gap-2">
+                        {banner.image_url && (
+                          <img 
+                            src={banner.image_url} 
+                            alt="" 
+                            className="w-10 h-10 object-cover rounded"
+                          />
+                        )}
+                        {banner.title}
+                      </div>
+                    </TableCell>
                     <TableCell>
                       <Badge className={getBannerTypeColor(banner.banner_type)}>
                         {t(`admin.banners.types.${banner.banner_type}`)}

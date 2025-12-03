@@ -254,6 +254,15 @@
     "statSatisfaction": "Satisfacción"
   },
   "admin": {
+    "title": "Panel de Administración",
+    "users": "Usuarios",
+    "statistics": "Estadísticas",
+    "content": "Contenido",
+    "settings": "Configuración",
+    "totalUsers": "Total de Usuarios",
+    "activeUsers": "Usuarios Activos",
+    "premiumUsers": "Usuarios Premium",
+    "revenue": "Ingresos",
     "banners": {
       "title": "Gestionar Banners",
       "description": "Crea y gestiona banners de anuncios para la página inicial",
@@ -281,7 +290,12 @@
         "startDate": "Fecha de Inicio",
         "endDate": "Fecha de Fin (opcional)",
         "order": "Orden de Visualización",
-        "active": "Banner Activo"
+        "active": "Banner Activo",
+        "image": "Imagen del Banner",
+        "uploadImage": "Subir Imagen",
+        "generateImage": "Generar con IA",
+        "generating": "Generando imagen...",
+        "uploading": "Subiendo..."
       },
       "types": {
         "info": "Información",
@@ -299,6 +313,7 @@
     },
     "suggestions": {
       "title": "Gestionar Sugerencias",
+      "description": "Ver y gestionar sugerencias de usuarios",
       "fetchError": "Error al cargar sugerencias",
       "updateSuccess": "¡Sugerencia actualizada con éxito!",
       "updateError": "Error al actualizar sugerencia",
