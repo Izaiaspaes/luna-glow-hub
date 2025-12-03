@@ -1,13 +1,12 @@
-import { Hero } from "@/components/landing/Hero";
-import { Features } from "@/components/landing/Features";
-import { Pricing } from "@/components/landing/Pricing";
-import { Testimonials } from "@/components/landing/Testimonials";
-import { FAQ } from "@/components/landing/FAQ";
-import { FinalCTA } from "@/components/landing/FinalCTA";
-import { TrustSection } from "@/components/landing/TrustSection";
+import { Hero } from "@/components/landing/es/Hero";
+import { Features } from "@/components/landing/es/Features";
+import { Pricing } from "@/components/landing/es/Pricing";
+import { Testimonials } from "@/components/landing/es/Testimonials";
+import { FAQ } from "@/components/landing/es/FAQ";
+import { FinalCTA } from "@/components/landing/es/FinalCTA";
+import { TrustSection } from "@/components/landing/es/TrustSection";
 import { ExitIntentPopup } from "@/components/landing/ExitIntentPopup";
 
-// ES version uses PT components as base - can be customized later with ES-specific components
 const LandingES = () => {
   return (
     <div className="min-h-screen">

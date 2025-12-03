@@ -15,32 +15,32 @@ export const Pricing = () => {
     {
       name: "Gratuito",
       price: formatPrice(0, currency),
-      period: "para sempre",
-      description: "Perfeito para começar sua jornada",
+      period: "para siempre",
+      description: "Perfecto para comenzar tu viaje",
       features: [
-        "Rastreamento básico do ciclo",
-        "Calendário menstrual",
-        "Previsões de fase",
-        "Acesso limitado ao Luna Sense",
+        "Seguimiento básico del ciclo",
+        "Calendario menstrual",
+        "Predicciones de fase",
+        "Acceso limitado a Luna Sense",
       ],
-      cta: "Começar Grátis",
+      cta: "Comenzar Gratis",
       variant: "ctaOutline" as const,
       popular: false
     },
     {
-      name: "Premium Mensal",
+      name: "Premium Mensual",
       price: formatPrice(prices.premium.monthly, currency),
-      period: "/mês",
-      description: "Todas as funcionalidades desbloqueadas",
+      period: "/mes",
+      description: "Todas las funcionalidades desbloqueadas",
       features: [
-        "Tudo do pacote Gratuito",
+        "Todo del paquete Gratuito",
         "Luna Sense 24/7 ilimitado",
-        "Diário com análise IA completa",
-        "SOS Feminino prioritário",
-        "Análises de beleza",
-        "Insights de saúde avançados",
+        "Diario con análisis IA completo",
+        "SOS Femenino prioritario",
+        "Análisis de belleza",
+        "Insights de salud avanzados",
       ],
-      cta: "Assinar Agora",
+      cta: "Suscribir Ahora",
       variant: "cta" as const,
       popular: true
     },
@@ -48,19 +48,19 @@ export const Pricing = () => {
       name: "Premium Plus Anual",
       price: formatPrice(prices.premiumPlus.yearly, currency),
       originalPrice: formatPrice(prices.premiumPlus.monthly * 12, currency),
-      period: "/ano",
-      badge: "Melhor Valor",
-      description: "Transformação completa garantida",
+      period: "/año",
+      badge: "Mejor Valor",
+      description: "Transformación completa garantizada",
       features: [
-        "Tudo do Premium Mensal",
+        "Todo del Premium Mensual",
         "Closet Virtual inteligente",
-        "Planos personalizados por fase",
-        "Comunidade exclusiva VIP",
-        "Conteúdo premium mensal",
-        "Suporte prioritário 24/7",
-        "Acesso vitalício a novos recursos",
+        "Planes personalizados por fase",
+        "Comunidad exclusiva VIP",
+        "Contenido premium mensual",
+        "Soporte prioritario 24/7",
+        "Acceso vitalicio a nuevas funciones",
       ],
-      cta: "Garantir Melhor Valor",
+      cta: "Obtener Mejor Valor",
       variant: "cta" as const,
       popular: false,
       highlight: true
@@ -71,11 +71,12 @@ export const Pricing = () => {
     return (
       <section className="py-24 bg-gradient-to-b from-background to-luna-pink-light/30">
         <div className="container mx-auto px-4 text-center">
-          <div className="animate-pulse">Carregando preços...</div>
+          <div className="animate-pulse">Cargando precios...</div>
         </div>
       </section>
     );
   }
+
   return (
     <section className="py-24 bg-gradient-to-b from-background to-luna-pink-light/30">
       <div className="container mx-auto px-4">
@@ -91,10 +92,10 @@ export const Pricing = () => {
             Oferta Limitada
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Escolha o pacote de assinatura perfeito para você
+            Elige el plan de suscripción perfecto para ti
           </h2>
           <p className="text-xl text-muted-foreground">
-            Comece grátis e faça upgrade quando estiver pronta para transformar seu bem-estar
+            Comienza gratis y actualiza cuando estés lista para transformar tu bienestar
           </p>
         </motion.div>
 
@@ -117,7 +118,7 @@ export const Pricing = () => {
               >
               {plan.popular && (
                 <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground">
-                  Mais Popular
+                  Más Popular
                 </Badge>
               )}
               
@@ -178,7 +179,7 @@ export const Pricing = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          Todos os pacotes incluem 7 dias de garantia de satisfação • Cancele quando quiser
+          Todos los planes incluyen garantía de satisfacción de 7 días • Cancela cuando quieras
         </motion.div>
       </div>
     </section>
