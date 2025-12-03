@@ -67,7 +67,7 @@ export const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              <Badge className="bg-secondary text-primary border-0 px-4 py-2 text-sm font-medium">
+              <Badge className="bg-gradient-to-r from-luna-pink via-luna-purple to-primary text-white border-0 px-4 py-2 text-sm font-medium shadow-lg">
                 <Sparkles className="w-4 h-4 mr-2" />
                 Oferta Especial - Ahorra en Plan Anual
               </Badge>
