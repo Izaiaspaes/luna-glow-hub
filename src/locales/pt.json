@@ -731,6 +731,47 @@
     "healthGoals": "Objetivos de Saúde",
     "preferences": "Preferências"
   },
+  "onboardingSuccess": {
+    "defaultName": "você",
+    "badge": "Cadastro Concluído!",
+    "welcome": "Bem-vinda,",
+    "subtitle": "Seu perfil foi criado com sucesso. Agora você tem acesso a recursos incríveis para transformar seu bem-estar.",
+    "benefits": {
+      "ai": {
+        "title": "IA Personalizada",
+        "description": "Planos de bem-estar criados especialmente para você"
+      },
+      "tracking": {
+        "title": "Rastreamento Completo",
+        "description": "Ciclo, sono, humor e energia em um só lugar"
+      },
+      "predictions": {
+        "title": "Previsões Inteligentes",
+        "description": "Antecipe seus sintomas e prepare-se melhor"
+      },
+      "privacy": {
+        "title": "100% Privado",
+        "description": "Seus dados protegidos com criptografia"
+      }
+    },
+    "premiumFeatures": {
+      "unlimitedPlans": "Planos de bem-estar ilimitados",
+      "aiJournal": "Diário da Mulher com IA",
+      "sosSupport": "SOS Feminino para momentos difíceis",
+      "advancedPredictions": "Previsões de sintomas avançadas",
+      "prioritySupport": "Suporte prioritário"
+    },
+    "specialBadge": "ESPECIAL",
+    "unlockTitle": "Desbloqueie todo o potencial do",
+    "unlockDescription": "Escolha o plano ideal para você e comece sua jornada de transformação com recursos exclusivos.",
+    "viewPlans": "Ver Planos e Assinar",
+    "exploreFree": "Explorar Grátis",
+    "trust": {
+      "securePayment": "Pagamento 100% seguro",
+      "guarantee": "7 dias de garantia",
+      "cancelAnytime": "Cancele quando quiser"
+    }
+  },
   "tracking": {
     "cycle": {
       "title": "Rastreamento de Ciclo",

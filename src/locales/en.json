@@ -701,6 +701,47 @@
     "healthGoals": "Health Goals",
     "preferences": "Preferences"
   },
+  "onboardingSuccess": {
+    "defaultName": "you",
+    "badge": "Registration Complete!",
+    "welcome": "Welcome,",
+    "subtitle": "Your profile has been created successfully. Now you have access to amazing features to transform your wellness.",
+    "benefits": {
+      "ai": {
+        "title": "Personalized AI",
+        "description": "Wellness plans created especially for you"
+      },
+      "tracking": {
+        "title": "Complete Tracking",
+        "description": "Cycle, sleep, mood and energy in one place"
+      },
+      "predictions": {
+        "title": "Smart Predictions",
+        "description": "Anticipate your symptoms and prepare better"
+      },
+      "privacy": {
+        "title": "100% Private",
+        "description": "Your data protected with encryption"
+      }
+    },
+    "premiumFeatures": {
+      "unlimitedPlans": "Unlimited wellness plans",
+      "aiJournal": "AI-powered Women's Journal",
+      "sosSupport": "SOS Support for difficult moments",
+      "advancedPredictions": "Advanced symptom predictions",
+      "prioritySupport": "Priority support"
+    },
+    "specialBadge": "SPECIAL",
+    "unlockTitle": "Unlock the full potential of",
+    "unlockDescription": "Choose the ideal plan for you and start your transformation journey with exclusive features.",
+    "viewPlans": "View Plans & Subscribe",
+    "exploreFree": "Explore Free",
+    "trust": {
+      "securePayment": "100% secure payment",
+      "guarantee": "7-day guarantee",
+      "cancelAnytime": "Cancel anytime"
+    }
+  },
   "tracking": {
     "cycle": {
       "title": "Cycle Tracking",

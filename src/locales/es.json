@@ -819,6 +819,47 @@
     "sync": "Sincronizar Ahora",
     "lastSync": "Última sincronización: {{date}}"
   },
+  "onboardingSuccess": {
+    "defaultName": "tú",
+    "badge": "¡Registro Completado!",
+    "welcome": "¡Bienvenida,",
+    "subtitle": "Tu perfil ha sido creado con éxito. Ahora tienes acceso a recursos increíbles para transformar tu bienestar.",
+    "benefits": {
+      "ai": {
+        "title": "IA Personalizada",
+        "description": "Planes de bienestar creados especialmente para ti"
+      },
+      "tracking": {
+        "title": "Seguimiento Completo",
+        "description": "Ciclo, sueño, humor y energía en un solo lugar"
+      },
+      "predictions": {
+        "title": "Predicciones Inteligentes",
+        "description": "Anticipa tus síntomas y prepárate mejor"
+      },
+      "privacy": {
+        "title": "100% Privado",
+        "description": "Tus datos protegidos con encriptación"
+      }
+    },
+    "premiumFeatures": {
+      "unlimitedPlans": "Planes de bienestar ilimitados",
+      "aiJournal": "Diario de la Mujer con IA",
+      "sosSupport": "SOS Femenino para momentos difíciles",
+      "advancedPredictions": "Predicciones avanzadas de síntomas",
+      "prioritySupport": "Soporte prioritario"
+    },
+    "specialBadge": "ESPECIAL",
+    "unlockTitle": "Desbloquea todo el potencial de",
+    "unlockDescription": "Elige el plan ideal para ti y comienza tu viaje de transformación con funciones exclusivas.",
+    "viewPlans": "Ver Planes y Suscribirse",
+    "exploreFree": "Explorar Gratis",
+    "trust": {
+      "securePayment": "Pago 100% seguro",
+      "guarantee": "7 días de garantía",
+      "cancelAnytime": "Cancela cuando quieras"
+    }
+  },
   "tracking": {
     "cycle": {
       "title": "Seguimiento de Ciclo",
