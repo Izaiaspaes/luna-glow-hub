@@ -23,6 +23,9 @@ import Install from "./pages/Install";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import LandingPT from "./pages/LandingPT";
+import LandingEN from "./pages/LandingEN";
+import LandingES from "./pages/LandingES";
 import "./i18n";
 
 const queryClient = new QueryClient();
