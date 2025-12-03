@@ -11,6 +11,7 @@ interface Banner {
   banner_type: string;
   link_url?: string;
   link_text?: string;
+  image_url?: string;
 }
 
 export const AnnouncementBanner = () => {
@@ -92,9 +93,17 @@ export const AnnouncementBanner = () => {
           <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="flex-shrink-0">
-                  {getIcon(banner.banner_type)}
-                </div>
+                {banner.image_url ? (
+                  <img 
+                    src={banner.image_url} 
+                    alt={banner.title}
+                    className="w-12 h-12 md:w-16 md:h-16 object-cover rounded-lg flex-shrink-0"
+                  />
+                ) : (
+                  <div className="flex-shrink-0">
+                    {getIcon(banner.banner_type)}
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm">
                     {banner.title}
