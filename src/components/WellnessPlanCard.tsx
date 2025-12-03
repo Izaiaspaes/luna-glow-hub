@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface Recommendation {
   category: string;
@@ -59,13 +60,13 @@ const getPriorityColor = (priority: string) => {
   return 'text-green-500 dark:text-green-400';
 };
 
-const getPlanTypeBadge = (planType: string) => {
+const getPlanTypeBadge = (planType: string, t: (key: string) => string) => {
   const type = planType.toLowerCase();
   
   if (type === 'sono') {
     return {
       icon: Moon,
-      label: 'Plano de Sono',
+      label: t('wellnessPlan.sleepPlan'),
       className: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30'
     };
   }
@@ -73,7 +74,7 @@ const getPlanTypeBadge = (planType: string) => {
   if (type === 'meditacao' || type === 'meditação') {
     return {
       icon: Brain,
-      label: 'Plano de Meditação',
+      label: t('wellnessPlan.meditationPlan'),
       className: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30'
     };
   }
@@ -81,7 +82,7 @@ const getPlanTypeBadge = (planType: string) => {
   if (type === 'nutricao' || type === 'nutrição' || type === 'alimentacao' || type === 'alimentação') {
     return {
       icon: UtensilsCrossed,
-      label: 'Plano de Alimentação',
+      label: t('wellnessPlan.nutritionPlan'),
       className: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30'
     };
   }
@@ -89,25 +90,26 @@ const getPlanTypeBadge = (planType: string) => {
   // Plano geral ou outro tipo
   return {
     icon: Sparkles,
-    label: 'Plano Geral',
+    label: t('wellnessPlan.generalPlan'),
     className: 'bg-primary/10 text-primary border-primary/30'
   };
 };
 
 export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps) {
+  const { t } = useTranslation();
   const content = plan.plan_content;
   const status = plan.status || (plan.is_active ? 'active' : 'archived');
-  const planTypeBadge = getPlanTypeBadge(plan.plan_type);
+  const planTypeBadge = getPlanTypeBadge(plan.plan_type, t);
   const PlanTypeIcon = planTypeBadge.icon;
   
   const getStatusBadge = () => {
     if (status === 'completed') {
-      return <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400 border-green-600">✓ Concluído</Badge>;
+      return <Badge variant="outline" className="ml-2 text-green-600 dark:text-green-400 border-green-600">✓ {t('wellnessPlan.completed')}</Badge>;
     }
     if (status === 'archived') {
-      return <Badge variant="outline" className="ml-2 text-muted-foreground">Arquivado</Badge>;
+      return <Badge variant="outline" className="ml-2 text-muted-foreground">{t('wellnessPlan.archived')}</Badge>;
     }
-    return <Badge variant="wellness" className="ml-2">✓ Ativo</Badge>;
+    return <Badge variant="wellness" className="ml-2">✓ {t('wellnessPlan.active')}</Badge>;
   };
   
   return (
@@ -127,15 +129,15 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
             </CardTitle>
             <CardDescription className="flex items-center gap-2 mt-2">
               <Calendar className="h-4 w-4" />
-              Válido desde {new Date(plan.valid_from).toLocaleDateString('pt-BR')}
+              {t('wellnessPlan.validSince')} {new Date(plan.valid_from).toLocaleDateString()}
               {plan.completed_at && (
                 <span className="text-green-600 dark:text-green-400 ml-2">
-                  • Concluído em {new Date(plan.completed_at).toLocaleDateString('pt-BR')}
+                  • {t('wellnessPlan.completedOn')} {new Date(plan.completed_at).toLocaleDateString()}
                 </span>
               )}
               {plan.archived_at && (
                 <span className="text-muted-foreground ml-2">
-                  • Arquivado em {new Date(plan.archived_at).toLocaleDateString('pt-BR')}
+                  • {t('wellnessPlan.archivedOn')} {new Date(plan.archived_at).toLocaleDateString()}
                 </span>
               )}
             </CardDescription>
@@ -153,19 +155,19 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
                   {status !== 'completed' && (
                     <DropdownMenuItem onClick={() => onStatusChange(plan.id, 'completed')}>
                       <CheckCircle className="h-4 w-4 mr-2" />
-                      Marcar como Concluído
+                      {t('wellnessPlan.markCompleted')}
                     </DropdownMenuItem>
                   )}
                   {status !== 'archived' && (
                     <DropdownMenuItem onClick={() => onStatusChange(plan.id, 'archived')}>
                       <Archive className="h-4 w-4 mr-2" />
-                      Arquivar
+                      {t('wellnessPlan.archive')}
                     </DropdownMenuItem>
                   )}
                   {status !== 'active' && (
                     <DropdownMenuItem onClick={() => onStatusChange(plan.id, 'active')}>
                       <RotateCcw className="h-4 w-4 mr-2" />
-                      Reativar
+                      {t('wellnessPlan.reactivate')}
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuContent>
@@ -184,7 +186,7 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
 
         {content.recommendations && content.recommendations.length > 0 && (
           <div>
-            <h4 className="font-semibold mb-3 text-lg">Recomendações Personalizadas</h4>
+            <h4 className="font-semibold mb-3 text-lg">{t('wellnessPlan.personalizedRecommendations')}</h4>
             <Accordion type="single" collapsible className="w-full space-y-2">
               {content.recommendations.map((rec, idx) => {
                 const Icon = getCategoryIcon(rec.category);
@@ -227,7 +229,7 @@ export function WellnessPlanCard({ plan, onStatusChange }: WellnessPlanCardProps
           <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
             <h4 className="font-semibold mb-2 flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary" />
-              Insights Personalizados
+              {t('wellnessPlan.personalizedInsights')}
             </h4>
             <p className="text-sm leading-relaxed text-muted-foreground">{content.insights}</p>
           </div>
