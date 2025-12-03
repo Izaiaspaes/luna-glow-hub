@@ -93,13 +93,19 @@ serve(async (req) => {
       }
 
       if (activePlans && activePlans.length >= 1) {
+        const limitMessages: Record<string, string> = {
+          pt: 'Usuários gratuitos podem ter apenas 1 plano de bem-estar ativo por vez. Arquive ou conclua seu plano atual para criar um novo, ou faça upgrade para Premium e tenha planos ilimitados!',
+          en: 'Free users can only have 1 active wellness plan at a time. Archive or complete your current plan to create a new one, or upgrade to Premium for unlimited plans!',
+          es: '¡Los usuarios gratuitos solo pueden tener 1 plan de bienestar activo a la vez. Archiva o completa tu plan actual para crear uno nuevo, o actualiza a Premium para planes ilimitados!'
+        };
+        
         return new Response(
           JSON.stringify({ 
             error: 'PLAN_LIMIT_REACHED',
-            message: 'Usuários gratuitos podem ter apenas 1 plano de bem-estar ativo por vez. Arquive ou conclua seu plano atual para criar um novo, ou faça upgrade para Premium e tenha planos ilimitados!'
+            message: limitMessages[language] || limitMessages.pt
           }),
           {
-            status: 403,
+            status: 200,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
