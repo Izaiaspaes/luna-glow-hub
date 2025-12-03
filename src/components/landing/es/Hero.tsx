@@ -98,7 +98,7 @@ export const Hero = () => {
                 size="xl" 
                 variant="cta" 
                 className="group"
-                onClick={() => window.location.href = '/pricing'}
+                onClick={() => window.location.href = '/auth'}
               >
                 Comienza Gratis Ahora
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -106,7 +106,7 @@ export const Hero = () => {
               <Button 
                 size="xl" 
                 variant="ctaOutline"
-                onClick={() => window.location.href = '/pricing'}
+                onClick={() => window.location.href = '/auth'}
               >
                 Ver Planes Premium
               </Button>
