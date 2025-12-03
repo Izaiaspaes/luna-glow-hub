@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Layout } from "@/components/Layout";
@@ -17,11 +17,13 @@ import {
   ArrowRight
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const PricingSuccess = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, subscriptionStatus, userProfile } = useAuth();
+  const emailSentRef = useRef(false);
 
   useEffect(() => {
     // If not logged in, redirect to auth
@@ -32,12 +34,45 @@ const PricingSuccess = () => {
 
   // Determine if user is Premium or Premium Plus
   const isPremiumPlus = useMemo(() => {
-    // Check Stripe product_id or database subscription_plan
     const stripeProductIds = ['prod_TVfx4bH4H0okVe', 'prod_TVfxAziuEOC4QN'];
     const hasStripePremiumPlus = subscriptionStatus?.product_id && stripeProductIds.includes(subscriptionStatus.product_id);
     const hasDbPremiumPlus = userProfile?.subscription_plan === 'premium_plus';
     return hasStripePremiumPlus || hasDbPremiumPlus;
   }, [subscriptionStatus, userProfile]);
+
+  // Send confirmation email once when page loads
+  useEffect(() => {
+    const sendConfirmationEmail = async () => {
+      if (!user || emailSentRef.current) return;
+      
+      // Check if subscription is active (either via Stripe or database)
+      const hasActiveSubscription = subscriptionStatus?.subscribed || 
+        userProfile?.subscription_plan === 'premium' || 
+        userProfile?.subscription_plan === 'premium_plus';
+      
+      if (!hasActiveSubscription) return;
+
+      emailSentRef.current = true;
+      
+      try {
+        const planType = isPremiumPlus ? 'premium_plus' : 'premium';
+        
+        await supabase.functions.invoke('send-subscription-confirmation', {
+          body: {
+            userId: user.id,
+            planType,
+            billingPeriod: 'monthly' // Default, could be enhanced to detect actual billing period
+          }
+        });
+        
+        console.log('[PricingSuccess] Confirmation email sent');
+      } catch (error) {
+        console.error('[PricingSuccess] Error sending confirmation email:', error);
+      }
+    };
+
+    sendConfirmationEmail();
+  }, [user, subscriptionStatus, userProfile, isPremiumPlus]);
 
   const planName = isPremiumPlus ? "Premium Plus" : "Premium";
 

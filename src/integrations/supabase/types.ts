@@ -653,6 +653,7 @@ export type Database = {
           encryption_enabled: boolean | null
           full_name: string | null
           id: string
+          last_accessed_at: string | null
           notification_preferences: Json | null
           phone: string | null
           privacy_mode: boolean | null
@@ -668,6 +669,7 @@ export type Database = {
           encryption_enabled?: boolean | null
           full_name?: string | null
           id?: string
+          last_accessed_at?: string | null
           notification_preferences?: Json | null
           phone?: string | null
           privacy_mode?: boolean | null
@@ -683,6 +685,7 @@ export type Database = {
           encryption_enabled?: boolean | null
           full_name?: string | null
           id?: string
+          last_accessed_at?: string | null
           notification_preferences?: Json | null
           phone?: string | null
           privacy_mode?: boolean | null
