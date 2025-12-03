@@ -4,17 +4,16 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Crown, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useDynamicPricing } from "@/hooks/useDynamicPricing";
-import { useCurrency } from "@/hooks/useCurrency";
 
 export const Pricing = () => {
   const { pricing, formatPrice, isLoading } = useDynamicPricing();
-  const { currency } = useCurrency();
-  const prices = pricing[currency];
+  // Force USD for English page
+  const prices = pricing['usd'];
 
   const plans = [
     {
       name: "Free",
-      price: formatPrice(0, currency),
+      price: formatPrice(0, 'usd'),
       period: "forever",
       description: "Perfect to start your journey",
       features: [
@@ -29,7 +28,7 @@ export const Pricing = () => {
     },
     {
       name: "Premium Monthly",
-      price: formatPrice(prices.premium.monthly, currency),
+      price: formatPrice(prices.premium.monthly, 'usd'),
       period: "/month",
       description: "All features unlocked",
       features: [
@@ -46,8 +45,8 @@ export const Pricing = () => {
     },
     {
       name: "Premium Plus Annual",
-      price: formatPrice(prices.premiumPlus.yearly, currency),
-      originalPrice: formatPrice(prices.premiumPlus.monthly * 12, currency),
+      price: formatPrice(prices.premiumPlus.yearly, 'usd'),
+      originalPrice: formatPrice(prices.premiumPlus.monthly * 12, 'usd'),
       period: "/year",
       badge: "Best Value",
       description: "Complete transformation guaranteed",
