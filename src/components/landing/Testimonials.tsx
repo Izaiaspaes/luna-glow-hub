@@ -158,14 +158,14 @@ export const Testimonials = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <div className="inline-flex items-center gap-2 bg-secondary px-6 py-3 rounded-full">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-luna-pink/20 via-luna-purple/20 to-primary/20 border border-primary/30 px-6 py-3 rounded-full shadow-md">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background" />
+                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-luna-pink to-luna-purple border-2 border-background" />
               ))}
             </div>
-            <span className="text-sm font-medium">
-              Junte-se a <span className="text-primary font-bold">500+ mulheres</span> que já transformaram seu bem-estar
+            <span className="text-sm font-medium text-foreground">
+              Junte-se a <span className="bg-gradient-to-r from-luna-pink via-luna-purple to-primary bg-clip-text text-transparent font-bold">500+ mulheres</span> que já transformaram seu bem-estar
             </span>
           </div>
         </motion.div>
