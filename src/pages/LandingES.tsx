@@ -8,13 +8,19 @@ import { TrustSection } from "@/components/landing/es/TrustSection";
 import { ExitIntentPopup } from "@/components/landing/ExitIntentPopup";
 import { SocialProof } from "@/components/landing/es/SocialProof";
 import { StickyCTA } from "@/components/landing/es/StickyCTA";
+import { Quiz } from "@/components/landing/es/Quiz";
+import { VideoDemo } from "@/components/landing/es/VideoDemo";
+import { CountdownTimer } from "@/components/landing/es/CountdownTimer";
 
 const LandingES = () => {
   return (
     <div className="min-h-screen">
       <Hero />
+      <VideoDemo />
       <Features />
+      <Quiz />
       <Testimonials />
+      <CountdownTimer />
       <TrustSection />
       <Pricing />
       <FAQ />

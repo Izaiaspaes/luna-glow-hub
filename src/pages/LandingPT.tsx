@@ -11,12 +11,16 @@ import { TrustSection } from "@/components/landing/TrustSection";
 import { ExitIntentPopup } from "@/components/landing/ExitIntentPopup";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { StickyCTA } from "@/components/landing/StickyCTA";
+import { Quiz } from "@/components/landing/Quiz";
+import { VideoDemo } from "@/components/landing/VideoDemo";
 
 const LandingPT = () => {
   return (
     <div className="min-h-screen">
       <Hero />
+      <VideoDemo videoId="dQw4w9WgXcQ" />
       <Features />
+      <Quiz />
       <ServicesHighlight />
       <Testimonials />
       <CompetitorComparison />
