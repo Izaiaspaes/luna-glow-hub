@@ -37,6 +37,23 @@ export const Hero = () => {
       </div>
 
       <div className="container mx-auto px-4 py-20 relative z-10">
+        <motion.div
+          className="max-w-4xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-primary/20">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/CEI4r-cMVjE?autoplay=1&mute=1"
+              title="Luna Glow - Presentación"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </motion.div>
+
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Left Content */}
           <motion.div 
