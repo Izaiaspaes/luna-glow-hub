@@ -6,7 +6,7 @@ import { Gift, Sparkles, Crown, Check, ArrowLeft, ArrowRight } from "lucide-reac
 import { useTranslation } from "react-i18next";
 import { NavLink } from "@/components/NavLink";
 import { useCurrency } from "@/hooks/useCurrency";
-import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
+import { useDynamicPricing } from "@/hooks/useDynamicPricing";
 
 interface Question {
   id: string;
@@ -16,11 +16,12 @@ interface Question {
 export const PlanCalculator = () => {
   const { t } = useTranslation();
   const { currency } = useCurrency();
+  const { pricing, formatPrice } = useDynamicPricing();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [showResult, setShowResult] = useState(false);
   
-  const prices = PRICING_CONFIG[currency];
+  const prices = pricing[currency];
 
   const questions: Question[] = [
     { id: "aiRecommendations", weight: 10 },

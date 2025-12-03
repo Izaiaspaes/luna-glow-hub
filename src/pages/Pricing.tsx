@@ -20,8 +20,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
-import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
 import { useCurrency } from "@/hooks/useCurrency";
+import { useDynamicPricing } from "@/hooks/useDynamicPricing";
 
 const getComparisonFeatures = (t: any) => [
   {
@@ -98,10 +98,11 @@ export default function Pricing() {
   const [loading, setLoading] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const { currency, isLoading: currencyLoading } = useCurrency();
+  const { pricing, isLoading: pricingLoading, formatPrice } = useDynamicPricing();
   const { t } = useTranslation();
   const navigate = useNavigate();
   
-  const prices = PRICING_CONFIG[currency];
+  const prices = pricing[currency];
   
   const freemiumFeatures = [
     t('pricing.freemiumFeatures.cycle'),
@@ -313,7 +314,7 @@ export default function Pricing() {
                   size="lg" 
                   className="w-full group"
                   onClick={() => handleCheckout(prices.premium.stripePriceId.monthly)}
-                  disabled={loading || currencyLoading}
+                  disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly')} (${formatPrice(prices.premium.monthly, currency)})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -323,7 +324,7 @@ export default function Pricing() {
                   size="lg" 
                   className="w-full hover:bg-primary/10"
                   onClick={() => handleCheckout(prices.premium.stripePriceId.yearly)}
-                  disabled={loading || currencyLoading}
+                  disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly')} (${formatPrice(prices.premium.yearly, currency)})`}
                 </Button>
@@ -374,7 +375,7 @@ export default function Pricing() {
                   className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
                   size="lg"
                   onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.monthly)}
-                  disabled={loading || currencyLoading}
+                  disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthlyPremiumPlus')} (${formatPrice(prices.premiumPlus.monthly, currency)})`}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -384,7 +385,7 @@ export default function Pricing() {
                   size="lg" 
                   className="w-full hover:bg-luna-purple/10 border-luna-purple"
                   onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.yearly)}
-                  disabled={loading || currencyLoading}
+                  disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${formatPrice(prices.premiumPlus.yearly, currency)})`}
                 </Button>
