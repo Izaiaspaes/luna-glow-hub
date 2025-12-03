@@ -46,7 +46,7 @@ export const StickyCTA = () => {
                 size="lg"
                 variant="cta"
                 className="w-full md:w-auto text-lg px-8 py-6"
-                onClick={() => window.location.href = '/auth'}
+                onClick={() => window.location.href = '/onboarding'}
               >
                 Começar Agora
                 <ArrowRight className="ml-2 w-5 h-5" />

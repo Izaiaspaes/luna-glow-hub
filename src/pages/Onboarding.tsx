@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOnboarding, OnboardingData } from "@/hooks/useOnboarding";
 import { OnboardingStep1 } from "@/components/onboarding/OnboardingStep1";
@@ -8,17 +8,86 @@ import { OnboardingStep4 } from "@/components/onboarding/OnboardingStep4";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
-
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { onboardingData, saveOnboardingData, autoSaveOnboardingData } = useOnboarding();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingData>(onboardingData || {});
   const [loading, setLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
+  // If user is already logged in and has completed onboarding, redirect to dashboard
+  useEffect(() => {
+    if (user) {
+      // User is logged in, skip step 1 and go to step 2
+      setCurrentStep(2);
+    }
+  }, [user]);
 
   const totalSteps = 4;
   const progress = (currentStep / totalSteps) * 100;
+
+  const handleStep1Next = async (stepData: Partial<OnboardingData> & { email?: string; password?: string }) => {
+    const { email, password, ...profileData } = stepData;
+    
+    // If user is not logged in, create account
+    if (!user && email && password) {
+      setLoading(true);
+      setAuthError(null);
+      
+      try {
+        const redirectUrl = `${window.location.origin}/onboarding`;
+        
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: redirectUrl,
+            data: {
+              full_name: profileData.full_name,
+              preferred_name: profileData.preferred_name,
+            }
+          }
+        });
+
+        if (error) {
+          if (error.message.includes("already registered")) {
+            setAuthError("Este e-mail já está cadastrado. Faça login ou use outro e-mail.");
+          } else if (error.message.includes("invalid")) {
+            setAuthError("E-mail ou senha inválidos. Verifique os dados e tente novamente.");
+          } else {
+            setAuthError(error.message);
+          }
+          setLoading(false);
+          return;
+        }
+
+        if (data.user) {
+          // Save profile data
+          const updatedData = { ...formData, ...profileData };
+          setFormData(updatedData);
+          await saveOnboardingData(updatedData, false);
+          
+          toast.success("Conta criada com sucesso!");
+          setCurrentStep(2);
+        }
+      } catch (err) {
+        setAuthError("Erro ao criar conta. Tente novamente.");
+      }
+      
+      setLoading(false);
+    } else {
+      // User is already logged in, just save profile data
+      const updatedData = { ...formData, ...profileData };
+      setFormData(updatedData);
+      await saveOnboardingData(updatedData, false);
+      setCurrentStep(2);
+    }
+  };
 
   const handleNext = async (stepData: Partial<OnboardingData>) => {
     const updatedData = { ...formData, ...stepData };
@@ -39,7 +108,12 @@ export default function Onboarding() {
   };
 
   const handleBack = () => {
+    // Don't go back to step 1 if user is logged in
     if (currentStep > 1) {
+      if (currentStep === 2 && user) {
+        // Can't go back to step 1 if already logged in
+        return;
+      }
       setCurrentStep(currentStep - 1);
     }
   };
@@ -63,9 +137,14 @@ export default function Onboarding() {
       <div className="w-full max-w-2xl">
         <div className="mb-8 space-y-4">
           <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-foreground">Bem-vinda!</h1>
+            <h1 className="text-3xl font-bold text-foreground">
+              {currentStep === 1 ? "Bem-vinda à Luna!" : "Personalize sua experiência"}
+            </h1>
             <p className="text-muted-foreground">
-              Vamos conhecer você melhor para personalizar sua experiência
+              {currentStep === 1 
+                ? "Crie sua conta e comece sua jornada de bem-estar"
+                : "Vamos conhecer você melhor para personalizar sua experiência"
+              }
             </p>
           </div>
           <div className="space-y-2">
@@ -82,15 +161,17 @@ export default function Onboarding() {
             {currentStep === 1 && (
               <OnboardingStep1 
                 data={formData} 
-                onNext={handleNext}
+                onNext={handleStep1Next}
                 onAutoSave={handleAutoSave}
+                isLoading={loading}
+                authError={authError}
               />
             )}
             {currentStep === 2 && (
               <OnboardingStep2 
                 data={formData} 
                 onNext={handleNext} 
-                onBack={handleBack}
+                onBack={user ? undefined : handleBack}
                 onAutoSave={handleAutoSave}
               />
             )}
