@@ -17,8 +17,8 @@ const LandingPT = () => {
   return (
     <div className="min-h-screen">
       <Hero />
-      <Features />
       <Quiz />
+      <Features />
       <ServicesHighlight />
       <Testimonials />
       <CompetitorComparison />

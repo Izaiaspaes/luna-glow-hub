@@ -15,8 +15,8 @@ const LandingES = () => {
   return (
     <div className="min-h-screen">
       <Hero />
-      <Features />
       <Quiz />
+      <Features />
       <Testimonials />
       <CountdownTimer />
       <TrustSection />
