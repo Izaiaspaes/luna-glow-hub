@@ -35,9 +35,33 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
-    const { planType, days = 7 } = await req.json();
+    const { planType, days = 7, language = 'pt' } = await req.json();
 
-    console.log(`Generating ${planType} wellness plan for user ${user.id}`);
+    console.log(`Generating ${planType} wellness plan for user ${user.id} in language ${language}`);
+    
+    // Language-specific configurations
+    const languageConfig: Record<string, { defaultUser: string; cycleNotAvailable: string; cyclePhases: Record<string, string>; priorities: Record<string, string> }> = {
+      pt: {
+        defaultUser: 'usuária',
+        cycleNotAvailable: 'não disponível',
+        cyclePhases: { menstrual: 'menstrual', follicular: 'folicular', ovulatory: 'ovulatória', luteal: 'lútea' },
+        priorities: { high: 'alta', medium: 'média', low: 'baixa' }
+      },
+      en: {
+        defaultUser: 'user',
+        cycleNotAvailable: 'not available',
+        cyclePhases: { menstrual: 'menstrual', follicular: 'follicular', ovulatory: 'ovulatory', luteal: 'luteal' },
+        priorities: { high: 'high', medium: 'medium', low: 'low' }
+      },
+      es: {
+        defaultUser: 'usuaria',
+        cycleNotAvailable: 'no disponible',
+        cyclePhases: { menstrual: 'menstrual', follicular: 'folicular', ovulatory: 'ovulatoria', luteal: 'lútea' },
+        priorities: { high: 'alta', medium: 'media', low: 'baja' }
+      }
+    };
+    
+    const langConfig = languageConfig[language] || languageConfig.pt;
 
     // Check subscription status and get user name
     const { data: onboardingData } = await supabase
@@ -53,7 +77,7 @@ serve(async (req) => {
       .single();
 
     const isPremium = profile?.subscription_plan === 'premium' || profile?.subscription_plan === 'premium_plus';
-    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || user.email?.split('@')[0] || 'usuária';
+    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || user.email?.split('@')[0] || langConfig.defaultUser;
 
     // If user is free, check active wellness plans limit
     if (!isPremium) {
@@ -144,7 +168,7 @@ serve(async (req) => {
       : 0;
 
     // Determine cycle phase if available
-    let cyclePhase = 'não disponível';
+    let cyclePhase = langConfig.cycleNotAvailable;
     if (context.cycle.length > 0) {
       const latestCycle = context.cycle[0];
       if (latestCycle.cycle_start_date) {
@@ -153,13 +177,13 @@ serve(async (req) => {
         const daysSinceCycleStart = Math.floor((today.getTime() - cycleStart.getTime()) / (1000 * 60 * 60 * 24));
         
         if (daysSinceCycleStart >= 0 && daysSinceCycleStart <= 5) {
-          cyclePhase = 'menstrual';
+          cyclePhase = langConfig.cyclePhases.menstrual;
         } else if (daysSinceCycleStart > 5 && daysSinceCycleStart <= 13) {
-          cyclePhase = 'folicular';
+          cyclePhase = langConfig.cyclePhases.follicular;
         } else if (daysSinceCycleStart > 13 && daysSinceCycleStart <= 17) {
-          cyclePhase = 'ovulatória';
+          cyclePhase = langConfig.cyclePhases.ovulatory;
         } else if (daysSinceCycleStart > 17) {
-          cyclePhase = 'lútea';
+          cyclePhase = langConfig.cyclePhases.luteal;
         }
       }
     }
@@ -172,10 +196,11 @@ serve(async (req) => {
       .eq('is_active', true)
       .maybeSingle();
 
-    // Create prompt based on plan type and template
-    let systemPrompt = `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
+    // Create prompt based on plan type, template and language
+    const systemPrompts: Record<string, string> = {
+      pt: `Você é uma especialista em saúde feminina e bem-estar. Sua missão é criar planos personalizados baseados nos dados de rastreamento da usuária.
 
-Sempre seja empática, acolhedora e forneça recomendações práticas e acionáveis. Use uma linguagem amigável e motivadora.
+Sempre seja empática, acolhedora e forneça recomendações práticas e acionáveis. Use uma linguagem amigável e motivadora EM PORTUGUÊS.
 
 IMPORTANTE: Sempre inicie os insights com "Olá ${userName}," (sem "querida" ou outros apelidos).
 
@@ -199,7 +224,64 @@ Formato da resposta: Retorne um objeto JSON com a seguinte estrutura:
     }
   ],
   "insights": "Insights principais sobre os dados da usuária (2-3 parágrafos), começando com 'Olá ${userName},'"
-}`;
+}`,
+      en: `You are a specialist in women's health and wellness. Your mission is to create personalized plans based on the user's tracking data.
+
+Always be empathetic, welcoming and provide practical, actionable recommendations. Use friendly and motivating language IN ENGLISH.
+
+IMPORTANT: Always start insights with "Hi ${userName}," (no "dear" or other nicknames).
+
+${template ? `Use this template as a BASE and CUSTOMIZE the recommendations according to the user's data:
+Template: ${template.name}
+Description: ${template.description}
+Base recommendations: ${JSON.stringify(template.base_recommendations, null, 2)}
+
+IMPORTANT: Do not copy the base recommendations literally. Use them as a guide and fully customize based on the user's actual data.` : ''}
+
+Response format: Return a JSON object with the following structure:
+{
+  "title": "Plan title",
+  "summary": "2-3 line summary of the plan",
+  "recommendations": [
+    {
+      "category": "category",
+      "title": "recommendation title",
+      "description": "detailed description",
+      "priority": "high|medium|low"
+    }
+  ],
+  "insights": "Main insights about the user's data (2-3 paragraphs), starting with 'Hi ${userName},'"
+}`,
+      es: `Eres una especialista en salud femenina y bienestar. Tu misión es crear planes personalizados basados en los datos de seguimiento de la usuaria.
+
+Siempre sé empática, acogedora y proporciona recomendaciones prácticas y accionables. Usa un lenguaje amigable y motivador EN ESPAÑOL.
+
+IMPORTANTE: Siempre inicia los insights con "Hola ${userName}," (sin "querida" u otros apodos).
+
+${template ? `Usa esta plantilla como BASE y PERSONALIZA las recomendaciones de acuerdo con los datos de la usuaria:
+Plantilla: ${template.name}
+Descripción: ${template.description}
+Recomendaciones base: ${JSON.stringify(template.base_recommendations, null, 2)}
+
+IMPORTANTE: No copies las recomendaciones base literalmente. Úsalas como guía y personaliza completamente con base en los datos reales de la usuaria.` : ''}
+
+Formato de respuesta: Devuelve un objeto JSON con la siguiente estructura:
+{
+  "title": "Título del plan",
+  "summary": "Resumen de 2-3 líneas del plan",
+  "recommendations": [
+    {
+      "category": "categoría",
+      "title": "título de la recomendación",
+      "description": "descripción detallada",
+      "priority": "alta|media|baja"
+    }
+  ],
+  "insights": "Insights principales sobre los datos de la usuaria (2-3 párrafos), comenzando con 'Hola ${userName},'"
+}`
+    };
+    
+    const systemPrompt = systemPrompts[language] || systemPrompts.pt;
 
     let userPrompt = '';
 

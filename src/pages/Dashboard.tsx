@@ -59,7 +59,7 @@ import { DashboardSkeleton } from "@/components/skeletons";
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition' | null;
 
 export default function Dashboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<'overview' | 'cycle' | 'sleep' | 'mood' | 'energy' | 'nutrition' | 'predictions' | 'calendar' | 'premiumPlus'>('overview');
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -211,7 +211,8 @@ export default function Dashboard() {
       const { data, error } = await supabase.functions.invoke('generate-wellness-plan', {
         body: { 
           planType,
-          days: 7
+          days: 7,
+          language: i18n.language || 'pt'
         }
       });
       
@@ -242,8 +243,8 @@ export default function Dashboard() {
       }
       
       toast({
-        title: "Plano de Bem-Estar gerado com sucesso!",
-        description: "Seu plano personalizado está pronto.",
+        title: t("dashboard.messages.planGenerated"),
+        description: t("dashboard.messages.planGeneratedDesc"),
       });
       
       await loadWellnessPlans();
