@@ -89,7 +89,7 @@ export const Hero = () => {
               <Button 
                 size="xl" 
                 variant="ctaOutline"
-                onClick={() => window.location.href = '/auth'}
+                onClick={() => window.location.href = '/onboarding'}
               >
                 View Premium Packages
               </Button>

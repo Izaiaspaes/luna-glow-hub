@@ -48,7 +48,7 @@ export const StickyCTA = () => {
                   <div className="text-sm text-muted-foreground">Join thousands of women who trust Luna Glow</div>
                 </div>
               </div>
-              <Button size="lg" variant="cta" className="w-full md:w-auto text-lg px-8 py-6" onClick={() => window.location.href = '/auth'}>
+              <Button size="lg" variant="cta" className="w-full md:w-auto text-lg px-8 py-6" onClick={() => window.location.href = '/onboarding'}>
                 Start Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
