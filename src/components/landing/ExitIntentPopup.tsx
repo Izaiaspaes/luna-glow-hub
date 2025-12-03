@@ -38,7 +38,7 @@ export const ExitIntentPopup = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-md p-0 overflow-hidden border-4 border-primary">
-        <div className="relative gradient-bg p-8 text-white">
+        <div className="relative bg-gradient-to-br from-luna-pink via-luna-purple to-primary p-8 text-white">
           <Badge className="absolute top-4 right-4 bg-white/20 text-white border-0 backdrop-blur-sm">
             <Sparkles className="w-3 h-3 mr-1" />
             Oferta Exclusiva

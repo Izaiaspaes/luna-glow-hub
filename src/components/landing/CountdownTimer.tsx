@@ -75,7 +75,7 @@ export const CountdownTimer = () => {
                   { value: timeLeft.seconds, label: "Segundos" }
                 ].map((item, index) => (
                   <motion.div key={index} className="flex flex-col items-center" whileHover={{ scale: 1.05 }}>
-                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl gradient-bg flex items-center justify-center shadow-lg">
+                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-luna-pink via-luna-purple to-primary flex items-center justify-center shadow-lg">
                       <span className="text-3xl md:text-5xl font-bold text-white">
                         {String(item.value).padStart(2, '0')}
                       </span>
