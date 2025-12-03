@@ -215,20 +215,30 @@ export default function Dashboard() {
         }
       });
       
-      // Check for plan limit error in both error and data (edge function may return error in data)
-      if (error?.message?.includes('PLAN_LIMIT_REACHED') || 
-          error?.message?.includes('apenas 1 plano') ||
-          data?.error === 'PLAN_LIMIT_REACHED') {
+      // Check for plan limit error - can be in data (403 response) or error context
+      if (data?.error === 'PLAN_LIMIT_REACHED') {
         setShowPlanLimitModal(true);
         return;
       }
       
+      // For FunctionsHttpError, the body may contain the error details
       if (error) {
+        // Try to parse error context for PLAN_LIMIT_REACHED
+        try {
+          const errorContext = error.context;
+          if (errorContext?.body) {
+            const bodyText = await errorContext.body.text?.() || errorContext.body;
+            const bodyJson = typeof bodyText === 'string' ? JSON.parse(bodyText) : bodyText;
+            if (bodyJson?.error === 'PLAN_LIMIT_REACHED') {
+              setShowPlanLimitModal(true);
+              return;
+            }
+          }
+        } catch (parseError) {
+          // If parsing fails, continue with regular error handling
+          console.log('Could not parse error context:', parseError);
+        }
         throw error;
-      }
-      
-      if (data?.error) {
-        throw new Error(data.message || data.error);
       }
       
       toast({
