@@ -84,7 +84,7 @@ export const Quiz = () => {
               <div className="space-y-4 pt-6">
                 <Button 
                   size="lg" 
-                  className="w-full bg-white text-primary hover:bg-white/90"
+                  className="w-full bg-gradient-to-r from-luna-pink via-luna-purple to-primary text-white hover:opacity-90 shadow-lg"
                   onClick={() => window.location.href = '/pricing'}
                 >
                   Comenzar Gratis Ahora
@@ -105,8 +105,9 @@ export const Quiz = () => {
       <div className="container mx-auto px-4">
         <motion.div 
           className="text-center max-w-3xl mx-auto mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -176,10 +177,9 @@ export const Quiz = () => {
 
               <Button
                 size="lg"
-                variant="cta"
                 onClick={handleNext}
                 disabled={!canProceed}
-                className="w-full"
+                className="w-full bg-gradient-to-r from-luna-pink via-luna-purple to-primary text-white hover:opacity-90 shadow-lg disabled:opacity-50"
               >
                 {currentQuestion === quizQuestions.length - 1 ? "Ver Resultado" : "Siguiente"}
                 <ArrowRight className="ml-2" />
