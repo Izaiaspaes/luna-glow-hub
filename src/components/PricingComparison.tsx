@@ -4,17 +4,18 @@ import { NavLink } from "@/components/NavLink";
 import { Check, X, Sparkles, Crown, Gift } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useCurrency } from "@/hooks/useCurrency";
-import { PRICING_CONFIG, formatPrice } from "@/lib/pricing";
+import { useDynamicPricing } from "@/hooks/useDynamicPricing";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export const PricingComparison = () => {
   const { t } = useTranslation();
   const { currency } = useCurrency();
+  const { pricing, formatPrice } = useDynamicPricing();
   const navigate = useNavigate();
   const [redirecting, setRedirecting] = useState(false);
   
-  const prices = PRICING_CONFIG[currency];
+  const prices = pricing[currency];
 
   const handleCTAClick = () => {
     setRedirecting(true);
