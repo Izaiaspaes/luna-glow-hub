@@ -69,37 +69,26 @@ export const UsersManagement = () => {
 
   const handleDeleteUser = async (userId: string) => {
     try {
-      // Delete user roles
-      const { error: rolesError } = await supabase
-        .from('user_roles')
-        .delete()
-        .eq('user_id', userId);
+      // Call edge function to delete user completely including auth account
+      const { data, error } = await supabase.functions.invoke('delete-user-complete', {
+        body: { userId }
+      });
 
-      if (rolesError) {
-        console.error('Error deleting roles:', rolesError);
+      if (error) {
+        console.error('Error deleting user:', error);
+        toast.error(`Erro ao deletar usuário: ${error.message}`);
+        setDeleteUserId(null);
+        return;
       }
 
-      // Delete user profile
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .delete()
-        .eq('user_id', userId);
-
-      if (profileError) {
-        console.error('Error deleting profile:', profileError);
+      if (data?.error) {
+        console.error('Error from edge function:', data.error);
+        toast.error(`Erro ao deletar usuário: ${data.error}`);
+        setDeleteUserId(null);
+        return;
       }
 
-      // Delete onboarding data
-      const { error: onboardingError } = await supabase
-        .from('user_onboarding_data')
-        .delete()
-        .eq('user_id', userId);
-
-      if (onboardingError) {
-        console.error('Error deleting onboarding:', onboardingError);
-      }
-
-      toast.success("Dados do usuário removidos com sucesso");
+      toast.success("Usuário deletado completamente com sucesso!");
       loadUsers();
     } catch (error) {
       console.error('Delete error:', error);
@@ -346,7 +335,7 @@ export const UsersManagement = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
             <AlertDialogDescription>
-              Esta ação irá remover as roles, perfil e dados de onboarding deste usuário. A conta de autenticação permanecerá ativa até que o usuário a exclua ou solicite exclusão.
+              Esta ação irá deletar COMPLETAMENTE o usuário, incluindo todos os dados, perfil, rastreamentos e a conta de autenticação. Esta ação é IRREVERSÍVEL.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

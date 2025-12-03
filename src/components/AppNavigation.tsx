@@ -34,8 +34,17 @@ export const AppNavigation = () => {
   };
 
   const handleLogout = async () => {
-    await signOut();
-    navigate("/");
+    try {
+      const { error } = await signOut();
+      if (error) {
+        console.error('Logout error:', error);
+      }
+      // Force navigation to home regardless of error
+      window.location.href = "/";
+    } catch (error) {
+      console.error('Logout error:', error);
+      window.location.href = "/";
+    }
   };
 
   // Don't show on auth page or onboarding
