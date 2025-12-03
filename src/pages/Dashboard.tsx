@@ -54,6 +54,7 @@ import logoLuna from "@/assets/logo-luna.png";
 
 import { PushNotificationPrompt } from "@/components/PushNotificationPrompt";
 import { Layout } from "@/components/Layout";
+import { DashboardSkeleton } from "@/components/skeletons";
 
 type TrackingType = 'cycle' | 'sleep' | 'mood' | 'energy' | 'work' | 'nutrition' | null;
 
@@ -266,7 +267,11 @@ export default function Dashboard() {
   };
 
   if (loading || !adminChecked) {
-    return null;
+    return (
+      <Layout>
+        <DashboardSkeleton />
+      </Layout>
+    );
   }
 
   return (
