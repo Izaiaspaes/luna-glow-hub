@@ -3,64 +3,80 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Crown, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Perfect to start your journey",
-    features: [
-      "Basic cycle tracking",
-      "Menstrual calendar",
-      "Phase predictions",
-      "Limited Luna Sense access",
-    ],
-    cta: "Start Free",
-    variant: "ctaOutline" as const,
-    popular: false
-  },
-  {
-    name: "Premium Monthly",
-    price: "$9.90",
-    period: "/month",
-    description: "All features unlocked",
-    features: [
-      "Everything in Free",
-      "Luna Sense 24/7 unlimited",
-      "AI-powered journal analysis",
-      "Priority SOS support",
-      "Beauty analyses",
-      "Advanced health insights",
-    ],
-    cta: "Subscribe Now",
-    variant: "cta" as const,
-    popular: true
-  },
-  {
-    name: "Premium Plus Annual",
-    price: "$99",
-    originalPrice: "$118.80",
-    period: "/year",
-    badge: "Best Value",
-    description: "Complete transformation guaranteed",
-    features: [
-      "Everything in Premium",
-      "Smart Virtual Closet",
-      "Phase-personalized plans",
-      "Exclusive VIP community",
-      "Monthly premium content",
-      "Priority 24/7 support",
-      "Lifetime access to new features",
-    ],
-    cta: "Get Best Value",
-    variant: "cta" as const,
-    popular: false,
-    highlight: true
-  }
-];
+import { useDynamicPricing } from "@/hooks/useDynamicPricing";
+import { useCurrency } from "@/hooks/useCurrency";
 
 export const Pricing = () => {
+  const { pricing, formatPrice, isLoading } = useDynamicPricing();
+  const { currency } = useCurrency();
+  const prices = pricing[currency];
+
+  const plans = [
+    {
+      name: "Free",
+      price: formatPrice(0, currency),
+      period: "forever",
+      description: "Perfect to start your journey",
+      features: [
+        "Basic cycle tracking",
+        "Menstrual calendar",
+        "Phase predictions",
+        "Limited Luna Sense access",
+      ],
+      cta: "Start Free",
+      variant: "ctaOutline" as const,
+      popular: false
+    },
+    {
+      name: "Premium Monthly",
+      price: formatPrice(prices.premium.monthly, currency),
+      period: "/month",
+      description: "All features unlocked",
+      features: [
+        "Everything in Free",
+        "Luna Sense 24/7 unlimited",
+        "AI-powered journal analysis",
+        "Priority SOS support",
+        "Beauty analyses",
+        "Advanced health insights",
+      ],
+      cta: "Subscribe Now",
+      variant: "cta" as const,
+      popular: true
+    },
+    {
+      name: "Premium Plus Annual",
+      price: formatPrice(prices.premiumPlus.yearly, currency),
+      originalPrice: formatPrice(prices.premiumPlus.monthly * 12, currency),
+      period: "/year",
+      badge: "Best Value",
+      description: "Complete transformation guaranteed",
+      features: [
+        "Everything in Premium",
+        "Smart Virtual Closet",
+        "Phase-personalized plans",
+        "Exclusive VIP community",
+        "Monthly premium content",
+        "Priority 24/7 support",
+        "Lifetime access to new features",
+      ],
+      cta: "Get Best Value",
+      variant: "cta" as const,
+      popular: false,
+      highlight: true
+    }
+  ];
+
+  if (isLoading) {
+    return (
+      <section className="py-24 bg-gradient-to-b from-background to-luna-pink-light/30">
+        <div className="container mx-auto px-4 text-center">
+          <div className="animate-pulse">Loading prices...</div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 bg-gradient-to-b from-background to-luna-pink-light/30">
       <div className="container mx-auto px-4">
