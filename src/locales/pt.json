@@ -782,7 +782,100 @@
     "totalUsers": "Total de Usuários",
     "activeUsers": "Usuários Ativos",
     "premiumUsers": "Usuários Premium",
-    "revenue": "Receita"
+    "revenue": "Receita",
+    "banners": {
+      "title": "Gerenciar Banners",
+      "description": "Crie e gerencie banners promocionais e informativos",
+      "addNew": "Novo Banner",
+      "noBanners": "Nenhum banner encontrado",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "activate": "Ativar banner",
+      "deactivate": "Desativar banner",
+      "fetchError": "Erro ao carregar banners",
+      "createError": "Erro ao criar banner",
+      "createSuccess": "Banner criado com sucesso!",
+      "updateError": "Erro ao atualizar banner",
+      "updateSuccess": "Banner atualizado com sucesso!",
+      "deleteError": "Erro ao excluir banner",
+      "deleteSuccess": "Banner excluído com sucesso!",
+      "deleteConfirm": "Tem certeza que deseja excluir este banner?",
+      "toggleError": "Erro ao alterar status",
+      "form": {
+        "title": "Título",
+        "type": "Tipo",
+        "message": "Mensagem",
+        "linkUrl": "URL do Link",
+        "linkText": "Texto do Link",
+        "startDate": "Data de Início",
+        "endDate": "Data de Fim",
+        "order": "Ordem",
+        "active": "Banner Ativo",
+        "image": "Imagem do Banner",
+        "uploadImage": "Enviar Imagem",
+        "generateImage": "Gerar com IA",
+        "generating": "Gerando imagem...",
+        "uploading": "Enviando..."
+      },
+      "types": {
+        "info": "Informativo",
+        "warning": "Aviso",
+        "success": "Sucesso",
+        "promo": "Promoção"
+      },
+      "table": {
+        "title": "Título",
+        "type": "Tipo",
+        "status": "Status",
+        "dates": "Período",
+        "actions": "Ações"
+      }
+    },
+    "suggestions": {
+      "title": "Gerenciar Sugestões",
+      "description": "Visualize e gerencie sugestões dos usuários",
+      "fetchError": "Erro ao carregar sugestões",
+      "updateSuccess": "Sugestão atualizada com sucesso!",
+      "updateError": "Erro ao atualizar sugestão",
+      "deleteSuccess": "Sugestão excluída com sucesso!",
+      "deleteError": "Erro ao excluir sugestão",
+      "deleteConfirm": "Tem certeza que deseja excluir esta sugestão?",
+      "noSuggestions": "Nenhuma sugestão encontrada",
+      "filter": {
+        "all": "Todas",
+        "pending": "Pendentes",
+        "reviewed": "Revisadas",
+        "implemented": "Implementadas",
+        "rejected": "Rejeitadas"
+      },
+      "status": {
+        "pending": "Pendente",
+        "reviewed": "Revisada",
+        "implemented": "Implementada",
+        "rejected": "Rejeitada"
+      },
+      "table": {
+        "date": "Data",
+        "email": "E-mail",
+        "suggestion": "Sugestão",
+        "category": "Categoria",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "dialog": {
+        "title": "Detalhes da Sugestão",
+        "description": "Revise e gerencie a sugestão do usuário",
+        "email": "E-mail",
+        "date": "Data",
+        "suggestion": "Sugestão",
+        "category": "Categoria",
+        "categoryPlaceholder": "Ex: Feature, Bug, Design",
+        "status": "Status",
+        "notes": "Notas do Admin",
+        "notesPlaceholder": "Adicione observações internas...",
+        "save": "Salvar Alterações"
+      }
+    }
   },
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",

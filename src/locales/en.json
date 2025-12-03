@@ -752,7 +752,100 @@
     "totalUsers": "Total Users",
     "activeUsers": "Active Users",
     "premiumUsers": "Premium Users",
-    "revenue": "Revenue"
+    "revenue": "Revenue",
+    "banners": {
+      "title": "Manage Banners",
+      "description": "Create and manage promotional and informational banners",
+      "addNew": "New Banner",
+      "noBanners": "No banners found",
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate banner",
+      "deactivate": "Deactivate banner",
+      "fetchError": "Error loading banners",
+      "createError": "Error creating banner",
+      "createSuccess": "Banner created successfully!",
+      "updateError": "Error updating banner",
+      "updateSuccess": "Banner updated successfully!",
+      "deleteError": "Error deleting banner",
+      "deleteSuccess": "Banner deleted successfully!",
+      "deleteConfirm": "Are you sure you want to delete this banner?",
+      "toggleError": "Error changing status",
+      "form": {
+        "title": "Title",
+        "type": "Type",
+        "message": "Message",
+        "linkUrl": "Link URL",
+        "linkText": "Link Text",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "order": "Order",
+        "active": "Active Banner",
+        "image": "Banner Image",
+        "uploadImage": "Upload Image",
+        "generateImage": "Generate with AI",
+        "generating": "Generating image...",
+        "uploading": "Uploading..."
+      },
+      "types": {
+        "info": "Information",
+        "warning": "Warning",
+        "success": "Success",
+        "promo": "Promotion"
+      },
+      "table": {
+        "title": "Title",
+        "type": "Type",
+        "status": "Status",
+        "dates": "Period",
+        "actions": "Actions"
+      }
+    },
+    "suggestions": {
+      "title": "Manage Suggestions",
+      "description": "View and manage user suggestions",
+      "fetchError": "Error loading suggestions",
+      "updateSuccess": "Suggestion updated successfully!",
+      "updateError": "Error updating suggestion",
+      "deleteSuccess": "Suggestion deleted successfully!",
+      "deleteError": "Error deleting suggestion",
+      "deleteConfirm": "Are you sure you want to delete this suggestion?",
+      "noSuggestions": "No suggestions found",
+      "filter": {
+        "all": "All",
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "implemented": "Implemented",
+        "rejected": "Rejected"
+      },
+      "status": {
+        "pending": "Pending",
+        "reviewed": "Reviewed",
+        "implemented": "Implemented",
+        "rejected": "Rejected"
+      },
+      "table": {
+        "date": "Date",
+        "email": "Email",
+        "suggestion": "Suggestion",
+        "category": "Category",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "dialog": {
+        "title": "Suggestion Details",
+        "description": "Review and manage user suggestion",
+        "email": "Email",
+        "date": "Date",
+        "suggestion": "Suggestion",
+        "category": "Category",
+        "categoryPlaceholder": "E.g.: Feature, Bug, Design",
+        "status": "Status",
+        "notes": "Admin Notes",
+        "notesPlaceholder": "Add internal observations...",
+        "save": "Save Changes"
+      }
+    }
   },
   "beautyAnalysis": {
     "title": "Beauty Analysis AI",
