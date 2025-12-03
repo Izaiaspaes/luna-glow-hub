@@ -57,6 +57,7 @@ export type Database = {
           created_by: string | null
           display_order: number
           end_date: string | null
+          force_display_at: string | null
           id: string
           image_url: string | null
           is_active: boolean
@@ -73,6 +74,7 @@ export type Database = {
           created_by?: string | null
           display_order?: number
           end_date?: string | null
+          force_display_at?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
@@ -89,6 +91,7 @@ export type Database = {
           created_by?: string | null
           display_order?: number
           end_date?: string | null
+          force_display_at?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
