@@ -28,7 +28,7 @@ export const FinalCTA = () => {
               size="xl" 
               variant="cta"
               className="group"
-              onClick={() => window.location.href = '/pricing'}
+              onClick={() => window.location.href = '/auth'}
             >
               Comenzar Gratis Ahora
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -36,7 +36,7 @@ export const FinalCTA = () => {
             <Button 
               size="xl" 
               variant="ctaOutline"
-              onClick={() => window.location.href = '/features'}
+              onClick={() => window.location.href = '/auth'}
             >
               Ver Todas las Funciones
             </Button>
