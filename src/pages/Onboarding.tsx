@@ -127,7 +127,7 @@ export default function Onboarding() {
     const { error } = await saveOnboardingData(finalData, true);
     
     if (!error) {
-      toast.success("Cadastro concluído com sucesso!");
+      toast.success(t('onboarding.completedSuccess'));
       navigate("/onboarding/success");
     }
     
@@ -140,18 +140,18 @@ export default function Onboarding() {
         <div className="mb-8 space-y-4">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold text-foreground">
-              {currentStep === 1 ? "Bem-vinda à Luna!" : "Personalize sua experiência"}
+              {currentStep === 1 ? t('onboarding.welcome') : t('onboarding.personalize')}
             </h1>
             <p className="text-muted-foreground">
               {currentStep === 1 
-                ? "Crie sua conta e comece sua jornada de bem-estar"
-                : "Vamos conhecer você melhor para personalizar sua experiência"
+                ? t('onboarding.welcomeSubtitle')
+                : t('onboarding.personalizeSubtitle')
               }
             </p>
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Etapa {currentStep} de {totalSteps}</span>
+              <span>{t('onboarding.step', { current: currentStep, total: totalSteps })}</span>
               <span>{Math.round(progress)}%</span>
             </div>
             <Progress value={progress} className="h-2" />

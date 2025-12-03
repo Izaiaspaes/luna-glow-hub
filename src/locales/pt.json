@@ -720,8 +720,12 @@
   },
   "onboarding": {
     "welcome": "Bem-vinda à Luna!",
+    "personalize": "Personalize sua experiência",
+    "welcomeSubtitle": "Crie sua conta e comece sua jornada de bem-estar",
+    "personalizeSubtitle": "Vamos conhecer você melhor para personalizar sua experiência",
+    "completedSuccess": "Cadastro concluído com sucesso!",
     "letsStart": "Vamos começar sua jornada",
-    "step": "Passo {{current}} de {{total}}",
+    "step": "Etapa {{current}} de {{total}}",
     "next": "Próximo",
     "back": "Voltar",
     "skip": "Pular",

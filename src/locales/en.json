@@ -690,6 +690,10 @@
   },
   "onboarding": {
     "welcome": "Welcome to Luna!",
+    "personalize": "Personalize your experience",
+    "welcomeSubtitle": "Create your account and start your wellness journey",
+    "personalizeSubtitle": "Let's get to know you better to personalize your experience",
+    "completedSuccess": "Registration completed successfully!",
     "letsStart": "Let's start your journey",
     "step": "Step {{current}} of {{total}}",
     "next": "Next",

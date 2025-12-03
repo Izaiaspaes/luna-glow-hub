@@ -821,6 +821,10 @@
   },
   "onboarding": {
     "welcome": "¡Bienvenida a Luna!",
+    "personalize": "Personaliza tu experiencia",
+    "welcomeSubtitle": "Crea tu cuenta y comienza tu viaje de bienestar",
+    "personalizeSubtitle": "Vamos a conocerte mejor para personalizar tu experiencia",
+    "completedSuccess": "¡Registro completado con éxito!",
     "letsStart": "Comencemos tu viaje",
     "step": "Paso {{current}} de {{total}}",
     "next": "Siguiente",
