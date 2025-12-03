@@ -146,32 +146,53 @@ export const BannersManagement = () => {
       if (error) throw error;
 
       if (data?.imageData) {
-        // Convert base64 to file and upload to storage
-        const base64Data = data.imageData.split(',')[1];
-        const byteCharacters = atob(base64Data);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: 'image/png' });
+        // Handle different base64 formats from AI
+        let base64Data = data.imageData;
         
-        const fileName = `ai-${Date.now()}.png`;
-        const { error: uploadError } = await supabase.storage
-          .from('banners')
-          .upload(fileName, blob);
+        // If it's a data URL, extract the base64 part
+        if (base64Data.includes(',')) {
+          base64Data = base64Data.split(',')[1];
+        }
+        
+        // If it starts with data:, it needs extraction
+        if (base64Data.startsWith('data:')) {
+          const match = base64Data.match(/base64,(.+)/);
+          if (match) {
+            base64Data = match[1];
+          }
+        }
 
-        if (uploadError) throw uploadError;
+        try {
+          const byteCharacters = atob(base64Data);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], { type: 'image/png' });
+          
+          const fileName = `ai-${Date.now()}.png`;
+          const { error: uploadError } = await supabase.storage
+            .from('banners')
+            .upload(fileName, blob);
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('banners')
-          .getPublicUrl(fileName);
+          if (uploadError) throw uploadError;
 
-        setFormData({ ...formData, image_url: publicUrl });
-        toast({
-          title: "Sucesso",
-          description: "Imagem gerada com IA com sucesso!",
-        });
+          const { data: { publicUrl } } = supabase.storage
+            .from('banners')
+            .getPublicUrl(fileName);
+
+          setFormData({ ...formData, image_url: publicUrl });
+          toast({
+            title: "Sucesso",
+            description: "Imagem gerada com IA com sucesso!",
+          });
+        } catch (decodeError) {
+          console.error('Base64 decode error:', decodeError, 'Raw data length:', data.imageData?.length);
+          throw new Error("Erro ao processar imagem gerada. Tente novamente.");
+        }
+      } else {
+        throw new Error("A IA não retornou uma imagem válida. Tente novamente.");
       }
     } catch (error: any) {
       console.error('AI generation error:', error);
