@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useOnboarding, OnboardingData } from "@/hooks/useOnboarding";
 import { OnboardingStep1 } from "@/components/onboarding/OnboardingStep1";
 import { OnboardingStep2 } from "@/components/onboarding/OnboardingStep2";
@@ -13,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { onboardingData, saveOnboardingData, autoSaveOnboardingData } = useOnboarding();
   const [currentStep, setCurrentStep] = useState(1);
@@ -56,9 +58,9 @@ export default function Onboarding() {
 
         if (error) {
           if (error.message.includes("already registered")) {
-            setAuthError("Este e-mail já está cadastrado. Faça login ou use outro e-mail.");
+            setAuthError(t('onboarding.form.emailAlreadyRegistered'));
           } else if (error.message.includes("invalid")) {
-            setAuthError("E-mail ou senha inválidos. Verifique os dados e tente novamente.");
+            setAuthError(t('onboarding.form.invalidCredentials'));
           } else {
             setAuthError(error.message);
           }
@@ -72,11 +74,11 @@ export default function Onboarding() {
           setFormData(updatedData);
           await saveOnboardingData(updatedData, false);
           
-          toast.success("Conta criada com sucesso!");
+          toast.success(t('onboarding.form.accountCreated'));
           setCurrentStep(2);
         }
       } catch (err) {
-        setAuthError("Erro ao criar conta. Tente novamente.");
+        setAuthError(t('onboarding.form.accountCreationError'));
       }
       
       setLoading(false);
