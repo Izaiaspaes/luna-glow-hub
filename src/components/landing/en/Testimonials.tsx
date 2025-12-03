@@ -153,11 +153,14 @@ export const Testimonials = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-luna-pink/20 via-luna-purple/20 to-primary/20 border border-primary/30 px-6 py-3 rounded-full shadow-md">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-luna-pink to-luna-purple border-2 border-background" />
-              ))}
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-luna-pink/20 via-luna-purple/20 to-primary/20 border border-primary/30 px-6 py-3 rounded-full shadow-md">
+            <div className="flex -space-x-3">
+              <img src={testimonial1} alt="User" className="w-10 h-10 rounded-full object-cover border-2 border-background" />
+              <img src={testimonial2} alt="User" className="w-10 h-10 rounded-full object-cover border-2 border-background" />
+              <img src={testimonial3} alt="User" className="w-10 h-10 rounded-full object-cover border-2 border-background" />
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-luna-pink to-luna-purple border-2 border-background flex items-center justify-center text-white text-xs font-bold">
+                +497
+              </div>
             </div>
             <span className="text-sm font-medium text-foreground">
               Join <span className="bg-gradient-to-r from-luna-pink via-luna-purple to-primary bg-clip-text text-transparent font-bold">500+ women</span> who already transformed their wellness
