@@ -34,7 +34,13 @@
     "blog": "Blog",
     "dashboard": "Panel",
     "home": "Inicio",
-    "admin": "Panel Admin"
+    "admin": "Panel Admin",
+    "features": "Funcionalidades",
+    "pricing": "Suscripciones",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "profile": "Perfil",
+    "settings": "Configuración"
   },
   "hero": {
     "title": "Tu Bienestar, Tu Comunidad, Tu Estilo",
