@@ -8,7 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Pencil, Trash2, Eye, EyeOff, Upload, Wand2, Loader2, Image as ImageIcon, X } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, Upload, Wand2, Loader2, Image as ImageIcon, X, RefreshCw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
@@ -317,6 +317,48 @@ export const BannersManagement = () => {
     }
   };
 
+  const forceDisplayBanner = async (bannerId: string) => {
+    const { error } = await supabase
+      .from("announcement_banners")
+      .update({ force_display_at: new Date().toISOString() })
+      .eq("id", bannerId);
+
+    if (error) {
+      toast({
+        title: "Erro",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Banner forçado",
+        description: "O banner será exibido novamente para todos os usuários",
+      });
+      fetchBanners();
+    }
+  };
+
+  const forceDisplayAllBanners = async () => {
+    const { error } = await supabase
+      .from("announcement_banners")
+      .update({ force_display_at: new Date().toISOString() })
+      .eq("is_active", true);
+
+    if (error) {
+      toast({
+        title: "Erro",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Todos os banners forçados",
+        description: "Todos os banners ativos serão exibidos novamente para todos os usuários",
+      });
+      fetchBanners();
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       title: "",
@@ -351,10 +393,16 @@ export const BannersManagement = () => {
             <CardTitle>{t("admin.banners.title")}</CardTitle>
             <CardDescription>{t("admin.banners.description")}</CardDescription>
           </div>
-          <Button onClick={() => setShowForm(!showForm)}>
-            <Plus className="h-4 w-4 mr-2" />
-            {t("admin.banners.addNew")}
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={forceDisplayAllBanners}>
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Forçar Todos
+            </Button>
+            <Button onClick={() => setShowForm(!showForm)}>
+              <Plus className="h-4 w-4 mr-2" />
+              {t("admin.banners.addNew")}
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -601,6 +649,14 @@ export const BannersManagement = () => {
                     </TableCell>
                     <TableCell>
                       <div className="flex justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => forceDisplayBanner(banner.id)}
+                          title="Forçar exibição para todos"
+                        >
+                          <RefreshCw className="h-4 w-4" />
+                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"

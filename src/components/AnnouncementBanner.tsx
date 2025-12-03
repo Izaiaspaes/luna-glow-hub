@@ -13,6 +13,7 @@ interface Banner {
   link_text?: string;
   image_url?: string;
   updated_at?: string;
+  force_display_at?: string;
 }
 
 interface DismissedBanner {
@@ -61,15 +62,23 @@ export const AnnouncementBanner = () => {
     }
   };
 
-  // Filter banners: show if not dismissed OR if updated after being dismissed
+  // Filter banners: show if not dismissed OR if updated/forced after being dismissed
   const activeBanners = banners.filter(banner => {
     const dismissedAt = dismissedBanners.get(banner.id);
     if (!dismissedAt) return true; // Never dismissed
     
-    // Show again if banner was updated after being dismissed
-    if (banner.updated_at) {
-      return new Date(banner.updated_at) > new Date(dismissedAt);
+    const dismissedDate = new Date(dismissedAt);
+    
+    // Show again if admin forced display after being dismissed
+    if (banner.force_display_at && new Date(banner.force_display_at) > dismissedDate) {
+      return true;
     }
+    
+    // Show again if banner was updated after being dismissed
+    if (banner.updated_at && new Date(banner.updated_at) > dismissedDate) {
+      return true;
+    }
+    
     return false;
   });
 
