@@ -216,29 +216,13 @@ export default function Dashboard() {
         }
       });
       
-      // Check for plan limit error - can be in data (403 response) or error context
+      // Check for plan limit error - returned as 200 with error field
       if (data?.error === 'PLAN_LIMIT_REACHED') {
         setShowPlanLimitModal(true);
         return;
       }
       
-      // For FunctionsHttpError, the body may contain the error details
       if (error) {
-        // Try to parse error context for PLAN_LIMIT_REACHED
-        try {
-          const errorContext = error.context;
-          if (errorContext?.body) {
-            const bodyText = await errorContext.body.text?.() || errorContext.body;
-            const bodyJson = typeof bodyText === 'string' ? JSON.parse(bodyText) : bodyText;
-            if (bodyJson?.error === 'PLAN_LIMIT_REACHED') {
-              setShowPlanLimitModal(true);
-              return;
-            }
-          }
-        } catch (parseError) {
-          // If parsing fails, continue with regular error handling
-          console.log('Could not parse error context:', parseError);
-        }
         throw error;
       }
       
@@ -251,8 +235,8 @@ export default function Dashboard() {
     } catch (error: any) {
       console.error('Error generating plan:', error);
       toast({
-        title: "Erro ao gerar plano",
-        description: error.message || "Tente novamente mais tarde.",
+        title: t("dashboard.messages.planError"),
+        description: t("dashboard.messages.planErrorRetry"),
         variant: "destructive",
       });
     } finally {
