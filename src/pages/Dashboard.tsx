@@ -215,13 +215,20 @@ export default function Dashboard() {
         }
       });
       
+      // Check for plan limit error in both error and data (edge function may return error in data)
+      if (error?.message?.includes('PLAN_LIMIT_REACHED') || 
+          error?.message?.includes('apenas 1 plano') ||
+          data?.error === 'PLAN_LIMIT_REACHED') {
+        setShowPlanLimitModal(true);
+        return;
+      }
+      
       if (error) {
-        // Check if it's a plan limit error
-        if (error.message?.includes('PLAN_LIMIT_REACHED') || error.message?.includes('apenas 1 plano')) {
-          setShowPlanLimitModal(true);
-          return;
-        }
         throw error;
+      }
+      
+      if (data?.error) {
+        throw new Error(data.message || data.error);
       }
       
       toast({
