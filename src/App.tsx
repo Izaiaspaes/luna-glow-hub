@@ -19,6 +19,7 @@ import Admin from "./pages/Admin";
 import PartnerInvite from "./pages/PartnerInvite";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import Onboarding from "./pages/Onboarding";
+import OnboardingSuccess from "./pages/OnboardingSuccess";
 import Install from "./pages/Install";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
@@ -57,6 +58,7 @@ const AppContent = () => {
           <Route path="/partner-invite" element={<PartnerInvite />} />
           <Route path="/partner-dashboard" element={<PartnerDashboard />} />
           <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding/success" element={<OnboardingSuccess />} />
           <Route path="/install" element={<Install />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />

@@ -51,8 +51,8 @@ export default function Onboarding() {
     const { error } = await saveOnboardingData(finalData, true);
     
     if (!error) {
-      toast.success("Cadastro concluído com sucesso! Agora escolha seu plano.");
-      navigate("/pricing");
+      toast.success("Cadastro concluído com sucesso!");
+      navigate("/onboarding/success");
     }
     
     setLoading(false);
