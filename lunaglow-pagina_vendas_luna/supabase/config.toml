@@ -1,0 +1,4 @@
+project_id = "cjuhghruedabxzeyzphj"
+
+[functions.luna-chat]
+verify_jwt = false
