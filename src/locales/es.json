@@ -29,18 +29,19 @@
     "terms": "Términos de Uso"
   },
   "nav": {
-    "features": "Funcionalidades",
-    "pricing": "Precios",
-    "blog": "Blog",
-    "dashboard": "Panel",
     "home": "Inicio",
-    "admin": "Panel Admin",
     "features": "Funcionalidades",
     "pricing": "Suscripciones",
+    "blog": "Blog",
     "about": "Acerca de",
     "contact": "Contacto",
+    "dashboard": "Panel",
     "profile": "Perfil",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "adminPanel": "Panel de Control",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "openMenu": "Abrir menú"
   },
   "hero": {
     "title": "Tu Bienestar, Tu Comunidad, Tu Estilo",
