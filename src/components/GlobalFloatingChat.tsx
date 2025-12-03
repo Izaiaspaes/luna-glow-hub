@@ -439,7 +439,7 @@ export const GlobalFloatingChat = () => {
           >
             <Card className="h-[600px] max-h-[calc(100vh-6rem)] flex flex-col shadow-2xl border-2 border-primary/20">
               {/* Header */}
-              <div className="gradient-bg text-white p-4 flex items-center justify-between rounded-t-lg">
+              <div className="bg-gradient-to-r from-[hsl(var(--luna-pink))] via-[hsl(var(--luna-purple))] to-[hsl(var(--primary))] text-white p-4 flex items-center justify-between rounded-t-lg">
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
@@ -448,20 +448,20 @@ export const GlobalFloatingChat = () => {
                     <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white" />
                   </div>
                   <div>
-                    <div className="font-bold flex items-center gap-2">
+                    <div className="font-bold flex items-center gap-2 text-white">
                       {isPremium ? "Luna Sense" : "Luna"}
                       {isPremiumPlus && <Sparkles className="w-4 h-4 text-yellow-300" />}
                     </div>
-                    <div className="text-xs opacity-90">{alwaysHereText[lang] || alwaysHereText.pt}</div>
+                    <div className="text-xs text-white/90">{alwaysHereText[lang] || alwaysHereText.pt}</div>
                   </div>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsOpen(false)}
-                  className="hover:bg-white/20 text-white"
+                  className="hover:bg-white/20 text-white h-8 w-8"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-white" />
                 </Button>
               </div>
 
