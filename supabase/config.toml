@@ -1,31 +1,70 @@
 project_id = "savriwalgygixwtcpmya"
 
-[functions.generate-banner-image]
+[functions.analyze-beauty]
 verify_jwt = false
 
-[functions.generate-wellness-plan]
+[functions.analyze-clothing-item]
+verify_jwt = false
+
+[functions.analyze-health-description]
+verify_jwt = false
+
+[functions.analyze-journal]
 verify_jwt = true
 
 [functions.check-cycle-phase-changes]
 verify_jwt = false
 
-[functions.send-partner-reminders]
+[functions.check-subscription]
 verify_jwt = false
 
-[functions.predict-symptoms]
-verify_jwt = true
+[functions.create-checkout]
+verify_jwt = false
 
-[functions.send-push-notification]
-verify_jwt = true
+[functions.customer-portal]
+verify_jwt = false
 
-[functions.analyze-journal]
+[functions.delete-user-complete]
+verify_jwt = false
+
+[functions.generate-banner-image]
+verify_jwt = false
+
+[functions.generate-outfit-suggestions]
+verify_jwt = false
+
+[functions.generate-wellness-plan]
 verify_jwt = true
 
 [functions.luna-sense-chat]
 verify_jwt = true
 
-[functions.send-subscription-confirmation]
+[functions.notify-admin-new-user]
+verify_jwt = false
+
+[functions.notify-plan-change]
+verify_jwt = false
+
+[functions.predict-symptoms]
 verify_jwt = true
 
 [functions.send-inactivity-reminders]
+verify_jwt = false
+
+[functions.send-newsletter-confirmation]
+verify_jwt = false
+
+[functions.send-partner-invite]
+verify_jwt = false
+
+[functions.send-partner-reminders]
+verify_jwt = false
+
+[functions.send-push-notification]
+verify_jwt = true
+
+[functions.send-subscription-confirmation]
+verify_jwt = true
+
+[functions.transcribe-audio]
 verify_jwt = false
