@@ -68,16 +68,42 @@ export const UsersManagement = () => {
   };
 
   const handleDeleteUser = async (userId: string) => {
-    const { error } = await supabase
-      .from('user_roles')
-      .delete()
-      .eq('user_id', userId);
+    try {
+      // Delete user roles
+      const { error: rolesError } = await supabase
+        .from('user_roles')
+        .delete()
+        .eq('user_id', userId);
 
-    if (error) {
-      toast.error("Erro ao deletar usuário");
-    } else {
-      toast.success("Usuário deletado com sucesso");
+      if (rolesError) {
+        console.error('Error deleting roles:', rolesError);
+      }
+
+      // Delete user profile
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('user_id', userId);
+
+      if (profileError) {
+        console.error('Error deleting profile:', profileError);
+      }
+
+      // Delete onboarding data
+      const { error: onboardingError } = await supabase
+        .from('user_onboarding_data')
+        .delete()
+        .eq('user_id', userId);
+
+      if (onboardingError) {
+        console.error('Error deleting onboarding:', onboardingError);
+      }
+
+      toast.success("Dados do usuário removidos com sucesso");
       loadUsers();
+    } catch (error) {
+      console.error('Delete error:', error);
+      toast.error("Erro ao deletar usuário");
     }
     setDeleteUserId(null);
   };
@@ -320,7 +346,7 @@ export const UsersManagement = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
             <AlertDialogDescription>
-              Esta ação não pode ser desfeita. Isso irá deletar permanentemente as roles deste usuário.
+              Esta ação irá remover as roles, perfil e dados de onboarding deste usuário. A conta de autenticação permanecerá ativa até que o usuário a exclua ou solicite exclusão.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -92,7 +92,7 @@ export const AppNavigation = () => {
               className="gap-2"
             >
               <DollarSign className="h-4 w-4" />
-              Preços
+              Assinaturas
             </Button>
 
             {user && isAdmin && (
@@ -203,7 +203,7 @@ export const AppNavigation = () => {
                   className="justify-start gap-3"
                 >
                   <DollarSign className="h-5 w-5" />
-                  Preços
+                  Assinaturas
                 </Button>
                 
                 {user && isAdmin && (
