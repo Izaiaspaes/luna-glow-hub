@@ -19,41 +19,6 @@ import {
 import { useTranslation } from "react-i18next";
 import { useOnboarding } from "@/hooks/useOnboarding";
 
-const benefits = [
-  {
-    icon: Brain,
-    title: "IA Personalizada",
-    description: "Planos de bem-estar criados especialmente para você",
-    color: "from-luna-purple to-luna-pink"
-  },
-  {
-    icon: Moon,
-    title: "Rastreamento Completo",
-    description: "Ciclo, sono, humor e energia em um só lugar",
-    color: "from-luna-blue to-luna-purple"
-  },
-  {
-    icon: Zap,
-    title: "Previsões Inteligentes",
-    description: "Antecipe seus sintomas e prepare-se melhor",
-    color: "from-luna-orange to-luna-pink"
-  },
-  {
-    icon: Shield,
-    title: "100% Privado",
-    description: "Seus dados protegidos com criptografia",
-    color: "from-luna-green to-luna-blue"
-  }
-];
-
-const premiumFeatures = [
-  "Planos de bem-estar ilimitados",
-  "Diário da Mulher com IA",
-  "SOS Feminino para momentos difíceis",
-  "Previsões de sintomas avançadas",
-  "Suporte prioritário"
-];
-
 export default function OnboardingSuccess() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -61,12 +26,46 @@ export default function OnboardingSuccess() {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    // Small delay for animation effect
     const timer = setTimeout(() => setShowContent(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  const userName = onboardingData?.preferred_name || onboardingData?.full_name?.split(' ')[0] || "você";
+  const userName = onboardingData?.preferred_name || onboardingData?.full_name?.split(' ')[0] || t('onboardingSuccess.defaultName');
+
+  const benefits = [
+    {
+      icon: Brain,
+      title: t('onboardingSuccess.benefits.ai.title'),
+      description: t('onboardingSuccess.benefits.ai.description'),
+      color: "from-luna-purple to-luna-pink"
+    },
+    {
+      icon: Moon,
+      title: t('onboardingSuccess.benefits.tracking.title'),
+      description: t('onboardingSuccess.benefits.tracking.description'),
+      color: "from-luna-blue to-luna-purple"
+    },
+    {
+      icon: Zap,
+      title: t('onboardingSuccess.benefits.predictions.title'),
+      description: t('onboardingSuccess.benefits.predictions.description'),
+      color: "from-luna-orange to-luna-pink"
+    },
+    {
+      icon: Shield,
+      title: t('onboardingSuccess.benefits.privacy.title'),
+      description: t('onboardingSuccess.benefits.privacy.description'),
+      color: "from-luna-green to-luna-blue"
+    }
+  ];
+
+  const premiumFeatures = [
+    t('onboardingSuccess.premiumFeatures.unlimitedPlans'),
+    t('onboardingSuccess.premiumFeatures.aiJournal'),
+    t('onboardingSuccess.premiumFeatures.sosSupport'),
+    t('onboardingSuccess.premiumFeatures.advancedPredictions'),
+    t('onboardingSuccess.premiumFeatures.prioritySupport')
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-luna-pink-light/30 to-luna-peach/30 relative overflow-hidden">
@@ -103,14 +102,14 @@ export default function OnboardingSuccess() {
           
           <Badge className="bg-gradient-to-r from-luna-pink via-luna-purple to-primary text-white border-0 px-4 py-2 text-sm font-medium shadow-lg mb-4">
             <Sparkles className="w-4 h-4 mr-2" />
-            Cadastro Concluído!
+            {t('onboardingSuccess.badge')}
           </Badge>
           
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Bem-vinda, <span className="gradient-text">{userName}</span>! 🎉
+            {t('onboardingSuccess.welcome')} <span className="gradient-text">{userName}</span>! 🎉
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Seu perfil foi criado com sucesso. Agora você tem acesso a recursos incríveis para transformar seu bem-estar.
+            {t('onboardingSuccess.subtitle')}
           </p>
         </motion.div>
 
@@ -173,7 +172,7 @@ export default function OnboardingSuccess() {
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
                       <Gift className="w-3 h-3 inline mr-1" />
-                      ESPECIAL
+                      {t('onboardingSuccess.specialBadge')}
                     </motion.div>
                   </div>
                 </div>
@@ -181,10 +180,10 @@ export default function OnboardingSuccess() {
                 {/* Right side - Content */}
                 <div className="flex-1 text-center md:text-left">
                   <h2 className="text-2xl md:text-3xl font-bold mb-3">
-                    Desbloqueie todo o potencial do <span className="gradient-text">Luna</span>
+                    {t('onboardingSuccess.unlockTitle')} <span className="gradient-text">Luna</span>
                   </h2>
                   <p className="text-muted-foreground mb-6">
-                    Escolha o plano ideal para você e comece sua jornada de transformação com recursos exclusivos.
+                    {t('onboardingSuccess.unlockDescription')}
                   </p>
 
                   {/* Features list */}
@@ -213,7 +212,7 @@ export default function OnboardingSuccess() {
                       className="group flex-1"
                       onClick={() => navigate('/pricing')}
                     >
-                      Ver Planos e Assinar
+                      {t('onboardingSuccess.viewPlans')}
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                     <Button 
@@ -223,7 +222,7 @@ export default function OnboardingSuccess() {
                       onClick={() => navigate('/dashboard')}
                     >
                       <Heart className="w-5 h-5 mr-2" />
-                      Explorar Grátis
+                      {t('onboardingSuccess.exploreFree')}
                     </Button>
                   </div>
                 </div>
@@ -240,15 +239,15 @@ export default function OnboardingSuccess() {
           >
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-luna-green" />
-              <span>Pagamento 100% seguro</span>
+              <span>{t('onboardingSuccess.trust.securePayment')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Gift className="w-4 h-4 text-luna-orange" />
-              <span>7 dias de garantia</span>
+              <span>{t('onboardingSuccess.trust.guarantee')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-luna-purple" />
-              <span>Cancele quando quiser</span>
+              <span>{t('onboardingSuccess.trust.cancelAnytime')}</span>
             </div>
           </motion.div>
         </motion.div>
