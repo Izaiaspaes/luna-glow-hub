@@ -20,3 +20,9 @@ verify_jwt = true
 
 [functions.luna-sense-chat]
 verify_jwt = true
+
+[functions.send-subscription-confirmation]
+verify_jwt = true
+
+[functions.send-inactivity-reminders]
+verify_jwt = false

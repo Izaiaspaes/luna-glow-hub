@@ -58,7 +58,7 @@ export function useAuth() {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check if user is admin
+          // Check if user is admin and update last_accessed_at
           setTimeout(async () => {
             const { data } = await supabase
               .from('user_roles')
@@ -68,6 +68,12 @@ export function useAuth() {
             
             setIsAdmin(!!data && data.length > 0);
             setAdminChecked(true);
+            
+            // Update last_accessed_at for activity tracking
+            await supabase
+              .from('profiles')
+              .update({ last_accessed_at: new Date().toISOString() })
+              .eq('user_id', session.user.id);
             
             // Check subscription status
             checkSubscription();
