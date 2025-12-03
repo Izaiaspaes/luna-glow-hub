@@ -6,6 +6,8 @@ import { FAQ } from "@/components/landing/en/FAQ";
 import { FinalCTA } from "@/components/landing/en/FinalCTA";
 import { TrustSection } from "@/components/landing/en/TrustSection";
 import { ExitIntentPopup } from "@/components/landing/ExitIntentPopup";
+import { SocialProof } from "@/components/landing/en/SocialProof";
+import { StickyCTA } from "@/components/landing/en/StickyCTA";
 
 const LandingEN = () => {
   return (
@@ -18,6 +20,8 @@ const LandingEN = () => {
       <FAQ />
       <FinalCTA />
       <ExitIntentPopup />
+      <SocialProof />
+      <StickyCTA />
     </div>
   );
 };
