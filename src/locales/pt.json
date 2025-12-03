@@ -40,7 +40,11 @@
     "contact": "Contato",
     "dashboard": "Dashboard",
     "profile": "Perfil",
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "adminPanel": "Painel de Controle",
+    "logout": "Sair",
+    "login": "Entrar",
+    "openMenu": "Abrir menu"
   },
   "auth": {
     "signIn": "Entrar",

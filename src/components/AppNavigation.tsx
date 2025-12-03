@@ -74,7 +74,7 @@ export const AppNavigation = () => {
               {user ? (
                 <>
                   <LayoutDashboard className="h-4 w-4" />
-                  Dashboard
+                  {t("nav.dashboard")}
                 </>
               ) : (
                 <>
@@ -91,7 +91,7 @@ export const AppNavigation = () => {
               className="gap-2"
             >
               <Sparkles className="h-4 w-4" />
-              Funcionalidades
+              {t("nav.features")}
             </Button>
 
             <Button
@@ -101,7 +101,7 @@ export const AppNavigation = () => {
               className="gap-2"
             >
               <DollarSign className="h-4 w-4" />
-              Assinaturas
+              {t("nav.pricing")}
             </Button>
 
             {user && isAdmin && (
@@ -112,7 +112,7 @@ export const AppNavigation = () => {
                 className="gap-2"
               >
                 <ShieldCheck className="h-4 w-4" />
-                Painel de Controle
+                {t("nav.adminPanel")}
               </Button>
             )}
           </div>
@@ -129,7 +129,7 @@ export const AppNavigation = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate("/dashboard?settings=true")}
-                title="Configurações"
+                title={t("nav.settings")}
                 className="hidden md:inline-flex"
               >
                 <Settings className="h-5 w-5" />
@@ -141,7 +141,7 @@ export const AppNavigation = () => {
                 className="gap-2 hidden md:inline-flex"
               >
                 <LogOut className="h-4 w-4" />
-                Sair
+                {t("nav.logout")}
               </Button>
             </>
           ) : (
@@ -151,7 +151,7 @@ export const AppNavigation = () => {
               onClick={() => navigate("/auth")}
               className="hidden md:inline-flex"
             >
-              Entrar
+              {t("nav.login")}
             </Button>
           )}
           
@@ -160,7 +160,7 @@ export const AppNavigation = () => {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Abrir menu</span>
+                <span className="sr-only">{t("nav.openMenu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
@@ -181,7 +181,7 @@ export const AppNavigation = () => {
                   {user ? (
                     <>
                       <LayoutDashboard className="h-5 w-5" />
-                      Dashboard
+                      {t("nav.dashboard")}
                     </>
                   ) : (
                     <>
@@ -200,7 +200,7 @@ export const AppNavigation = () => {
                   className="justify-start gap-3"
                 >
                   <Sparkles className="h-5 w-5" />
-                  Funcionalidades
+                  {t("nav.features")}
                 </Button>
                 
                 <Button
@@ -212,7 +212,7 @@ export const AppNavigation = () => {
                   className="justify-start gap-3"
                 >
                   <DollarSign className="h-5 w-5" />
-                  Assinaturas
+                  {t("nav.pricing")}
                 </Button>
                 
                 {user && isAdmin && (
@@ -225,7 +225,7 @@ export const AppNavigation = () => {
                     className="justify-start gap-3"
                   >
                     <ShieldCheck className="h-5 w-5" />
-                    Painel de Controle
+                    {t("nav.adminPanel")}
                   </Button>
                 )}
                 
@@ -243,7 +243,7 @@ export const AppNavigation = () => {
                         className="w-full justify-start gap-3"
                       >
                         <Settings className="h-5 w-5" />
-                        Configurações
+                        {t("nav.settings")}
                       </Button>
                       <Button
                         variant="outline"
@@ -254,7 +254,7 @@ export const AppNavigation = () => {
                         className="w-full justify-start gap-3"
                       >
                         <LogOut className="h-5 w-5" />
-                        Sair
+                        {t("nav.logout")}
                       </Button>
                     </>
                   ) : (
@@ -266,7 +266,7 @@ export const AppNavigation = () => {
                       }}
                       className="w-full"
                     >
-                      Entrar
+                      {t("nav.login")}
                     </Button>
                   )}
                 </div>
