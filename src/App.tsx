@@ -23,6 +23,7 @@ import OnboardingSuccess from "./pages/OnboardingSuccess";
 import Install from "./pages/Install";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import PromotionRules from "./pages/PromotionRules";
 import NotFound from "./pages/NotFound";
 import LandingPT from "./pages/LandingPT";
 import LandingEN from "./pages/LandingEN";
@@ -62,6 +63,7 @@ const AppContent = () => {
           <Route path="/install" element={<Install />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/promotion-rules" element={<PromotionRules />} />
           <Route path="/pt" element={<LandingPT />} />
           <Route path="/en" element={<LandingEN />} />
           <Route path="/es" element={<LandingES />} />
