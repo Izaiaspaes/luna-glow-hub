@@ -1516,5 +1516,35 @@
       "privacy": "Privacidade e segurança total",
       "support": "Suporte"
     }
+  },
+  "referral": {
+    "title": "Indique e Ganhe",
+    "description": "Indique amigas e ganhe 10% de desconto na sua próxima renovação quando elas ficarem 30 dias assinantes!",
+    "yourLink": "Seu link de indicação",
+    "code": "Código",
+    "share": "Compartilhar",
+    "shareTitle": "Conheça a Luna!",
+    "shareText": "Use meu código de indicação e comece sua jornada de bem-estar!",
+    "linkCopied": "Link copiado!",
+    "copyError": "Erro ao copiar link",
+    "howItWorks": "Como funciona",
+    "step1": "Compartilhe seu link com amigas",
+    "step2": "Ela se cadastra e assina um plano",
+    "step3": "Após 30 dias de assinatura ativa, você ganha 10% de desconto!",
+    "yourReferrals": "Suas indicações",
+    "anonymous": "Usuária",
+    "stats": {
+      "total": "Indicações",
+      "pending": "Pendentes",
+      "completed": "Completas",
+      "rewarded": "Recompensas"
+    },
+    "status": {
+      "signedUp": "Cadastrado",
+      "subscribed": "Aguardando 30 dias",
+      "eligible": "Elegível",
+      "rewarded": "Recompensado",
+      "expired": "Expirado"
+    }
   }
 }

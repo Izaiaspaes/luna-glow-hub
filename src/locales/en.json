@@ -1489,5 +1489,35 @@
       "privacy": "Complete privacy and security",
       "support": "Support"
     }
+  },
+  "referral": {
+    "title": "Refer & Earn",
+    "description": "Invite friends and get 10% off your next renewal when they stay subscribed for 30 days!",
+    "yourLink": "Your referral link",
+    "code": "Code",
+    "share": "Share",
+    "shareTitle": "Discover Luna!",
+    "shareText": "Use my referral code and start your wellness journey!",
+    "linkCopied": "Link copied!",
+    "copyError": "Error copying link",
+    "howItWorks": "How it works",
+    "step1": "Share your link with friends",
+    "step2": "They sign up and subscribe to a plan",
+    "step3": "After 30 days of active subscription, you get 10% off!",
+    "yourReferrals": "Your referrals",
+    "anonymous": "User",
+    "stats": {
+      "total": "Referrals",
+      "pending": "Pending",
+      "completed": "Completed",
+      "rewarded": "Rewards"
+    },
+    "status": {
+      "signedUp": "Signed Up",
+      "subscribed": "Waiting 30 days",
+      "eligible": "Eligible",
+      "rewarded": "Rewarded",
+      "expired": "Expired"
+    }
   }
 }

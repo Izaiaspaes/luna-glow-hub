@@ -43,6 +43,7 @@ import { DailyWorkMessage } from "@/components/DailyWorkMessage";
 import { AppTour } from "@/components/AppTour";
 import { PremiumPlusTour } from "@/components/PremiumPlusTour";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
+import { ReferralSection } from "@/components/ReferralSection";
 import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
 import { SOSButton } from "@/components/SOSButton";
@@ -612,6 +613,9 @@ export default function Dashboard() {
                     
                     {/* Subscription Status */}
                     <SubscriptionCard />
+                    
+                    {/* Referral Program */}
+                    {hasPremiumAccess && <ReferralSection />}
                     
                     {/* AI Wellness Plans Section */}
                     <div>
