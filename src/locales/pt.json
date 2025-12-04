@@ -1546,5 +1546,47 @@
       "rewarded": "Recompensado",
       "expired": "Expirado"
     }
+  },
+  "promotionRules": {
+    "title": "Regras de Promoções e Indicações",
+    "subtitle": "Conheça todas as regras do nosso programa de indicações e cupons promocionais para aproveitar ao máximo os benefícios da Luna.",
+    "referral": {
+      "title": "Programa Indique e Ganhe",
+      "howItWorks": "Como funciona:",
+      "howItWorksDesc": "Compartilhe seu link de indicação exclusivo com amigas e conhecidas. Quando elas se cadastrarem e assinarem um plano pago, você ganha benefícios!",
+      "benefit": "Benefício para quem indica:",
+      "benefitDesc": "Você recebe 10% de desconto na sua próxima renovação de assinatura quando sua indicada permanecer assinante por 30 dias consecutivos.",
+      "eligibility": "Período de elegibilidade:",
+      "eligibilityDesc": "A indicada deve manter a assinatura ativa por no mínimo 30 dias para que o desconto seja aplicado à sua conta.",
+      "accumulation": "Acúmulo de descontos:",
+      "accumulationDesc": "Você pode acumular múltiplas indicações válidas. Os descontos são aplicados automaticamente na sua próxima cobrança.",
+      "important": "Importante:",
+      "importantDesc": "Indicações fraudulentas, autocadastramentos ou uso indevido do programa resultarão na perda dos benefícios e possível suspensão da conta."
+    },
+    "coupons": {
+      "title": "Cupons Promocionais",
+      "validity": "Validade:",
+      "validityDesc": "Cada cupom possui uma data de validade específica. Cupons expirados não podem ser utilizados ou reativados.",
+      "singleUse": "Uso único:",
+      "singleUseDesc": "Salvo indicação contrária, cada cupom pode ser utilizado apenas uma vez por usuária.",
+      "usageLimit": "Limite de uso:",
+      "usageLimitDesc": "Alguns cupons possuem limite máximo de utilizações. Quando esgotado, o cupom se torna inválido.",
+      "discountTypes": "Tipos de desconto:",
+      "discountTypesDesc": "Os cupons podem oferecer desconto percentual (ex: 20% off) ou valor fixo (ex: R$ 10 off), conforme especificado.",
+      "nonCumulative": "Não cumulativo:",
+      "nonCumulativeDesc": "Cupons não podem ser combinados com outras promoções, descontos de indicação ou ofertas especiais, salvo indicação expressa."
+    },
+    "general": {
+      "title": "Regras Gerais",
+      "rule1": "A Luna reserva-se o direito de alterar, suspender ou encerrar programas promocionais a qualquer momento, mediante aviso prévio.",
+      "rule2": "Benefícios e descontos são pessoais e intransferíveis, vinculados exclusivamente à conta da usuária beneficiária.",
+      "rule3": "Em caso de cancelamento da assinatura, os benefícios acumulados são perdidos e não podem ser recuperados posteriormente.",
+      "rule4": "A Luna pode solicitar verificação de identidade para liberação de benefícios em casos de suspeita de fraude.",
+      "rule5": "Dúvidas sobre promoções podem ser enviadas para suporte@lunaglow.com.br"
+    },
+    "agreement": {
+      "checkbox": "Li e compreendi todas as regras de promoções e indicações da Luna",
+      "button": "Li e Concordo"
+    }
   }
 }

@@ -30,10 +30,10 @@ const PromotionRules = () => {
             <Gift className="w-8 h-8" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-            Regras de Promoções e Indicações
+            {t("promotionRules.title")}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Conheça todas as regras do nosso programa de indicações e cupons promocionais para aproveitar ao máximo os benefícios da Luna.
+            {t("promotionRules.subtitle")}
           </p>
         </div>
 
@@ -44,7 +44,7 @@ const PromotionRules = () => {
               <div className="p-2 rounded-lg bg-luna-purple/10">
                 <Users className="w-5 h-5 text-luna-purple" />
               </div>
-              Programa Indique e Ganhe
+              {t("promotionRules.referral.title")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -52,31 +52,31 @@ const PromotionRules = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Como funciona:</strong> Compartilhe seu link de indicação exclusivo com amigas e conhecidas. Quando elas se cadastrarem e assinarem um plano pago, você ganha benefícios!
+                  <strong>{t("promotionRules.referral.howItWorks")}</strong> {t("promotionRules.referral.howItWorksDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Benefício para quem indica:</strong> Você recebe 10% de desconto na sua próxima renovação de assinatura quando sua indicada permanecer assinante por 30 dias consecutivos.
+                  <strong>{t("promotionRules.referral.benefit")}</strong> {t("promotionRules.referral.benefitDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Período de elegibilidade:</strong> A indicada deve manter a assinatura ativa por no mínimo 30 dias para que o desconto seja aplicado à sua conta.
+                  <strong>{t("promotionRules.referral.eligibility")}</strong> {t("promotionRules.referral.eligibilityDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Acúmulo de descontos:</strong> Você pode acumular múltiplas indicações válidas. Os descontos são aplicados automaticamente na sua próxima cobrança.
+                  <strong>{t("promotionRules.referral.accumulation")}</strong> {t("promotionRules.referral.accumulationDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-luna-orange mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Importante:</strong> Indicações fraudulentas, autocadastramentos ou uso indevido do programa resultarão na perda dos benefícios e possível suspensão da conta.
+                  <strong>{t("promotionRules.referral.important")}</strong> {t("promotionRules.referral.importantDesc")}
                 </p>
               </div>
             </div>
@@ -90,7 +90,7 @@ const PromotionRules = () => {
               <div className="p-2 rounded-lg bg-luna-pink/10">
                 <Ticket className="w-5 h-5 text-luna-pink" />
               </div>
-              Cupons Promocionais
+              {t("promotionRules.coupons.title")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -98,31 +98,31 @@ const PromotionRules = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Validade:</strong> Cada cupom possui uma data de validade específica. Cupons expirados não podem ser utilizados ou reativados.
+                  <strong>{t("promotionRules.coupons.validity")}</strong> {t("promotionRules.coupons.validityDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Uso único:</strong> Salvo indicação contrária, cada cupom pode ser utilizado apenas uma vez por usuária.
+                  <strong>{t("promotionRules.coupons.singleUse")}</strong> {t("promotionRules.coupons.singleUseDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Limite de uso:</strong> Alguns cupons possuem limite máximo de utilizações. Quando esgotado, o cupom se torna inválido.
+                  <strong>{t("promotionRules.coupons.usageLimit")}</strong> {t("promotionRules.coupons.usageLimitDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-luna-green mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Tipos de desconto:</strong> Os cupons podem oferecer desconto percentual (ex: 20% off) ou valor fixo (ex: R$ 10 off), conforme especificado.
+                  <strong>{t("promotionRules.coupons.discountTypes")}</strong> {t("promotionRules.coupons.discountTypesDesc")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-luna-orange mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  <strong>Não cumulativo:</strong> Cupons não podem ser combinados com outras promoções, descontos de indicação ou ofertas especiais, salvo indicação expressa.
+                  <strong>{t("promotionRules.coupons.nonCumulative")}</strong> {t("promotionRules.coupons.nonCumulativeDesc")}
                 </p>
               </div>
             </div>
@@ -136,7 +136,7 @@ const PromotionRules = () => {
               <div className="p-2 rounded-lg bg-luna-blue/10">
                 <Calendar className="w-5 h-5 text-luna-blue" />
               </div>
-              Regras Gerais
+              {t("promotionRules.general.title")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -144,31 +144,31 @@ const PromotionRules = () => {
               <div className="flex items-start gap-3">
                 <Percent className="w-5 h-5 text-luna-blue mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  A Luna reserva-se o direito de alterar, suspender ou encerrar programas promocionais a qualquer momento, mediante aviso prévio.
+                  {t("promotionRules.general.rule1")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <Percent className="w-5 h-5 text-luna-blue mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  Benefícios e descontos são pessoais e intransferíveis, vinculados exclusivamente à conta da usuária beneficiária.
+                  {t("promotionRules.general.rule2")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <Percent className="w-5 h-5 text-luna-blue mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  Em caso de cancelamento da assinatura, os benefícios acumulados são perdidos e não podem ser recuperados posteriormente.
+                  {t("promotionRules.general.rule3")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <Percent className="w-5 h-5 text-luna-blue mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  A Luna pode solicitar verificação de identidade para liberação de benefícios em casos de suspeita de fraude.
+                  {t("promotionRules.general.rule4")}
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <Percent className="w-5 h-5 text-luna-blue mt-0.5 shrink-0" />
                 <p className="text-foreground/80">
-                  Dúvidas sobre promoções podem ser enviadas para suporte@lunaglow.com.br
+                  {t("promotionRules.general.rule5")}
                 </p>
               </div>
             </div>
@@ -189,7 +189,7 @@ const PromotionRules = () => {
                   htmlFor="agree" 
                   className="text-foreground cursor-pointer select-none"
                 >
-                  Li e compreendi todas as regras de promoções e indicações da Luna
+                  {t("promotionRules.agreement.checkbox")}
                 </label>
               </div>
               <Button
@@ -198,7 +198,7 @@ const PromotionRules = () => {
                 size="lg"
                 className="bg-gradient-to-r from-luna-pink to-luna-purple hover:opacity-90 text-white px-8"
               >
-                Li e Concordo
+                {t("promotionRules.agreement.button")}
               </Button>
             </div>
           </CardContent>
