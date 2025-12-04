@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { trackPurchase } from "@/lib/analytics";
 
 const PricingSuccess = () => {
   const { t } = useTranslation();
@@ -40,9 +41,9 @@ const PricingSuccess = () => {
     return hasStripePremiumPlus || hasDbPremiumPlus;
   }, [subscriptionStatus, userProfile]);
 
-  // Send confirmation email once when page loads
+  // Track purchase and send confirmation email once when page loads
   useEffect(() => {
-    const sendConfirmationEmail = async () => {
+    const handlePurchaseSuccess = async () => {
       if (!user || emailSentRef.current) return;
       
       // Check if subscription is active (either via Stripe or database)
@@ -54,9 +55,12 @@ const PricingSuccess = () => {
 
       emailSentRef.current = true;
       
+      const planType = isPremiumPlus ? 'premium_plus' : 'premium';
+      
+      // Track purchase event for GTM/GA4
+      trackPurchase({ planType });
+      
       try {
-        const planType = isPremiumPlus ? 'premium_plus' : 'premium';
-        
         await supabase.functions.invoke('send-subscription-confirmation', {
           body: {
             userId: user.id,
@@ -71,7 +75,7 @@ const PricingSuccess = () => {
       }
     };
 
-    sendConfirmationEmail();
+    handlePurchaseSuccess();
   }, [user, subscriptionStatus, userProfile, isPremiumPlus]);
 
   const planName = isPremiumPlus ? "Premium Plus" : "Premium";

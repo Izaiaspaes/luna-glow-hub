@@ -18,10 +18,11 @@ import logoLuna from "@/assets/logo-luna.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { useCurrency } from "@/hooks/useCurrency";
 import { useDynamicPricing } from "@/hooks/useDynamicPricing";
+import { trackViewPricing, trackBeginCheckout } from "@/lib/analytics";
 
 const getComparisonFeatures = (t: any) => [
   {
@@ -103,6 +104,11 @@ export default function Pricing() {
   const navigate = useNavigate();
   
   const prices = pricing[currency];
+
+  // Track view_pricing on page load
+  useEffect(() => {
+    trackViewPricing();
+  }, []);
   
   const freemiumFeatures = [
     t('pricing.freemiumFeatures.cycle'),
@@ -147,7 +153,21 @@ export default function Pricing() {
 
   const comparisonFeatures = getComparisonFeatures(t);
 
-  const handleCheckout = async (priceId: string) => {
+  const handleCheckout = async (priceId: string, planType: 'premium' | 'premium_plus', billingPeriod: 'monthly' | 'yearly') => {
+    // Get price value for tracking
+    const priceValue = planType === 'premium_plus' 
+      ? (billingPeriod === 'yearly' ? prices.premiumPlus.yearly : prices.premiumPlus.monthly)
+      : (billingPeriod === 'yearly' ? prices.premium.yearly : prices.premium.monthly);
+
+    // Track begin_checkout event
+    trackBeginCheckout({
+      priceId,
+      planType,
+      billingPeriod,
+      currency: currency === 'brl' ? 'BRL' : 'USD',
+      value: priceValue
+    });
+
     if (!user || !session) {
       setRedirecting(true);
       setTimeout(() => {
@@ -313,7 +333,7 @@ export default function Pricing() {
                   variant="colorful" 
                   size="lg" 
                   className="w-full group"
-                  onClick={() => handleCheckout(prices.premium.stripePriceId.monthly)}
+                  onClick={() => handleCheckout(prices.premium.stripePriceId.monthly, 'premium', 'monthly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly')} (${formatPrice(prices.premium.monthly, currency)})`}
@@ -323,7 +343,7 @@ export default function Pricing() {
                   variant="outline" 
                   size="lg" 
                   className="w-full hover:bg-primary/10"
-                  onClick={() => handleCheckout(prices.premium.stripePriceId.yearly)}
+                  onClick={() => handleCheckout(prices.premium.stripePriceId.yearly, 'premium', 'yearly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeYearly')} (${formatPrice(prices.premium.yearly, currency)})`}
@@ -374,7 +394,7 @@ export default function Pricing() {
                 <Button 
                   className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
                   size="lg"
-                  onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.monthly)}
+                  onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.monthly, 'premium_plus', 'monthly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthlyPremiumPlus')} (${formatPrice(prices.premiumPlus.monthly, currency)})`}
@@ -384,7 +404,7 @@ export default function Pricing() {
                   variant="outline" 
                   size="lg" 
                   className="w-full hover:bg-luna-purple/10 border-luna-purple"
-                  onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.yearly)}
+                  onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.yearly, 'premium_plus', 'yearly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeYearlyPremiumPlus')} (${formatPrice(prices.premiumPlus.yearly, currency)})`}
@@ -559,7 +579,7 @@ export default function Pricing() {
                 variant="secondary" 
                 size="lg" 
                 className="group"
-                onClick={() => handleCheckout(prices.premium.stripePriceId.monthly)}
+                onClick={() => handleCheckout(prices.premium.stripePriceId.monthly, 'premium', 'monthly')}
                 disabled={loading || currencyLoading}
               >
                 {loading ? t('pricing.processing') : t('pricing.ctaStartNow')}
