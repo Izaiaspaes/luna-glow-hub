@@ -29,7 +29,8 @@
     "update": "Update",
     "create": "Create",
     "continue": "Continue",
-    "skip": "Skip"
+    "skip": "Skip",
+    "learnMore": "Learn More"
   },
   "nav": {
     "home": "Home",
