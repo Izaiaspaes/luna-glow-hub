@@ -165,7 +165,7 @@ export const PlanCalculator = () => {
                     ))}
                   </div>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <NavLink to="/auth" className="flex-1">
+                    <NavLink to="/onboarding" className="flex-1">
                       <Button variant="colorful" size="lg" className="w-full">
                         {t("planCalculator.result.cta")}
                       </Button>

@@ -281,7 +281,7 @@ export default function Pricing() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <NavLink to="/auth" className="w-full">
+                <NavLink to="/onboarding" className="w-full">
                   <Button variant="outline" size="lg" className="w-full">
                     {t('pricing.startFree')}
                   </Button>
@@ -586,7 +586,7 @@ export default function Pricing() {
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             ) : (
-              <NavLink to="/auth">
+              <NavLink to="/onboarding">
                 <Button variant="secondary" size="lg" className="group">
                   {t('pricing.ctaStartFreeTrial')}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

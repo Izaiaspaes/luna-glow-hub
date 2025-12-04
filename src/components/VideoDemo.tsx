@@ -59,7 +59,7 @@ export const VideoDemo = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <NavLink to="/auth">
+              <NavLink to="/onboarding">
                 <Button variant="colorful" size="lg" className="w-full sm:w-auto">
                   {t("videoDemo.ctaButton")}
                 </Button>
