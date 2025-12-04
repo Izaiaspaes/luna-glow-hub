@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -23,28 +23,37 @@ import { trackPurchase } from "@/lib/analytics";
 const PricingSuccess = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, subscriptionStatus, userProfile } = useAuth();
   const emailSentRef = useRef(false);
 
+  // Preview mode for design testing (use ?preview=true or ?preview=plus)
+  const previewMode = searchParams.get("preview");
+  const isPreviewMode = previewMode === "true" || previewMode === "plus";
+
   useEffect(() => {
-    // If not logged in, redirect to auth
-    if (!user) {
+    // If not logged in and not in preview mode, redirect to auth
+    if (!user && !isPreviewMode) {
       navigate("/auth");
     }
-  }, [user, navigate]);
+  }, [user, navigate, isPreviewMode]);
 
   // Determine if user is Premium or Premium Plus
   const isPremiumPlus = useMemo(() => {
+    // In preview mode, check if preview=plus
+    if (isPreviewMode) {
+      return previewMode === "plus";
+    }
     const stripeProductIds = ['prod_TVfx4bH4H0okVe', 'prod_TVfxAziuEOC4QN'];
     const hasStripePremiumPlus = subscriptionStatus?.product_id && stripeProductIds.includes(subscriptionStatus.product_id);
     const hasDbPremiumPlus = userProfile?.subscription_plan === 'premium_plus';
     return hasStripePremiumPlus || hasDbPremiumPlus;
-  }, [subscriptionStatus, userProfile]);
+  }, [subscriptionStatus, userProfile, isPreviewMode, previewMode]);
 
-  // Track purchase and send confirmation email once when page loads
+  // Track purchase and send confirmation email once when page loads (skip in preview mode)
   useEffect(() => {
     const handlePurchaseSuccess = async () => {
-      if (!user || emailSentRef.current) return;
+      if (!user || emailSentRef.current || isPreviewMode) return;
       
       // Check if subscription is active (either via Stripe or database)
       const hasActiveSubscription = subscriptionStatus?.subscribed || 
@@ -76,7 +85,7 @@ const PricingSuccess = () => {
     };
 
     handlePurchaseSuccess();
-  }, [user, subscriptionStatus, userProfile, isPremiumPlus]);
+  }, [user, subscriptionStatus, userProfile, isPremiumPlus, isPreviewMode]);
 
   const planName = isPremiumPlus ? "Premium Plus" : "Premium";
 
@@ -132,6 +141,13 @@ const PricingSuccess = () => {
 
   return (
     <Layout>
+      {isPreviewMode && (
+        <div className="bg-amber-500 text-white text-center py-2 px-4 text-sm font-medium">
+          🔍 Modo Preview - Visualizando: {isPremiumPlus ? "Premium Plus" : "Premium"} | 
+          <a href="/pricing/success?preview=true" className="underline ml-2">Premium</a> | 
+          <a href="/pricing/success?preview=plus" className="underline ml-2">Premium Plus</a>
+        </div>
+      )}
       <div className="min-h-screen bg-gradient-to-b from-luna-pink/10 via-luna-purple/10 to-background py-16 px-4">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Success Header */}
