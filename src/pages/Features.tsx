@@ -686,7 +686,7 @@ export default function Features() {
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
             {t('features.cta.description')}
           </p>
-          <NavLink to="/auth">
+          <NavLink to="/onboarding">
             <Button variant="secondary" size="lg" className="group">
               {t('features.cta.createAccount')}
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

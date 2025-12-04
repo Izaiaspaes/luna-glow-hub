@@ -202,7 +202,7 @@ export const FeaturedHighlights = () => {
         {/* CTA */}
         <div className="text-center">
           <div className="inline-flex flex-col sm:flex-row gap-4">
-            <NavLink to="/auth">
+            <NavLink to="/onboarding">
               <Button variant="colorful" size="lg" className="group">
                 {t("featuredHighlights.ctaButton")}
                 <Sparkles className="ml-2 h-5 w-5 transition-transform group-hover:rotate-12" />

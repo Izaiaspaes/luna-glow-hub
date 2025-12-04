@@ -45,7 +45,7 @@ export const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <NavLink to="/auth">
+              <NavLink to="/onboarding">
                 <Button variant="colorful" size="lg" className="group">
                   {t('hero.cta')}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
