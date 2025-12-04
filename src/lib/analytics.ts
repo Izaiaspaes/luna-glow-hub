@@ -1,0 +1,83 @@
+// DataLayer utility for GTM integration
+
+declare global {
+  interface Window {
+    dataLayer: Record<string, any>[];
+  }
+}
+
+// Initialize dataLayer if not exists
+if (typeof window !== 'undefined' && !window.dataLayer) {
+  window.dataLayer = [];
+}
+
+export const pushToDataLayer = (event: Record<string, any>) => {
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(event);
+    console.log('[DataLayer]', event);
+  }
+};
+
+// View pricing page
+export const trackViewPricing = () => {
+  pushToDataLayer({
+    event: 'view_pricing',
+    page_type: 'pricing'
+  });
+};
+
+// Begin checkout - when user clicks subscribe
+export const trackBeginCheckout = (params: {
+  priceId: string;
+  planType: 'premium' | 'premium_plus';
+  billingPeriod: 'monthly' | 'yearly';
+  currency: string;
+  value: number;
+}) => {
+  pushToDataLayer({
+    event: 'begin_checkout',
+    ecommerce: {
+      currency: params.currency.toUpperCase(),
+      value: params.value,
+      items: [{
+        item_id: params.priceId,
+        item_name: params.planType === 'premium_plus' ? 'Premium Plus' : 'Premium',
+        item_category: 'subscription',
+        price: params.value,
+        quantity: 1
+      }]
+    },
+    plan_type: params.planType,
+    billing_period: params.billingPeriod
+  });
+};
+
+// Purchase complete - on success page
+export const trackPurchase = (params: {
+  planType: 'premium' | 'premium_plus';
+  transactionId?: string;
+}) => {
+  pushToDataLayer({
+    event: 'purchase',
+    ecommerce: {
+      transaction_id: params.transactionId || `txn_${Date.now()}`,
+      items: [{
+        item_name: params.planType === 'premium_plus' ? 'Premium Plus' : 'Premium',
+        item_category: 'subscription',
+        quantity: 1
+      }]
+    },
+    plan_type: params.planType
+  });
+};
+
+// Sign up complete - after onboarding
+export const trackSignUp = (params?: {
+  method?: string;
+}) => {
+  pushToDataLayer({
+    event: 'sign_up',
+    method: params?.method || 'email'
+  });
+};

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useOnboarding } from "@/hooks/useOnboarding";
+import { trackSignUp } from "@/lib/analytics";
 
 export default function OnboardingSuccess() {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ export default function OnboardingSuccess() {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
+    // Track sign_up event
+    trackSignUp({ method: 'email' });
+    
     const timer = setTimeout(() => setShowContent(true), 300);
     return () => clearTimeout(timer);
   }, []);
