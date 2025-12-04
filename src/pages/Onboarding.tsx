@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useOnboarding, OnboardingData } from "@/hooks/useOnboarding";
 import { OnboardingStep1 } from "@/components/onboarding/OnboardingStep1";
@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   const { user } = useAuth();
   const { onboardingData, saveOnboardingData, autoSaveOnboardingData } = useOnboarding();
@@ -21,6 +22,16 @@ export default function Onboarding() {
   const [formData, setFormData] = useState<OnboardingData>(onboardingData || {});
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+
+  // Capture referral code from URL
+  useEffect(() => {
+    const refCode = searchParams.get("ref");
+    if (refCode) {
+      setReferralCode(refCode);
+      console.log("Referral code captured:", refCode);
+    }
+  }, [searchParams]);
 
   // If user is already logged in and has completed onboarding, redirect to dashboard
   useEffect(() => {
@@ -69,6 +80,24 @@ export default function Onboarding() {
         }
 
         if (data.user) {
+          // Register referral if code exists
+          if (referralCode) {
+            try {
+              await supabase.functions.invoke("process-referral", {
+                body: { 
+                  action: "register_referral", 
+                  referral_code: referralCode,
+                  user_id: data.user.id,
+                  email: email
+                },
+              });
+              console.log("Referral registered successfully");
+            } catch (refErr) {
+              console.error("Error registering referral:", refErr);
+              // Don't block onboarding if referral fails
+            }
+          }
+          
           // Save profile data
           const updatedData = { ...formData, ...profileData };
           setFormData(updatedData);
