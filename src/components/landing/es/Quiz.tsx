@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackQuizComplete } from "@/lib/analytics";
 
 const quizQuestions = [
   {
@@ -53,6 +54,7 @@ export const Quiz = () => {
     if (currentQuestion < quizQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
+      trackQuizComplete({ result: 'ready', language: 'es' });
       setShowResult(true);
     }
   };

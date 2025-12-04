@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import { Mail, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { trackLead } from "@/lib/analytics";
 
 export const NewsletterSignup = () => {
   const { t } = useTranslation();
@@ -68,8 +69,11 @@ export const NewsletterSignup = () => {
         // Don't fail the subscription if email fails
         toast.success(t('newsletter.successNoEmail'));
       } else {
-      toast.success(t('newsletter.successSubscribed'));
+        toast.success(t('newsletter.successSubscribed'));
       }
+
+      // Track lead event
+      trackLead({ source: 'newsletter' });
 
       setEmail("");
       setError(""); // Clear error on success

@@ -81,3 +81,25 @@ export const trackSignUp = (params?: {
     method: params?.method || 'email'
   });
 };
+
+// Quiz complete - when user finishes quiz on landing page
+export const trackQuizComplete = (params: {
+  result?: string;
+  language?: string;
+}) => {
+  pushToDataLayer({
+    event: 'quiz_complete',
+    quiz_result: params.result,
+    language: params.language
+  });
+};
+
+// Lead - when user submits newsletter form
+export const trackLead = (params?: {
+  source?: string;
+}) => {
+  pushToDataLayer({
+    event: 'generate_lead',
+    lead_source: params?.source || 'newsletter'
+  });
+};
