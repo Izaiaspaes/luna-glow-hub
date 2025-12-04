@@ -1519,5 +1519,47 @@
       "rewarded": "Rewarded",
       "expired": "Expired"
     }
+  },
+  "promotionRules": {
+    "title": "Promotion and Referral Rules",
+    "subtitle": "Learn all the rules of our referral program and promotional coupons to make the most of Luna's benefits.",
+    "referral": {
+      "title": "Refer and Earn Program",
+      "howItWorks": "How it works:",
+      "howItWorksDesc": "Share your exclusive referral link with friends and acquaintances. When they sign up and subscribe to a paid plan, you earn benefits!",
+      "benefit": "Benefit for referrers:",
+      "benefitDesc": "You receive a 10% discount on your next subscription renewal when your referral remains subscribed for 30 consecutive days.",
+      "eligibility": "Eligibility period:",
+      "eligibilityDesc": "The referred user must maintain an active subscription for at least 30 days for the discount to be applied to your account.",
+      "accumulation": "Discount accumulation:",
+      "accumulationDesc": "You can accumulate multiple valid referrals. Discounts are automatically applied to your next billing.",
+      "important": "Important:",
+      "importantDesc": "Fraudulent referrals, self-registrations or misuse of the program will result in loss of benefits and possible account suspension."
+    },
+    "coupons": {
+      "title": "Promotional Coupons",
+      "validity": "Validity:",
+      "validityDesc": "Each coupon has a specific expiration date. Expired coupons cannot be used or reactivated.",
+      "singleUse": "Single use:",
+      "singleUseDesc": "Unless otherwise indicated, each coupon can only be used once per user.",
+      "usageLimit": "Usage limit:",
+      "usageLimitDesc": "Some coupons have a maximum usage limit. When exhausted, the coupon becomes invalid.",
+      "discountTypes": "Discount types:",
+      "discountTypesDesc": "Coupons may offer percentage discounts (e.g., 20% off) or fixed amounts (e.g., $10 off), as specified.",
+      "nonCumulative": "Non-cumulative:",
+      "nonCumulativeDesc": "Coupons cannot be combined with other promotions, referral discounts or special offers, unless expressly indicated."
+    },
+    "general": {
+      "title": "General Rules",
+      "rule1": "Luna reserves the right to change, suspend or terminate promotional programs at any time, with prior notice.",
+      "rule2": "Benefits and discounts are personal and non-transferable, linked exclusively to the beneficiary's account.",
+      "rule3": "In case of subscription cancellation, accumulated benefits are lost and cannot be recovered later.",
+      "rule4": "Luna may request identity verification to release benefits in cases of suspected fraud.",
+      "rule5": "Questions about promotions can be sent to suporte@lunaglow.com.br"
+    },
+    "agreement": {
+      "checkbox": "I have read and understood all Luna's promotion and referral rules",
+      "button": "I've Read and Agree"
+    }
   }
 }
