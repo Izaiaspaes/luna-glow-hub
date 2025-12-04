@@ -31,7 +31,7 @@ export const ExitIntentPopup = () => {
   }, [hasShown]);
 
   const handleClaim = () => {
-    window.location.href = '/auth?promo=PRIMEIRA15';
+    window.location.href = '/onboarding?promo=PRIMEIRA15';
     setIsOpen(false);
   };
 
