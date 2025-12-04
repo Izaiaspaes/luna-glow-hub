@@ -55,7 +55,7 @@ export const VideoDemo = ({ videoId = "dQw4w9WgXcQ" }: VideoDemoProps) => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <Button variant="cta" size="lg" onClick={() => window.location.href = '/auth'}>
+              <Button variant="cta" size="lg" onClick={() => window.location.href = '/onboarding'}>
                 Começar Grátis
               </Button>
               <Button variant="outline" size="lg" onClick={() => window.location.href = '/pricing'}>
