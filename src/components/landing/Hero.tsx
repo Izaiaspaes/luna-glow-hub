@@ -48,7 +48,7 @@ export const Hero = () => {
             <iframe
               className="w-full h-full"
               src="https://www.youtube.com/embed/fr5_EwByacg?autoplay=1&mute=1"
-              title="Luna Glow - Apresentação"
+              title="Luna - Apresentação"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
