@@ -727,6 +727,54 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          created_at: string
+          id: string
+          referral_code: string
+          referred_email: string | null
+          referred_subscribed_at: string | null
+          referred_user_id: string | null
+          referrer_user_id: string
+          reward_applied: boolean
+          reward_applied_at: string | null
+          reward_eligible_at: string | null
+          status: string
+          stripe_coupon_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          referral_code: string
+          referred_email?: string | null
+          referred_subscribed_at?: string | null
+          referred_user_id?: string | null
+          referrer_user_id: string
+          reward_applied?: boolean
+          reward_applied_at?: string | null
+          reward_eligible_at?: string | null
+          status?: string
+          stripe_coupon_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          referral_code?: string
+          referred_email?: string | null
+          referred_subscribed_at?: string | null
+          referred_user_id?: string | null
+          referrer_user_id?: string
+          reward_applied?: boolean
+          reward_applied_at?: string | null
+          reward_eligible_at?: string | null
+          status?: string
+          stripe_coupon_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       reminders: {
         Row: {
           created_at: string
@@ -1000,6 +1048,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_referral_codes: {
+        Row: {
+          created_at: string
+          id: string
+          referral_code: string
+          rewards_earned: number
+          successful_referrals: number
+          total_referrals: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          referral_code: string
+          rewards_earned?: number
+          successful_referrals?: number
+          total_referrals?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          referral_code?: string
+          rewards_earned?: number
+          successful_referrals?: number
+          total_referrals?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -1194,6 +1275,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_referral_code: { Args: never; Returns: string }
       get_users_with_profiles: {
         Args: never
         Returns: {

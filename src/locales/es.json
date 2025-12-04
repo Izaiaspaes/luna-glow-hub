@@ -1808,5 +1808,35 @@
       "privacy": "Privacidad y seguridad total",
       "support": "Soporte"
     }
+  },
+  "referral": {
+    "title": "Invita y Gana",
+    "description": "¡Invita amigas y obtén 10% de descuento en tu próxima renovación cuando ellas se queden 30 días suscriptoras!",
+    "yourLink": "Tu enlace de referencia",
+    "code": "Código",
+    "share": "Compartir",
+    "shareTitle": "¡Conoce Luna!",
+    "shareText": "¡Usa mi código de referencia y comienza tu viaje de bienestar!",
+    "linkCopied": "¡Enlace copiado!",
+    "copyError": "Error al copiar enlace",
+    "howItWorks": "Cómo funciona",
+    "step1": "Comparte tu enlace con amigas",
+    "step2": "Ella se registra y suscribe a un plan",
+    "step3": "¡Después de 30 días de suscripción activa, obtienes 10% de descuento!",
+    "yourReferrals": "Tus referencias",
+    "anonymous": "Usuaria",
+    "stats": {
+      "total": "Referencias",
+      "pending": "Pendientes",
+      "completed": "Completadas",
+      "rewarded": "Recompensas"
+    },
+    "status": {
+      "signedUp": "Registrado",
+      "subscribed": "Esperando 30 días",
+      "eligible": "Elegible",
+      "rewarded": "Recompensado",
+      "expired": "Expirado"
+    }
   }
 }
