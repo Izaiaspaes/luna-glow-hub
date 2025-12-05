@@ -1,17 +1,13 @@
 import * as Sentry from "@sentry/react";
 
+// Sentry DSN - this is a public key, safe to include in client code
+const SENTRY_DSN = "https://d2a7a98ec96a76342aab90835298cbe5@o4510483480248320.ingest.us.sentry.io/4510483489816576";
+
 // Initialize Sentry for error monitoring
-// DSN should be set in production - get it from sentry.io dashboard
 export function initSentry() {
-  const dsn = import.meta.env.VITE_SENTRY_DSN;
-  
-  if (!dsn) {
-    console.warn("Sentry DSN not configured. Error monitoring disabled.");
-    return;
-  }
 
   Sentry.init({
-    dsn,
+    dsn: SENTRY_DSN,
     environment: import.meta.env.MODE,
     
     // Performance monitoring
