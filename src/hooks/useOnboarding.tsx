@@ -58,12 +58,16 @@ export interface OnboardingData {
   completed_at?: string;
 }
 
+export type SaveStatus = 'idle' | 'saving' | 'saved' | 'error';
+
 export function useOnboarding() {
   const { user } = useAuth();
   const [onboardingData, setOnboardingData] = useState<OnboardingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
   const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+  const [statusTimer, setStatusTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -152,6 +156,22 @@ export function useOnboarding() {
     }
   };
 
+  // Helper to update status with auto-reset
+  const updateSaveStatus = (status: SaveStatus) => {
+    if (statusTimer) {
+      clearTimeout(statusTimer);
+    }
+    setSaveStatus(status);
+    
+    // Auto-reset to idle after showing saved/error status
+    if (status === 'saved' || status === 'error') {
+      const timer = setTimeout(() => {
+        setSaveStatus('idle');
+      }, 2000);
+      setStatusTimer(timer);
+    }
+  };
+
   // Auto-save function with debounce
   const autoSaveOnboardingData = (data: Partial<OnboardingData>) => {
     if (!user) return;
@@ -160,6 +180,9 @@ export function useOnboarding() {
     if (autoSaveTimer) {
       clearTimeout(autoSaveTimer);
     }
+
+    // Show saving indicator immediately when typing
+    setSaveStatus('saving');
 
     // Set new timer for auto-save (3 seconds after last change)
     const timer = setTimeout(async () => {
@@ -176,8 +199,10 @@ export function useOnboarding() {
           .upsert(updateData, { onConflict: 'user_id' });
 
         console.log("Auto-save completed");
+        updateSaveStatus('saved');
       } catch (error) {
         console.error("Auto-save error:", error);
+        updateSaveStatus('error');
       }
     }, 3000);
 
@@ -191,5 +216,6 @@ export function useOnboarding() {
     saveOnboardingData,
     autoSaveOnboardingData,
     refreshOnboardingData: loadOnboardingData,
+    saveStatus,
   };
 }
