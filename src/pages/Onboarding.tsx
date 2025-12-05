@@ -13,6 +13,64 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2, Check, AlertCircle, Cloud } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Skeleton Loading Component
+function OnboardingSkeleton() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl">
+        <div className="mb-8 space-y-4">
+          <div className="text-center space-y-2">
+            <Skeleton className="h-9 w-64 mx-auto" />
+            <Skeleton className="h-5 w-80 mx-auto" />
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-28" />
+            </div>
+            <Skeleton className="h-2 w-full" />
+          </div>
+        </div>
+
+        <Card>
+          <CardContent className="pt-6 space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-12" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-14" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </div>
+            <Skeleton className="h-10 w-full mt-4" />
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
 
 // Save Status Indicator Component
 function SaveStatusIndicator({ status }: { status: SaveStatus }) {
@@ -56,8 +114,8 @@ export default function Onboarding() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
-  const { user } = useAuth();
-  const { onboardingData, saveOnboardingData, autoSaveOnboardingData, saveStatus } = useOnboarding();
+  const { user, loading: authLoading } = useAuth();
+  const { onboardingData, loading: dataLoading, saveOnboardingData, autoSaveOnboardingData, saveStatus } = useOnboarding();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingData>(onboardingData || {});
   const [loading, setLoading] = useState(false);
@@ -202,6 +260,11 @@ export default function Onboarding() {
     
     setLoading(false);
   };
+
+  // Show skeleton while loading auth or data (only for logged in users)
+  if (authLoading || (user && dataLoading)) {
+    return <OnboardingSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
