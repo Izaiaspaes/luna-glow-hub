@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { setUserContext, clearUserContext } from "@/lib/sentry";
 
 interface SubscriptionStatus {
   subscribed: boolean;
@@ -58,6 +59,9 @@ export function useAuth() {
         setUser(session?.user ?? null);
         
         if (session?.user) {
+          // Set Sentry user context for error tracking
+          setUserContext(session.user.id, session.user.email);
+          
           // Check if user is admin and update last_accessed_at
           setTimeout(async () => {
             const { data } = await supabase
@@ -79,6 +83,7 @@ export function useAuth() {
             checkSubscription();
           }, 0);
         } else {
+          clearUserContext();
           setIsAdmin(false);
           setAdminChecked(true);
         }
@@ -134,6 +139,7 @@ export function useAuth() {
   };
 
   const signOut = async () => {
+    clearUserContext();
     const { error } = await supabase.auth.signOut();
     return { error };
   };
