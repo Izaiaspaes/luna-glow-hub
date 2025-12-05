@@ -103,12 +103,30 @@ export function useOnboarding() {
     }
   };
 
+  // Sanitize data before saving - convert empty strings to null for database compatibility
+  const sanitizeData = (data: Partial<OnboardingData>): Partial<OnboardingData> => {
+    const sanitized: Partial<OnboardingData> = {};
+    
+    for (const [key, value] of Object.entries(data)) {
+      if (value === "" || value === undefined) {
+        // Convert empty strings to null for optional fields
+        (sanitized as any)[key] = null;
+      } else {
+        (sanitized as any)[key] = value;
+      }
+    }
+    
+    return sanitized;
+  };
+
   const saveOnboardingData = async (data: Partial<OnboardingData>, markComplete = false) => {
     if (!user) return { error: new Error("No user") };
 
     try {
+      const sanitizedData = sanitizeData(data);
+      
       const updateData = {
-        ...data,
+        ...sanitizedData,
         user_id: user.id,
         ...(markComplete && { completed_at: new Date().toISOString() }),
       };
@@ -146,8 +164,10 @@ export function useOnboarding() {
     // Set new timer for auto-save (3 seconds after last change)
     const timer = setTimeout(async () => {
       try {
+        const sanitizedData = sanitizeData(data);
+        
         const updateData = {
-          ...data,
+          ...sanitizedData,
           user_id: user.id,
         };
 

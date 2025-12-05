@@ -41,7 +41,7 @@ type Step2Data = z.infer<typeof step2Schema>;
 interface OnboardingStep2Props {
   data: OnboardingData;
   onNext: (data: Partial<OnboardingData>) => void;
-  onBack: () => void;
+  onBack?: () => void;
   onAutoSave: (data: Partial<OnboardingData>) => void;
 }
 
@@ -171,9 +171,11 @@ export function OnboardingStep2({ data, onNext, onBack, onAutoSave }: Onboarding
       </div>
 
       <div className="flex gap-4">
-        <Button type="button" variant="outline" onClick={onBack} className="w-full">
-          Voltar
-        </Button>
+        {onBack && (
+          <Button type="button" variant="outline" onClick={onBack} className="w-full">
+            Voltar
+          </Button>
+        )}
         <Button type="submit" variant="hero" className="w-full">
           Próximo
         </Button>
