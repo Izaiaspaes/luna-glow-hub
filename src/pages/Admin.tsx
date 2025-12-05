@@ -4,9 +4,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus, Bug } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Sentry } from "@/lib/sentry";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
 import { PlansManagement } from "@/components/admin/PlansManagement";
@@ -82,25 +81,11 @@ export default function Admin() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Painel Administrativo</h1>
-            <p className="text-muted-foreground">
-              Gerencie usuários, visualize estatísticas e configure a plataforma
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              Sentry.captureMessage("Test error from Admin panel");
-              toast.success("Erro de teste enviado ao Sentry!");
-            }}
-            className="flex items-center gap-2"
-          >
-            <Bug className="w-4 h-4" />
-            Testar Sentry
-          </Button>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">Painel Administrativo</h1>
+          <p className="text-muted-foreground">
+            Gerencie usuários, visualize estatísticas e configure a plataforma
+          </p>
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
