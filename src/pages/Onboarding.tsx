@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useOnboarding, OnboardingData } from "@/hooks/useOnboarding";
+import { useOnboarding, OnboardingData, SaveStatus } from "@/hooks/useOnboarding";
 import { OnboardingStep1 } from "@/components/onboarding/OnboardingStep1";
 import { OnboardingStep2 } from "@/components/onboarding/OnboardingStep2";
 import { OnboardingStep3 } from "@/components/onboarding/OnboardingStep3";
@@ -11,13 +11,53 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { Loader2, Check, AlertCircle, Cloud } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+// Save Status Indicator Component
+function SaveStatusIndicator({ status }: { status: SaveStatus }) {
+  return (
+    <div className={cn(
+      "flex items-center gap-2 text-xs transition-all duration-300",
+      status === 'idle' && "text-muted-foreground",
+      status === 'saving' && "text-amber-500",
+      status === 'saved' && "text-green-500",
+      status === 'error' && "text-destructive"
+    )}>
+      {status === 'idle' && (
+        <>
+          <Cloud className="w-3.5 h-3.5" />
+          <span>Auto-save ativo</span>
+        </>
+      )}
+      {status === 'saving' && (
+        <>
+          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          <span>Salvando...</span>
+        </>
+      )}
+      {status === 'saved' && (
+        <>
+          <Check className="w-3.5 h-3.5" />
+          <span>Salvo!</span>
+        </>
+      )}
+      {status === 'error' && (
+        <>
+          <AlertCircle className="w-3.5 h-3.5" />
+          <span>Erro ao salvar</span>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function Onboarding() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { onboardingData, saveOnboardingData, autoSaveOnboardingData } = useOnboarding();
+  const { onboardingData, saveOnboardingData, autoSaveOnboardingData, saveStatus } = useOnboarding();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<OnboardingData>(onboardingData || {});
   const [loading, setLoading] = useState(false);
@@ -179,9 +219,9 @@ export default function Onboarding() {
             </p>
           </div>
           <div className="space-y-2">
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>{t('onboarding.step', { current: currentStep, total: totalSteps })}</span>
-              <span>{Math.round(progress)}%</span>
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-muted-foreground">{t('onboarding.step', { current: currentStep, total: totalSteps })}</span>
+              <SaveStatusIndicator status={saveStatus} />
             </div>
             <Progress value={progress} className="h-2" />
           </div>

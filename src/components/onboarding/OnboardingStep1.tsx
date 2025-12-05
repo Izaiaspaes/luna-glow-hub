@@ -111,12 +111,6 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold text-foreground">{t('onboarding.form.createAccount')}</h2>
         <p className="text-muted-foreground">{t('onboarding.form.startJourney')}</p>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span>{t('onboarding.form.autoSaveActive')}</span>
-          </div>
-        </div>
       </div>
 
       {/* Auth Error Display */}
