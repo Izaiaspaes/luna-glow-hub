@@ -5,17 +5,21 @@ const SENTRY_DSN = "https://d2a7a98ec96a76342aab90835298cbe5@o4510483480248320.i
 
 // Initialize Sentry for error monitoring
 export function initSentry() {
+  const isProduction = import.meta.env.MODE === "production";
 
   Sentry.init({
     dsn: SENTRY_DSN,
     environment: import.meta.env.MODE,
     
-    // Performance monitoring
-    tracesSampleRate: 0.1, // 10% of transactions
+    // Performance monitoring - lower in production to save quota
+    tracesSampleRate: isProduction ? 0.05 : 0.5, // 5% prod, 50% dev
     
-    // Session replay for debugging
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
+    // Session replay - more aggressive in dev for debugging
+    replaysSessionSampleRate: isProduction ? 0.05 : 0.3, // 5% prod, 30% dev
+    replaysOnErrorSampleRate: isProduction ? 1.0 : 1.0,  // 100% on errors (both)
+    
+    // Only enable debug logging in development
+    debug: !isProduction,
     
     // Filter out non-critical errors (browser noise, not app bugs)
     beforeSend(event) {
