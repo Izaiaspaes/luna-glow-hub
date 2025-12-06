@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { NavLink } from "@/components/NavLink";
-import { ArrowRight, LogIn, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { ArrowRight, LogIn, User, LogOut, LayoutDashboard, Shield, Smartphone } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -54,6 +54,12 @@ export const Hero = () => {
               <NavLink to="/features">
                 <Button variant="outline" size="lg">
                   {t('hero.ctaSecondary')}
+                </Button>
+              </NavLink>
+              <NavLink to="/install">
+                <Button variant="ghost" size="lg" className="gap-2">
+                  <Smartphone className="h-5 w-5" />
+                  {t('install.installApp', 'Instalar App')}
                 </Button>
               </NavLink>
             </div>

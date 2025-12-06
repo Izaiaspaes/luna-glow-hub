@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch, Globe, CreditCard } from "lucide-react";
+import { Loader2, Palette, Upload, User, Mail, Phone, Lock, Heart, Shield, FileText, Watch, Globe, CreditCard, Smartphone } from "lucide-react";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
@@ -545,6 +545,27 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                   Rever Tour Premium Plus
                 </Button>
               </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Smartphone className="h-4 w-4 text-luna-blue" />
+                  <h3 className="text-sm font-semibold">Instalar App</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Instale o Luna na tela inicial do seu celular para acesso rápido
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={() => window.location.href = '/install'}
+                  className="w-full"
+                >
+                  <Smartphone className="h-4 w-4 mr-2" />
+                  Instruções de Instalação
+                </Button>
+              </div>
+
 
               <div className="flex justify-end pt-4">
                 <Button onClick={handleSaveProfile} disabled={saving}>

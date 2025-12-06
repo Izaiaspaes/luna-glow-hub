@@ -1,4 +1,4 @@
-import { Heart, Mail, Phone, Share2 } from "lucide-react";
+import { Heart, Mail, Phone, Share2, Smartphone } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { SuggestionsForm } from "@/components/SuggestionsForm";
@@ -92,6 +92,12 @@ export const Footer = () => {
               <li>
                 <NavLink to="/pricing" className="hover:text-primary transition-smooth">
                   {t('nav.pricing')}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/install" className="hover:text-primary transition-smooth flex items-center gap-1">
+                  <Smartphone className="h-3 w-3" />
+                  {t('install.installApp', 'Instalar App')}
                 </NavLink>
               </li>
             </ul>
