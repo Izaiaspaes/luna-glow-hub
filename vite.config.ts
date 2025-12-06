@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     react(), 
     mode === "development" && componentTagger(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt', // Changed from autoUpdate to prevent errors in WebViews
       includeAssets: ['favicon.png', 'logo-luna.png'],
       manifest: {
         name: 'Luna - Bem-estar Feminino',
