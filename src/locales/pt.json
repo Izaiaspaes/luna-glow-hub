@@ -1394,7 +1394,7 @@
     "noEntriesMessage": "Comece sua primeira entrada para receber insights personalizados!"
   },
   "subscription": {
-    "currentPlan": "Plano Atual",
+    "currentPlan": "Assinatura Atual",
     "notSubscribed": "Plano Gratuito",
     "subscribed": "Assinante",
     "upgradeDesc": "Faça upgrade para desbloquear recursos premium",

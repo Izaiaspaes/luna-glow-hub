@@ -1367,7 +1367,7 @@
     "noEntriesMessage": "Start your first entry to receive personalized insights!"
   },
   "subscription": {
-    "currentPlan": "Current Plan",
+    "currentPlan": "Current Subscription",
     "notSubscribed": "Free Plan",
     "subscribed": "Subscribed",
     "upgradeDesc": "Upgrade to unlock premium features",
