@@ -19,10 +19,18 @@ export function initSentry() {
     
     // Filter out non-critical errors
     beforeSend(event) {
+      const errorMessage = event.exception?.values?.[0]?.value || "";
+      
       // Ignore ResizeObserver errors (common browser noise)
-      if (event.exception?.values?.[0]?.value?.includes("ResizeObserver")) {
+      if (errorMessage.includes("ResizeObserver")) {
         return null;
       }
+      
+      // Ignore CSSStyleSheet SecurityError (Sentry replay cross-origin noise)
+      if (errorMessage.includes("CSSStyleSheet") || errorMessage.includes("SecurityError")) {
+        return null;
+      }
+      
       return event;
     },
     
