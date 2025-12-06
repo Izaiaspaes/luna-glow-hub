@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSessionTimeout } from "./hooks/useSessionTimeout";
 import { SessionTimeoutModal } from "./components/SessionTimeoutModal";
 import { SOSButton } from "./components/SOSButton";
+import PWAInstallPrompt from "./components/PWAInstallPrompt";
 import Index from "./pages/Index";
 import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
@@ -40,6 +41,7 @@ const AppContent = () => {
       <Toaster />
       <Sonner />
       <SOSButton />
+      <PWAInstallPrompt />
       <SessionTimeoutModal
         open={showWarning}
         onRenew={handleRenewSession}
