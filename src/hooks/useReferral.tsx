@@ -27,62 +27,97 @@ interface Referral {
 }
 
 export const useReferral = () => {
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const [referralCode, setReferralCode] = useState<ReferralCode | null>(null);
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchReferralCode = useCallback(async () => {
-    if (!user) return;
+    // Check both user and session to ensure valid authentication
+    if (!user || !session?.access_token) {
+      setReferralCode(null);
+      return;
+    }
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke("process-referral", {
         body: { action: "get_referral_code", user_id: user.id },
       });
 
-      if (fnError) throw fnError;
-      if (data.success) {
+      if (fnError) {
+        // Handle 401 errors gracefully (user logged out)
+        if (fnError.message?.includes('401') || fnError.message?.includes('Invalid')) {
+          setReferralCode(null);
+          return;
+        }
+        throw fnError;
+      }
+      if (data?.success) {
         setReferralCode(data.data);
+      } else if (data?.error) {
+        // Handle business logic errors gracefully
+        console.warn("Referral code fetch returned error:", data.error);
+        setReferralCode(null);
       }
     } catch (err) {
       console.error("Error fetching referral code:", err);
       setError("Failed to load referral code");
     }
-  }, [user]);
+  }, [user, session]);
 
   const fetchReferrals = useCallback(async () => {
-    if (!user) return;
+    // Check both user and session to ensure valid authentication
+    if (!user || !session?.access_token) {
+      setReferrals([]);
+      return;
+    }
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke("process-referral", {
         body: { action: "get_referrals", user_id: user.id },
       });
 
-      if (fnError) throw fnError;
-      if (data.success) {
+      if (fnError) {
+        // Handle 401 errors gracefully (user logged out)
+        if (fnError.message?.includes('401') || fnError.message?.includes('Invalid')) {
+          setReferrals([]);
+          return;
+        }
+        throw fnError;
+      }
+      if (data?.success) {
         setReferrals(data.data || []);
+      } else if (data?.error) {
+        // Handle business logic errors gracefully
+        console.warn("Referrals fetch returned error:", data.error);
+        setReferrals([]);
       }
     } catch (err) {
       console.error("Error fetching referrals:", err);
       setError("Failed to load referrals");
     }
-  }, [user]);
+  }, [user, session]);
 
   useEffect(() => {
     const loadData = async () => {
-      if (!user) {
+      // Clear data and stop loading if no valid session
+      if (!user || !session?.access_token) {
+        setReferralCode(null);
+        setReferrals([]);
         setIsLoading(false);
+        setError(null);
         return;
       }
 
       setIsLoading(true);
+      setError(null);
       await Promise.all([fetchReferralCode(), fetchReferrals()]);
       setIsLoading(false);
     };
 
     loadData();
-  }, [user, fetchReferralCode, fetchReferrals]);
+  }, [user, session, fetchReferralCode, fetchReferrals]);
 
   const getReferralLink = () => {
     if (!referralCode) return "";
