@@ -17,20 +17,42 @@ export function initSentry() {
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
     
-    // Filter out non-critical errors
+    // Filter out non-critical errors (browser noise, not app bugs)
     beforeSend(event) {
       const errorMessage = event.exception?.values?.[0]?.value || "";
+      const errorType = event.exception?.values?.[0]?.type || "";
       
-      // Ignore ResizeObserver errors (common browser noise)
+      // === BROWSER NOISE FILTERS ===
+      
+      // ResizeObserver errors (browser layout calculation noise)
       if (errorMessage.includes("ResizeObserver")) {
         return null;
       }
       
-      // Ignore CSSStyleSheet SecurityError (Sentry replay cross-origin noise)
-      if (errorMessage.includes("CSSStyleSheet") || errorMessage.includes("SecurityError")) {
+      // CSSStyleSheet SecurityError (Sentry replay cross-origin noise)
+      if (errorMessage.includes("CSSStyleSheet") || 
+          (errorType === "SecurityError" && errorMessage.includes("stylesheet"))) {
         return null;
       }
       
+      // Script errors from cross-origin scripts (no useful info)
+      if (errorMessage === "Script error." || errorMessage === "Script error") {
+        return null;
+      }
+      
+      // ChunkLoadError from code-splitting during deployments
+      if (errorType === "ChunkLoadError" || errorMessage.includes("Loading chunk")) {
+        return null;
+      }
+      
+      // Browser extension interference (common patterns)
+      if (errorMessage.includes("extension") || 
+          errorMessage.includes("chrome-extension://") ||
+          errorMessage.includes("moz-extension://")) {
+        return null;
+      }
+      
+      // === KEEP ALL OTHER ERRORS (app bugs, API errors, etc.) ===
       return event;
     },
     
