@@ -56,11 +56,11 @@ export const AppNavigation = () => {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-6">
-          {/* Logo */}
+      <div className="container flex h-12 sm:h-14 md:h-16 items-center justify-between px-3 sm:px-4">
+        <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
+          {/* Logo - Smaller on mobile */}
           <Link to={user ? "/dashboard" : "/"} onClick={handleLogoClick} className="flex items-center gap-2">
-            <img src={logoLuna} alt="Luna" className="h-8 w-auto" />
+            <img src={logoLuna} alt="Luna" className="h-6 sm:h-7 md:h-8 w-auto" />
           </Link>
 
           {/* Navigation Links */}
