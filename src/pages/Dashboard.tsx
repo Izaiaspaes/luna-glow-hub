@@ -287,71 +287,71 @@ export default function Dashboard() {
       <AppTour />
       <PremiumPlusTour />
 
-      <main className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8 animate-fade-in flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8">
+        {/* Welcome Section - More compact on mobile */}
+        <div className="mb-4 sm:mb-6 md:mb-8 animate-fade-in flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">
               {t('dashboard.welcome', { name: profile?.preferred_name ? `, ${profile.preferred_name}` : profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : '' })}
             </h1>
-            <p className="text-sm md:text-base text-muted-foreground">
+            <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
               {t('dashboard.subtitle')}
             </p>
           </div>
           <PrivacyModeIndicator />
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+        {/* Quick Stats - Optimized for mobile */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.cycle')}</CardTitle>
-              <Calendar className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 p-2.5 sm:p-4 md:p-6">
+              <CardTitle className="text-[10px] sm:text-xs md:text-sm font-medium">{t('dashboard.quickStats.cycle')}</CardTitle>
+              <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.cycleDay')}</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.cyclePhase')}</p>
+            <CardContent className="p-2.5 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
+              <div className="text-base sm:text-lg md:text-2xl font-bold">{t('dashboard.quickStats.cycleDay')}</div>
+              <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.cyclePhase')}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.sleep')}</CardTitle>
-              <Moon className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 p-2.5 sm:p-4 md:p-6">
+              <CardTitle className="text-[10px] sm:text-xs md:text-sm font-medium">{t('dashboard.quickStats.sleep')}</CardTitle>
+              <Moon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.sleepAvg')}</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.sleepWeek')}</p>
+            <CardContent className="p-2.5 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
+              <div className="text-base sm:text-lg md:text-2xl font-bold">{t('dashboard.quickStats.sleepAvg')}</div>
+              <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.sleepWeek')}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.mood')}</CardTitle>
-              <Smile className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 p-2.5 sm:p-4 md:p-6">
+              <CardTitle className="text-[10px] sm:text-xs md:text-sm font-medium">{t('dashboard.quickStats.mood')}</CardTitle>
+              <Smile className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.moodScore')}</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.moodToday')}</p>
+            <CardContent className="p-2.5 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
+              <div className="text-base sm:text-lg md:text-2xl font-bold">{t('dashboard.quickStats.moodScore')}</div>
+              <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.moodToday')}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card animate-fade-in" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2 p-4 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">{t('dashboard.quickStats.energy')}</CardTitle>
-              <Zap className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 p-2.5 sm:p-4 md:p-6">
+              <CardTitle className="text-[10px] sm:text-xs md:text-sm font-medium">{t('dashboard.quickStats.energy')}</CardTitle>
+              <Zap className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent className="p-4 pt-0 md:p-6 md:pt-0">
-              <div className="text-lg md:text-2xl font-bold">{t('dashboard.quickStats.energyScore')}</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.energyLevel')}</p>
+            <CardContent className="p-2.5 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
+              <div className="text-base sm:text-lg md:text-2xl font-bold">{t('dashboard.quickStats.energyScore')}</div>
+              <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.energyLevel')}</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Left Column - Tracking */}
-          <div className="lg:col-span-2 space-y-4 md:space-y-6">
+          <div className="lg:col-span-2 space-y-3 sm:space-y-4 md:space-y-6">
             {/* Push Notifications Prompt */}
             {activeTab === 'overview' && (
               <div className="animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
@@ -360,84 +360,83 @@ export default function Dashboard() {
             )}
 
             
-            {/* Tabs */}
-            <div className="flex flex-wrap gap-2 pb-2 scrollbar-hide">
-              <Button
-                variant={activeTab === 'overview' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('overview')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-                data-tour="overview"
-              >
-                <span className="hidden sm:inline">{t('dashboard.tabs.overview')}</span>
-                <span className="sm:hidden">{t('dashboard.tabs.overviewShort')}</span>
-              </Button>
-              <Button
-                variant={activeTab === 'cycle' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('cycle')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-                data-tour="tracking"
-              >
-                <Heart className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                {t('dashboard.tabs.cycle')}
-              </Button>
-              <Button
-                variant={activeTab === 'sleep' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('sleep')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-              >
-                <Moon className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                {t('dashboard.tabs.sleep')}
-              </Button>
-              <Button
-                variant={activeTab === 'mood' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('mood')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-              >
-                <Smile className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                {t('dashboard.tabs.mood')}
-              </Button>
-              <Button
-                variant={activeTab === 'energy' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('energy')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-              >
-                <Zap className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                {t('dashboard.tabs.energy')}
-              </Button>
-              <Button
-                variant={activeTab === 'nutrition' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('nutrition')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-              >
-                <Apple className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                {t('dashboard.tabs.nutrition')}
-              </Button>
-              <Button
-                variant={activeTab === 'predictions' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('predictions')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-              >
-                <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span className="hidden sm:inline">{t('dashboard.tabs.predictions')} IA</span>
-                <span className="sm:hidden">{t('dashboard.tabs.predictions')}</span>
-              </Button>
-              <Button
-                variant={activeTab === 'calendar' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setActiveTab('calendar')}
-                className="whitespace-nowrap flex-shrink-0 text-xs md:text-sm"
-                data-tour="calendar"
-              >
-                <Calendar className="w-3 h-3 md:w-4 md:h-4 md:mr-1 lg:mr-2" />
-                <span className="hidden md:inline">{t('dashboard.tabs.calendar')}</span>
-              </Button>
+            {/* Tabs - Horizontal scroll on mobile */}
+            <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0">
+              <div className="flex gap-1.5 sm:gap-2 pb-2 min-w-max">
+                <Button
+                  variant={activeTab === 'overview' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('overview')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                  data-tour="overview"
+                >
+                  {t('dashboard.tabs.overviewShort')}
+                </Button>
+                <Button
+                  variant={activeTab === 'cycle' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('cycle')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                  data-tour="tracking"
+                >
+                  <Heart className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.cycle')}</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'sleep' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('sleep')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                >
+                  <Moon className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.sleep')}</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'mood' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('mood')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                >
+                  <Smile className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.mood')}</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'energy' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('energy')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                >
+                  <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.energy')}</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'nutrition' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('nutrition')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                >
+                  <Apple className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.nutrition')}</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'predictions' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('predictions')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                >
+                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.predictions')}</span>
+                </Button>
+                <Button
+                  variant={activeTab === 'calendar' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveTab('calendar')}
+                  className="whitespace-nowrap h-8 sm:h-9 px-2.5 sm:px-3 text-[11px] sm:text-xs md:text-sm"
+                  data-tour="calendar"
+                >
+                  <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 sm:mr-1" />
+                  <span className="hidden sm:inline">{t('dashboard.tabs.calendar')}</span>
+                </Button>
               {/* Premium/Premium Plus Tab - only show for non-premium users */}
               {!hasPremiumAccess && (
                 <Button
@@ -507,8 +506,8 @@ export default function Dashboard() {
                   )}
                 </>
               )}
+              </div>
             </div>
-
             {/* Content Area */}
             {activeTab === 'calendar' ? (
               <CalendarView 

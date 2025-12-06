@@ -27,57 +27,58 @@ export const Hero = () => {
   const getInitials = (email: string) => {
     return email.charAt(0).toUpperCase();
   };
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-soft">
-      <div className="container mx-auto px-4 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+  return <section className="relative min-h-[calc(100vh-48px)] sm:min-h-[calc(100vh-56px)] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-soft">
+      <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12 lg:py-20">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center">
           {/* Text Content */}
-          <div className="space-y-8 text-center lg:text-left">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left">
             <div className="inline-block">
               
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
               {t('hero.title')}
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
               {t('hero.subtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center lg:justify-start">
               <NavLink to="/onboarding">
-                <Button variant="colorful" size="lg" className="group">
+                <Button variant="colorful" size="default" className="group w-full sm:w-auto h-10 sm:h-11 md:h-12 text-sm sm:text-base">
                   {t('hero.cta')}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </NavLink>
               <NavLink to="/features">
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="default" className="w-full sm:w-auto h-10 sm:h-11 md:h-12 text-sm sm:text-base">
                   {t('hero.ctaSecondary')}
                 </Button>
               </NavLink>
-              <NavLink to="/install">
-                <Button variant="ghost" size="lg" className="gap-2">
-                  <Smartphone className="h-5 w-5" />
+              <NavLink to="/install" className="hidden sm:block">
+                <Button variant="ghost" size="default" className="gap-2 h-10 sm:h-11 md:h-12 text-sm sm:text-base">
+                  <Smartphone className="h-4 w-4 sm:h-5 sm:w-5" />
                   {t('install.installApp', 'Instalar App')}
                 </Button>
               </NavLink>
             </div>
 
-            <div className="flex items-center gap-8 justify-center lg:justify-start pt-4">
+            {/* Stats - More compact on mobile */}
+            <div className="flex items-center gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start pt-2 sm:pt-4">
               <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">100%</p>
-                <p className="text-sm text-muted-foreground">{t('hero.stats.private')}</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">100%</p>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{t('hero.stats.private')}</p>
               </div>
-              <div className="h-12 w-px bg-border"></div>
+              <div className="h-8 sm:h-10 md:h-12 w-px bg-border"></div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">{t('hero.stats.free')}</p>
-                <p className="text-sm text-muted-foreground">{t('hero.stats.freeDesc')}</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{t('hero.stats.free')}</p>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{t('hero.stats.freeDesc')}</p>
               </div>
-              <div className="h-12 w-px bg-border"></div>
+              <div className="h-8 sm:h-10 md:h-12 w-px bg-border"></div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-foreground">{t('hero.stats.ai')}</p>
-                <p className="text-sm text-muted-foreground">{t('hero.stats.aiDesc')}</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{t('hero.stats.ai')}</p>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{t('hero.stats.aiDesc')}</p>
               </div>
             </div>
           </div>
