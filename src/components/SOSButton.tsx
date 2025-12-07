@@ -120,31 +120,31 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
       )}
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl flex items-center gap-2">
-              <Heart className="w-6 h-6 text-luna-pink" />
+            <DialogTitle className="text-xl md:text-2xl flex items-center gap-2">
+              <Heart className="w-5 h-5 md:w-6 md:h-6 text-luna-pink" />
               {t('sos.title')}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-sm">
               {t('sos.description')}
             </DialogDescription>
           </DialogHeader>
 
           {!selectedOption ? (
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
               {sosOptions.map((option) => {
                 const Icon = option.icon;
                 return (
                   <Card
                     key={option.id}
-                    className="cursor-pointer hover:border-primary transition-all hover:shadow-md"
+                    className="cursor-pointer hover:border-primary transition-all hover:shadow-md touch-target"
                     onClick={() => setSelectedOption(option.id)}
                   >
-                    <CardHeader>
+                    <CardHeader className="p-4">
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-6 h-6 ${option.color}`} />
-                        <CardTitle className="text-lg">
+                        <Icon className={`w-5 h-5 md:w-6 md:h-6 ${option.color}`} />
+                        <CardTitle className="text-base md:text-lg">
                           {t(`sos.options.${option.id}.title`)}
                         </CardTitle>
                       </div>
@@ -154,23 +154,23 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
               })}
             </div>
           ) : (
-            <div className="space-y-6 mt-4">
+            <div className="space-y-4 mt-2">
               <Card className="border-2 border-luna-pink/30 bg-luna-pink/5">
-                <CardContent className="pt-6">
-                  <p className="text-muted-foreground italic">{selectedData?.message}</p>
+                <CardContent className="p-4">
+                  <p className="text-sm md:text-base text-muted-foreground italic">{selectedData?.message}</p>
                 </CardContent>
               </Card>
 
               <div>
-                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-luna-purple" />
+                <h3 className="font-semibold text-base md:text-lg mb-3 flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-luna-purple" />
                   {t('sos.techniquesTitle')}
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {selectedData?.techniques.map((technique, index) => (
                     <Card key={index} className="hover:bg-muted/50 transition-smooth">
-                      <CardContent className="py-4">
-                        <p className="text-sm flex items-start gap-3">
+                      <CardContent className="p-3 md:py-4">
+                        <p className="text-xs md:text-sm flex items-start gap-2 md:gap-3">
                           <span className="text-luna-purple font-bold">{index + 1}.</span>
                           {technique}
                         </p>
@@ -180,11 +180,11 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
                 </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <Button
                   variant="outline"
                   onClick={() => setSelectedOption(null)}
-                  className="flex-1"
+                  className="flex-1 h-11 md:h-10"
                 >
                   {t('sos.backButton')}
                 </Button>
@@ -197,7 +197,7 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
                     setShowDialog(false);
                     setSelectedOption(null);
                   }}
-                  className="flex-1 bg-gradient-to-r from-luna-purple to-luna-pink text-white"
+                  className="flex-1 h-11 md:h-10 bg-gradient-to-r from-luna-purple to-luna-pink text-white"
                 >
                   {t('sos.feelingBetter')}
                 </Button>
