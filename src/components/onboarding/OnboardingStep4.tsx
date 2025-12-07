@@ -95,57 +95,57 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-foreground">Seus Interesses e Objetivos</h2>
-        <p className="text-muted-foreground">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+      <div className="space-y-2 md:space-y-4">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground">Seus Interesses e Objetivos</h2>
+        <p className="text-sm md:text-base text-muted-foreground">
           Conte-nos mais sobre você para personalizar sua experiência
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <Label>Tipo de Rotina de Trabalho</Label>
+      <div className="space-y-4 md:space-y-6">
+        <div className="space-y-1.5 md:space-y-2">
+          <Label className="text-sm md:text-base">Tipo de Rotina de Trabalho</Label>
           <Controller
             control={control}
             name="work_routine_type"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
                   <SelectValue placeholder="Selecione o tipo de rotina" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="fixed">Horário Fixo</SelectItem>
-                  <SelectItem value="variable">Horários Variáveis</SelectItem>
-                  <SelectItem value="shift">Escala de Plantão</SelectItem>
+                  <SelectItem value="fixed" className="text-base md:text-sm">Horário Fixo</SelectItem>
+                  <SelectItem value="variable" className="text-base md:text-sm">Horários Variáveis</SelectItem>
+                  <SelectItem value="shift" className="text-base md:text-sm">Escala de Plantão</SelectItem>
                 </SelectContent>
               </Select>
             )}
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="favorite_color">Cor Favorita</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label htmlFor="favorite_color" className="text-sm md:text-base">Cor Favorita</Label>
           <Input
             id="favorite_color"
             {...register("favorite_color")}
             placeholder="Ex: Rosa, Azul, Verde..."
-            className={errors.favorite_color ? "border-destructive focus-visible:ring-destructive" : ""}
+            className={`h-11 md:h-10 text-base md:text-sm ${errors.favorite_color ? "border-destructive focus-visible:ring-destructive" : ""}`}
             maxLength={50}
           />
           {errors.favorite_color && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.favorite_color.message}
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <Label>Hobbies</Label>
+          <Label className="text-sm md:text-base">Hobbies</Label>
           <div className="grid grid-cols-2 gap-2">
             {hobbiesOptions.map((hobby) => (
-              <div key={hobby} className="flex items-center space-x-2">
+              <div key={hobby} className="flex items-center space-x-2 min-h-[44px] md:min-h-0">
                 <Checkbox
                   id={`hobby-${hobby}`}
                   checked={selectedHobbies.includes(hobby)}
@@ -156,71 +156,72 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
                       : selectedHobbies.filter((h) => h !== hobby);
                     setValue("hobbies", newHobbies, { shouldValidate: true });
                   }}
+                  className="w-5 h-5 md:w-4 md:h-4"
                 />
-                <Label htmlFor={`hobby-${hobby}`} className="font-normal cursor-pointer">
+                <Label htmlFor={`hobby-${hobby}`} className="font-normal cursor-pointer text-sm">
                   {hobby}
                 </Label>
               </div>
             ))}
           </div>
           {errors.hobbies && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.hobbies.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] md:text-xs text-muted-foreground">
             Selecione até 7 hobbies
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="personal_interests">Outros Interesses</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label htmlFor="personal_interests" className="text-sm md:text-base">Outros Interesses</Label>
           <Textarea
             id="personal_interests"
             {...register("personal_interests")}
             placeholder="Música, livros, filmes, lugares..."
-            className={errors.personal_interests ? "border-destructive focus-visible:ring-destructive" : ""}
+            className={`min-h-[80px] text-base md:text-sm ${errors.personal_interests ? "border-destructive focus-visible:ring-destructive" : ""}`}
             maxLength={500}
             rows={3}
           />
           {errors.personal_interests && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.personal_interests.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground text-right">
-            {watch("personal_interests")?.length || 0}/500 caracteres
+          <p className="text-[10px] md:text-xs text-muted-foreground text-right">
+            {watch("personal_interests")?.length || 0}/500
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="self_love_notes">O que mais gosta em si mesma?</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label htmlFor="self_love_notes" className="text-sm md:text-base">O que mais gosta em si mesma?</Label>
           <Textarea
             id="self_love_notes"
             {...register("self_love_notes")}
             placeholder="Pode ser algo físico ou emocional..."
-            className={errors.self_love_notes ? "border-destructive focus-visible:ring-destructive" : ""}
+            className={`min-h-[80px] text-base md:text-sm ${errors.self_love_notes ? "border-destructive focus-visible:ring-destructive" : ""}`}
             maxLength={500}
             rows={3}
           />
           {errors.self_love_notes && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.self_love_notes.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground text-right">
-            {watch("self_love_notes")?.length || 0}/500 caracteres
+          <p className="text-[10px] md:text-xs text-muted-foreground text-right">
+            {watch("self_love_notes")?.length || 0}/500
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label>Cuidados que já pratica</Label>
+          <Label className="text-sm md:text-base">Cuidados que já pratica</Label>
           <div className="grid grid-cols-2 gap-2">
             {careRoutines.map((routine) => (
-              <div key={routine} className="flex items-center space-x-2">
+              <div key={routine} className="flex items-center space-x-2 min-h-[44px] md:min-h-0">
                 <Checkbox
                   id={`care-${routine}`}
                   checked={selectedCareRoutines.includes(routine)}
@@ -230,8 +231,9 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
                       : selectedCareRoutines.filter((r) => r !== routine);
                     setValue("current_care_routines", newRoutines);
                   }}
+                  className="w-5 h-5 md:w-4 md:h-4"
                 />
-                <Label htmlFor={`care-${routine}`} className="font-normal cursor-pointer text-sm">
+                <Label htmlFor={`care-${routine}`} className="font-normal cursor-pointer text-xs md:text-sm leading-tight">
                   {routine}
                 </Label>
               </div>
@@ -240,10 +242,10 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
         </div>
 
         <div className="space-y-2">
-          <Label>O que gostaria de melhorar</Label>
+          <Label className="text-sm md:text-base">O que gostaria de melhorar</Label>
           <div className="grid grid-cols-2 gap-2">
             {careGoals.map((goal) => (
-              <div key={goal} className="flex items-center space-x-2">
+              <div key={goal} className="flex items-center space-x-2 min-h-[44px] md:min-h-0">
                 <Checkbox
                   id={`goal-${goal}`}
                   checked={selectedCareGoals.includes(goal)}
@@ -253,8 +255,9 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
                       : selectedCareGoals.filter((g) => g !== goal);
                     setValue("care_improvement_goals", newGoals);
                   }}
+                  className="w-5 h-5 md:w-4 md:h-4"
                 />
-                <Label htmlFor={`goal-${goal}`} className="font-normal cursor-pointer text-sm">
+                <Label htmlFor={`goal-${goal}`} className="font-normal cursor-pointer text-xs md:text-sm leading-tight">
                   {goal}
                 </Label>
               </div>
@@ -262,78 +265,80 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label>Campo da vida mais explorado hoje</Label>
-          <Controller
-            control={control}
-            name="most_explored_life_area"
-            render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {lifeAreas.map((area) => (
-                    <SelectItem key={area} value={area}>
-                      {area}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          />
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label className="text-sm md:text-base">Campo mais explorado hoje</Label>
+            <Controller
+              control={control}
+              name="most_explored_life_area"
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {lifeAreas.map((area) => (
+                      <SelectItem key={area} value={area} className="text-base md:text-sm">
+                        {area}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
+
+          <div className="space-y-1.5 md:space-y-2">
+            <Label className="text-sm md:text-base">Campo a melhorar</Label>
+            <Controller
+              control={control}
+              name="life_area_to_improve"
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
+                    <SelectValue placeholder="Selecione" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {lifeAreas.map((area) => (
+                      <SelectItem key={area} value={area} className="text-base md:text-sm">
+                        {area}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <Label>Campo da vida que gostaria de melhorar</Label>
-          <Controller
-            control={control}
-            name="life_area_to_improve"
-            render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
-                </SelectTrigger>
-                <SelectContent>
-                  {lifeAreas.map((area) => (
-                    <SelectItem key={area} value={area}>
-                      {area}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="main_app_goal">Objetivo principal com o app</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label htmlFor="main_app_goal" className="text-sm md:text-base">Objetivo principal com o app</Label>
           <Textarea
             id="main_app_goal"
             {...register("main_app_goal")}
             placeholder="Ex: Quero me organizar melhor, me cuidar mais..."
-            className={errors.main_app_goal ? "border-destructive focus-visible:ring-destructive" : ""}
+            className={`min-h-[80px] text-base md:text-sm ${errors.main_app_goal ? "border-destructive focus-visible:ring-destructive" : ""}`}
             maxLength={500}
             rows={3}
           />
           {errors.main_app_goal && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.main_app_goal.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground text-right">
-            {watch("main_app_goal")?.length || 0}/500 caracteres
+          <p className="text-[10px] md:text-xs text-muted-foreground text-right">
+            {watch("main_app_goal")?.length || 0}/500
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-1">
+          <Label className="flex items-center gap-1 text-sm md:text-base">
             Como prefere receber conteúdo <span className="text-destructive">*</span>
           </Label>
           <div className="grid grid-cols-2 gap-2">
             {contentPrefs.map((pref) => (
-              <div key={pref} className="flex items-center space-x-2">
+              <div key={pref} className="flex items-center space-x-2 min-h-[44px] md:min-h-0">
                 <Checkbox
                   id={`content-${pref}`}
                   checked={selectedContentPrefs.includes(pref)}
@@ -343,6 +348,7 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
                       : selectedContentPrefs.filter((p) => p !== pref);
                     setValue("content_preferences", newPrefs, { shouldValidate: true });
                   }}
+                  className="w-5 h-5 md:w-4 md:h-4"
                 />
                 <Label htmlFor={`content-${pref}`} className="font-normal cursor-pointer text-sm">
                   {pref}
@@ -351,29 +357,29 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
             ))}
           </div>
           {errors.content_preferences && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.content_preferences.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] md:text-xs text-muted-foreground">
             Selecione pelo menos uma preferência
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label>Frequência de notificações</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label className="text-sm md:text-base">Frequência de notificações</Label>
           <Controller
             control={control}
             name="notification_frequency"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   {notificationFreqs.map((freq) => (
-                    <SelectItem key={freq} value={freq}>
+                    <SelectItem key={freq} value={freq} className="text-base md:text-sm">
                       {freq}
                     </SelectItem>
                   ))}
@@ -384,11 +390,11 @@ export function OnboardingStep4({ data, onComplete, onBack, loading, onAutoSave 
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <Button type="button" variant="outline" onClick={onBack} className="w-full">
+      <div className="flex gap-3 md:gap-4">
+        <Button type="button" variant="outline" onClick={onBack} className="w-full h-12 md:h-10 text-base md:text-sm">
           Voltar
         </Button>
-        <Button type="submit" variant="hero" className="w-full" disabled={loading}>
+        <Button type="submit" variant="hero" className="w-full h-12 md:h-10 text-base md:text-sm" disabled={loading}>
           {loading ? "Salvando..." : "Concluir"}
         </Button>
       </div>
