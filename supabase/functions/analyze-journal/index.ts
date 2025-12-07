@@ -90,10 +90,14 @@ serve(async (req) => {
     const aiData = await aiResponse.json();
     const aiContent = aiData.choices[0].message.content;
     
-    // Parse the AI response
+    // Parse the AI response - handle markdown code blocks
     let analysis;
     try {
-      analysis = JSON.parse(aiContent);
+      // Try to extract JSON from markdown code blocks if present
+      const jsonMatch = aiContent.match(/```json\n?([\s\S]*?)\n?```/) || 
+                       aiContent.match(/```\n?([\s\S]*?)\n?```/);
+      const jsonString = jsonMatch ? jsonMatch[1].trim() : aiContent.trim();
+      analysis = JSON.parse(jsonString);
     } catch (e) {
       console.error('Failed to parse AI response:', aiContent);
       throw new Error('Failed to parse AI analysis');
