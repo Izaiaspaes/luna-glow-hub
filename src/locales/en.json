@@ -1137,6 +1137,8 @@
       "flowHeavy": "Heavy",
       "isDelayed": "Period delayed",
       "isDelayedHint": "Check if your period is delayed",
+      "delayDays": "How many days late?",
+      "delayDaysPlaceholder": "E.g: 5",
       "symptoms": "Symptoms",
       "symptomsPlaceholder": "E.g: cramps, headache, bloating",
       "notes": "Notes",

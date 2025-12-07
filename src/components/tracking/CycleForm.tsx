@@ -30,6 +30,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
     cycleStartDate: z.string().min(1, t('forms.cycle.dateRequired')),
     flowIntensity: z.enum(["leve", "moderado", "intenso"]).optional(),
     isDelayed: z.boolean().optional(),
+    delayDays: z.number().min(1).max(90).optional(),
     symptoms: z.string().optional(),
     notes: z.string().optional(),
   });
@@ -41,6 +42,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
     defaultValues: {
       cycleStartDate: "",
       isDelayed: false,
+      delayDays: undefined,
       symptoms: "",
       notes: "",
     },
@@ -158,7 +160,12 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
               <FormControl>
                 <Checkbox
                   checked={field.value}
-                  onCheckedChange={field.onChange}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked);
+                    if (!checked) {
+                      form.setValue('delayDays', undefined);
+                    }
+                  }}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
@@ -172,6 +179,31 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
             </FormItem>
           )}
         />
+
+        {form.watch('isDelayed') && (
+          <FormField
+            control={form.control}
+            name="delayDays"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-base md:text-sm font-medium">{t('forms.cycle.delayDays')}</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="number" 
+                    min={1}
+                    max={90}
+                    placeholder={t('forms.cycle.delayDaysPlaceholder')}
+                    className="h-12 md:h-10 text-base md:text-sm px-4"
+                    {...field}
+                    value={field.value ?? ''}
+                    onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           control={form.control}
