@@ -471,6 +471,44 @@
       "addFirstRecord": "Adicionar Primeiro Registro",
       "recentRecords": "Registros Recentes",
       "addNew": "Adicionar Novo"
+    },
+    "aiAssistant": {
+      "title": "Assistente IA",
+      "subtitle": "Sempre disponível para você",
+      "insightTitle": "Insight do dia",
+      "insightMessage": "Você está na fase folicular do seu ciclo - é um ótimo momento para atividades sociais e projetos criativos!",
+      "insightBasis": "Baseado nos seus últimos 7 dias de dados",
+      "generatePlan": "Gerar Plano de Bem-Estar"
+    },
+    "activePlans": {
+      "title": "Planos de Bem-Estar Ativos",
+      "noPlans": "Nenhum plano ativo no momento",
+      "plan": "Plano",
+      "validSince": "Válido desde",
+      "active": "Ativo"
+    },
+    "premium": {
+      "exclusiveFeatures": "Recursos avançados exclusivos",
+      "description": "Aqui você encontra funcionalidades exclusivas para uma experiência ainda mais completa de autocuidado e bem-estar."
+    },
+    "sos": {
+      "subtitle": "Suporte imediato quando você mais precisa",
+      "instructions": "Clique no botão vermelho flutuante no canto inferior direito da tela para acesso rápido a técnicas de relaxamento, suporte emocional e cuidados imediatos.",
+      "options": {
+        "pain": "Dores físicas e cólicas",
+        "anxiety": "Ansiedade e estresse",
+        "fatigue": "Cansaço extremo",
+        "irritation": "Irritação e TPM"
+      }
+    },
+    "trackingDialog": {
+      "cycle": "Registrar Ciclo",
+      "sleep": "Registrar Sono",
+      "mood": "Registrar Humor",
+      "energy": "Registrar Energia",
+      "work": "Registrar Trabalho",
+      "nutrition": "Registrar Alimentação",
+      "description": "Preencha as informações para registrar seus dados"
     }
   },
   "privacy": {
@@ -1396,13 +1434,16 @@
     "chatPlaceholder": "Como você está se sentindo hoje?",
     "send": "Enviar",
     "listening": "Ouvindo...",
-    "thinking": "Pensando...",
+    "thinking": "Luna está pensando...",
     "errorSending": "Erro ao enviar mensagem",
     "errorLoading": "Erro ao carregar conversa",
+    "errorMessage": "Desculpe, tive um problema para processar sua mensagem. Pode tentar novamente?",
     "newConversation": "Nova Conversa",
     "conversationHistory": "Histórico de Conversas",
     "emptyState": "Oi! Eu sou a Luna Sense 💜",
     "emptyStateDesc": "Estou aqui para te apoiar na sua jornada de bem-estar. Pergunte-me qualquer coisa!",
+    "welcomeMessage": "Olá! 💜 Eu sou a Luna Sense, sua assistente inteligente de bem-estar feminino. Como posso te ajudar hoje?",
+    "adaptiveNote": "Luna adapta sua personalidade à fase do seu ciclo",
     "exampleQuestions": "Perguntas exemplo:",
     "example1": "Como posso melhorar meu sono?",
     "example2": "Estou me sentindo ansiosa, pode me ajudar?",
@@ -1410,22 +1451,34 @@
   },
   "womenJournal": {
     "title": "Diário da Mulher",
-    "subtitle": "Registre seu dia e receba insights com IA",
+    "subtitle": "Escreva livremente sobre seu dia. A IA vai analisar e devolver insights personalizados",
     "premiumRequired": "Recurso Premium",
-    "premiumMessage": "O Diário da Mulher está disponível nos planos Premium e Premium Plus",
+    "premiumMessage": "Escreva livremente e receba insights poderosos da IA sobre seu dia, padrões recorrentes e correlações entre humor, sintomas e ciclo.",
     "newEntry": "Nova Entrada",
     "history": "Histórico",
-    "writePlaceholder": "Como foi seu dia? Compartilhe seus pensamentos, sentimentos e experiências...",
+    "historyTitle": "Histórico de Entradas",
+    "writePlaceholder": "Como foi seu dia? O que você está sentindo? Compartilhe livremente...",
     "recordAudio": "Gravar Áudio",
     "save": "Salvar",
     "analyzing": "Analisando...",
+    "analyzeWithAI": "Analisar com IA",
+    "analysisComplete": "Análise completa!",
+    "analysisCompleteDesc": "A IA analisou seu diário e salvou a entrada",
     "entrySaved": "Entrada salva! 📝",
-    "errorSaving": "Erro ao salvar entrada",
+    "entryDeleted": "Entrada excluída",
+    "entryDeletedDesc": "A entrada do diário foi removida",
+    "errorSaving": "Erro ao analisar",
+    "errorDeleting": "Erro ao excluir",
     "errorLoading": "Erro ao carregar diário",
+    "writeFirst": "Escreva algo primeiro",
+    "writeFirstDesc": "Digite seu diário para que a IA possa analisar",
     "aiInsights": "Insights da IA",
     "summary": "Resumo",
+    "daySummary": "Resumo do Dia",
     "patterns": "Padrões Identificados",
+    "recurringPatterns": "Padrões Recorrentes",
     "suggestions": "Sugestões",
+    "practicalSuggestions": "Sugestões Práticas",
     "correlations": "Correlações",
     "noEntries": "Ainda não há entradas",
     "noEntriesMessage": "Comece sua primeira entrada para receber insights personalizados!"

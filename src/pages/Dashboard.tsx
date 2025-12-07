@@ -752,20 +752,20 @@ export default function Dashboard() {
                     <Sparkles className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Assistente IA</CardTitle>
-                    <CardDescription className="text-xs">Sempre disponível para você</CardDescription>
+                    <CardTitle className="text-lg">{t('dashboard.aiAssistant.title')}</CardTitle>
+                    <CardDescription className="text-xs">{t('dashboard.aiAssistant.subtitle')}</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-muted/50 rounded-lg p-4">
                   <p className="text-sm mb-3">
-                    <strong className="text-primary">💡 Insight do dia:</strong>
+                    <strong className="text-primary">💡 {t('dashboard.aiAssistant.insightTitle')}:</strong>
                     <br />
-                    Você está na fase folicular do seu ciclo - é um ótimo momento para atividades sociais e projetos criativos!
+                    {t('dashboard.aiAssistant.insightMessage')}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Baseado nos seus últimos 7 dias de dados
+                    {t('dashboard.aiAssistant.insightBasis')}
                   </p>
                 </div>
                 <DropdownMenu>
@@ -775,25 +775,25 @@ export default function Dashboard() {
                       className="w-full"
                       disabled={generatingPlan}
                     >
-                      {generatingPlan ? "Gerando..." : "Gerar Plano de Bem-Estar"}
+                      {generatingPlan ? t('dashboard.content.generating') : t('dashboard.aiAssistant.generatePlan')}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="center" className="w-48">
                     <DropdownMenuItem onClick={() => generateWellnessPlan('geral')}>
                       <Sparkles className="w-4 h-4 mr-2" />
-                      Plano Geral
+                      {t('dashboard.planMenu.general')}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => generateWellnessPlan('sono')}>
                       <Moon className="w-4 h-4 mr-2" />
-                      Plano de Sono
+                      {t('dashboard.planMenu.sleep')}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => generateWellnessPlan('meditacao')}>
                       <Sparkles className="w-4 h-4 mr-2" />
-                      Plano de Meditação
+                      {t('dashboard.planMenu.meditation')}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => generateWellnessPlan('alimentacao')}>
                       <Heart className="w-4 h-4 mr-2" />
-                      Plano de Alimentação
+                      {t('dashboard.planMenu.nutrition')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -802,12 +802,12 @@ export default function Dashboard() {
 
             <Card className="bg-gradient-card">
               <CardHeader>
-                <CardTitle className="text-lg">Planos de Bem-Estar Ativos</CardTitle>
+                <CardTitle className="text-lg">{t('dashboard.activePlans.title')}</CardTitle>
               </CardHeader>
               <CardContent data-tour="plans">
                 {wellnessPlans.filter(plan => plan.status === 'active' || (plan.is_active && !plan.status)).length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
-                    Nenhum plano ativo no momento
+                    {t('dashboard.activePlans.noPlans')}
                   </p>
                 ) : (
                   <div className="space-y-3">
@@ -819,14 +819,14 @@ export default function Dashboard() {
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex-1">
                             <h4 className="font-semibold text-sm">
-                              {plan.plan_content?.title || `Plano ${plan.plan_type}`}
+                              {plan.plan_content?.title || `${t('dashboard.activePlans.plan')} ${plan.plan_type}`}
                             </h4>
                             <p className="text-xs text-muted-foreground mt-1">
-                              Válido desde {new Date(plan.valid_from).toLocaleDateString('pt-BR')}
+                              {t('dashboard.activePlans.validSince')} {new Date(plan.valid_from).toLocaleDateString(i18n.language === 'pt' ? 'pt-BR' : i18n.language === 'es' ? 'es-ES' : 'en-US')}
                             </p>
                           </div>
                           <Badge variant="wellness" className="ml-2 text-xs">
-                            ✓ Ativo
+                            ✓ {t('dashboard.activePlans.active')}
                           </Badge>
                         </div>
                         {plan.plan_content?.summary && (
@@ -852,13 +852,13 @@ export default function Dashboard() {
                   <Sparkles className="w-6 h-6 text-luna-purple" />
                   <div>
                     <CardTitle className="text-2xl">✨ {isPremiumPlusUser ? 'Premium Plus' : 'Premium'}</CardTitle>
-                    <CardDescription>Recursos avançados exclusivos</CardDescription>
+                    <CardDescription>{t('dashboard.premium.exclusiveFeatures')}</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Aqui você encontra funcionalidades exclusivas para uma experiência ainda mais completa de autocuidado e bem-estar.
+                  {t('dashboard.premium.description')}
                 </p>
               </CardContent>
             </Card>
@@ -896,31 +896,31 @@ export default function Dashboard() {
                     <Heart className="w-5 h-5" />
                   </div>
                   <div>
-                    <CardTitle>🆘 SOS Feminino</CardTitle>
-                    <CardDescription>Suporte imediato quando você mais precisa</CardDescription>
+                    <CardTitle>🆘 {t('sos.title')}</CardTitle>
+                    <CardDescription>{t('dashboard.sos.subtitle')}</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Clique no botão vermelho flutuante no canto inferior direito da tela para acesso rápido a técnicas de relaxamento, suporte emocional e cuidados imediatos.
+                  {t('dashboard.sos.instructions')}
                 </p>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center gap-2">
                     <span className="text-red-500">•</span>
-                    Dores físicas e cólicas
+                    {t('dashboard.sos.options.pain')}
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-red-500">•</span>
-                    Ansiedade e estresse
+                    {t('dashboard.sos.options.anxiety')}
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-red-500">•</span>
-                    Cansaço extremo
+                    {t('dashboard.sos.options.fatigue')}
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-red-500">•</span>
-                    Irritação e TPM
+                    {t('dashboard.sos.options.irritation')}
                   </li>
                 </ul>
               </CardContent>
@@ -934,15 +934,15 @@ export default function Dashboard() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {trackingType === 'cycle' && 'Registrar Ciclo'}
-              {trackingType === 'sleep' && 'Registrar Sono'}
-              {trackingType === 'mood' && 'Registrar Humor'}
-              {trackingType === 'energy' && 'Registrar Energia'}
-              {trackingType === 'work' && 'Registrar Trabalho'}
-              {trackingType === 'nutrition' && 'Registrar Alimentação'}
+              {trackingType === 'cycle' && t('dashboard.trackingDialog.cycle')}
+              {trackingType === 'sleep' && t('dashboard.trackingDialog.sleep')}
+              {trackingType === 'mood' && t('dashboard.trackingDialog.mood')}
+              {trackingType === 'energy' && t('dashboard.trackingDialog.energy')}
+              {trackingType === 'work' && t('dashboard.trackingDialog.work')}
+              {trackingType === 'nutrition' && t('dashboard.trackingDialog.nutrition')}
             </DialogTitle>
             <DialogDescription>
-              Preencha as informações para registrar seus dados
+              {t('dashboard.trackingDialog.description')}
             </DialogDescription>
           </DialogHeader>
           {user && trackingType === 'cycle' && (
