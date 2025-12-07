@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useProfile } from "@/hooks/useProfile";
@@ -25,6 +26,7 @@ export function BeautyAnalysis() {
   const { profile } = useProfile();
   const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [processingImage, setProcessingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -60,9 +62,14 @@ export function BeautyAnalysis() {
       return;
     }
 
-    const base64Image = await fileToBase64(file);
-    setPendingFile(file);
-    setPreviewImage(base64Image);
+    setProcessingImage(true);
+    try {
+      const base64Image = await fileToBase64(file);
+      setPendingFile(file);
+      setPreviewImage(base64Image);
+    } finally {
+      setProcessingImage(false);
+    }
   };
 
   // Cancel pending analysis
@@ -538,8 +545,22 @@ export function BeautyAnalysis() {
               }}
             />
 
+            {/* Processing image skeleton */}
+            {processingImage && (
+              <div className="space-y-4">
+                <Skeleton className="w-full max-w-md mx-auto h-64 rounded-lg" />
+                <div className="flex gap-3 justify-center">
+                  <Skeleton className="h-10 w-24" />
+                  <Skeleton className="h-10 w-36" />
+                </div>
+                <p className="text-center text-sm text-muted-foreground">
+                  {t('beautyAnalysis.processingImage')}
+                </p>
+              </div>
+            )}
+
             {/* Preview with confirmation */}
-            {previewImage && !loading && (
+            {previewImage && !loading && !processingImage && (
               <div className="space-y-4">
                 <img
                   src={previewImage}
