@@ -162,7 +162,7 @@ export function BeautyAnalysis() {
           <div className="grid md:grid-cols-2 gap-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Formato do Rosto</CardTitle>
+                <CardTitle className="text-lg">{t('beautyAnalysis.results.faceShape')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-semibold text-primary">{currentAnalysis.face_shape}</p>
@@ -170,7 +170,7 @@ export function BeautyAnalysis() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Tom de Pele</CardTitle>
+                <CardTitle className="text-lg">{t('beautyAnalysis.results.skinTone')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-lg">{currentAnalysis.skin_tone_detected}</p>
@@ -181,14 +181,14 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Estação de Cores</CardTitle>
-              <CardDescription>Sua paleta ideal</CardDescription>
+              <CardTitle>{t('beautyAnalysis.results.colorSeason')}</CardTitle>
+              <CardDescription>{t('beautyAnalysis.results.idealPalette')}</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-xl font-semibold mb-3">{currentAnalysis.color_season}</p>
               <div className="space-y-2">
                 <div>
-                  <p className="text-sm font-medium mb-1">Use estas cores:</p>
+                  <p className="text-sm font-medium mb-1">{t('beautyAnalysis.results.useTheseColors')}</p>
                   <div className="flex flex-wrap gap-2">
                     {currentAnalysis.best_colors_to_wear?.map((color: string, i: number) => (
                       <Badge key={i} variant="default">{color}</Badge>
@@ -196,7 +196,7 @@ export function BeautyAnalysis() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm font-medium mb-1">Evite estas cores:</p>
+                  <p className="text-sm font-medium mb-1">{t('beautyAnalysis.results.avoidTheseColors')}</p>
                   <div className="flex flex-wrap gap-2">
                     {currentAnalysis.colors_to_avoid?.map((color: string, i: number) => (
                       <Badge key={i} variant="outline">{color}</Badge>
@@ -209,23 +209,23 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Recomendações de Maquiagem</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.makeupRecommendations')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <p className="font-medium">Base:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.foundation')}:</p>
                 <p className="text-sm text-muted-foreground">{currentAnalysis.makeup_recommendations?.foundation}</p>
               </div>
               <div>
-                <p className="font-medium">Olhos:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.eyes')}:</p>
                 <p className="text-sm text-muted-foreground">{currentAnalysis.makeup_recommendations?.eyes}</p>
               </div>
               <div>
-                <p className="font-medium">Lábios:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.lips')}:</p>
                 <p className="text-sm text-muted-foreground">{currentAnalysis.makeup_recommendations?.lips}</p>
               </div>
               <div>
-                <p className="font-medium">Blush:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.blush')}:</p>
                 <p className="text-sm text-muted-foreground">{currentAnalysis.makeup_recommendations?.cheeks}</p>
               </div>
             </CardContent>
@@ -233,7 +233,7 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Cuidados com a Pele</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.skincare')}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-1">
@@ -255,7 +255,7 @@ export function BeautyAnalysis() {
         <div className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Biotipo</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.bodyType')}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-semibold text-primary mb-2">{currentAnalysis.body_type}</p>
@@ -265,11 +265,11 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Recomendações de Roupas</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.clothingRecommendations')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <p className="font-medium">Blusas e Camisas:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.topsAndShirts')}:</p>
                 <ul className="list-disc list-inside text-sm text-muted-foreground">
                   {currentAnalysis.clothing_recommendations?.tops?.map((item: string, i: number) => (
                     <li key={i}>{item}</li>
@@ -277,7 +277,7 @@ export function BeautyAnalysis() {
                 </ul>
               </div>
               <div>
-                <p className="font-medium">Calças e Saias:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.pantsAndSkirts')}:</p>
                 <ul className="list-disc list-inside text-sm text-muted-foreground">
                   {currentAnalysis.clothing_recommendations?.bottoms?.map((item: string, i: number) => (
                     <li key={i}>{item}</li>
@@ -285,7 +285,7 @@ export function BeautyAnalysis() {
                 </ul>
               </div>
               <div>
-                <p className="font-medium">Vestidos:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.dresses')}:</p>
                 <ul className="list-disc list-inside text-sm text-muted-foreground">
                   {currentAnalysis.clothing_recommendations?.dresses?.map((item: string, i: number) => (
                     <li key={i}>{item}</li>
@@ -293,7 +293,7 @@ export function BeautyAnalysis() {
                 </ul>
               </div>
               <div>
-                <p className="font-medium">Acessórios:</p>
+                <p className="font-medium">{t('beautyAnalysis.results.accessories')}:</p>
                 <ul className="list-disc list-inside text-sm text-muted-foreground">
                   {currentAnalysis.clothing_recommendations?.accessories?.map((item: string, i: number) => (
                     <li key={i}>{item}</li>
@@ -305,7 +305,7 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Estampas e Padrões</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.patternsAndPrints')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -318,7 +318,7 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Modelagens que Valorizam</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.bestFits')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -331,7 +331,7 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Dicas de Estilo</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.stylingTips')}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-1">
@@ -353,12 +353,12 @@ export function BeautyAnalysis() {
         <div className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Produto Identificado</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.productIdentified')}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-xl font-semibold">{currentAnalysis.product_identified}</p>
               <div className="mt-3 flex items-center gap-2">
-                <span className="text-sm">Compatibilidade:</span>
+                <span className="text-sm">{t('beautyAnalysis.results.compatibility')}:</span>
                 <Badge variant={currentAnalysis.matches_profile ? "default" : "secondary"}>
                   {currentAnalysis.compatibility_score}/10
                 </Badge>
@@ -368,11 +368,11 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Combina com Você?</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.matchesYou')}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className={currentAnalysis.matches_profile ? "text-green-600 font-medium" : "text-orange-600 font-medium"}>
-                {currentAnalysis.matches_profile ? "✓ Sim, combina!" : "⚠ Pode não ser ideal"}
+                {currentAnalysis.matches_profile ? t('beautyAnalysis.results.yesMatches') : t('beautyAnalysis.results.mayNotBeIdeal')}
               </p>
               <p className="text-sm mt-2 text-muted-foreground">{currentAnalysis.why_matches}</p>
             </CardContent>
@@ -381,7 +381,7 @@ export function BeautyAnalysis() {
           {currentAnalysis.better_alternatives && currentAnalysis.better_alternatives.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Alternativas Melhores</CardTitle>
+                <CardTitle>{t('beautyAnalysis.results.betterAlternatives')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="list-disc list-inside space-y-1">
@@ -395,7 +395,7 @@ export function BeautyAnalysis() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Dicas de Uso</CardTitle>
+              <CardTitle>{t('beautyAnalysis.results.usageTips')}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc list-inside space-y-1">
