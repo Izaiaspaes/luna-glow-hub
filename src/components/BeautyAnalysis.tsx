@@ -24,10 +24,13 @@ export function BeautyAnalysis() {
   const { profile } = useProfile();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [analysisType, setAnalysisType] = useState<AnalysisType>('face');
   const [currentAnalysis, setCurrentAnalysis] = useState<any>(null);
   const [history, setHistory] = useState<BeautyAnalysis[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('analyze');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -43,7 +46,8 @@ export function BeautyAnalysis() {
     });
   };
 
-  const handleFileSelect = async (file: File) => {
+  // Handle file selection - show preview first
+  const handleFilePreview = async (file: File) => {
     if (!file.type.startsWith('image/')) {
       toast.error('Por favor, selecione uma imagem válida');
       return;
@@ -54,23 +58,35 @@ export function BeautyAnalysis() {
       return;
     }
 
+    const base64Image = await fileToBase64(file);
+    setPendingFile(file);
+    setPreviewImage(base64Image);
+  };
+
+  // Cancel pending analysis
+  const handleCancelAnalysis = () => {
+    setPendingFile(null);
+    setPreviewImage(null);
+  };
+
+  // Confirm and run analysis
+  const handleConfirmAnalysis = async () => {
+    if (!pendingFile) return;
+
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
 
-      // Convert image to base64 for AI analysis
-      const base64Image = await fileToBase64(file);
-      
-      // Set preview image
+      const base64Image = previewImage!;
       setSelectedImage(base64Image);
 
       // Upload to Supabase Storage for history
-      const fileExt = file.name.split('.').pop();
+      const fileExt = pendingFile.name.split('.').pop();
       const fileName = `${user.id}/${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
         .from('beauty-analysis')
-        .upload(fileName, file);
+        .upload(fileName, pendingFile);
 
       if (uploadError) {
         console.error('Upload error (non-blocking):', uploadError);
@@ -89,6 +105,8 @@ export function BeautyAnalysis() {
       if (error) throw error;
 
       setCurrentAnalysis(data.analysis.ai_analysis);
+      setPendingFile(null);
+      setPreviewImage(null);
       toast.success('Análise concluída! 🎨');
     } catch (error: any) {
       console.error('Error analyzing image:', error);
@@ -431,7 +449,7 @@ export function BeautyAnalysis() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="analyze" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="analyze">Nova Análise</TabsTrigger>
             <TabsTrigger value="history" onClick={loadHistory}>
@@ -486,7 +504,7 @@ export function BeautyAnalysis() {
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
+              onChange={(e) => e.target.files?.[0] && handleFilePreview(e.target.files[0])}
             />
             <input
               ref={cameraInputRef}
@@ -494,8 +512,34 @@ export function BeautyAnalysis() {
               accept="image/*"
               capture="user"
               className="hidden"
-              onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
+              onChange={(e) => e.target.files?.[0] && handleFilePreview(e.target.files[0])}
             />
+
+            {/* Preview with confirmation */}
+            {previewImage && !loading && (
+              <div className="space-y-4">
+                <img
+                  src={previewImage}
+                  alt="Preview"
+                  className="w-full max-w-md mx-auto rounded-lg"
+                />
+                <div className="flex gap-3 justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={handleCancelAnalysis}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={handleConfirmAnalysis}
+                    disabled={loading}
+                  >
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Gerar Análise
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {loading && (
               <div className="flex items-center justify-center py-8">
@@ -504,7 +548,7 @@ export function BeautyAnalysis() {
               </div>
             )}
 
-            {selectedImage && !loading && (
+            {selectedImage && !loading && !previewImage && (
               <div className="space-y-4">
                 <img
                   src={selectedImage}
@@ -563,6 +607,7 @@ export function BeautyAnalysis() {
                                 setCurrentAnalysis(item.ai_analysis);
                                 setSelectedImage(item.photo_url);
                                 setAnalysisType(item.analysis_type);
+                                setActiveTab('analyze');
                               }}
                             >
                               Ver análise completa
