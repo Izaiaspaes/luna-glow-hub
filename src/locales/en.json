@@ -1126,6 +1126,32 @@
       }
     }
   },
+  "forms": {
+    "cycle": {
+      "dateRequired": "Start date is required",
+      "startDate": "Period Start Date",
+      "flowIntensity": "Flow Intensity",
+      "flowPlaceholder": "Select intensity",
+      "flowLight": "Light",
+      "flowModerate": "Moderate",
+      "flowHeavy": "Heavy",
+      "isDelayed": "Period delayed",
+      "isDelayedHint": "Check if your period is delayed",
+      "symptoms": "Symptoms",
+      "symptomsPlaceholder": "E.g: cramps, headache, bloating",
+      "notes": "Notes",
+      "notesPlaceholder": "Additional notes about your cycle...",
+      "analyzing": "Analyzing...",
+      "analyzeAI": "Analyze with AI",
+      "analysisComplete": "Analysis complete!",
+      "analysisError": "Error analyzing description",
+      "scrollHint": "Scroll down to save",
+      "saving": "Saving...",
+      "save": "Save Record",
+      "successMessage": "Cycle record saved successfully!",
+      "errorMessage": "Error saving record"
+    }
+  },
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "network": "Connection error. Check your internet.",
