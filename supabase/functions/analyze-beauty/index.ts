@@ -30,7 +30,7 @@ serve(async (req) => {
       });
     }
 
-    const { imageBase64, storageUrl, analysisType } = await req.json();
+    const { imageBase64, storageUrl, analysisType, language } = await req.json();
 
     if (!imageBase64 || !analysisType) {
       return new Response(JSON.stringify({ error: 'Missing imageBase64 or analysisType' }), {
@@ -38,6 +38,15 @@ serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    // Determine language for AI response
+    const userLanguage = language || 'pt';
+    const languageNames: Record<string, string> = {
+      pt: 'português brasileiro',
+      en: 'English',
+      es: 'español'
+    };
+    const languageInstruction = languageNames[userLanguage] || 'português brasileiro';
 
     // Use storage URL for saving to database, base64 for AI analysis
     const imageUrlForStorage = storageUrl || 'base64-upload';
@@ -101,7 +110,10 @@ serve(async (req) => {
     
     let systemPrompt = '';
     if (analysisType === 'face') {
-      systemPrompt = `Você é uma consultora de beleza especializada em análise facial e coloração pessoal. Analise a imagem do rosto fornecida e forneça uma análise detalhada em JSON.
+      systemPrompt = `Você é uma consultora de beleza especializada em análise facial e coloração pessoal. 
+IMPORTANTE: Responda INTEIRAMENTE em ${languageInstruction}. Todos os textos, recomendações e a mensagem personalizada devem estar em ${languageInstruction}.
+
+Analise a imagem do rosto fornecida e forneça uma análise detalhada em JSON.
 
 ${userName ? `A usuária se chama ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
 
@@ -131,7 +143,10 @@ Forneça sua análise no seguinte formato JSON:
   "personalized_message": "mensagem carinhosa e encorajadora ${greetingForPrompt} - ${userName ? `comece com o nome ${userName}` : 'NÃO use Querida, Amiga ou termos genéricos'}"
 }`;
     } else if (analysisType === 'body') {
-      systemPrompt = `Você é uma consultora de moda e estilo corporal. Analise a imagem fornecida e forneça recomendações de vestuário em JSON.
+      systemPrompt = `Você é uma consultora de moda e estilo corporal.
+IMPORTANTE: Responda INTEIRAMENTE em ${languageInstruction}. Todos os textos, recomendações e a mensagem personalizada devem estar em ${languageInstruction}.
+
+Analise a imagem fornecida e forneça recomendações de vestuário em JSON.
 
 ${userName ? `A usuária se chama ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
 
@@ -157,7 +172,10 @@ Forneça sua análise no seguinte formato JSON:
   "personalized_message": "mensagem motivadora ${greetingForPrompt} - ${userName ? `comece com o nome ${userName}` : 'NÃO use Querida, Amiga ou termos genéricos'}"
 }`;
     } else if (analysisType === 'product') {
-      systemPrompt = `Você é uma consultora de beleza especializada em análise de produtos. Analise o produto da imagem e diga se combina com o perfil da usuária.
+      systemPrompt = `Você é uma consultora de beleza especializada em análise de produtos.
+IMPORTANTE: Responda INTEIRAMENTE em ${languageInstruction}. Todos os textos, recomendações e a mensagem personalizada devem estar em ${languageInstruction}.
+
+Analise o produto da imagem e diga se combina com o perfil da usuária.
 
 ${userName ? `A usuária se chama ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
 

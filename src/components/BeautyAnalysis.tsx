@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useProfile } from "@/hooks/useProfile";
+import { useTranslation } from "react-i18next";
 
 type AnalysisType = 'face' | 'body' | 'product';
 
@@ -22,6 +23,7 @@ interface BeautyAnalysis {
 
 export function BeautyAnalysis() {
   const { profile } = useProfile();
+  const { i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
@@ -97,9 +99,9 @@ export function BeautyAnalysis() {
         .from('beauty-analysis')
         .getPublicUrl(fileName);
 
-      // Call AI analysis with base64 image
+      // Call AI analysis with base64 image and user language
       const { data, error } = await supabase.functions.invoke('analyze-beauty', {
-        body: { imageBase64: base64Image, storageUrl: publicUrl, analysisType },
+        body: { imageBase64: base64Image, storageUrl: publicUrl, analysisType, language: i18n.language },
       });
 
       if (error) throw error;
