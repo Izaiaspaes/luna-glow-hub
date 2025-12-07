@@ -129,52 +129,89 @@ export const PricingComparison = () => {
 
         {/* Comparison Table */}
         <div className="max-w-6xl mx-auto">
-          {/* Plans Header */}
-          <div className="grid grid-cols-4 gap-4 mb-6">
-            <div className="col-span-1"></div>
-            {plans.map((plan, index) => {
-              const Icon = plan.icon;
-              return (
-                <Card 
-                  key={index}
-                  className={`relative overflow-hidden ${plan.highlight ? 'border-primary border-2 shadow-hover' : 'border-2'}`}
-                >
-                  {plan.highlight && (
-                    <div className="absolute top-0 left-0 right-0 bg-gradient-colorful text-white text-xs font-bold py-1 text-center">
-                      {t("pricingComparison.mostPopular")}
-                    </div>
-                  )}
-                  <div className={`p-6 ${plan.highlight ? 'pt-10' : ''}`}>
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <div className={`p-2 rounded-lg bg-${plan.color}`}>
-                        <Icon className="h-5 w-5 text-white" />
+          {/* Plans Header - Mobile: Horizontal scroll, Desktop: Grid */}
+          <div className="mb-6">
+            {/* Mobile: Horizontal scroll cards */}
+            <div className="flex md:hidden gap-3 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4">
+              {plans.map((plan, index) => {
+                const Icon = plan.icon;
+                return (
+                  <Card 
+                    key={index}
+                    className={`relative overflow-hidden flex-shrink-0 w-[140px] snap-center ${plan.highlight ? 'border-primary border-2 shadow-hover' : 'border-2'}`}
+                  >
+                    {plan.highlight && (
+                      <div className="absolute top-0 left-0 right-0 bg-gradient-colorful text-white text-[10px] font-bold py-0.5 text-center">
+                        {t("pricingComparison.mostPopular")}
                       </div>
-                      <h3 className="text-xl font-bold">{plan.name}</h3>
+                    )}
+                    <div className={`p-3 ${plan.highlight ? 'pt-6' : ''}`}>
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <div className={`p-1 rounded bg-${plan.color}`}>
+                          <Icon className="h-3 w-3 text-white" />
+                        </div>
+                        <h3 className="text-sm font-bold truncate">{plan.name}</h3>
+                      </div>
+                      <div className="text-center mb-1">
+                        <div className="text-lg font-bold text-primary">{plan.price}</div>
+                        {plan.name !== "Free" && (
+                          <div className="text-[10px] text-muted-foreground">/mês</div>
+                        )}
+                      </div>
+                      <p className="text-[10px] text-muted-foreground text-center line-clamp-2">{plan.description}</p>
                     </div>
-                    <div className="text-center mb-2">
-                      <div className="text-3xl font-bold text-primary">{plan.price}</div>
-                      {plan.name !== "Free" && (
-                        <div className="text-sm text-muted-foreground">/mês</div>
-                      )}
+                  </Card>
+                );
+              })}
+            </div>
+            
+            {/* Desktop: Grid layout */}
+            <div className="hidden md:grid grid-cols-4 gap-4">
+              <div className="col-span-1"></div>
+              {plans.map((plan, index) => {
+                const Icon = plan.icon;
+                return (
+                  <Card 
+                    key={index}
+                    className={`relative overflow-hidden ${plan.highlight ? 'border-primary border-2 shadow-hover' : 'border-2'}`}
+                  >
+                    {plan.highlight && (
+                      <div className="absolute top-0 left-0 right-0 bg-gradient-colorful text-white text-xs font-bold py-1 text-center">
+                        {t("pricingComparison.mostPopular")}
+                      </div>
+                    )}
+                    <div className={`p-6 ${plan.highlight ? 'pt-10' : ''}`}>
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <div className={`p-2 rounded-lg bg-${plan.color}`}>
+                          <Icon className="h-5 w-5 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold">{plan.name}</h3>
+                      </div>
+                      <div className="text-center mb-2">
+                        <div className="text-3xl font-bold text-primary">{plan.price}</div>
+                        {plan.name !== "Free" && (
+                          <div className="text-sm text-muted-foreground">/mês</div>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground text-center">{plan.description}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground text-center">{plan.description}</p>
-                  </div>
-                </Card>
-              );
-            })}
+                  </Card>
+                );
+              })}
+            </div>
           </div>
 
           {/* Features Comparison */}
           {features.map((category, catIndex) => (
-            <div key={catIndex} className="mb-8">
-              <h4 className="text-lg font-bold mb-4 text-foreground">{category.category}</h4>
+            <div key={catIndex} className="mb-6 md:mb-8">
+              <h4 className="text-base md:text-lg font-bold mb-3 md:mb-4 text-foreground">{category.category}</h4>
               {category.items.map((item, itemIndex) => (
                 <div 
                   key={itemIndex}
-                  className={`grid grid-cols-4 gap-4 p-4 ${itemIndex % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg`}
+                  className={`grid grid-cols-4 gap-2 md:gap-4 p-2 md:p-4 ${itemIndex % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg`}
                 >
                   <div className="col-span-1 flex items-center">
-                    <span className="text-sm text-foreground">{item.name}</span>
+                    <span className="text-xs md:text-sm text-foreground leading-tight">{item.name}</span>
                   </div>
                   <div className="flex items-center justify-center">
                     {renderFeatureValue(item.free)}
@@ -191,14 +228,14 @@ export const PricingComparison = () => {
           ))}
 
           {/* CTA Buttons */}
-          <div className="grid grid-cols-4 gap-4 mt-8">
-            <div className="col-span-1"></div>
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4 mt-6 md:mt-8">
+            <div className="hidden md:block md:col-span-1"></div>
             {plans.map((plan, index) => (
               <div key={index} className="flex justify-center">
                 <Button 
                   variant={plan.highlight ? "colorful" : "outline"}
-                  size="lg"
-                  className="w-full"
+                  size="sm"
+                  className="w-full text-xs md:text-sm md:py-3"
                   onClick={handleCTAClick}
                   disabled={redirecting}
                 >
