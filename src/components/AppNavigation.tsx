@@ -24,8 +24,8 @@ export const AppNavigation = () => {
     }
   };
 
-  const handleHomeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleHomeClick = (e?: React.MouseEvent) => {
+    e?.preventDefault();
     if (user) {
       navigate("/dashboard");
     } else {
@@ -173,7 +173,7 @@ export const AppNavigation = () => {
                 <Button
                   variant={isActive("/") || isActive("/dashboard") ? "default" : "ghost"}
                   onClick={() => {
-                    handleHomeClick({} as React.MouseEvent);
+                    handleHomeClick();
                     setMobileMenuOpen(false);
                   }}
                   className="justify-start gap-3"
