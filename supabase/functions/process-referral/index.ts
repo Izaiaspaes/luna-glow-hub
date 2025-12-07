@@ -219,9 +219,11 @@ serve(async (req) => {
 
     throw new Error("Invalid action");
 
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    logStep("ERROR", { message: errorMessage });
+  } catch (error: any) {
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : (error?.message || error?.details || JSON.stringify(error) || 'Unknown error');
+    logStep("ERROR", { message: errorMessage, fullError: JSON.stringify(error) });
     return new Response(JSON.stringify({ error: errorMessage }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
