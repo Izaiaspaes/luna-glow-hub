@@ -56,6 +56,12 @@ export function initSentry() {
         return null;
       }
       
+      // Java object errors (browser keyboard logging/extension interference)
+      if (errorMessage.includes("Java object is gone") || 
+          errorMessage.includes("enableDidUserTypeOnKeyboardLogging")) {
+        return null;
+      }
+      
       // === KEEP ALL OTHER ERRORS (app bugs, API errors, etc.) ===
       return event;
     },

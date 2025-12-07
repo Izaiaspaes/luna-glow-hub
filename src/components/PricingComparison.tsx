@@ -201,31 +201,64 @@ export const PricingComparison = () => {
             </div>
           </div>
 
-          {/* Features Comparison */}
-          {features.map((category, catIndex) => (
-            <div key={catIndex} className="mb-6 md:mb-8">
-              <h4 className="text-base md:text-lg font-bold mb-3 md:mb-4 text-foreground">{category.category}</h4>
-              {category.items.map((item, itemIndex) => (
-                <div 
-                  key={itemIndex}
-                  className={`grid grid-cols-4 gap-2 md:gap-4 p-2 md:p-4 ${itemIndex % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg`}
-                >
-                  <div className="col-span-1 flex items-center">
-                    <span className="text-xs md:text-sm text-foreground leading-tight">{item.name}</span>
+          {/* Mobile: Stacked comparison cards */}
+          <div className="md:hidden space-y-6">
+            {features.map((category, catIndex) => (
+              <div key={catIndex}>
+                <h4 className="text-sm font-bold mb-3 text-foreground">{category.category}</h4>
+                {category.items.map((item, itemIndex) => (
+                  <div 
+                    key={itemIndex}
+                    className={`p-3 ${itemIndex % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg mb-2`}
+                  >
+                    <span className="text-xs font-medium text-foreground block mb-2">{item.name}</span>
+                    <div className="grid grid-cols-3 gap-2">
+                      <div className="text-center">
+                        <span className="text-[10px] text-muted-foreground block mb-1">Free</span>
+                        {renderFeatureValue(item.free)}
+                      </div>
+                      <div className="text-center">
+                        <span className="text-[10px] text-muted-foreground block mb-1">Premium</span>
+                        {renderFeatureValue(item.premium)}
+                      </div>
+                      <div className="text-center">
+                        <span className="text-[10px] text-muted-foreground block mb-1">Plus</span>
+                        {renderFeatureValue(item.premiumPlus)}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-center">
-                    {renderFeatureValue(item.free)}
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: Table layout */}
+          <div className="hidden md:block">
+            {features.map((category, catIndex) => (
+              <div key={catIndex} className="mb-8">
+                <h4 className="text-lg font-bold mb-4 text-foreground">{category.category}</h4>
+                {category.items.map((item, itemIndex) => (
+                  <div 
+                    key={itemIndex}
+                    className={`grid grid-cols-4 gap-4 p-4 ${itemIndex % 2 === 0 ? 'bg-muted/30' : ''} rounded-lg`}
+                  >
+                    <div className="col-span-1 flex items-center">
+                      <span className="text-sm text-foreground leading-tight">{item.name}</span>
+                    </div>
+                    <div className="flex items-center justify-center">
+                      {renderFeatureValue(item.free)}
+                    </div>
+                    <div className="flex items-center justify-center">
+                      {renderFeatureValue(item.premium)}
+                    </div>
+                    <div className="flex items-center justify-center">
+                      {renderFeatureValue(item.premiumPlus)}
+                    </div>
                   </div>
-                  <div className="flex items-center justify-center">
-                    {renderFeatureValue(item.premium)}
-                  </div>
-                  <div className="flex items-center justify-center">
-                    {renderFeatureValue(item.premiumPlus)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ))}
+                ))}
+              </div>
+            ))}
+          </div>
 
           {/* CTA Buttons */}
           <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4 mt-6 md:mt-8">
