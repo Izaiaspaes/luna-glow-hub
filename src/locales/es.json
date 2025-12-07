@@ -1547,6 +1547,7 @@
     "takePhoto": "Tomar Foto",
     "upload": "Subir",
     "analyzing": "Analizando...",
+    "processingImage": "Procesando imagen...",
     "analysisCompleted": "¡Análisis completado! 🎨",
     "errorAnalyzing": "Error al analizar imagen",
     "errorLoading": "Error al cargar historial",

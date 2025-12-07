@@ -1253,6 +1253,7 @@
     "product": "Produto",
     "takePhoto": "Tirar Foto",
     "upload": "Enviar",
+    "processingImage": "Processando imagem...",
     "analyzing": "Analisando...",
     "analysisCompleted": "Análise completa! 🎨",
     "errorAnalyzing": "Erro ao analisar imagem",
