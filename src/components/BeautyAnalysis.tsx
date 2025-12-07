@@ -506,10 +506,16 @@ export function BeautyAnalysis() {
               accept="image/*"
               className="hidden"
               onChange={(e) => {
-                if (e.target.files?.[0]) {
-                  handleFilePreview(e.target.files[0]);
+                const file = e.target.files?.[0];
+                if (file) {
+                  handleFilePreview(file);
                 }
-                e.target.value = ''; // Reset para permitir selecionar o mesmo arquivo
+                // Reset delayed to avoid state conflicts
+                setTimeout(() => {
+                  if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                  }
+                }, 100);
               }}
             />
             <input
@@ -519,10 +525,16 @@ export function BeautyAnalysis() {
               capture="user"
               className="hidden"
               onChange={(e) => {
-                if (e.target.files?.[0]) {
-                  handleFilePreview(e.target.files[0]);
+                const file = e.target.files?.[0];
+                if (file) {
+                  handleFilePreview(file);
                 }
-                e.target.value = ''; // Reset para garantir que onChange dispare novamente
+                // Reset delayed to avoid state conflicts
+                setTimeout(() => {
+                  if (cameraInputRef.current) {
+                    cameraInputRef.current.value = '';
+                  }
+                }, 100);
               }}
             />
 
