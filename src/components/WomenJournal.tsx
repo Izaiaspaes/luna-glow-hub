@@ -9,6 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useTranslation } from "react-i18next";
 
 interface JournalEntry {
   id: string;
@@ -21,6 +22,7 @@ interface JournalEntry {
 }
 
 export function WomenJournal() {
+  const { t, i18n } = useTranslation();
   const { subscriptionStatus, userProfile } = useAuth();
   const { profile } = useProfile();
   const [journalEntry, setJournalEntry] = useState("");
@@ -54,7 +56,6 @@ export function WomenJournal() {
 
       if (error) throw error;
       
-      // Transform data to match interface
       const transformedData: JournalEntry[] = (data || []).map(entry => ({
         ...entry,
         ai_suggestions: (Array.isArray(entry.ai_suggestions) ? entry.ai_suggestions : []) as string[]
@@ -69,8 +70,8 @@ export function WomenJournal() {
   const handleAnalyze = async () => {
     if (!journalEntry.trim()) {
       toast({
-        title: "Escreva algo primeiro",
-        description: "Digite seu diário para que a IA possa analisar",
+        title: t('womenJournal.writeFirst'),
+        description: t('womenJournal.writeFirstDesc'),
         variant: "destructive",
       });
       return;
@@ -79,22 +80,25 @@ export function WomenJournal() {
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('analyze-journal', {
-        body: { entry: journalEntry },
+        body: { 
+          entry: journalEntry,
+          language: i18n.language
+        },
       });
 
       if (error) throw error;
 
       setAiInsights(data);
       setJournalEntry("");
-      await loadHistory(); // Reload history after saving
+      await loadHistory();
       toast({
-        title: "✨ Análise completa!",
-        description: "A IA analisou seu diário e salvou a entrada",
+        title: `✨ ${t('womenJournal.analysisComplete')}`,
+        description: t('womenJournal.analysisCompleteDesc'),
       });
     } catch (error: any) {
       console.error('Error analyzing journal:', error);
       toast({
-        title: "Erro ao analisar",
+        title: t('womenJournal.errorSaving'),
         description: error.message,
         variant: "destructive",
       });
@@ -114,13 +118,13 @@ export function WomenJournal() {
 
       await loadHistory();
       toast({
-        title: "Entrada excluída",
-        description: "A entrada do diário foi removida",
+        title: t('womenJournal.entryDeleted'),
+        description: t('womenJournal.entryDeletedDesc'),
       });
     } catch (error: any) {
       console.error('Error deleting entry:', error);
       toast({
-        title: "Erro ao excluir",
+        title: t('womenJournal.errorDeleting'),
         description: error.message,
         variant: "destructive",
       });
@@ -135,18 +139,18 @@ export function WomenJournal() {
             <div className="p-2 rounded-lg bg-gradient-to-r from-luna-purple to-luna-pink text-white">
               <BookOpen className="w-5 h-5" />
             </div>
-            <CardTitle>🌟 Diário da Mulher com IA</CardTitle>
+            <CardTitle>🌟 {t('womenJournal.title')}</CardTitle>
           </div>
           <CardDescription>
-            Disponível no Premium e Premium Plus
+            {t('womenJournal.premiumRequired')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            Escreva livremente e receba insights poderosos da IA sobre seu dia, padrões recorrentes e correlações entre humor, sintomas e ciclo.
+            {t('womenJournal.premiumMessage')}
           </p>
           <Button variant="outline" disabled className="w-full">
-            Gerenciar Assinatura
+            {t('subscription.manageSubscription')}
           </Button>
         </CardContent>
       </Card>
@@ -162,7 +166,7 @@ export function WomenJournal() {
               <div className="p-2 rounded-lg bg-gradient-to-r from-luna-purple to-luna-pink text-white">
                 <BookOpen className="w-5 h-5" />
               </div>
-              <CardTitle>Diário da Mulher</CardTitle>
+              <CardTitle>{t('womenJournal.title')}</CardTitle>
             </div>
             <Button
               variant="outline"
@@ -170,16 +174,16 @@ export function WomenJournal() {
               onClick={() => setShowHistory(!showHistory)}
             >
               <History className="w-4 h-4 mr-2" />
-              Histórico
+              {t('womenJournal.history')}
             </Button>
           </div>
           <CardDescription>
-            Escreva livremente sobre seu dia. A IA vai analisar e devolver insights personalizados
+            {t('womenJournal.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Textarea
-            placeholder="Como foi seu dia? O que você está sentindo? Compartilhe livremente..."
+            placeholder={t('womenJournal.writePlaceholder')}
             value={journalEntry}
             onChange={(e) => setJournalEntry(e.target.value)}
             className="min-h-[200px] resize-none"
@@ -189,7 +193,7 @@ export function WomenJournal() {
             disabled={loading || !journalEntry.trim()}
             className="w-full bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
           >
-            {loading ? "Analisando..." : "Analisar com IA"}
+            {loading ? t('womenJournal.analyzing') : t('womenJournal.analyzeWithAI')}
             <Sparkles className="ml-2 w-4 h-4" />
           </Button>
         </CardContent>
@@ -198,7 +202,7 @@ export function WomenJournal() {
       {showHistory && history.length > 0 && (
         <Card className="border-2 border-luna-purple/50">
           <CardHeader>
-            <CardTitle className="text-lg">Histórico de Entradas</CardTitle>
+            <CardTitle className="text-lg">{t('womenJournal.historyTitle')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[400px] pr-4">
@@ -208,7 +212,7 @@ export function WomenJournal() {
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <p className="text-xs text-muted-foreground mb-2">
-                          {new Date(entry.created_at).toLocaleDateString('pt-BR', {
+                          {new Date(entry.created_at).toLocaleDateString(i18n.language === 'pt' ? 'pt-BR' : i18n.language === 'es' ? 'es-ES' : 'en-US', {
                             day: '2-digit',
                             month: 'long',
                             year: 'numeric',
@@ -223,20 +227,20 @@ export function WomenJournal() {
                         {entry.ai_summary && (
                           <div className="space-y-2 text-sm">
                             <div>
-                              <span className="font-semibold text-luna-purple">Resumo:</span>
+                              <span className="font-semibold text-luna-purple">{t('womenJournal.summary')}:</span>
                               <p className="mt-1">{entry.ai_summary}</p>
                             </div>
                             
                             {entry.ai_patterns && (
                               <div>
-                                <span className="font-semibold text-luna-pink">Padrões:</span>
+                                <span className="font-semibold text-luna-pink">{t('womenJournal.patterns')}:</span>
                                 <p className="mt-1">{entry.ai_patterns}</p>
                               </div>
                             )}
                             
                             {entry.ai_suggestions && entry.ai_suggestions.length > 0 && (
                               <div>
-                                <span className="font-semibold text-luna-orange">Sugestões:</span>
+                                <span className="font-semibold text-luna-orange">{t('womenJournal.suggestions')}:</span>
                                 <ul className="mt-1 space-y-1">
                                   {entry.ai_suggestions.map((suggestion, i) => (
                                     <li key={i} className="flex items-start gap-2">
@@ -250,7 +254,7 @@ export function WomenJournal() {
                             
                             {entry.ai_correlations && (
                               <div>
-                                <span className="font-semibold text-luna-green">Correlações:</span>
+                                <span className="font-semibold text-luna-green">{t('womenJournal.correlations')}:</span>
                                 <p className="mt-1">{entry.ai_correlations}</p>
                               </div>
                             )}
@@ -280,7 +284,7 @@ export function WomenJournal() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-luna-purple" />
-              <CardTitle>Insights da IA</CardTitle>
+              <CardTitle>{t('womenJournal.aiInsights')}</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -288,7 +292,7 @@ export function WomenJournal() {
               <div>
                 <h4 className="font-semibold flex items-center gap-2 mb-2">
                   <BookOpen className="w-4 h-4 text-luna-purple" />
-                  Resumo do Dia
+                  {t('womenJournal.daySummary')}
                 </h4>
                 <p className="text-sm text-muted-foreground">{aiInsights.summary}</p>
               </div>
@@ -298,7 +302,7 @@ export function WomenJournal() {
               <div>
                 <h4 className="font-semibold flex items-center gap-2 mb-2">
                   <TrendingUp className="w-4 h-4 text-luna-pink" />
-                  Padrões Recorrentes
+                  {t('womenJournal.recurringPatterns')}
                 </h4>
                 <p className="text-sm text-muted-foreground">{aiInsights.patterns}</p>
               </div>
@@ -306,7 +310,7 @@ export function WomenJournal() {
 
             {aiInsights.suggestions && (
               <div>
-                <h4 className="font-semibold mb-2">💡 Sugestões Práticas</h4>
+                <h4 className="font-semibold mb-2">💡 {t('womenJournal.practicalSuggestions')}</h4>
                 <ul className="space-y-2">
                   {aiInsights.suggestions.map((suggestion: string, index: number) => (
                     <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
@@ -320,7 +324,7 @@ export function WomenJournal() {
 
             {aiInsights.correlations && (
               <div>
-                <h4 className="font-semibold mb-2">🔗 Correlações</h4>
+                <h4 className="font-semibold mb-2">🔗 {t('womenJournal.correlations')}</h4>
                 <p className="text-sm text-muted-foreground">{aiInsights.correlations}</p>
               </div>
             )}

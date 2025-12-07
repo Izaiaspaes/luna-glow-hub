@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useTranslation } from "react-i18next";
 
 interface Message {
   role: "user" | "assistant";
@@ -16,12 +17,13 @@ interface Message {
 }
 
 export function LunaSense() {
+  const { t, i18n } = useTranslation();
   const { subscriptionStatus, userProfile } = useAuth();
   const { profile } = useProfile();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Olá! 💜 Eu sou a Luna Sense, sua assistente inteligente de bem-estar feminino. Como posso te ajudar hoje?",
+      content: t('lunaSense.welcomeMessage'),
       timestamp: new Date(),
     },
   ]);
@@ -58,7 +60,8 @@ export function LunaSense() {
       const { data, error } = await supabase.functions.invoke('luna-sense-chat', {
         body: { 
           message: input,
-          conversationHistory: messages.slice(-5) // Send last 5 messages for context
+          conversationHistory: messages.slice(-5),
+          language: i18n.language
         },
       });
 
@@ -74,15 +77,14 @@ export function LunaSense() {
     } catch (error: any) {
       console.error('Error chatting with Luna Sense:', error);
       toast({
-        title: "Erro na conversa",
+        title: t('lunaSense.errorSending'),
         description: error.message,
         variant: "destructive",
       });
       
-      // Add error message to chat
       setMessages(prev => [...prev, {
         role: "assistant",
-        content: "Desculpe, tive um problema para processar sua mensagem. Pode tentar novamente?",
+        content: t('lunaSense.errorMessage'),
         timestamp: new Date(),
       }]);
     } finally {
@@ -98,15 +100,15 @@ export function LunaSense() {
             <div className="p-2 rounded-lg bg-gradient-to-r from-luna-purple to-luna-pink text-white">
               <MessageCircle className="w-5 h-5" />
             </div>
-            <CardTitle>💬 Luna Sense - Assistente Inteligente</CardTitle>
+            <CardTitle>💬 {t('lunaSense.title')} - {t('featuredHighlights.lunaSense.title').split(' - ')[1]}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            Conversa livre e empática sobre saúde feminina, rotina e emoções. Com personalidade que se adapta à sua fase do ciclo.
+            {t('lunaSense.premiumMessage')}
           </p>
           <Button variant="outline" disabled className="w-full">
-            Disponível no Premium Plus
+            {t('lunaSense.premiumRequired')}
           </Button>
         </CardContent>
       </Card>
@@ -121,8 +123,8 @@ export function LunaSense() {
             <MessageCircle className="w-5 h-5" />
           </div>
           <div>
-            <CardTitle>Luna Sense</CardTitle>
-            <p className="text-sm text-muted-foreground">Assistente Inteligente 24/7</p>
+            <CardTitle>{t('lunaSense.title')}</CardTitle>
+            <p className="text-sm text-muted-foreground">{t('lunaSense.subtitle')}</p>
           </div>
         </div>
       </CardHeader>
@@ -143,7 +145,7 @@ export function LunaSense() {
               >
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                 <p className="text-xs opacity-70 mt-1">
-                  {message.timestamp.toLocaleTimeString("pt-BR", {
+                  {message.timestamp.toLocaleTimeString(i18n.language === 'pt' ? 'pt-BR' : i18n.language === 'es' ? 'es-ES' : 'en-US', {
                     hour: "2-digit",
                     minute: "2-digit",
                   })}
@@ -156,7 +158,7 @@ export function LunaSense() {
               <div className="bg-muted rounded-2xl px-4 py-3">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 animate-pulse text-luna-purple" />
-                  <span className="text-sm">Luna está pensando...</span>
+                  <span className="text-sm">{t('lunaSense.thinking')}</span>
                 </div>
               </div>
             </div>
@@ -175,7 +177,7 @@ export function LunaSense() {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Digite sua mensagem..."
+            placeholder={t('lunaSense.chatPlaceholder')}
             disabled={loading}
             className="flex-1"
           />
@@ -188,7 +190,7 @@ export function LunaSense() {
           </Button>
         </form>
         <p className="text-xs text-muted-foreground mt-2 text-center">
-          💜 Luna adapta sua personalidade à fase do seu ciclo
+          💜 {t('lunaSense.adaptiveNote')}
         </p>
       </CardContent>
     </Card>

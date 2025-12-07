@@ -485,6 +485,44 @@
       "addFirstRecord": "Add First Record",
       "recentRecords": "Recent Records",
       "addNew": "Add New"
+    },
+    "aiAssistant": {
+      "title": "AI Assistant",
+      "subtitle": "Always available for you",
+      "insightTitle": "Today's insight",
+      "insightMessage": "You're in the follicular phase of your cycle - it's a great time for social activities and creative projects!",
+      "insightBasis": "Based on your last 7 days of data",
+      "generatePlan": "Generate Wellness Plan"
+    },
+    "activePlans": {
+      "title": "Active Wellness Plans",
+      "noPlans": "No active plans at the moment",
+      "plan": "Plan",
+      "validSince": "Valid since",
+      "active": "Active"
+    },
+    "premium": {
+      "exclusiveFeatures": "Exclusive advanced features",
+      "description": "Here you'll find exclusive features for an even more complete self-care and wellness experience."
+    },
+    "sos": {
+      "subtitle": "Immediate support when you need it most",
+      "instructions": "Click the red floating button in the bottom right corner of the screen for quick access to relaxation techniques, emotional support and immediate care.",
+      "options": {
+        "pain": "Physical pain and cramps",
+        "anxiety": "Anxiety and stress",
+        "fatigue": "Extreme fatigue",
+        "irritation": "Irritation and PMS"
+      }
+    },
+    "trackingDialog": {
+      "cycle": "Log Cycle",
+      "sleep": "Log Sleep",
+      "mood": "Log Mood",
+      "energy": "Log Energy",
+      "work": "Log Work",
+      "nutrition": "Log Nutrition",
+      "description": "Fill in the information to record your data"
     }
   },
   "pricingSuccess": {
@@ -1369,13 +1407,16 @@
     "chatPlaceholder": "How are you feeling today?",
     "send": "Send",
     "listening": "Listening...",
-    "thinking": "Thinking...",
+    "thinking": "Luna is thinking...",
     "errorSending": "Error sending message",
     "errorLoading": "Error loading conversation",
+    "errorMessage": "Sorry, I had a problem processing your message. Can you try again?",
     "newConversation": "New Conversation",
     "conversationHistory": "Conversation History",
     "emptyState": "Hi! I'm Luna Sense 💜",
     "emptyStateDesc": "I'm here to support you on your wellness journey. Ask me anything!",
+    "welcomeMessage": "Hello! 💜 I'm Luna Sense, your intelligent wellness assistant. How can I help you today?",
+    "adaptiveNote": "Luna adapts her personality to your cycle phase",
     "exampleQuestions": "Example questions:",
     "example1": "How can I improve my sleep?",
     "example2": "I'm feeling anxious, can you help?",
@@ -1383,22 +1424,34 @@
   },
   "womenJournal": {
     "title": "Women's Journal",
-    "subtitle": "Record your day and receive AI insights",
+    "subtitle": "Write freely about your day. AI will analyze and return personalized insights",
     "premiumRequired": "Premium feature",
-    "premiumMessage": "Women's Journal is available on Premium and Premium Plus plans",
+    "premiumMessage": "Write freely and receive powerful AI insights about your day, recurring patterns and correlations between mood, symptoms and cycle.",
     "newEntry": "New Entry",
     "history": "History",
-    "writePlaceholder": "How was your day? Share your thoughts, feelings and experiences...",
+    "historyTitle": "Entry History",
+    "writePlaceholder": "How was your day? What are you feeling? Share freely...",
     "recordAudio": "Record Audio",
     "save": "Save",
     "analyzing": "Analyzing...",
+    "analyzeWithAI": "Analyze with AI",
+    "analysisComplete": "Analysis complete!",
+    "analysisCompleteDesc": "AI analyzed your journal and saved the entry",
     "entrySaved": "Entry saved! 📝",
-    "errorSaving": "Error saving entry",
+    "entryDeleted": "Entry deleted",
+    "entryDeletedDesc": "The journal entry was removed",
+    "errorSaving": "Error analyzing",
+    "errorDeleting": "Error deleting",
     "errorLoading": "Error loading journal",
+    "writeFirst": "Write something first",
+    "writeFirstDesc": "Type your journal for AI to analyze",
     "aiInsights": "AI Insights",
     "summary": "Summary",
+    "daySummary": "Day Summary",
     "patterns": "Identified Patterns",
+    "recurringPatterns": "Recurring Patterns",
     "suggestions": "Suggestions",
+    "practicalSuggestions": "Practical Suggestions",
     "correlations": "Correlations",
     "noEntries": "No entries yet",
     "noEntriesMessage": "Start your first entry to receive personalized insights!"
