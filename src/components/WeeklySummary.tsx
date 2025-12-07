@@ -3,8 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Clock, BarChart3 } from "lucide-react";
 import { useWorkTracking } from "@/hooks/useWorkTracking";
+import { useTranslation } from "react-i18next";
 
 export function WeeklySummary() {
+  const { t } = useTranslation();
   const { getWeeklySummary } = useWorkTracking();
   const [summary, setSummary] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -26,11 +28,11 @@ export function WeeklySummary() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Resumo Semanal
+            {t("weeklySummary.title")}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">Carregando...</p>
+          <p className="text-muted-foreground">{t("weeklySummary.loading")}</p>
         </CardContent>
       </Card>
     );
@@ -42,12 +44,12 @@ export function WeeklySummary() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Resumo Semanal
+            {t("weeklySummary.title")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            Registre seus dias de trabalho para ver um resumo semanal com análises e padrões.
+            {t("weeklySummary.emptyMessage")}
           </p>
         </CardContent>
       </Card>
@@ -58,10 +60,10 @@ export function WeeklySummary() {
     const dist = summary.workloadDistribution;
     const max = Math.max(dist.light, dist.moderate, dist.heavy, dist.exhausting);
     
-    if (dist.exhausting === max) return { level: 'Exaustiva', color: 'destructive' };
-    if (dist.heavy === max) return { level: 'Pesada', color: 'default' };
-    if (dist.moderate === max) return { level: 'Moderada', color: 'secondary' };
-    return { level: 'Leve', color: 'outline' };
+    if (dist.exhausting === max) return { level: t("weeklySummary.workloadLevels.exhausting"), color: 'destructive' };
+    if (dist.heavy === max) return { level: t("weeklySummary.workloadLevels.heavy"), color: 'default' };
+    if (dist.moderate === max) return { level: t("weeklySummary.workloadLevels.moderate"), color: 'secondary' };
+    return { level: t("weeklySummary.workloadLevels.light"), color: 'outline' };
   };
 
   const mostCommon = getMostCommonWorkload();
@@ -71,10 +73,10 @@ export function WeeklySummary() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
-          Resumo Semanal de Trabalho
+          {t("weeklySummary.workTitle")}
         </CardTitle>
         <CardDescription>
-          Análise dos últimos 7 dias
+          {t("weeklySummary.subtitle")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -82,7 +84,7 @@ export function WeeklySummary() {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
-              Total de Horas
+              {t("weeklySummary.totalHours")}
             </div>
             <p className="text-2xl font-bold">{summary.totalHours}h</p>
           </div>
@@ -90,34 +92,34 @@ export function WeeklySummary() {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <BarChart3 className="h-4 w-4" />
-              Média Diária
+              {t("weeklySummary.dailyAverage")}
             </div>
             <p className="text-2xl font-bold">{summary.avgHours}h</p>
           </div>
         </div>
 
         <div className="space-y-2">
-          <p className="text-sm font-medium">Carga de Trabalho Predominante</p>
+          <p className="text-sm font-medium">{t("weeklySummary.predominantWorkload")}</p>
           <Badge variant={mostCommon.color as any}>{mostCommon.level}</Badge>
         </div>
 
         <div className="space-y-2">
-          <p className="text-sm font-medium">Distribuição Semanal</p>
+          <p className="text-sm font-medium">{t("weeklySummary.weeklyDistribution")}</p>
           <div className="grid grid-cols-2 gap-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Dias Leves:</span>
+              <span className="text-muted-foreground">{t("weeklySummary.lightDays")}:</span>
               <span className="font-medium">{summary.workloadDistribution.light}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Dias Moderados:</span>
+              <span className="text-muted-foreground">{t("weeklySummary.moderateDays")}:</span>
               <span className="font-medium">{summary.workloadDistribution.moderate}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Dias Pesados:</span>
+              <span className="text-muted-foreground">{t("weeklySummary.heavyDays")}:</span>
               <span className="font-medium">{summary.workloadDistribution.heavy}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Dias Exaustivos:</span>
+              <span className="text-muted-foreground">{t("weeklySummary.exhaustingDays")}:</span>
               <span className="font-medium">{summary.workloadDistribution.exhausting}</span>
             </div>
           </div>
@@ -125,20 +127,18 @@ export function WeeklySummary() {
 
         {summary.avgHours > 9 && (
           <div className="rounded-lg bg-muted p-3 text-sm">
-            <p className="font-medium mb-1">💜 Sugestão da Luna</p>
+            <p className="font-medium mb-1">💜 {t("weeklySummary.lunaSuggestion")}</p>
             <p className="text-muted-foreground">
-              Percebemos que sua média de trabalho está alta ({summary.avgHours}h/dia). 
-              Considere programar rituais fixos de autocuidado, especialmente nos dias mais intensos.
+              {t("weeklySummary.highWorkloadMessage", { hours: summary.avgHours })}
             </p>
           </div>
         )}
 
         {summary.workloadDistribution.exhausting > 0 && (
           <div className="rounded-lg bg-muted p-3 text-sm">
-            <p className="font-medium mb-1">⚠️ Atenção ao seu bem-estar</p>
+            <p className="font-medium mb-1">⚠️ {t("weeklySummary.wellbeingAttention")}</p>
             <p className="text-muted-foreground">
-              Você teve {summary.workloadDistribution.exhausting} dia(s) de carga exaustiva esta semana. 
-              Seu humor e energia podem estar comprometidos. Priorize descanso e recuperação.
+              {t("weeklySummary.exhaustingMessage", { days: summary.workloadDistribution.exhausting })}
             </p>
           </div>
         )}

@@ -2079,5 +2079,77 @@
     "generateOutfits": "Generar Combinaciones de Looks",
     "creatingOutfits": "Creando looks increíbles para ti...",
     "noOutfits": "¡Genera tus primeras sugerencias de looks!"
+  },
+  "symptomPredictions": {
+    "title": "Predicciones Inteligentes de Síntomas",
+    "description": "La IA analiza tus patrones para predecir síntomas de los próximos 7 días",
+    "analyzing": "Analizando...",
+    "generatePredictions": "Generar Predicciones",
+    "updatePredictions": "Actualizar Predicciones",
+    "emptyAlert": "Haz clic en \"Generar Predicciones\" para que la IA analice tus datos históricos y prediga síntomas futuros basados en tus patrones únicos.",
+    "confidence": "confianza",
+    "predictedSymptoms": "Síntomas Previstos",
+    "recommendations": "Recomendaciones",
+    "phases": {
+      "menstrual": "Fase Menstrual",
+      "follicular": "Fase Folicular",
+      "ovulatory": "Fase Ovulatoria",
+      "luteal": "Fase Lútea"
+    },
+    "severity": {
+      "low": "Leve",
+      "medium": "Moderado",
+      "high": "Intenso"
+    },
+    "toasts": {
+      "generated": "¡Predicciones generadas!",
+      "generatedDesc": "Tus predicciones inteligentes de síntomas están listas.",
+      "error": "Error al generar predicciones",
+      "errorRetry": "Inténtalo de nuevo más tarde."
+    }
+  },
+  "weeklySummary": {
+    "title": "Resumen Semanal",
+    "workTitle": "Resumen Semanal de Trabajo",
+    "subtitle": "Análisis de los últimos 7 días",
+    "loading": "Cargando...",
+    "emptyMessage": "Registra tus días de trabajo para ver un resumen semanal con análisis y patrones.",
+    "totalHours": "Total de Horas",
+    "dailyAverage": "Promedio Diario",
+    "predominantWorkload": "Carga de Trabajo Predominante",
+    "weeklyDistribution": "Distribución Semanal",
+    "lightDays": "Días Ligeros",
+    "moderateDays": "Días Moderados",
+    "heavyDays": "Días Pesados",
+    "exhaustingDays": "Días Agotadores",
+    "workloadLevels": {
+      "light": "Ligera",
+      "moderate": "Moderada",
+      "heavy": "Pesada",
+      "exhausting": "Agotadora"
+    },
+    "lunaSuggestion": "Sugerencia de Luna",
+    "highWorkloadMessage": "Notamos que tu promedio de trabajo es alto ({{hours}}h/día). Considera programar rituales fijos de autocuidado, especialmente en los días más intensos.",
+    "wellbeingAttention": "Atención a tu bienestar",
+    "exhaustingMessage": "Tuviste {{days}} día(s) de carga agotadora esta semana. Tu estado de ánimo y energía pueden estar comprometidos. Prioriza el descanso y la recuperación."
+  },
+  "dailyWork": {
+    "workload": "Carga",
+    "hoursWorked": "trabajadas",
+    "predictedMoodImpact": "Impacto previsto en el ánimo",
+    "workloadLevels": {
+      "light": "Ligera",
+      "moderate": "Moderada",
+      "heavy": "Pesada",
+      "exhausting": "Agotadora",
+      "unknown": "Desconocida"
+    },
+    "moodImpact": {
+      "low": "Bajo",
+      "medium": "Medio",
+      "high": "Alto",
+      "veryHigh": "Muy Alto",
+      "unknown": "Desconocido"
+    }
   }
 }

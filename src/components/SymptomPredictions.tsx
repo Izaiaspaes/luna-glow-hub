@@ -7,7 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Brain, TrendingUp, Calendar, AlertTriangle, Sparkles, Loader2 } from "lucide-react";
 import { format, addDays } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS, es } from "date-fns/locale";
+import { useTranslation } from "react-i18next";
 
 interface Prediction {
   date: string;
@@ -22,20 +23,22 @@ interface SymptomPredictionsProps {
   userId: string;
 }
 
-const phaseLabels: Record<string, string> = {
-  menstrual: "Menstrual",
-  follicular: "Folicular",
-  ovulatory: "Ovulatória",
-  luteal: "Lútea",
-};
-
 const severityColors: Record<string, string> = {
   low: "bg-green-500/10 text-green-700 dark:text-green-400",
   medium: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400",
   high: "bg-red-500/10 text-red-700 dark:text-red-400",
 };
 
+const getDateLocale = (lang: string) => {
+  switch (lang) {
+    case 'en': return enUS;
+    case 'es': return es;
+    default: return ptBR;
+  }
+};
+
 export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
+  const { t, i18n } = useTranslation();
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [summary, setSummary] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -55,14 +58,14 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
       setHasGenerated(true);
 
       toast({
-        title: "Previsões geradas!",
-        description: "Suas previsões inteligentes de sintomas estão prontas.",
+        title: t("symptomPredictions.toasts.generated"),
+        description: t("symptomPredictions.toasts.generatedDesc"),
       });
     } catch (error: any) {
       console.error("Error generating predictions:", error);
       toast({
-        title: "Erro ao gerar previsões",
-        description: error.message || "Tente novamente mais tarde.",
+        title: t("symptomPredictions.toasts.error"),
+        description: error.message || t("symptomPredictions.toasts.errorRetry"),
         variant: "destructive",
       });
     } finally {
@@ -84,10 +87,10 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Brain className="h-5 w-5 text-primary" />
-                Previsões Inteligentes de Sintomas
+                {t("symptomPredictions.title")}
               </CardTitle>
               <CardDescription>
-                IA analisa seus padrões para prever sintomas dos próximos 7 dias
+                {t("symptomPredictions.description")}
               </CardDescription>
             </div>
             <Button
@@ -98,12 +101,12 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Analisando...
+                  {t("symptomPredictions.analyzing")}
                 </>
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
-                  {hasGenerated ? "Atualizar Previsões" : "Gerar Previsões"}
+                  {hasGenerated ? t("symptomPredictions.updatePredictions") : t("symptomPredictions.generatePredictions")}
                 </>
               )}
             </Button>
@@ -115,8 +118,7 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
             <Alert>
               <TrendingUp className="h-4 w-4" />
               <AlertDescription>
-                Clique em "Gerar Previsões" para que a IA analise seus dados históricos
-                e preveja sintomas futuros com base nos seus padrões únicos.
+                {t("symptomPredictions.emptyAlert")}
               </AlertDescription>
             </Alert>
           </CardContent>
@@ -146,21 +148,19 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
                       <div className="flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                         <p className="font-medium">
-                          {format(new Date(prediction.date), "EEEE, dd 'de' MMMM", { locale: ptBR })}
+                          {format(new Date(prediction.date), "EEEE, dd MMMM", { locale: getDateLocale(i18n.language) })}
                         </p>
                       </div>
                       <Badge variant="secondary" className="text-xs">
-                        Fase {phaseLabels[prediction.phase] || prediction.phase}
+                        {t(`symptomPredictions.phases.${prediction.phase}`)}
                       </Badge>
                     </div>
                     <div className="text-right">
                       <p className={`text-sm font-medium ${getConfidenceColor(prediction.confidence)}`}>
-                        {prediction.confidence}% confiança
+                        {prediction.confidence}% {t("symptomPredictions.confidence")}
                       </p>
                       <Badge className={`text-xs ${severityColors[prediction.severity]}`}>
-                        {prediction.severity === "low" && "Leve"}
-                        {prediction.severity === "medium" && "Moderado"}
-                        {prediction.severity === "high" && "Intenso"}
+                        {t(`symptomPredictions.severity.${prediction.severity}`)}
                       </Badge>
                     </div>
                   </div>
@@ -170,7 +170,7 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
                     <div>
                       <p className="text-sm font-medium mb-2 flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-orange-500" />
-                        Sintomas Previstos
+                        {t("symptomPredictions.predictedSymptoms")}
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {prediction.symptoms.map((symptom, idx) => (
@@ -187,7 +187,7 @@ export function SymptomPredictions({ userId }: SymptomPredictionsProps) {
                     <div>
                       <p className="text-sm font-medium mb-2 flex items-center gap-2">
                         <Sparkles className="h-4 w-4 text-primary" />
-                        Recomendações
+                        {t("symptomPredictions.recommendations")}
                       </p>
                       <ul className="space-y-1.5">
                         {prediction.recommendations.map((rec, idx) => (
