@@ -106,15 +106,16 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="energy_date">
+        <Label htmlFor="energy_date" className="text-base md:text-sm font-medium">
           <Zap className="w-4 h-4 inline mr-2" />
           {t("forms.energy.date")}
         </Label>
         <Input
           id="energy_date"
           type="date"
+          className="h-12 md:h-10 text-base md:text-sm px-4"
           {...register("energy_date")}
         />
         {errors.energy_date && (
@@ -123,45 +124,46 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="time_of_day">{t("forms.energy.timeOfDay")}</Label>
+        <Label htmlFor="time_of_day" className="text-base md:text-sm font-medium">{t("forms.energy.timeOfDay")}</Label>
         <Select onValueChange={(value) => setValue("time_of_day", value)}>
-          <SelectTrigger>
+          <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
             <SelectValue placeholder={t("forms.energy.timePlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="manha">{t("forms.energy.timeMorning")}</SelectItem>
-            <SelectItem value="tarde">{t("forms.energy.timeAfternoon")}</SelectItem>
-            <SelectItem value="noite">{t("forms.energy.timeNight")}</SelectItem>
+            <SelectItem value="manha" className="py-3 md:py-2 text-base md:text-sm">{t("forms.energy.timeMorning")}</SelectItem>
+            <SelectItem value="tarde" className="py-3 md:py-2 text-base md:text-sm">{t("forms.energy.timeAfternoon")}</SelectItem>
+            <SelectItem value="noite" className="py-3 md:py-2 text-base md:text-sm">{t("forms.energy.timeNight")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <Label>{t("forms.energy.level", { level: energyLevel })} {analysis && t("forms.energy.levelAdjusted")}</Label>
+      <div className="space-y-3">
+        <Label className="text-base md:text-sm font-medium">{t("forms.energy.level", { level: energyLevel })} {analysis && t("forms.energy.levelAdjusted")}</Label>
         <Slider
           value={[energyLevel]}
           onValueChange={(value) => !analysis && setEnergyLevel(value[0])}
           min={1}
           max={5}
           step={1}
-          className="py-4"
+          className="py-6 md:py-4"
           disabled={!!analysis}
         />
-        <div className="flex justify-between text-xs text-muted-foreground">
+        <div className="flex justify-between text-sm md:text-xs text-muted-foreground">
           <span>{t("forms.energy.levelExhausted")}</span>
           <span>{t("forms.energy.levelEnergized")}</span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes">{t("forms.energy.notes")}</Label>
+        <Label htmlFor="notes" className="text-base md:text-sm font-medium">{t("forms.energy.notes")}</Label>
         <Textarea
           id="notes"
           placeholder={t("forms.energy.notesPlaceholder")}
+          className="min-h-[100px] md:min-h-[80px] text-base md:text-sm p-4 resize-none"
           {...register("notes")}
           onChange={(e) => setValue("notes", e.target.value)}
         />
-        <div className="flex gap-2 mt-2">
+        <div className="flex flex-wrap gap-2 mt-3">
           <VoiceRecorder 
             onTranscription={(text) => {
               setValue("notes", text);
@@ -174,6 +176,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
               type="button"
               variant="outline"
               size="sm"
+              className="h-10 md:h-8 px-4 text-sm"
               onClick={() => handleAnalyzeDescription(notesValue)}
               disabled={isAnalyzing}
             >
@@ -195,7 +198,7 @@ export function EnergyForm({ userId, onSuccess }: EnergyFormProps) {
       <Button 
         ref={submitButtonRef}
         type="submit" 
-        className="w-full" 
+        className="w-full h-12 md:h-10 text-base md:text-sm font-medium mt-2" 
         variant="hero" 
         disabled={loading}
       >

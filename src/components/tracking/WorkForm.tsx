@@ -63,24 +63,24 @@ export function WorkForm() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+      <CardHeader className="pb-4 md:pb-6">
+        <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
           <Briefcase className="h-5 w-5" />
           {t("forms.work.title")}
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-sm md:text-base">
           {t("forms.work.description")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
             <FormField
               control={form.control}
               name="work_date"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>{t("forms.work.date")}</FormLabel>
+                  <FormLabel className="text-base md:text-sm font-medium">{t("forms.work.date")}</FormLabel>
                   <FormControl>
                     <DatePicker
                       date={field.value}
@@ -99,17 +99,17 @@ export function WorkForm() {
               name="routine_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("forms.work.routineType")}</FormLabel>
+                  <FormLabel className="text-base md:text-sm font-medium">{t("forms.work.routineType")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
                         <SelectValue placeholder={t("forms.work.routinePlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="fixed">{t("forms.work.routineFixed")}</SelectItem>
-                      <SelectItem value="variable">{t("forms.work.routineVariable")}</SelectItem>
-                      <SelectItem value="shift">{t("forms.work.routineShift")}</SelectItem>
+                      <SelectItem value="fixed" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.routineFixed")}</SelectItem>
+                      <SelectItem value="variable" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.routineVariable")}</SelectItem>
+                      <SelectItem value="shift" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.routineShift")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -122,7 +122,7 @@ export function WorkForm() {
               name="hours_worked"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("forms.work.hoursWorked")}</FormLabel>
+                  <FormLabel className="text-base md:text-sm font-medium">{t("forms.work.hoursWorked")}</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -130,6 +130,7 @@ export function WorkForm() {
                       max="24"
                       step="0.5"
                       placeholder="8"
+                      className="h-12 md:h-10 text-base md:text-sm px-4"
                       {...field}
                       onChange={(e) => field.onChange(parseFloat(e.target.value))}
                     />
@@ -144,18 +145,18 @@ export function WorkForm() {
               name="shift_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("forms.work.shiftType")}</FormLabel>
+                  <FormLabel className="text-base md:text-sm font-medium">{t("forms.work.shiftType")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
                         <SelectValue placeholder={t("forms.work.shiftPlaceholder")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="day">{t("forms.work.shiftDay")}</SelectItem>
-                      <SelectItem value="night">{t("forms.work.shiftNight")}</SelectItem>
-                      <SelectItem value="mixed">{t("forms.work.shiftMixed")}</SelectItem>
-                      <SelectItem value="off">{t("forms.work.shiftOff")}</SelectItem>
+                      <SelectItem value="day" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.shiftDay")}</SelectItem>
+                      <SelectItem value="night" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.shiftNight")}</SelectItem>
+                      <SelectItem value="mixed" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.shiftMixed")}</SelectItem>
+                      <SelectItem value="off" className="py-3 md:py-2 text-base md:text-sm">{t("forms.work.shiftOff")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -168,10 +169,11 @@ export function WorkForm() {
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("forms.work.notes")}</FormLabel>
+                  <FormLabel className="text-base md:text-sm font-medium">{t("forms.work.notes")}</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={t("forms.work.notesPlaceholder")}
+                      className="min-h-[100px] md:min-h-[80px] text-base md:text-sm p-4 resize-none"
                       {...field}
                     />
                   </FormControl>
@@ -180,7 +182,11 @@ export function WorkForm() {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button 
+              type="submit" 
+              className="w-full h-12 md:h-10 text-base md:text-sm font-medium mt-2" 
+              disabled={isSubmitting}
+            >
               {isSubmitting ? t("forms.work.saving") : t("forms.work.save")}
             </Button>
           </form>

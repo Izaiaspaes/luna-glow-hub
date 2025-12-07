@@ -122,15 +122,16 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="sleep_date">
+        <Label htmlFor="sleep_date" className="text-base md:text-sm font-medium">
           <Moon className="w-4 h-4 inline mr-2" />
           {t('forms.sleep.date')}
         </Label>
         <Input
           id="sleep_date"
           type="date"
+          className="h-12 md:h-10 text-base md:text-sm px-4"
           {...register("sleep_date")}
         />
         {errors.sleep_date && (
@@ -138,28 +139,30 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3 md:gap-4">
         <div className="space-y-2">
-          <Label htmlFor="bedtime">{t('forms.sleep.bedtime')}</Label>
+          <Label htmlFor="bedtime" className="text-base md:text-sm font-medium">{t('forms.sleep.bedtime')}</Label>
           <Input
             id="bedtime"
             type="time"
+            className="h-12 md:h-10 text-base md:text-sm px-4"
             {...register("bedtime")}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="wake_time">{t('forms.sleep.wakeTime')}</Label>
+          <Label htmlFor="wake_time" className="text-base md:text-sm font-medium">{t('forms.sleep.wakeTime')}</Label>
           <Input
             id="wake_time"
             type="time"
+            className="h-12 md:h-10 text-base md:text-sm px-4"
             {...register("wake_time")}
           />
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label>
+      <div className="space-y-3">
+        <Label className="text-base md:text-sm font-medium">
           {t('forms.sleep.quality', { quality: sleepQuality })} {analysis && t('forms.sleep.qualityAdjusted')}
         </Label>
         <Slider
@@ -168,24 +171,25 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
           min={1}
           max={5}
           step={1}
-          className="py-4"
+          className="py-6 md:py-4"
           disabled={!!analysis}
         />
-        <div className="flex justify-between text-xs text-muted-foreground">
+        <div className="flex justify-between text-sm md:text-xs text-muted-foreground">
           <span>{t('forms.sleep.qualityVeryBad')}</span>
           <span>{t('forms.sleep.qualityExcellent')}</span>
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes">{t('forms.sleep.notes')}</Label>
+        <Label htmlFor="notes" className="text-base md:text-sm font-medium">{t('forms.sleep.notes')}</Label>
         <Textarea
           id="notes"
           placeholder={t('forms.sleep.notesPlaceholder')}
+          className="min-h-[100px] md:min-h-[80px] text-base md:text-sm p-4 resize-none"
           {...register("notes")}
           onChange={(e) => setValue("notes", e.target.value)}
         />
-        <div className="flex gap-2 mt-2">
+        <div className="flex flex-wrap gap-2 mt-3">
           <VoiceRecorder 
             onTranscription={(text) => {
               setValue("notes", text);
@@ -198,6 +202,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
               type="button"
               variant="outline"
               size="sm"
+              className="h-10 md:h-8 px-4 text-sm"
               onClick={() => handleAnalyzeDescription(notesValue)}
               disabled={isAnalyzing}
             >
@@ -219,7 +224,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
       <Button 
         ref={submitButtonRef}
         type="submit" 
-        className="w-full" 
+        className="w-full h-12 md:h-10 text-base md:text-sm font-medium mt-2" 
         variant="hero" 
         disabled={loading}
       >
