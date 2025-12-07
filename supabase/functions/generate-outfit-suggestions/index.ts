@@ -127,8 +127,9 @@ Retorne sua resposta no seguinte formato JSON:
 
     let suggestions;
     try {
-      const jsonMatch = aiContent.match(/```json\n([\s\S]*?)\n```/) || aiContent.match(/```\n([\s\S]*?)\n```/);
-      const jsonString = jsonMatch ? jsonMatch[1] : aiContent;
+      const jsonCodeBlockMatch = aiContent.match(/```json\n?([\s\S]*?)\n?```/) || 
+                                  aiContent.match(/```\n?([\s\S]*?)\n?```/);
+      const jsonString = jsonCodeBlockMatch ? jsonCodeBlockMatch[1].trim() : aiContent.trim();
       suggestions = JSON.parse(jsonString);
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', parseError);

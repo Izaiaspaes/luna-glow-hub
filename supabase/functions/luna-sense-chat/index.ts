@@ -46,7 +46,10 @@ serve(async (req) => {
       .eq('user_id', user.id)
       .single();
 
-    const userName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0] || 'querida';
+    const rawName = onboardingData?.preferred_name || profile?.full_name?.split(' ')[0];
+    const userName = rawName 
+      ? rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase()
+      : null;
 
     // Get user's recent cycle data to understand current phase
     const { data: cycleData } = await supabase
@@ -96,7 +99,9 @@ serve(async (req) => {
         
         Quando a usuária disser "estou mal hoje", seja extra empática e ofereça suporte emocional imediato.
         
-        Você está conversando com ${userName}.`
+        ${userName ? `Você está conversando com ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
+        
+        IMPORTANTE: ${userName ? `Chame a usuária pelo nome ${userName}` : 'NÃO use "Querida", "Amiga" ou termos genéricos. Dirija-se diretamente sem apelidos.'}`
       },
       ...conversationHistory.map((msg: any) => ({
         role: msg.role,
