@@ -1880,5 +1880,45 @@
       "checkbox": "He leído y comprendido todas las reglas de promociones e indicaciones de Luna",
       "button": "He Leído y Acepto"
     }
+  },
+  "install": {
+    "installApp": "Instalar App",
+    "title": "Instala Luna",
+    "subtitle": "Obtén acceso rápido a Luna directamente desde la pantalla de inicio de tu teléfono",
+    "benefit1": {
+      "title": "Acceso Instantáneo",
+      "description": "Un toque y estás en la app, sin abrir el navegador"
+    },
+    "benefit2": {
+      "title": "Funciona Offline",
+      "description": "Registra tus datos incluso sin internet"
+    },
+    "benefit3": {
+      "title": "Privacidad Total",
+      "description": "Tus datos permanecen seguros en tu dispositivo"
+    },
+    "installed": "¡Luna ya está instalado!",
+    "goToDashboard": "Ir al Dashboard",
+    "installButton": "Instalar Luna",
+    "ios": {
+      "notice": "Sigue los pasos a continuación en Safari",
+      "tip": "Consejo: Asegúrate de estar usando Safari, no Chrome u otro navegador",
+      "step1": {
+        "title": "Abre el menú de compartir",
+        "description": "Toca el ícono de compartir en la barra inferior de Safari"
+      },
+      "step2": {
+        "title": "Añadir a la pantalla de inicio",
+        "description": "Desplázate hacia abajo en el menú y encuentra \"Añadir a la pantalla de inicio\""
+      },
+      "step3": {
+        "title": "Confirma la instalación",
+        "description": "Toca \"Añadir\" en la esquina superior derecha"
+      },
+      "step4": {
+        "title": "¡Listo!",
+        "description": "El ícono de Luna aparecerá en tu pantalla de inicio. ¡Tócalo para abrir la app!"
+      }
+    }
   }
 }

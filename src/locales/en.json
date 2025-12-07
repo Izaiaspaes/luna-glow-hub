@@ -1571,5 +1571,45 @@
       "checkbox": "I have read and understood all Luna's promotion and referral rules",
       "button": "I've Read and Agree"
     }
+  },
+  "install": {
+    "installApp": "Install App",
+    "title": "Install Luna",
+    "subtitle": "Get quick access to Luna directly from your phone's home screen",
+    "benefit1": {
+      "title": "Instant Access",
+      "description": "One tap and you're in the app, no browser needed"
+    },
+    "benefit2": {
+      "title": "Works Offline",
+      "description": "Log your data even without internet"
+    },
+    "benefit3": {
+      "title": "Total Privacy",
+      "description": "Your data stays safe on your device"
+    },
+    "installed": "Luna is already installed!",
+    "goToDashboard": "Go to Dashboard",
+    "installButton": "Install Luna",
+    "ios": {
+      "notice": "Follow the steps below in Safari",
+      "tip": "Tip: Make sure you're using Safari, not Chrome or another browser",
+      "step1": {
+        "title": "Open the share menu",
+        "description": "Tap the share icon in Safari's bottom bar"
+      },
+      "step2": {
+        "title": "Add to Home Screen",
+        "description": "Scroll down in the menu and find \"Add to Home Screen\""
+      },
+      "step3": {
+        "title": "Confirm installation",
+        "description": "Tap \"Add\" in the top right corner"
+      },
+      "step4": {
+        "title": "Done!",
+        "description": "The Luna icon will appear on your home screen. Tap it to open the app!"
+      }
+    }
   }
 }
