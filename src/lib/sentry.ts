@@ -58,7 +58,23 @@ export function initSentry() {
       
       // Java object errors (browser keyboard logging/extension interference)
       if (errorMessage.includes("Java object is gone") || 
-          errorMessage.includes("enableDidUserTypeOnKeyboardLogging")) {
+          errorMessage.includes("enableDidUserTypeOnKeyboardLogging") ||
+          errorMessage.includes("enableButtonsClickedMetaDataLogging") ||
+          errorMessage.includes("invoking postMessage")) {
+        return null;
+      }
+      
+      // ServiceWorker errors (PWA/WebView compatibility issues)
+      if (errorMessage.includes("ServiceWorker") || 
+          errorMessage.includes("service worker") ||
+          errorMessage.includes("dev-sw.js") ||
+          (errorType === "InvalidStateError" && errorMessage.includes("document")) ||
+          (errorType === "SecurityError" && errorMessage.includes("register"))) {
+        return null;
+      }
+      
+      // replaceAll compatibility issues (older browsers/polyfill issues)
+      if (errorMessage.includes("replaceAll is not a function")) {
         return null;
       }
       
