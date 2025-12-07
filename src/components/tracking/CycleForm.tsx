@@ -105,15 +105,19 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
         <FormField
           control={form.control}
           name="cycleStartDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('forms.cycle.startDate')}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t('forms.cycle.startDate')}</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <Input 
+                  type="date" 
+                  className="h-12 md:h-10 text-base md:text-sm px-4"
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,17 +129,17 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="flowIntensity"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('forms.cycle.flowIntensity')}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t('forms.cycle.flowIntensity')}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
                     <SelectValue placeholder={t('forms.cycle.flowPlaceholder')} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="leve">{t('forms.cycle.flowLight')}</SelectItem>
-                  <SelectItem value="moderado">{t('forms.cycle.flowModerate')}</SelectItem>
-                  <SelectItem value="intenso">{t('forms.cycle.flowHeavy')}</SelectItem>
+                  <SelectItem value="leve" className="py-3 md:py-2 text-base md:text-sm">{t('forms.cycle.flowLight')}</SelectItem>
+                  <SelectItem value="moderado" className="py-3 md:py-2 text-base md:text-sm">{t('forms.cycle.flowModerate')}</SelectItem>
+                  <SelectItem value="intenso" className="py-3 md:py-2 text-base md:text-sm">{t('forms.cycle.flowHeavy')}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -148,9 +152,13 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="symptoms"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('forms.cycle.symptoms')}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t('forms.cycle.symptoms')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('forms.cycle.symptomsPlaceholder')} {...field} />
+                <Input 
+                  placeholder={t('forms.cycle.symptomsPlaceholder')} 
+                  className="h-12 md:h-10 text-base md:text-sm px-4"
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -162,11 +170,15 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('forms.cycle.notes')}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t('forms.cycle.notes')}</FormLabel>
               <FormControl>
-                <Textarea placeholder={t('forms.cycle.notesPlaceholder')} {...field} />
+                <Textarea 
+                  placeholder={t('forms.cycle.notesPlaceholder')} 
+                  className="min-h-[100px] md:min-h-[80px] text-base md:text-sm p-4 resize-none"
+                  {...field} 
+                />
               </FormControl>
-              <div className="flex gap-2 mt-2">
+              <div className="flex flex-wrap gap-2 mt-3">
                 <VoiceRecorder 
                   onTranscription={(text) => {
                     field.onChange(text);
@@ -179,6 +191,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="h-10 md:h-8 px-4 text-sm"
                     onClick={() => handleAnalyzeDescription(field.value)}
                     disabled={isAnalyzing}
                   >
@@ -203,7 +216,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
         <Button 
           ref={submitButtonRef}
           type="submit" 
-          className="w-full" 
+          className="w-full h-12 md:h-10 text-base md:text-sm font-medium mt-2" 
           disabled={isSubmitting}
         >
           {isSubmitting ? t('forms.cycle.saving') : t('forms.cycle.save')}

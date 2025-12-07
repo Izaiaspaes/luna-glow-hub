@@ -140,15 +140,19 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 md:space-y-6">
         <FormField
           control={form.control}
           name="nutritionDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("forms.nutrition.date")}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.date")}</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <Input 
+                  type="date" 
+                  className="h-12 md:h-10 text-base md:text-sm px-4"
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -160,18 +164,18 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="mealType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("forms.nutrition.mealType")}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.mealType")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
                     <SelectValue placeholder={t("forms.nutrition.mealPlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="breakfast">{t("forms.nutrition.breakfast")}</SelectItem>
-                  <SelectItem value="lunch">{t("forms.nutrition.lunch")}</SelectItem>
-                  <SelectItem value="dinner">{t("forms.nutrition.dinner")}</SelectItem>
-                  <SelectItem value="snack">{t("forms.nutrition.snack")}</SelectItem>
+                  <SelectItem value="breakfast" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.breakfast")}</SelectItem>
+                  <SelectItem value="lunch" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.lunch")}</SelectItem>
+                  <SelectItem value="dinner" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.dinner")}</SelectItem>
+                  <SelectItem value="snack" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.snack")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -184,11 +188,11 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="foodsConsumed"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("forms.nutrition.foodsConsumed")}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.foodsConsumed")}</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder={t("forms.nutrition.foodsPlaceholder")}
-                  className="min-h-[100px]"
+                  className="min-h-[120px] md:min-h-[100px] text-base md:text-sm p-4 resize-none"
                   {...field}
                 />
               </FormControl>
@@ -202,17 +206,17 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="portionSize"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("forms.nutrition.portionSize")}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.portionSize")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
                     <SelectValue placeholder={t("forms.nutrition.portionPlaceholder")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="small">{t("forms.nutrition.portionSmall")}</SelectItem>
-                  <SelectItem value="medium">{t("forms.nutrition.portionMedium")}</SelectItem>
-                  <SelectItem value="large">{t("forms.nutrition.portionLarge")}</SelectItem>
+                  <SelectItem value="small" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.portionSmall")}</SelectItem>
+                  <SelectItem value="medium" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.portionMedium")}</SelectItem>
+                  <SelectItem value="large" className="py-3 md:py-2 text-base md:text-sm">{t("forms.nutrition.portionLarge")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -225,12 +229,12 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("forms.nutrition.notes")}</FormLabel>
-              <div className="space-y-2">
+              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.notes")}</FormLabel>
+              <div className="space-y-3">
                 <FormControl>
                   <Textarea
                     placeholder={t("forms.nutrition.notesPlaceholder")}
-                    className="min-h-[80px]"
+                    className="min-h-[100px] md:min-h-[80px] text-base md:text-sm p-4 resize-none"
                     {...field}
                   />
                 </FormControl>
@@ -251,7 +255,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           variant="outline"
           onClick={handleAnalyzeDescription}
           disabled={isAnalyzing}
-          className="w-full"
+          className="w-full h-12 md:h-10 text-base md:text-sm"
         >
           <Sparkles className="mr-2 h-4 w-4" />
           {isAnalyzing ? t("forms.nutrition.analyzing") : t("forms.nutrition.analyzeAI")}
@@ -262,7 +266,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
         )}
 
         <FormItem>
-          <FormLabel>{t("forms.nutrition.quality", { quality: nutritionQuality })}</FormLabel>
+          <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.quality", { quality: nutritionQuality })}</FormLabel>
           <FormControl>
             <Slider
               value={[nutritionQuality]}
@@ -270,7 +274,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
               max={5}
               min={1}
               step={1}
-              className="w-full"
+              className="w-full py-6 md:py-4"
               disabled={!!analysis}
             />
           </FormControl>
@@ -280,7 +284,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           ref={submitButtonRef}
           type="submit" 
           disabled={isLoading} 
-          className="w-full"
+          className="w-full h-12 md:h-10 text-base md:text-sm font-medium mt-2"
         >
           {isLoading ? t("forms.nutrition.registering") : t("forms.nutrition.save")}
         </Button>
