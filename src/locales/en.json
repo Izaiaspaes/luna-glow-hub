@@ -1692,5 +1692,53 @@
         "description": "The Luna icon will appear on your home screen. Tap it to open the app!"
       }
     }
+  },
+  "beautyAnalysis": {
+    "title": "AI Beauty Analysis",
+    "description": "AI-powered analysis of face, body, and products",
+    "premiumPlusOnly": "Available only on Premium Plus plan",
+    "upgradeMessage": "This feature is only available for Premium Plus subscribers. Upgrade to unlock personalized analysis of face, body, and products!",
+    "newAnalysis": "New Analysis",
+    "history": "History",
+    "face": "Face",
+    "body": "Body",
+    "product": "Product",
+    "takePhoto": "Take Photo",
+    "upload": "Upload",
+    "generateAnalysis": "Generate Analysis",
+    "analyzing": "Analyzing image...",
+    "noHistory": "You don't have any saved analyses yet. Do your first analysis!",
+    "viewFullAnalysis": "View full analysis"
+  },
+  "virtualCloset": {
+    "title": "My Virtual Closet",
+    "description": "Photograph your clothes and get AI outfit suggestions",
+    "premiumPlusOnly": "Premium Plus exclusive feature",
+    "upgradeMessage": "Upgrade to Premium Plus to photograph your clothes and receive personalized outfit suggestions with AI!",
+    "myCloset": "My Closet",
+    "outfitSuggestions": "Outfit Suggestions",
+    "addPhoto": "Add Photo",
+    "takePhoto": "Take Photo",
+    "analyzingItem": "Analyzing item with AI...",
+    "emptyCloset": "Your closet is empty. Add your first items!",
+    "occasion": "Occasion",
+    "season": "Season",
+    "occasions": {
+      "casual": "Casual",
+      "work": "Work",
+      "formal": "Formal",
+      "party": "Party",
+      "sport": "Sport"
+    },
+    "seasons": {
+      "any": "Any",
+      "spring": "Spring",
+      "summer": "Summer",
+      "autumn": "Autumn",
+      "winter": "Winter"
+    },
+    "generateOutfits": "Generate Outfit Combinations",
+    "creatingOutfits": "Creating amazing outfits for you...",
+    "noOutfits": "Generate your first outfit suggestions!"
   }
 }

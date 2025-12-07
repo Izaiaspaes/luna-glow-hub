@@ -8,6 +8,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { toast } from "sonner";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 import {
   Select,
   SelectContent,
@@ -42,6 +43,7 @@ interface OutfitSuggestion {
 
 export default function VirtualCloset() {
   const { profile } = useProfile();
+  const { t } = useTranslation();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [closetItems, setClosetItems] = useState<ClosetItem[]>([]);
@@ -208,17 +210,17 @@ export default function VirtualCloset() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shirt className="h-5 w-5" />
-            Meu Closet Virtual
+            {t('virtualCloset.title')}
           </CardTitle>
           <CardDescription>
-            Recurso exclusivo Premium Plus
+            {t('virtualCloset.premiumPlusOnly')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Alert>
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
-              Faça upgrade para Premium Plus para fotografar suas roupas e receber sugestões de looks personalizadas com IA!
+              {t('virtualCloset.upgradeMessage')}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -231,10 +233,10 @@ export default function VirtualCloset() {
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg md:text-2xl">
           <Shirt className="h-5 w-5 flex-shrink-0" />
-          <span className="truncate">Meu Closet Virtual</span>
+          <span className="truncate">{t('virtualCloset.title')}</span>
         </CardTitle>
         <CardDescription className="text-xs md:text-sm">
-          Fotografe suas peças e receba sugestões de looks com IA
+          {t('virtualCloset.description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="overflow-hidden">
@@ -243,8 +245,8 @@ export default function VirtualCloset() {
           if (tab === "outfits") loadOutfitSuggestions();
         }}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="closet">Meu Closet</TabsTrigger>
-            <TabsTrigger value="outfits">Sugestões de Looks</TabsTrigger>
+            <TabsTrigger value="closet">{t('virtualCloset.myCloset')}</TabsTrigger>
+            <TabsTrigger value="outfits">{t('virtualCloset.outfitSuggestions')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="closet" className="space-y-4 overflow-hidden">
@@ -282,7 +284,7 @@ export default function VirtualCloset() {
                 className="flex-1 min-w-[120px]"
               >
                 <Upload className="mr-2 h-4 w-4 flex-shrink-0" />
-                <span className="truncate">Adicionar Foto</span>
+                <span className="truncate">{t('virtualCloset.addPhoto')}</span>
               </Button>
               
               <Button
@@ -292,14 +294,14 @@ export default function VirtualCloset() {
                 className="flex-1 min-w-[120px]"
               >
                 <Camera className="mr-2 h-4 w-4 flex-shrink-0" />
-                <span className="truncate">Tirar Foto</span>
+                <span className="truncate">{t('virtualCloset.takePhoto')}</span>
               </Button>
             </div>
 
             {isAnalyzing && (
               <div className="text-center py-8">
                 <Sparkles className="h-12 w-12 mx-auto mb-4 animate-pulse text-luna-purple" />
-                <p className="text-muted-foreground">Analisando peça com IA...</p>
+                <p className="text-muted-foreground">{t('virtualCloset.analyzingItem')}</p>
               </div>
             )}
 
@@ -336,7 +338,7 @@ export default function VirtualCloset() {
             {closetItems.length === 0 && !isAnalyzing && (
               <div className="text-center py-8 text-muted-foreground overflow-hidden">
                 <Shirt className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p className="break-words px-4">Seu closet está vazio. Adicione suas primeiras peças!</p>
+                <p className="break-words px-4">{t('virtualCloset.emptyCloset')}</p>
               </div>
             )}
           </TabsContent>
@@ -345,27 +347,27 @@ export default function VirtualCloset() {
             <div className="grid grid-cols-2 gap-4">
               <Select value={selectedOccasion} onValueChange={setSelectedOccasion}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Ocasião" />
+                  <SelectValue placeholder={t('virtualCloset.occasion')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="casual">Casual</SelectItem>
-                  <SelectItem value="trabalho">Trabalho</SelectItem>
-                  <SelectItem value="formal">Formal</SelectItem>
-                  <SelectItem value="festa">Festa</SelectItem>
-                  <SelectItem value="esporte">Esporte</SelectItem>
+                  <SelectItem value="casual">{t('virtualCloset.occasions.casual')}</SelectItem>
+                  <SelectItem value="trabalho">{t('virtualCloset.occasions.work')}</SelectItem>
+                  <SelectItem value="formal">{t('virtualCloset.occasions.formal')}</SelectItem>
+                  <SelectItem value="festa">{t('virtualCloset.occasions.party')}</SelectItem>
+                  <SelectItem value="esporte">{t('virtualCloset.occasions.sport')}</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select value={selectedSeason} onValueChange={setSelectedSeason}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Estação" />
+                  <SelectValue placeholder={t('virtualCloset.season')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="qualquer">Qualquer</SelectItem>
-                  <SelectItem value="primavera">Primavera</SelectItem>
-                  <SelectItem value="verão">Verão</SelectItem>
-                  <SelectItem value="outono">Outono</SelectItem>
-                  <SelectItem value="inverno">Inverno</SelectItem>
+                  <SelectItem value="qualquer">{t('virtualCloset.seasons.any')}</SelectItem>
+                  <SelectItem value="primavera">{t('virtualCloset.seasons.spring')}</SelectItem>
+                  <SelectItem value="verão">{t('virtualCloset.seasons.summer')}</SelectItem>
+                  <SelectItem value="outono">{t('virtualCloset.seasons.autumn')}</SelectItem>
+                  <SelectItem value="inverno">{t('virtualCloset.seasons.winter')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -376,13 +378,13 @@ export default function VirtualCloset() {
               className="w-full"
             >
               <Sparkles className="mr-2 h-4 w-4" />
-              Gerar Combinações de Looks
+              {t('virtualCloset.generateOutfits')}
             </Button>
 
             {isGenerating && (
               <div className="text-center py-8">
                 <Sparkles className="h-12 w-12 mx-auto mb-4 animate-pulse text-luna-purple" />
-                <p className="text-muted-foreground">Criando looks incríveis para você...</p>
+                <p className="text-muted-foreground">{t('virtualCloset.creatingOutfits')}</p>
               </div>
             )}
 
@@ -427,7 +429,7 @@ export default function VirtualCloset() {
             {outfitSuggestions.length === 0 && !isGenerating && (
               <div className="text-center py-8 text-muted-foreground">
                 <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Gere suas primeiras sugestões de looks!</p>
+                <p>{t('virtualCloset.noOutfits')}</p>
               </div>
             )}
           </TabsContent>
