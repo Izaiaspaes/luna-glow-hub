@@ -58,7 +58,11 @@ serve(async (req) => {
       .limit(1)
       .single();
 
-    const userName = onboardingData?.preferred_name || 'querida';
+    // Usar nome preferido da usuária, com primeira letra maiúscula
+    const rawName = onboardingData?.preferred_name || onboardingData?.social_name || onboardingData?.full_name?.split(' ')[0];
+    const userName = rawName 
+      ? rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase()
+      : null;
 
     // Build context for AI
     const userContext = {
@@ -92,12 +96,16 @@ serve(async (req) => {
     }
 
     // System prompt based on analysis type
+    const greeting = userName ? `${userName}` : 'você';
+    const greetingForPrompt = userName ? `para ${userName}` : 'para a usuária';
+    
     let systemPrompt = '';
     if (analysisType === 'face') {
       systemPrompt = `Você é uma consultora de beleza especializada em análise facial e coloração pessoal. Analise a imagem do rosto fornecida e forneça uma análise detalhada em JSON.
 
+${userName ? `A usuária se chama ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
+
 Informações da usuária:
-- Nome: ${userName}
 - Tom de pele declarado: ${userContext.skin_tone || 'não informado'}
 - Tipos de pele: ${userContext.skin_types?.join(', ') || 'não informado'}
 - Cor dos olhos: ${userContext.eye_color || 'não informado'}
@@ -120,13 +128,14 @@ Forneça sua análise no seguinte formato JSON:
   "skincare_tips": ["dica1", "dica2", "dica3"],
   "best_colors_to_wear": ["cor1", "cor2", "cor3"],
   "colors_to_avoid": ["cor1", "cor2"],
-  "personalized_message": "mensagem carinhosa e encorajadora para ${userName}"
+  "personalized_message": "mensagem carinhosa e encorajadora ${greetingForPrompt} - ${userName ? `comece com o nome ${userName}` : 'NÃO use Querida, Amiga ou termos genéricos'}"
 }`;
     } else if (analysisType === 'body') {
       systemPrompt = `Você é uma consultora de moda e estilo corporal. Analise a imagem fornecida e forneça recomendações de vestuário em JSON.
 
+${userName ? `A usuária se chama ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
+
 Informações da usuária:
-- Nome: ${userName}
 - Formas corporais declaradas: ${userContext.body_shapes?.join(', ') || 'não informado'}
 - Tom de pele: ${userContext.skin_tone || 'não informado'}
 - Cor favorita: ${userContext.favorite_color || 'não informado'}
@@ -145,13 +154,14 @@ Forneça sua análise no seguinte formato JSON:
   "patterns_and_prints": ["padrões que favorecem"],
   "best_fits": ["cortes que valorizam"],
   "styling_tips": ["dica1", "dica2", "dica3"],
-  "personalized_message": "mensagem motivadora para ${userName}"
+  "personalized_message": "mensagem motivadora ${greetingForPrompt} - ${userName ? `comece com o nome ${userName}` : 'NÃO use Querida, Amiga ou termos genéricos'}"
 }`;
     } else if (analysisType === 'product') {
       systemPrompt = `Você é uma consultora de beleza especializada em análise de produtos. Analise o produto da imagem e diga se combina com o perfil da usuária.
 
+${userName ? `A usuária se chama ${userName}.` : 'Não use termos genéricos como "Querida" ou "Amiga". Dirija-se à usuária de forma neutra.'}
+
 Informações da usuária:
-- Nome: ${userName}
 - Tom de pele: ${userContext.skin_tone || 'não informado'}
 - Tipos de pele: ${userContext.skin_types?.join(', ') || 'não informado'}
 - Cor dos olhos: ${userContext.eye_color || 'não informado'}
@@ -166,7 +176,7 @@ Forneça sua análise no seguinte formato JSON:
   "why_matches": "explicação de por que combina ou não",
   "better_alternatives": ["alternativa1", "alternativa2"],
   "usage_tips": ["dica1", "dica2"],
-  "personalized_message": "mensagem personalizada para ${userName}"
+  "personalized_message": "mensagem personalizada ${greetingForPrompt} - ${userName ? `comece com o nome ${userName}` : 'NÃO use Querida, Amiga ou termos genéricos'}"
 }`;
     }
 

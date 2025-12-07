@@ -504,7 +504,12 @@ export function BeautyAnalysis() {
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={(e) => e.target.files?.[0] && handleFilePreview(e.target.files[0])}
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  handleFilePreview(e.target.files[0]);
+                }
+                e.target.value = ''; // Reset para permitir selecionar o mesmo arquivo
+              }}
             />
             <input
               ref={cameraInputRef}
@@ -512,7 +517,12 @@ export function BeautyAnalysis() {
               accept="image/*"
               capture="user"
               className="hidden"
-              onChange={(e) => e.target.files?.[0] && handleFilePreview(e.target.files[0])}
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  handleFilePreview(e.target.files[0]);
+                }
+                e.target.value = ''; // Reset para garantir que onChange dispare novamente
+              }}
             />
 
             {/* Preview with confirmation */}
