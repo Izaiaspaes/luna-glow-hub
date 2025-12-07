@@ -1719,5 +1719,53 @@
         "description": "O ícone do Luna aparecerá na sua tela inicial. Toque nele para abrir o app!"
       }
     }
+  },
+  "beautyAnalysis": {
+    "title": "Análise de Beleza AI",
+    "description": "Análise inteligente de rosto, corpo e produtos com IA",
+    "premiumPlusOnly": "Disponível apenas no plano Premium Plus",
+    "upgradeMessage": "Essa funcionalidade está disponível apenas para assinantes Premium Plus. Faça upgrade para desbloquear análises personalizadas de rosto, corpo e produtos!",
+    "newAnalysis": "Nova Análise",
+    "history": "Histórico",
+    "face": "Rosto",
+    "body": "Corpo",
+    "product": "Produto",
+    "takePhoto": "Tirar Foto",
+    "upload": "Upload",
+    "generateAnalysis": "Gerar Análise",
+    "analyzing": "Analisando imagem...",
+    "noHistory": "Você ainda não tem análises salvas. Faça sua primeira análise!",
+    "viewFullAnalysis": "Ver análise completa"
+  },
+  "virtualCloset": {
+    "title": "Meu Closet Virtual",
+    "description": "Fotografe suas peças e receba sugestões de looks com IA",
+    "premiumPlusOnly": "Recurso exclusivo Premium Plus",
+    "upgradeMessage": "Faça upgrade para Premium Plus para fotografar suas roupas e receber sugestões de looks personalizadas com IA!",
+    "myCloset": "Meu Closet",
+    "outfitSuggestions": "Sugestões de Looks",
+    "addPhoto": "Adicionar Foto",
+    "takePhoto": "Tirar Foto",
+    "analyzingItem": "Analisando peça com IA...",
+    "emptyCloset": "Seu closet está vazio. Adicione suas primeiras peças!",
+    "occasion": "Ocasião",
+    "season": "Estação",
+    "occasions": {
+      "casual": "Casual",
+      "work": "Trabalho",
+      "formal": "Formal",
+      "party": "Festa",
+      "sport": "Esporte"
+    },
+    "seasons": {
+      "any": "Qualquer",
+      "spring": "Primavera",
+      "summer": "Verão",
+      "autumn": "Outono",
+      "winter": "Inverno"
+    },
+    "generateOutfits": "Gerar Combinações de Looks",
+    "creatingOutfits": "Criando looks incríveis para você...",
+    "noOutfits": "Gere suas primeiras sugestões de looks!"
   }
 }

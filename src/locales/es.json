@@ -2001,5 +2001,53 @@
       "successMessage": "¡Registro de ciclo guardado con éxito!",
       "errorMessage": "Error al guardar registro"
     }
+  },
+  "beautyAnalysis": {
+    "title": "Análisis de Belleza AI",
+    "description": "Análisis inteligente de rostro, cuerpo y productos con IA",
+    "premiumPlusOnly": "Disponible solo en el plan Premium Plus",
+    "upgradeMessage": "Esta función está disponible solo para suscriptores Premium Plus. ¡Actualiza para desbloquear análisis personalizados de rostro, cuerpo y productos!",
+    "newAnalysis": "Nuevo Análisis",
+    "history": "Historial",
+    "face": "Rostro",
+    "body": "Cuerpo",
+    "product": "Producto",
+    "takePhoto": "Tomar Foto",
+    "upload": "Subir",
+    "generateAnalysis": "Generar Análisis",
+    "analyzing": "Analizando imagen...",
+    "noHistory": "Aún no tienes análisis guardados. ¡Haz tu primer análisis!",
+    "viewFullAnalysis": "Ver análisis completo"
+  },
+  "virtualCloset": {
+    "title": "Mi Closet Virtual",
+    "description": "Fotografía tus prendas y recibe sugerencias de looks con IA",
+    "premiumPlusOnly": "Función exclusiva Premium Plus",
+    "upgradeMessage": "¡Actualiza a Premium Plus para fotografiar tu ropa y recibir sugerencias de looks personalizadas con IA!",
+    "myCloset": "Mi Closet",
+    "outfitSuggestions": "Sugerencias de Looks",
+    "addPhoto": "Agregar Foto",
+    "takePhoto": "Tomar Foto",
+    "analyzingItem": "Analizando prenda con IA...",
+    "emptyCloset": "Tu closet está vacío. ¡Agrega tus primeras prendas!",
+    "occasion": "Ocasión",
+    "season": "Temporada",
+    "occasions": {
+      "casual": "Casual",
+      "work": "Trabajo",
+      "formal": "Formal",
+      "party": "Fiesta",
+      "sport": "Deporte"
+    },
+    "seasons": {
+      "any": "Cualquiera",
+      "spring": "Primavera",
+      "summer": "Verano",
+      "autumn": "Otoño",
+      "winter": "Invierno"
+    },
+    "generateOutfits": "Generar Combinaciones de Looks",
+    "creatingOutfits": "Creando looks increíbles para ti...",
+    "noOutfits": "¡Genera tus primeras sugerencias de looks!"
   }
 }

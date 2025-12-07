@@ -23,7 +23,7 @@ interface BeautyAnalysis {
 
 export function BeautyAnalysis() {
   const { profile } = useProfile();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
@@ -421,17 +421,16 @@ export function BeautyAnalysis() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-primary" />
-            Análise de Beleza AI
+            {t('beautyAnalysis.title')}
           </CardTitle>
           <CardDescription>
-            Disponível apenas no plano Premium Plus
+            {t('beautyAnalysis.premiumPlusOnly')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Alert>
             <AlertDescription>
-              Essa funcionalidade está disponível apenas para assinantes Premium Plus.
-              Faça upgrade para desbloquear análises personalizadas de rosto, corpo e produtos!
+              {t('beautyAnalysis.upgradeMessage')}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -444,19 +443,19 @@ export function BeautyAnalysis() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-primary" />
-          Análise de Beleza AI
+          {t('beautyAnalysis.title')}
         </CardTitle>
         <CardDescription>
-          Análise inteligente de rosto, corpo e produtos com IA
+          {t('beautyAnalysis.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="analyze">Nova Análise</TabsTrigger>
+            <TabsTrigger value="analyze">{t('beautyAnalysis.newAnalysis')}</TabsTrigger>
             <TabsTrigger value="history" onClick={loadHistory}>
               <History className="h-4 w-4 mr-2" />
-              Histórico
+              {t('beautyAnalysis.history')}
             </TabsTrigger>
           </TabsList>
 
@@ -466,19 +465,19 @@ export function BeautyAnalysis() {
                 variant={analysisType === 'face' ? 'default' : 'outline'}
                 onClick={() => setAnalysisType('face')}
               >
-                Rosto
+                {t('beautyAnalysis.face')}
               </Button>
               <Button
                 variant={analysisType === 'body' ? 'default' : 'outline'}
                 onClick={() => setAnalysisType('body')}
               >
-                Corpo
+                {t('beautyAnalysis.body')}
               </Button>
               <Button
                 variant={analysisType === 'product' ? 'default' : 'outline'}
                 onClick={() => setAnalysisType('product')}
               >
-                Produto
+                {t('beautyAnalysis.product')}
               </Button>
             </div>
 
@@ -489,7 +488,7 @@ export function BeautyAnalysis() {
                 variant="default"
               >
                 <Camera className="h-4 w-4 mr-2" />
-                Tirar Foto
+                {t('beautyAnalysis.takePhoto')}
               </Button>
               <Button
                 onClick={() => fileInputRef.current?.click()}
@@ -497,7 +496,7 @@ export function BeautyAnalysis() {
                 variant="secondary"
               >
                 <Upload className="h-4 w-4 mr-2" />
-                Upload
+                {t('beautyAnalysis.upload')}
               </Button>
             </div>
 
@@ -540,14 +539,14 @@ export function BeautyAnalysis() {
                     variant="outline"
                     onClick={handleCancelAnalysis}
                   >
-                    Cancelar
+                    {t('common.cancel')}
                   </Button>
                   <Button
                     onClick={handleConfirmAnalysis}
                     disabled={loading}
                   >
                     <Sparkles className="h-4 w-4 mr-2" />
-                    Gerar Análise
+                    {t('beautyAnalysis.generateAnalysis')}
                   </Button>
                 </div>
               </div>
@@ -556,7 +555,7 @@ export function BeautyAnalysis() {
             {loading && (
               <div className="flex items-center justify-center py-8">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                <span className="ml-2">Analisando imagem...</span>
+                <span className="ml-2">{t('beautyAnalysis.analyzing')}</span>
               </div>
             )}
 
@@ -580,7 +579,7 @@ export function BeautyAnalysis() {
             ) : history.length === 0 ? (
               <Alert>
                 <AlertDescription>
-                  Você ainda não tem análises salvas. Faça sua primeira análise!
+                  {t('beautyAnalysis.noHistory')}
                 </AlertDescription>
               </Alert>
             ) : (
@@ -598,8 +597,8 @@ export function BeautyAnalysis() {
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-2">
                               <Badge>
-                                {item.analysis_type === 'face' ? 'Rosto' : 
-                                 item.analysis_type === 'body' ? 'Corpo' : 'Produto'}
+                                {item.analysis_type === 'face' ? t('beautyAnalysis.face') : 
+                                 item.analysis_type === 'body' ? t('beautyAnalysis.body') : t('beautyAnalysis.product')}
                               </Badge>
                               <Button
                                 variant="ghost"
@@ -622,7 +621,7 @@ export function BeautyAnalysis() {
                                 setActiveTab('analyze');
                               }}
                             >
-                              Ver análise completa
+                              {t('beautyAnalysis.viewFullAnalysis')}
                             </Button>
                           </div>
                         </div>
