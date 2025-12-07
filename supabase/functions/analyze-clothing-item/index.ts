@@ -100,11 +100,12 @@ Forneça sua análise no seguinte formato JSON:
 
     console.log('AI response received:', aiContent);
 
-    // Parse JSON from AI response
+    // Parse JSON from AI response - handle markdown code blocks
     let analysisResult;
     try {
-      const jsonMatch = aiContent.match(/```json\n([\s\S]*?)\n```/) || aiContent.match(/```\n([\s\S]*?)\n```/);
-      const jsonString = jsonMatch ? jsonMatch[1] : aiContent;
+      const jsonCodeBlockMatch = aiContent.match(/```json\n?([\s\S]*?)\n?```/) || 
+                                  aiContent.match(/```\n?([\s\S]*?)\n?```/);
+      const jsonString = jsonCodeBlockMatch ? jsonCodeBlockMatch[1].trim() : aiContent.trim();
       analysisResult = JSON.parse(jsonString);
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', parseError);

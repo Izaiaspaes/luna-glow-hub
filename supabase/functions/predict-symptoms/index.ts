@@ -181,12 +181,20 @@ INSTRUÇÕES:
     const aiData = await aiResponse.json();
     const aiContent = aiData.choices[0].message.content;
 
-    // Parse AI response
+    // Parse AI response - handle markdown code blocks
     let predictions;
     try {
-      const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error("No JSON found in response");
-      predictions = JSON.parse(jsonMatch[0]);
+      // Try to extract JSON from markdown code blocks if present
+      const jsonCodeBlockMatch = aiContent.match(/```json\n?([\s\S]*?)\n?```/) || 
+                                  aiContent.match(/```\n?([\s\S]*?)\n?```/);
+      if (jsonCodeBlockMatch) {
+        predictions = JSON.parse(jsonCodeBlockMatch[1].trim());
+      } else {
+        // Try to find raw JSON object
+        const jsonMatch = aiContent.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error("No JSON found in response");
+        predictions = JSON.parse(jsonMatch[0]);
+      }
     } catch (parseError) {
       console.error("Failed to parse AI response:", aiContent);
       throw new Error("Failed to parse AI predictions");
