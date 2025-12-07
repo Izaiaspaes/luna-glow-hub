@@ -91,67 +91,69 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-foreground">Sua Aparência</h2>
-        <p className="text-muted-foreground">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+      <div className="space-y-2 md:space-y-4">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground">Sua Aparência</h2>
+        <p className="text-sm md:text-base text-muted-foreground">
           Essas informações são opcionais e nos ajudam a personalizar recomendações
         </p>
       </div>
 
       <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="weight">Peso (kg)</Label>
+        <div className="grid grid-cols-2 gap-3 md:gap-4">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="weight" className="text-sm md:text-base">Peso (kg)</Label>
             <Input
               id="weight"
               type="number"
+              inputMode="decimal"
               step="0.1"
               {...register("weight", { valueAsNumber: true })}
               placeholder="Ex: 65.5"
-              className={errors.weight ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.weight ? "border-destructive focus-visible:ring-destructive" : ""}`}
               min={30}
               max={300}
             />
             {errors.weight && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs text-destructive flex items-center gap-1">
+                <span className="text-sm">⚠️</span>
                 {errors.weight.message}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] md:text-xs text-muted-foreground">
               Opcional (30-300kg)
             </p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="height">Altura (cm)</Label>
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="height" className="text-sm md:text-base">Altura (cm)</Label>
             <Input
               id="height"
               type="number"
+              inputMode="numeric"
               {...register("height", { valueAsNumber: true })}
               placeholder="Ex: 165"
-              className={errors.height ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.height ? "border-destructive focus-visible:ring-destructive" : ""}`}
               min={100}
               max={250}
             />
             {errors.height && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs text-destructive flex items-center gap-1">
+                <span className="text-sm">⚠️</span>
                 {errors.height.message}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] md:text-xs text-muted-foreground">
               Opcional (100-250cm)
             </p>
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label>Formato do Corpo</Label>
-          <div className="grid grid-cols-2 gap-2">
+          <Label className="text-sm md:text-base">Formato do Corpo</Label>
+          <div className="grid grid-cols-2 gap-2 md:gap-2">
             {bodyShapes.map((shape) => (
-              <div key={shape} className="flex items-center space-x-2">
+              <div key={shape} className="flex items-center space-x-2 min-h-[44px] md:min-h-0">
                 <Checkbox
                   id={`body-${shape}`}
                   checked={selectedBodyShapes.includes(shape)}
@@ -162,37 +164,38 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
                       : selectedBodyShapes.filter((s) => s !== shape);
                     setValue("body_shapes", newShapes, { shouldValidate: true });
                   }}
+                  className="w-5 h-5 md:w-4 md:h-4"
                 />
-                <Label htmlFor={`body-${shape}`} className="font-normal cursor-pointer">
+                <Label htmlFor={`body-${shape}`} className="font-normal cursor-pointer text-sm">
                   {shape}
                 </Label>
               </div>
             ))}
           </div>
           {errors.body_shapes && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.body_shapes.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] md:text-xs text-muted-foreground">
             Opcional - Selecione até 3 opções
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label>Tom de Pele</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label className="text-sm md:text-base">Tom de Pele</Label>
           <Controller
             control={control}
             name="skin_tone"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
                   <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
                 <SelectContent>
                   {skinTones.map((tone) => (
-                    <SelectItem key={tone} value={tone}>
+                    <SelectItem key={tone} value={tone} className="text-base md:text-sm">
                       {tone}
                     </SelectItem>
                   ))}
@@ -203,10 +206,10 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
         </div>
 
         <div className="space-y-2">
-          <Label>Tipo de Pele</Label>
+          <Label className="text-sm md:text-base">Tipo de Pele</Label>
           <div className="grid grid-cols-2 gap-2">
             {skinTypes.map((type) => (
-              <div key={type} className="flex items-center space-x-2">
+              <div key={type} className="flex items-center space-x-2 min-h-[44px] md:min-h-0">
                 <Checkbox
                   id={`skin-${type}`}
                   checked={selectedSkinTypes.includes(type)}
@@ -217,38 +220,39 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
                       : selectedSkinTypes.filter((t) => t !== type);
                     setValue("skin_types", newTypes, { shouldValidate: true });
                   }}
+                  className="w-5 h-5 md:w-4 md:h-4"
                 />
-                <Label htmlFor={`skin-${type}`} className="font-normal cursor-pointer">
+                <Label htmlFor={`skin-${type}`} className="font-normal cursor-pointer text-sm">
                   {type}
                 </Label>
               </div>
             ))}
           </div>
           {errors.skin_types && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs text-destructive flex items-center gap-1">
+              <span className="text-sm">⚠️</span>
               {errors.skin_types.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] md:text-xs text-muted-foreground">
             Opcional - Selecione até 4 opções
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Cor dos Olhos</Label>
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label className="text-sm md:text-base">Cor dos Olhos</Label>
             <Controller
               control={control}
               name="eye_color"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
                     {eyeColors.map((color) => (
-                      <SelectItem key={color} value={color}>
+                      <SelectItem key={color} value={color} className="text-base md:text-sm">
                         {color}
                       </SelectItem>
                     ))}
@@ -258,38 +262,38 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="hair_color">Cor do Cabelo Atual</Label>
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="hair_color" className="text-sm md:text-base">Cor do Cabelo Atual</Label>
             <Input
               id="hair_color"
               {...register("hair_color")}
               placeholder="Ex: castanho, loiro..."
-              className={errors.hair_color ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.hair_color ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={50}
             />
             {errors.hair_color && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs text-destructive flex items-center gap-1">
+                <span className="text-sm">⚠️</span>
                 {errors.hair_color.message}
               </p>
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Tipo de Cabelo</Label>
+        <div className="grid grid-cols-2 gap-3 md:gap-4">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label className="text-sm md:text-base">Tipo de Cabelo</Label>
             <Controller
               control={control}
               name="hair_type"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
                     {hairTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
+                      <SelectItem key={type} value={type} className="text-base md:text-sm">
                         {type}
                       </SelectItem>
                     ))}
@@ -299,19 +303,19 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
             />
           </div>
 
-          <div className="space-y-2">
-            <Label>Comprimento do Cabelo</Label>
+          <div className="space-y-1.5 md:space-y-2">
+            <Label className="text-sm md:text-base">Comprimento</Label>
             <Controller
               control={control}
               name="hair_length"
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11 md:h-10 text-base md:text-sm">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent>
                     {hairLengths.map((length) => (
-                      <SelectItem key={length} value={length}>
+                      <SelectItem key={length} value={length} className="text-base md:text-sm">
                         {length}
                       </SelectItem>
                     ))}
@@ -323,11 +327,11 @@ export function OnboardingStep3({ data, onNext, onBack, onAutoSave }: Onboarding
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <Button type="button" variant="outline" onClick={onBack} className="w-full">
+      <div className="flex gap-3 md:gap-4">
+        <Button type="button" variant="outline" onClick={onBack} className="w-full h-12 md:h-10 text-base md:text-sm">
           Voltar
         </Button>
-        <Button type="submit" variant="hero" className="w-full">
+        <Button type="submit" variant="hero" className="w-full h-12 md:h-10 text-base md:text-sm">
           Próximo
         </Button>
       </div>

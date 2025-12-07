@@ -73,17 +73,17 @@ export function OnboardingStep2({ data, onNext, onBack, onAutoSave }: Onboarding
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-foreground">Seu Nascimento</h2>
-        <p className="text-muted-foreground">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+      <div className="space-y-2 md:space-y-4">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground">Seu Nascimento</h2>
+        <p className="text-sm md:text-base text-muted-foreground">
           Essas informações nos ajudarão a criar seu mini mapa astral
         </p>
       </div>
 
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label className="flex items-center gap-1">
+      <div className="space-y-3 md:space-y-4">
+        <div className="space-y-1.5 md:space-y-2">
+          <Label className="flex items-center gap-1 text-sm md:text-base">
             Data de Nascimento <span className="text-destructive">*</span>
           </Label>
           <DatePicker
@@ -100,69 +100,69 @@ export function OnboardingStep2({ data, onNext, onBack, onAutoSave }: Onboarding
             placeholder="Selecione sua data de nascimento"
           />
           {errors.birth_date && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+              <span className="text-sm md:text-base">⚠️</span>
               {errors.birth_date.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] md:text-xs text-muted-foreground">
             💡 Digite manualmente (dd/mm/aaaa) ou clique no calendário
           </p>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="birth_time">Horário de Nascimento</Label>
+        <div className="space-y-1.5 md:space-y-2">
+          <Label htmlFor="birth_time" className="text-sm md:text-base">Horário de Nascimento</Label>
           <Input
             id="birth_time"
             type="time"
             {...register("birth_time")}
-            className={errors.birth_time ? "border-destructive focus-visible:ring-destructive" : ""}
+            className={`h-11 md:h-10 text-base md:text-sm ${errors.birth_time ? "border-destructive focus-visible:ring-destructive" : ""}`}
           />
           {errors.birth_time && (
-            <p className="text-sm text-destructive flex items-center gap-1">
-              <span className="text-base">⚠️</span>
+            <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+              <span className="text-sm md:text-base">⚠️</span>
               {errors.birth_time.message}
             </p>
           )}
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] md:text-xs text-muted-foreground">
             ✨ Opcional, mas recomendado para um mapa astral mais preciso
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="birth_city" className="flex items-center gap-1">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="birth_city" className="flex items-center gap-1 text-sm md:text-base">
               Cidade de Nascimento <span className="text-destructive">*</span>
             </Label>
             <Input
               id="birth_city"
               {...register("birth_city")}
               placeholder="Ex: Rio de Janeiro"
-              className={errors.birth_city ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.birth_city ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={100}
             />
             {errors.birth_city && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.birth_city.message}
               </p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="birth_country" className="flex items-center gap-1">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="birth_country" className="flex items-center gap-1 text-sm md:text-base">
               País de Nascimento <span className="text-destructive">*</span>
             </Label>
             <Input
               id="birth_country"
               {...register("birth_country")}
               placeholder="Ex: Brasil"
-              className={errors.birth_country ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.birth_country ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={100}
             />
             {errors.birth_country && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.birth_country.message}
               </p>
             )}
@@ -170,13 +170,13 @@ export function OnboardingStep2({ data, onNext, onBack, onAutoSave }: Onboarding
         </div>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-3 md:gap-4">
         {onBack && (
-          <Button type="button" variant="outline" onClick={onBack} className="w-full">
+          <Button type="button" variant="outline" onClick={onBack} className="w-full h-12 md:h-10 text-base md:text-sm">
             Voltar
           </Button>
         )}
-        <Button type="submit" variant="hero" className="w-full">
+        <Button type="submit" variant="hero" className="w-full h-12 md:h-10 text-base md:text-sm">
           Próximo
         </Button>
       </div>

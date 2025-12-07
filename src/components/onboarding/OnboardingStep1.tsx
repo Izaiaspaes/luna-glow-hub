@@ -107,17 +107,17 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold text-foreground">{t('onboarding.form.createAccount')}</h2>
-        <p className="text-muted-foreground">{t('onboarding.form.startJourney')}</p>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+      <div className="space-y-2 md:space-y-4">
+        <h2 className="text-xl md:text-2xl font-semibold text-foreground">{t('onboarding.form.createAccount')}</h2>
+        <p className="text-sm md:text-base text-muted-foreground">{t('onboarding.form.startJourney')}</p>
       </div>
 
       {/* Auth Error Display */}
       {authError && (
-        <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4">
-          <p className="text-sm text-destructive flex items-center gap-2">
-            <span className="text-base">⚠️</span>
+        <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3 md:p-4">
+          <p className="text-xs md:text-sm text-destructive flex items-center gap-2">
+            <span className="text-sm md:text-base">⚠️</span>
             {authError}
           </p>
         </div>
@@ -125,15 +125,15 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
 
       <div className="space-y-4">
         {/* Email & Password Section */}
-        <div className="p-4 rounded-lg bg-muted/30 border border-border/50 space-y-4">
-          <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
-            <Lock className="w-4 h-4" />
+        <div className="p-3 md:p-4 rounded-lg bg-muted/30 border border-border/50 space-y-3 md:space-y-4">
+          <h3 className="text-xs md:text-sm font-medium text-foreground flex items-center gap-2">
+            <Lock className="w-3.5 h-3.5 md:w-4 md:h-4" />
             {t('onboarding.form.accessData')}
           </h3>
           
-          <div className="space-y-2">
-            <Label htmlFor="email" className="flex items-center gap-1">
-              <Mail className="w-3.5 h-3.5" />
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="email" className="flex items-center gap-1 text-sm md:text-base">
+              <Mail className="w-3 h-3 md:w-3.5 md:h-3.5" />
               {t('onboarding.form.email')} <span className="text-destructive">*</span>
             </Label>
             <Input
@@ -141,22 +141,22 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
               type="email"
               {...register("email")}
               placeholder={t('onboarding.form.emailPlaceholder')}
-              className={errors.email ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.email ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={255}
               autoComplete="email"
             />
             {errors.email && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.email.message}
               </p>
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="password" className="flex items-center gap-1">
-                <Lock className="w-3.5 h-3.5" />
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+            <div className="space-y-1.5 md:space-y-2">
+              <Label htmlFor="password" className="flex items-center gap-1 text-sm md:text-base">
+                <Lock className="w-3 h-3 md:w-3.5 md:h-3.5" />
                 {t('onboarding.form.password')} <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
@@ -165,28 +165,28 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder={t('onboarding.form.passwordPlaceholder')}
-                  className={`pr-10 ${errors.password ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className={`h-11 md:h-10 text-base md:text-sm pr-10 ${errors.password ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   maxLength={72}
                   autoComplete="new-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? <EyeOff className="w-4 h-4 md:w-4 md:h-4" /> : <Eye className="w-4 h-4 md:w-4 md:h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <span className="text-base">⚠️</span>
+                <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                  <span className="text-sm md:text-base">⚠️</span>
                   {errors.password.message}
                 </p>
               )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="flex items-center gap-1">
+            <div className="space-y-1.5 md:space-y-2">
+              <Label htmlFor="confirmPassword" className="flex items-center gap-1 text-sm md:text-base">
                 {t('onboarding.form.confirmPassword')} <span className="text-destructive">*</span>
               </Label>
               <div className="relative">
@@ -195,21 +195,21 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
                   type={showConfirmPassword ? "text" : "password"}
                   {...register("confirmPassword")}
                   placeholder={t('onboarding.form.confirmPasswordPlaceholder')}
-                  className={`pr-10 ${errors.confirmPassword ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                  className={`h-11 md:h-10 text-base md:text-sm pr-10 ${errors.confirmPassword ? "border-destructive focus-visible:ring-destructive" : ""}`}
                   maxLength={72}
                   autoComplete="new-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
                 >
-                  {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showConfirmPassword ? <EyeOff className="w-4 h-4 md:w-4 md:h-4" /> : <Eye className="w-4 h-4 md:w-4 md:h-4" />}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <span className="text-base">⚠️</span>
+                <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                  <span className="text-sm md:text-base">⚠️</span>
                   {errors.confirmPassword.message}
                 </p>
               )}
@@ -218,124 +218,125 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
         </div>
 
         {/* Profile Section */}
-        <div className="p-4 rounded-lg bg-muted/30 border border-border/50 space-y-4">
-          <h3 className="text-sm font-medium text-foreground">{t('onboarding.form.aboutYou')}</h3>
+        <div className="p-3 md:p-4 rounded-lg bg-muted/30 border border-border/50 space-y-3 md:space-y-4">
+          <h3 className="text-xs md:text-sm font-medium text-foreground">{t('onboarding.form.aboutYou')}</h3>
           
-          <div className="space-y-2">
-            <Label htmlFor="preferred_name" className="flex items-center gap-1">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="preferred_name" className="flex items-center gap-1 text-sm md:text-base">
               {t('onboarding.form.preferredName')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="preferred_name"
               {...register("preferred_name")}
               placeholder={t('onboarding.form.preferredNamePlaceholder')}
-              className={errors.preferred_name ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.preferred_name ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={50}
             />
             {errors.preferred_name && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.preferred_name.message}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] md:text-xs text-muted-foreground">
               {t('onboarding.form.preferredNameHint')}
             </p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="full_name" className="flex items-center gap-1">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="full_name" className="flex items-center gap-1 text-sm md:text-base">
               {t('onboarding.form.fullName')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="full_name"
               {...register("full_name")}
               placeholder={t('onboarding.form.fullNamePlaceholder')}
-              className={errors.full_name ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.full_name ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={100}
             />
             {errors.full_name && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.full_name.message}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] md:text-xs text-muted-foreground">
               {t('onboarding.form.fullNameHint')}
             </p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="age" className="flex items-center gap-1">
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="age" className="flex items-center gap-1 text-sm md:text-base">
               {t('onboarding.form.age')} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="age"
               type="number"
+              inputMode="numeric"
               {...register("age", { valueAsNumber: true })}
               placeholder={t('onboarding.form.agePlaceholder')}
-              className={errors.age ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.age ? "border-destructive focus-visible:ring-destructive" : ""}`}
               min={13}
               max={120}
             />
             {errors.age && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.age.message}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] md:text-xs text-muted-foreground">
               {t('onboarding.form.ageHint')}
             </p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="profession">{t('onboarding.form.profession')}</Label>
+          <div className="space-y-1.5 md:space-y-2">
+            <Label htmlFor="profession" className="text-sm md:text-base">{t('onboarding.form.profession')}</Label>
             <Input
               id="profession"
               {...register("profession")}
               placeholder={t('onboarding.form.professionPlaceholder')}
-              className={errors.profession ? "border-destructive focus-visible:ring-destructive" : ""}
+              className={`h-11 md:h-10 text-base md:text-sm ${errors.profession ? "border-destructive focus-visible:ring-destructive" : ""}`}
               maxLength={100}
             />
             {errors.profession && (
-              <p className="text-sm text-destructive flex items-center gap-1">
-                <span className="text-base">⚠️</span>
+              <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                <span className="text-sm md:text-base">⚠️</span>
                 {errors.profession.message}
               </p>
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="current_city">{t('onboarding.form.currentCity')}</Label>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+            <div className="space-y-1.5 md:space-y-2">
+              <Label htmlFor="current_city" className="text-sm md:text-base">{t('onboarding.form.currentCity')}</Label>
               <Input
                 id="current_city"
                 {...register("current_city")}
                 placeholder={t('onboarding.form.currentCityPlaceholder')}
-                className={errors.current_city ? "border-destructive focus-visible:ring-destructive" : ""}
+                className={`h-11 md:h-10 text-base md:text-sm ${errors.current_city ? "border-destructive focus-visible:ring-destructive" : ""}`}
                 maxLength={100}
               />
               {errors.current_city && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <span className="text-base">⚠️</span>
+                <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                  <span className="text-sm md:text-base">⚠️</span>
                   {errors.current_city.message}
                 </p>
               )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="current_country">{t('onboarding.form.currentCountry')}</Label>
+            <div className="space-y-1.5 md:space-y-2">
+              <Label htmlFor="current_country" className="text-sm md:text-base">{t('onboarding.form.currentCountry')}</Label>
               <Input
                 id="current_country"
                 {...register("current_country")}
                 placeholder={t('onboarding.form.currentCountryPlaceholder')}
-                className={errors.current_country ? "border-destructive focus-visible:ring-destructive" : ""}
+                className={`h-11 md:h-10 text-base md:text-sm ${errors.current_country ? "border-destructive focus-visible:ring-destructive" : ""}`}
                 maxLength={100}
               />
               {errors.current_country && (
-                <p className="text-sm text-destructive flex items-center gap-1">
-                  <span className="text-base">⚠️</span>
+                <p className="text-xs md:text-sm text-destructive flex items-center gap-1">
+                  <span className="text-sm md:text-base">⚠️</span>
                   {errors.current_country.message}
                 </p>
               )}
@@ -344,7 +345,7 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
         </div>
       </div>
 
-      <Button type="submit" className="w-full" variant="hero" disabled={isLoading}>
+      <Button type="submit" className="w-full h-12 md:h-10 text-base md:text-sm" variant="hero" disabled={isLoading}>
         {isLoading ? t('onboarding.form.creatingAccount') : t('onboarding.form.createAccountButton')}
       </Button>
       
