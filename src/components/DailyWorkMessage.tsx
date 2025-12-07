@@ -3,8 +3,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, AlertCircle, TrendingUp, Sparkles } from "lucide-react";
 import { useWorkTracking } from "@/hooks/useWorkTracking";
+import { useTranslation } from "react-i18next";
 
 export function DailyWorkMessage() {
+  const { t } = useTranslation();
   const [todayDate] = useState(() => new Date());
   const { workData, loading } = useWorkTracking(todayDate);
   const [todayWork, setTodayWork] = useState<any>(null);
@@ -22,30 +24,30 @@ export function DailyWorkMessage() {
   const getWorkloadInfo = (level: string) => {
     switch (level) {
       case 'light':
-        return { label: 'Leve', icon: Sparkles, color: 'outline' };
+        return { label: t("dailyWork.workloadLevels.light"), icon: Sparkles, color: 'outline' };
       case 'moderate':
-        return { label: 'Moderada', icon: TrendingUp, color: 'secondary' };
+        return { label: t("dailyWork.workloadLevels.moderate"), icon: TrendingUp, color: 'secondary' };
       case 'heavy':
-        return { label: 'Pesada', icon: AlertCircle, color: 'default' };
+        return { label: t("dailyWork.workloadLevels.heavy"), icon: AlertCircle, color: 'default' };
       case 'exhausting':
-        return { label: 'Exaustiva', icon: AlertCircle, color: 'destructive' };
+        return { label: t("dailyWork.workloadLevels.exhausting"), icon: AlertCircle, color: 'destructive' };
       default:
-        return { label: 'Desconhecida', icon: Heart, color: 'outline' };
+        return { label: t("dailyWork.workloadLevels.unknown"), icon: Heart, color: 'outline' };
     }
   };
 
   const getMoodImpactInfo = (level: string) => {
     switch (level) {
       case 'low':
-        return 'Baixo';
+        return t("dailyWork.moodImpact.low");
       case 'medium':
-        return 'Médio';
+        return t("dailyWork.moodImpact.medium");
       case 'high':
-        return 'Alto';
+        return t("dailyWork.moodImpact.high");
       case 'very_high':
-        return 'Muito Alto';
+        return t("dailyWork.moodImpact.veryHigh");
       default:
-        return 'Desconhecido';
+        return t("dailyWork.moodImpact.unknown");
     }
   };
 
@@ -62,15 +64,15 @@ export function DailyWorkMessage() {
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
               <Badge variant={workloadInfo.color as any}>
-                Carga {workloadInfo.label}
+                {t("dailyWork.workload")} {workloadInfo.label}
               </Badge>
               <span className="text-sm text-muted-foreground">
-                {todayWork.hours_worked}h trabalhadas
+                {todayWork.hours_worked}h {t("dailyWork.hoursWorked")}
               </span>
             </div>
             
             <p className="text-sm">
-              <span className="font-medium">Impacto previsto no humor: </span>
+              <span className="font-medium">{t("dailyWork.predictedMoodImpact")}: </span>
               <span className="text-muted-foreground">
                 {getMoodImpactInfo(todayWork.mood_impact_level)}
               </span>

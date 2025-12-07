@@ -1770,5 +1770,77 @@
     "generateOutfits": "Generate Outfit Combinations",
     "creatingOutfits": "Creating amazing outfits for you...",
     "noOutfits": "Generate your first outfit suggestions!"
+  },
+  "symptomPredictions": {
+    "title": "Smart Symptom Predictions",
+    "description": "AI analyzes your patterns to predict symptoms for the next 7 days",
+    "analyzing": "Analyzing...",
+    "generatePredictions": "Generate Predictions",
+    "updatePredictions": "Update Predictions",
+    "emptyAlert": "Click \"Generate Predictions\" to have AI analyze your historical data and predict future symptoms based on your unique patterns.",
+    "confidence": "confidence",
+    "predictedSymptoms": "Predicted Symptoms",
+    "recommendations": "Recommendations",
+    "phases": {
+      "menstrual": "Menstrual Phase",
+      "follicular": "Follicular Phase",
+      "ovulatory": "Ovulatory Phase",
+      "luteal": "Luteal Phase"
+    },
+    "severity": {
+      "low": "Mild",
+      "medium": "Moderate",
+      "high": "Intense"
+    },
+    "toasts": {
+      "generated": "Predictions generated!",
+      "generatedDesc": "Your smart symptom predictions are ready.",
+      "error": "Error generating predictions",
+      "errorRetry": "Please try again later."
+    }
+  },
+  "weeklySummary": {
+    "title": "Weekly Summary",
+    "workTitle": "Weekly Work Summary",
+    "subtitle": "Analysis of the last 7 days",
+    "loading": "Loading...",
+    "emptyMessage": "Log your work days to see a weekly summary with analysis and patterns.",
+    "totalHours": "Total Hours",
+    "dailyAverage": "Daily Average",
+    "predominantWorkload": "Predominant Workload",
+    "weeklyDistribution": "Weekly Distribution",
+    "lightDays": "Light Days",
+    "moderateDays": "Moderate Days",
+    "heavyDays": "Heavy Days",
+    "exhaustingDays": "Exhausting Days",
+    "workloadLevels": {
+      "light": "Light",
+      "moderate": "Moderate",
+      "heavy": "Heavy",
+      "exhausting": "Exhausting"
+    },
+    "lunaSuggestion": "Luna's Suggestion",
+    "highWorkloadMessage": "We noticed your work average is high ({{hours}}h/day). Consider scheduling fixed self-care rituals, especially on more intense days.",
+    "wellbeingAttention": "Attention to your wellbeing",
+    "exhaustingMessage": "You had {{days}} exhausting day(s) this week. Your mood and energy may be compromised. Prioritize rest and recovery."
+  },
+  "dailyWork": {
+    "workload": "Workload",
+    "hoursWorked": "worked",
+    "predictedMoodImpact": "Predicted mood impact",
+    "workloadLevels": {
+      "light": "Light",
+      "moderate": "Moderate",
+      "heavy": "Heavy",
+      "exhausting": "Exhausting",
+      "unknown": "Unknown"
+    },
+    "moodImpact": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "veryHigh": "Very High",
+      "unknown": "Unknown"
+    }
   }
 }
