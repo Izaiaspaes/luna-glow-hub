@@ -32,6 +32,15 @@
     "skip": "Skip",
     "learnMore": "Learn More"
   },
+  "cookies": {
+    "title": "Cookies & Privacy",
+    "lgpdBadge": "GDPR Compliant",
+    "description": "We use essential cookies to ensure the Luna platform works correctly. Your personal data is protected in accordance with GDPR (General Data Protection Regulation). You have full control over your information and can request deletion at any time.",
+    "accept": "Accept & Continue",
+    "decline": "Essential Only",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
   "nav": {
     "home": "Home",
     "features": "Features",
