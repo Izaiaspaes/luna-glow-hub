@@ -246,43 +246,43 @@ export default function Pricing() {
       </section>
 
       {/* Pricing Cards */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <section className="py-12 md:py-20 bg-background">
+        <div className="container mx-auto px-3 md:px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
             {/* Freemium Plan */}
             <Card className="bg-gradient-card border-2 relative animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'both' }}>
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-muted text-foreground">
-                    <Heart className="w-6 h-6" />
+              <CardHeader className="pb-4 md:pb-6">
+                <div className="flex items-center justify-between mb-3 md:mb-4">
+                  <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-muted text-foreground">
+                    <Heart className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  <Badge variant="free">{t('pricing.freePackage')}</Badge>
+                  <Badge variant="free" className="text-xs md:text-sm">{t('pricing.freePackage')}</Badge>
                 </div>
-                <CardTitle className="text-3xl">{t('pricing.freeTitle')}</CardTitle>
-                <CardDescription className="text-lg">
+                <CardTitle className="text-2xl md:text-3xl">{t('pricing.freeTitle')}</CardTitle>
+                <CardDescription className="text-base md:text-lg">
                   {t('pricing.freeDescription')}
                 </CardDescription>
-                <div className="pt-4">
-                  <span className="text-5xl font-bold">{currency === 'brl' ? 'R$' : '$'} 0</span>
-                  <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
+                <div className="pt-3 md:pt-4">
+                  <span className="text-4xl md:text-5xl font-bold">{currency === 'brl' ? 'R$' : '$'} 0</span>
+                  <span className="text-muted-foreground text-sm md:text-base">{t('pricing.perMonth')}</span>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground pb-4 border-b border-border">
+              <CardContent className="space-y-3 md:space-y-4">
+                <p className="text-sm text-muted-foreground pb-3 md:pb-4 border-b border-border">
                   {t('pricing.freeForever')}
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-2.5 md:space-y-3">
                   {freemiumFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
+                    <li key={index} className="flex items-start gap-2.5 md:gap-3">
+                      <Check className="w-4 h-4 md:w-5 md:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-sm leading-relaxed">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4 md:pt-6">
                 <NavLink to="/onboarding" className="w-full">
-                  <Button variant="outline" size="lg" className="w-full">
+                  <Button variant="outline" size="lg" className="w-full h-11 md:h-12 text-sm md:text-base">
                     {t('pricing.startFree')}
                   </Button>
                 </NavLink>
@@ -290,59 +290,59 @@ export default function Pricing() {
             </Card>
 
             {/* Premium Plan */}
-            <Card className="bg-gradient-card border-2 border-primary relative shadow-colorful animate-fade-in hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-colorful text-white text-sm font-medium rounded-full shadow-colorful">
+            <Card className="bg-gradient-card border-2 border-primary relative shadow-colorful animate-fade-in md:hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+              <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2 px-3 md:px-4 py-1 bg-gradient-colorful text-white text-xs md:text-sm font-medium rounded-full shadow-colorful whitespace-nowrap">
                 {t('pricing.mostPopular')}
               </div>
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-colorful text-white shadow-colorful">
-                    <Sparkles className="w-6 h-6" />
+              <CardHeader className="pb-4 md:pb-6 pt-6 md:pt-8">
+                <div className="flex items-center justify-between mb-3 md:mb-4">
+                  <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-colorful text-white shadow-colorful">
+                    <Sparkles className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  <Badge variant="premium">{t('pricing.premiumPackage')}</Badge>
+                  <Badge variant="premium" className="text-xs md:text-sm">{t('pricing.premiumPackage')}</Badge>
                 </div>
-                <CardTitle className="text-3xl">{t('pricing.premiumTitle')}</CardTitle>
-                <CardDescription className="text-lg">
+                <CardTitle className="text-2xl md:text-3xl">{t('pricing.premiumTitle')}</CardTitle>
+                <CardDescription className="text-base md:text-lg">
                   {t('pricing.premiumDescription2')}
                 </CardDescription>
-                <div className="pt-4">
-                  <span className="text-5xl font-bold">
+                <div className="pt-3 md:pt-4">
+                  <span className="text-4xl md:text-5xl font-bold">
                     {formatPrice(prices.premium.monthly, currency)}
                   </span>
-                  <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
+                  <span className="text-muted-foreground text-sm md:text-base">{t('pricing.perMonth')}</span>
                 </div>
-                <p className="text-sm text-muted-foreground pt-2">
+                <p className="text-xs md:text-sm text-muted-foreground pt-2">
                   {t('pricing.or')} {formatPrice(prices.premium.yearly, currency)}/ano
                 </p>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground pb-4 border-b border-border">
+              <CardContent className="space-y-3 md:space-y-4">
+                <p className="text-sm text-muted-foreground pb-3 md:pb-4 border-b border-border">
                   {t('pricing.premiumPower')}
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-2.5 md:space-y-3">
                   {premiumFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium">{feature}</span>
+                    <li key={index} className="flex items-start gap-2.5 md:gap-3">
+                      <Check className="w-4 h-4 md:w-5 md:h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-sm leading-relaxed font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="flex-col gap-2">
+              <CardFooter className="flex-col gap-2 pt-4 md:pt-6">
                 <Button 
                   variant="colorful" 
                   size="lg" 
-                  className="w-full group"
+                  className="w-full group h-11 md:h-12 text-sm md:text-base"
                   onClick={() => handleCheckout(prices.premium.stripePriceId.monthly, 'premium', 'monthly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthly')} (${formatPrice(prices.premium.monthly, currency)})`}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="w-full hover:bg-primary/10"
+                  className="w-full hover:bg-primary/10 h-11 md:h-12 text-sm md:text-base"
                   onClick={() => handleCheckout(prices.premium.stripePriceId.yearly, 'premium', 'yearly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
@@ -352,58 +352,58 @@ export default function Pricing() {
             </Card>
 
             {/* Premium Plus Plan */}
-            <Card className="bg-gradient-card border-2 border-luna-purple relative shadow-lg animate-fade-in hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange text-white text-sm font-medium rounded-full shadow-lg">
+            <Card className="bg-gradient-card border-2 border-luna-purple relative shadow-lg animate-fade-in md:hover:scale-105 transition-all duration-300" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
+              <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2 px-3 md:px-4 py-1 bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange text-white text-xs md:text-sm font-medium rounded-full shadow-lg whitespace-nowrap">
                 ✨ Completo
               </div>
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-r from-luna-purple to-luna-pink text-white shadow-lg">
-                    <Zap className="w-6 h-6" />
+              <CardHeader className="pb-4 md:pb-6 pt-6 md:pt-8">
+                <div className="flex items-center justify-between mb-3 md:mb-4">
+                  <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-r from-luna-purple to-luna-pink text-white shadow-lg">
+                    <Zap className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  <Badge className="bg-gradient-to-r from-luna-purple to-luna-pink text-white">Premium Plus</Badge>
+                  <Badge className="bg-gradient-to-r from-luna-purple to-luna-pink text-white text-xs md:text-sm">Premium Plus</Badge>
                 </div>
-                <CardTitle className="text-3xl">{t('pricing.premiumPlusTitle')}</CardTitle>
-                <CardDescription className="text-lg">
+                <CardTitle className="text-2xl md:text-3xl">{t('pricing.premiumPlusTitle')}</CardTitle>
+                <CardDescription className="text-base md:text-lg">
                   {t('pricing.premiumPlusDescription')}
                 </CardDescription>
-                <div className="pt-4">
-                  <span className="text-5xl font-bold">
+                <div className="pt-3 md:pt-4">
+                  <span className="text-4xl md:text-5xl font-bold">
                     {formatPrice(prices.premiumPlus.monthly, currency)}
                   </span>
-                  <span className="text-muted-foreground">{t('pricing.perMonth')}</span>
+                  <span className="text-muted-foreground text-sm md:text-base">{t('pricing.perMonth')}</span>
                 </div>
-                <p className="text-sm text-muted-foreground pt-2">
+                <p className="text-xs md:text-sm text-muted-foreground pt-2">
                   {t('pricing.or')} {formatPrice(prices.premiumPlus.yearly, currency)}/ano
                 </p>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground pb-4 border-b border-border">
+              <CardContent className="space-y-3 md:space-y-4">
+                <p className="text-sm text-muted-foreground pb-3 md:pb-4 border-b border-border">
                   {t('pricing.allAdvancedFeatures')}
                 </p>
-                <ul className="space-y-3">
+                <ul className="space-y-2.5 md:space-y-3">
                   {premiumPlusFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-luna-purple flex-shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium">{feature}</span>
+                    <li key={index} className="flex items-start gap-2.5 md:gap-3">
+                      <Check className="w-4 h-4 md:w-5 md:h-5 text-luna-purple flex-shrink-0 mt-0.5" />
+                      <span className="text-sm leading-relaxed font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="flex-col gap-2">
+              <CardFooter className="flex-col gap-2 pt-4 md:pt-6">
                 <Button 
-                  className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white"
+                  className="w-full group bg-gradient-to-r from-luna-purple via-luna-pink to-luna-orange hover:opacity-90 text-white h-11 md:h-12 text-sm md:text-base"
                   size="lg"
                   onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.monthly, 'premium_plus', 'monthly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
                   {loading ? t('pricing.processing') : `${t('pricing.subscribeMonthlyPremiumPlus')} (${formatPrice(prices.premiumPlus.monthly, currency)})`}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="w-full hover:bg-luna-purple/10 border-luna-purple"
+                  className="w-full hover:bg-luna-purple/10 border-luna-purple h-11 md:h-12 text-sm md:text-base"
                   onClick={() => handleCheckout(prices.premiumPlus.stripePriceId.yearly, 'premium_plus', 'yearly')}
                   disabled={loading || currencyLoading || pricingLoading}
                 >
