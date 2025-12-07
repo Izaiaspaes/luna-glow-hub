@@ -1920,5 +1920,31 @@
         "description": "El ícono de Luna aparecerá en tu pantalla de inicio. ¡Tócalo para abrir la app!"
       }
     }
+  },
+  "forms": {
+    "cycle": {
+      "dateRequired": "La fecha de inicio es obligatoria",
+      "startDate": "Fecha de Inicio del Período",
+      "flowIntensity": "Intensidad del Flujo",
+      "flowPlaceholder": "Selecciona la intensidad",
+      "flowLight": "Leve",
+      "flowModerate": "Moderado",
+      "flowHeavy": "Intenso",
+      "isDelayed": "Período atrasado",
+      "isDelayedHint": "Marca si tu período está atrasado",
+      "symptoms": "Síntomas",
+      "symptomsPlaceholder": "Ej: cólicos, dolor de cabeza, hinchazón",
+      "notes": "Notas",
+      "notesPlaceholder": "Notas adicionales sobre tu ciclo...",
+      "analyzing": "Analizando...",
+      "analyzeAI": "Analizar con IA",
+      "analysisComplete": "¡Análisis completo!",
+      "analysisError": "Error al analizar descripción",
+      "scrollHint": "Desplázate hacia abajo para guardar",
+      "saving": "Guardando...",
+      "save": "Guardar Registro",
+      "successMessage": "¡Registro de ciclo guardado con éxito!",
+      "errorMessage": "Error al guardar registro"
+    }
   }
 }

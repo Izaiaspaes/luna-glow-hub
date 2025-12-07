@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslation } from "react-i18next";
 
 interface CycleFormProps {
@@ -28,6 +29,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
   const cycleSchema = z.object({
     cycleStartDate: z.string().min(1, t('forms.cycle.dateRequired')),
     flowIntensity: z.enum(["leve", "moderado", "intenso"]).optional(),
+    isDelayed: z.boolean().optional(),
     symptoms: z.string().optional(),
     notes: z.string().optional(),
   });
@@ -38,6 +40,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
     resolver: zodResolver(cycleSchema),
     defaultValues: {
       cycleStartDate: "",
+      isDelayed: false,
       symptoms: "",
       notes: "",
     },
@@ -143,6 +146,29 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
                 </SelectContent>
               </Select>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="isDelayed"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-base md:text-sm font-medium cursor-pointer">
+                  {t('forms.cycle.isDelayed')}
+                </FormLabel>
+                <p className="text-sm text-muted-foreground">
+                  {t('forms.cycle.isDelayedHint')}
+                </p>
+              </div>
             </FormItem>
           )}
         />

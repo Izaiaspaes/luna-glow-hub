@@ -1034,6 +1034,32 @@
       }
     }
   },
+  "forms": {
+    "cycle": {
+      "dateRequired": "A data de início é obrigatória",
+      "startDate": "Data de Início da Menstruação",
+      "flowIntensity": "Intensidade do Fluxo",
+      "flowPlaceholder": "Selecione a intensidade",
+      "flowLight": "Leve",
+      "flowModerate": "Moderado",
+      "flowHeavy": "Intenso",
+      "isDelayed": "Menstruação atrasada",
+      "isDelayedHint": "Marque se sua menstruação está atrasada",
+      "symptoms": "Sintomas",
+      "symptomsPlaceholder": "Ex: cólica, dor de cabeça, inchaço",
+      "notes": "Observações",
+      "notesPlaceholder": "Anotações adicionais sobre seu ciclo...",
+      "analyzing": "Analisando...",
+      "analyzeAI": "Analisar com IA",
+      "analysisComplete": "Análise concluída!",
+      "analysisError": "Erro ao analisar descrição",
+      "scrollHint": "Role para baixo para salvar",
+      "saving": "Salvando...",
+      "save": "Salvar Registro",
+      "successMessage": "Registro de ciclo salvo com sucesso!",
+      "errorMessage": "Erro ao salvar registro"
+    }
+  },
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",
     "network": "Erro de conexão. Verifique sua internet.",

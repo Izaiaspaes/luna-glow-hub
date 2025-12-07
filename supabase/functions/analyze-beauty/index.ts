@@ -30,14 +30,17 @@ serve(async (req) => {
       });
     }
 
-    const { imageUrl, analysisType } = await req.json();
+    const { imageBase64, storageUrl, analysisType } = await req.json();
 
-    if (!imageUrl || !analysisType) {
-      return new Response(JSON.stringify({ error: 'Missing imageUrl or analysisType' }), {
+    if (!imageBase64 || !analysisType) {
+      return new Response(JSON.stringify({ error: 'Missing imageBase64 or analysisType' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    // Use storage URL for saving to database, base64 for AI analysis
+    const imageUrlForStorage = storageUrl || 'base64-upload';
 
     // Fetch user onboarding data for personalization
     const { data: onboardingData } = await supabase
@@ -169,7 +172,7 @@ Forneça sua análise no seguinte formato JSON:
 
     console.log('Sending image to AI for analysis...');
 
-    // Call Lovable AI with image
+    // Call Lovable AI with base64 image
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -189,7 +192,7 @@ Forneça sua análise no seguinte formato JSON:
               {
                 type: 'image_url',
                 image_url: {
-                  url: imageUrl,
+                  url: imageBase64,
                 },
               },
             ],
@@ -226,7 +229,7 @@ Forneça sua análise no seguinte formato JSON:
       .from('beauty_analyses')
       .insert({
         user_id: user.id,
-        photo_url: imageUrl,
+        photo_url: imageUrlForStorage,
         analysis_type: analysisType,
         ai_analysis: analysisResult,
         skin_tone_detected: analysisResult.skin_tone_detected || null,

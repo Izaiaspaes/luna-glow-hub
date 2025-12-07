@@ -33,6 +33,16 @@ export function BeautyAnalysis() {
 
   const hasPremiumPlus = profile?.subscription_plan === 'premium_plus';
 
+  // Convert file to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleFileSelect = async (file: File) => {
     if (!file.type.startsWith('image/')) {
       toast.error('Por favor, selecione uma imagem válida');
@@ -49,25 +59,31 @@ export function BeautyAnalysis() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
 
-      // Upload to Supabase Storage
+      // Convert image to base64 for AI analysis
+      const base64Image = await fileToBase64(file);
+      
+      // Set preview image
+      setSelectedImage(base64Image);
+
+      // Upload to Supabase Storage for history
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('beauty-analysis')
         .upload(fileName, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error (non-blocking):', uploadError);
+      }
 
-      // Get public URL
+      // Get public URL for storage (for history)
       const { data: { publicUrl } } = supabase.storage
         .from('beauty-analysis')
         .getPublicUrl(fileName);
 
-      setSelectedImage(publicUrl);
-
-      // Call AI analysis
+      // Call AI analysis with base64 image
       const { data, error } = await supabase.functions.invoke('analyze-beauty', {
-        body: { imageUrl: publicUrl, analysisType },
+        body: { imageBase64: base64Image, storageUrl: publicUrl, analysisType },
       });
 
       if (error) throw error;
