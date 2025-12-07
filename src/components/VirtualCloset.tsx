@@ -227,17 +227,17 @@ export default function VirtualCloset() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Shirt className="h-5 w-5" />
-          Meu Closet Virtual
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center gap-2 text-lg md:text-2xl">
+          <Shirt className="h-5 w-5 flex-shrink-0" />
+          <span className="truncate">Meu Closet Virtual</span>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-xs md:text-sm">
           Fotografe suas peças e receba sugestões de looks com IA
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="overflow-hidden">
         <Tabs defaultValue="closet" onValueChange={(tab) => {
           if (tab === "closet") loadClosetItems();
           if (tab === "outfits") loadOutfitSuggestions();
@@ -247,14 +247,19 @@ export default function VirtualCloset() {
             <TabsTrigger value="outfits">Sugestões de Looks</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="closet" className="space-y-4">
-            <div className="flex gap-2">
+          <TabsContent value="closet" className="space-y-4 overflow-hidden">
+            <div className="flex flex-wrap gap-2">
               <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handleImageUpload(e.target.files[0])}
+                onChange={(e) => {
+                  if (e.target.files?.[0]) {
+                    handleImageUpload(e.target.files[0]);
+                  }
+                  e.target.value = '';
+                }}
               />
               <input
                 ref={cameraInputRef}
@@ -262,27 +267,32 @@ export default function VirtualCloset() {
                 accept="image/*"
                 capture="environment"
                 className="hidden"
-                onChange={(e) => e.target.files?.[0] && handleImageUpload(e.target.files[0])}
+                onChange={(e) => {
+                  if (e.target.files?.[0]) {
+                    handleImageUpload(e.target.files[0]);
+                  }
+                  e.target.value = '';
+                }}
               />
               
               <Button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isAnalyzing}
                 variant="outline"
-                className="flex-1"
+                className="flex-1 min-w-[120px]"
               >
-                <Upload className="mr-2 h-4 w-4" />
-                Adicionar Foto
+                <Upload className="mr-2 h-4 w-4 flex-shrink-0" />
+                <span className="truncate">Adicionar Foto</span>
               </Button>
               
               <Button
                 onClick={() => cameraInputRef.current?.click()}
                 disabled={isAnalyzing}
                 variant="outline"
-                className="flex-1"
+                className="flex-1 min-w-[120px]"
               >
-                <Camera className="mr-2 h-4 w-4" />
-                Tirar Foto
+                <Camera className="mr-2 h-4 w-4 flex-shrink-0" />
+                <span className="truncate">Tirar Foto</span>
               </Button>
             </div>
 
