@@ -1045,6 +1045,8 @@
       "flowHeavy": "Intenso",
       "isDelayed": "Menstruação atrasada",
       "isDelayedHint": "Marque se sua menstruação está atrasada",
+      "delayDays": "Quantos dias de atraso?",
+      "delayDaysPlaceholder": "Ex: 5",
       "symptoms": "Sintomas",
       "symptomsPlaceholder": "Ex: cólica, dor de cabeça, inchaço",
       "notes": "Observações",

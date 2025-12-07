@@ -1932,6 +1932,8 @@
       "flowHeavy": "Intenso",
       "isDelayed": "Período atrasado",
       "isDelayedHint": "Marca si tu período está atrasado",
+      "delayDays": "¿Cuántos días de retraso?",
+      "delayDaysPlaceholder": "Ej: 5",
       "symptoms": "Síntomas",
       "symptomsPlaceholder": "Ej: cólicos, dolor de cabeza, hinchazón",
       "notes": "Notas",
