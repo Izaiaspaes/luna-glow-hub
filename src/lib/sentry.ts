@@ -73,6 +73,12 @@ export function initSentry() {
         return null;
       }
       
+      // WebKit/iOS WebView message handler errors (iOS Safari PWA noise)
+      if (errorMessage.includes("webkit.messageHandlers") || 
+          errorMessage.includes("window.webkit")) {
+        return null;
+      }
+      
       // replaceAll compatibility issues (older browsers/polyfill issues)
       if (errorMessage.includes("replaceAll is not a function")) {
         return null;
