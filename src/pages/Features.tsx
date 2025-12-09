@@ -38,11 +38,6 @@ export default function Features() {
   const { t, i18n, ready } = useTranslation();
   const currentLanguage = i18n.language;
   
-  // Force correct language for translations - workaround for i18n caching issue
-  const translate = (key: string) => {
-    return t(key, { lng: currentLanguage });
-  };
-  
   if (!ready) return null;
   
   return (
@@ -327,13 +322,13 @@ export default function Features() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-hero text-white rounded-full text-sm font-medium mb-6">
               <Crown className="w-4 h-4" />
-              {translate('features.premiumFeatures.badge')}
+              {t('features.premiumFeatures.badge')}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {translate('features.premiumFeatures.title')}
+              {t('features.premiumFeatures.title')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              {translate('features.premiumFeatures.description')}
+              {t('features.premiumFeatures.description')}
             </p>
           </div>
 
@@ -349,24 +344,24 @@ export default function Features() {
                     Premium Plus
                   </span>
                 </div>
-                <CardTitle className="text-xl">{translate('features.premiumFeatures.lunaSense.title')}</CardTitle>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.lunaSense.title')}</CardTitle>
                 <CardDescription>
-                  {translate('features.premiumFeatures.lunaSense.description')}
+                  {t('features.premiumFeatures.lunaSense.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.lunaSense.benefit1')}</span>
+                    <span>{t('features.premiumFeatures.lunaSense.benefit1')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.lunaSense.benefit2')}</span>
+                    <span>{t('features.premiumFeatures.lunaSense.benefit2')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.lunaSense.benefit3')}</span>
+                    <span>{t('features.premiumFeatures.lunaSense.benefit3')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -383,24 +378,24 @@ export default function Features() {
                     Premium Plus
                   </span>
                 </div>
-                <CardTitle className="text-xl">{translate('features.premiumFeatures.virtualCloset.title')}</CardTitle>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.virtualCloset.title')}</CardTitle>
                 <CardDescription>
-                  {translate('features.premiumFeatures.virtualCloset.description')}
+                  {t('features.premiumFeatures.virtualCloset.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.virtualCloset.benefit1')}</span>
+                    <span>{t('features.premiumFeatures.virtualCloset.benefit1')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.virtualCloset.benefit2')}</span>
+                    <span>{t('features.premiumFeatures.virtualCloset.benefit2')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.virtualCloset.benefit3')}</span>
+                    <span>{t('features.premiumFeatures.virtualCloset.benefit3')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -417,24 +412,24 @@ export default function Features() {
                     Premium Plus
                   </span>
                 </div>
-                <CardTitle className="text-xl">{translate('features.premiumFeatures.beautyAnalysis.title')}</CardTitle>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.beautyAnalysis.title')}</CardTitle>
                 <CardDescription>
-                  {translate('features.premiumFeatures.beautyAnalysis.description')}
+                  {t('features.premiumFeatures.beautyAnalysis.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.beautyAnalysis.benefit1')}</span>
+                    <span>{t('features.premiumFeatures.beautyAnalysis.benefit1')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.beautyAnalysis.benefit2')}</span>
+                    <span>{t('features.premiumFeatures.beautyAnalysis.benefit2')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.beautyAnalysis.benefit3')}</span>
+                    <span>{t('features.premiumFeatures.beautyAnalysis.benefit3')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -451,24 +446,24 @@ export default function Features() {
                     Premium
                   </span>
                 </div>
-                <CardTitle className="text-xl">{translate('features.premiumFeatures.aiJournal.title')}</CardTitle>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.aiJournal.title')}</CardTitle>
                 <CardDescription>
-                  {translate('features.premiumFeatures.aiJournal.description')}
+                  {t('features.premiumFeatures.aiJournal.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.aiJournal.benefit1')}</span>
+                    <span>{t('features.premiumFeatures.aiJournal.benefit1')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.aiJournal.benefit2')}</span>
+                    <span>{t('features.premiumFeatures.aiJournal.benefit2')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.aiJournal.benefit3')}</span>
+                    <span>{t('features.premiumFeatures.aiJournal.benefit3')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -485,24 +480,24 @@ export default function Features() {
                     Premium
                   </span>
                 </div>
-                <CardTitle className="text-xl">{translate('features.premiumFeatures.sosFeminino.title')}</CardTitle>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.sosFeminino.title')}</CardTitle>
                 <CardDescription>
-                  {translate('features.premiumFeatures.sosFeminino.description')}
+                  {t('features.premiumFeatures.sosFeminino.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.sosFeminino.benefit1')}</span>
+                    <span>{t('features.premiumFeatures.sosFeminino.benefit1')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.sosFeminino.benefit2')}</span>
+                    <span>{t('features.premiumFeatures.sosFeminino.benefit2')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.sosFeminino.benefit3')}</span>
+                    <span>{t('features.premiumFeatures.sosFeminino.benefit3')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -519,24 +514,24 @@ export default function Features() {
                     Premium
                   </span>
                 </div>
-                <CardTitle className="text-xl">{translate('features.premiumFeatures.symptomPredictions.title')}</CardTitle>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.symptomPredictions.title')}</CardTitle>
                 <CardDescription>
-                  {translate('features.premiumFeatures.symptomPredictions.description')}
+                  {t('features.premiumFeatures.symptomPredictions.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.symptomPredictions.benefit1')}</span>
+                    <span>{t('features.premiumFeatures.symptomPredictions.benefit1')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.symptomPredictions.benefit2')}</span>
+                    <span>{t('features.premiumFeatures.symptomPredictions.benefit2')}</span>
                   </li>
                   <li className="flex items-center gap-2 text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    <span>{translate('features.premiumFeatures.symptomPredictions.benefit3')}</span>
+                    <span>{t('features.premiumFeatures.symptomPredictions.benefit3')}</span>
                   </li>
                 </ul>
               </CardContent>
@@ -546,7 +541,7 @@ export default function Features() {
           <div className="text-center">
             <NavLink to="/pricing">
               <Button size="lg" className="group">
-                {translate('features.premiumFeatures.viewPlans')}
+                {t('features.premiumFeatures.viewPlans')}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </NavLink>
