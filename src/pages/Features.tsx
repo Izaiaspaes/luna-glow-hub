@@ -35,8 +35,15 @@ import logoLuna from "@/assets/logo-luna.png";
 import { Layout } from "@/components/Layout";
 
 export default function Features() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n, ready } = useTranslation();
   const currentLanguage = i18n.language;
+  
+  // Debug: Log translation key values
+  console.log('Current language:', currentLanguage);
+  console.log('Luna Sense title:', t('features.premiumFeatures.lunaSense.title'));
+  console.log('Beauty Analysis title:', t('features.premiumFeatures.beautyAnalysis.title'));
+  
+  if (!ready) return null;
   
   return (
     <Layout key={`layout-${currentLanguage}`}>
