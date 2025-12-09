@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -37,23 +36,11 @@ import { Layout } from "@/components/Layout";
 
 export default function Features() {
   const { t, i18n } = useTranslation();
-  const [, setForceUpdate] = useState(0);
-  
-  // Force re-render when language changes
-  useEffect(() => {
-    const handleLanguageChange = () => {
-      setForceUpdate(prev => prev + 1);
-    };
-    
-    i18n.on('languageChanged', handleLanguageChange);
-    return () => {
-      i18n.off('languageChanged', handleLanguageChange);
-    };
-  }, [i18n]);
+  const currentLanguage = i18n.language;
   
   return (
-    <Layout>
-    <div className="min-h-screen bg-background">
+    <Layout key={`layout-${currentLanguage}`}>
+    <div key={`features-${currentLanguage}`} className="min-h-screen bg-background">
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gradient-soft">
