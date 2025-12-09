@@ -35,7 +35,7 @@ import logoLuna from "@/assets/logo-luna.png";
 import { Layout } from "@/components/Layout";
 
 export default function Features() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <Layout>
     <div className="min-h-screen bg-background">
@@ -312,9 +312,8 @@ export default function Features() {
         </div>
       </section>
 
-        {/* Premium Features Section */}
-        {/* Key forces re-render on language change */}
-      <section className="py-20 lg:py-32 bg-muted/30">
+      {/* Premium Features Section */}
+      <section key={`premium-${i18n.language}`} className="py-20 lg:py-32 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-hero text-white rounded-full text-sm font-medium mb-6">
