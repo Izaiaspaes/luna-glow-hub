@@ -35,15 +35,16 @@ import logoLuna from "@/assets/logo-luna.png";
 import { Layout } from "@/components/Layout";
 
 export default function Features() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n, ready } = useTranslation();
   
-  // Debug: log current language and translations
-  console.log('Current language:', i18n.language);
-  console.log('Luna Sense title:', t('features.premiumFeatures.lunaSense.title'));
+  // Force re-render when language changes
+  const currentLanguage = i18n.language;
+  
+  if (!ready) return null;
   
   return (
-    <Layout>
-    <div key={i18n.language} className="min-h-screen bg-background">
+    <Layout key={currentLanguage}>
+    <div className="min-h-screen bg-background">
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gradient-soft">
@@ -318,7 +319,7 @@ export default function Features() {
       </section>
 
       {/* Premium Features Section */}
-      <section key={`premium-${i18n.language}`} className="py-20 lg:py-32 bg-muted/30">
+      <section className="py-20 lg:py-32 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-hero text-white rounded-full text-sm font-medium mb-6">
