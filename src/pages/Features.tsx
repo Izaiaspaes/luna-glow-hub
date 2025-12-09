@@ -36,9 +36,14 @@ import { Layout } from "@/components/Layout";
 
 export default function Features() {
   const { t, i18n } = useTranslation();
+  
+  // Debug: log current language and translations
+  console.log('Current language:', i18n.language);
+  console.log('Luna Sense title:', t('features.premiumFeatures.lunaSense.title'));
+  
   return (
     <Layout>
-    <div className="min-h-screen bg-background">
+    <div key={i18n.language} className="min-h-screen bg-background">
 
       {/* Hero Section */}
       <section className="py-20 lg:py-32 bg-gradient-soft">
