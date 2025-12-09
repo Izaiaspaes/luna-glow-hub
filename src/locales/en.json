@@ -205,6 +205,54 @@
       "anonymityOption": "Anonymity option",
       "anonymityOptionDesc": "Share experiences with total privacy"
     },
+    "premiumFeatures": {
+      "badge": "Premium Features",
+      "title": "Exclusive AI-Powered Features",
+      "description": "Unlock Luna's full potential with premium features powered by Artificial Intelligence",
+      "viewPlans": "View Plans & Pricing",
+      "lunaSense": {
+        "title": "Luna Sense",
+        "description": "Your AI assistant specialized in women's health, available 24/7",
+        "benefit1": "Empathetic and personalized conversations",
+        "benefit2": "Adapts to your cycle and mood",
+        "benefit3": "Contextualized responses to your routine"
+      },
+      "virtualCloset": {
+        "title": "Virtual Closet",
+        "description": "Organize your wardrobe and get AI-powered outfit suggestions",
+        "benefit1": "Automatic clothing cataloging",
+        "benefit2": "Outfit suggestions by occasion",
+        "benefit3": "Combinations based on your style"
+      },
+      "beautyAnalysis": {
+        "title": "Beauty Analysis",
+        "description": "AI facial analysis for personalized recommendations",
+        "benefit1": "Skin tone identification",
+        "benefit2": "Makeup suggestions",
+        "benefit3": "Skincare recommendations"
+      },
+      "aiJournal": {
+        "title": "AI Journal",
+        "description": "Write about your day and receive deep insights with AI analysis",
+        "benefit1": "Automatic pattern analysis",
+        "benefit2": "Emotional trigger identification",
+        "benefit3": "Practical self-care suggestions"
+      },
+      "sosFeminino": {
+        "title": "SOS Support",
+        "description": "Immediate support in difficult moments with relaxation techniques",
+        "benefit1": "Guided breathing techniques",
+        "benefit2": "Comforting phrases",
+        "benefit3": "Quick self-care actions"
+      },
+      "symptomPredictions": {
+        "title": "Symptom Prediction",
+        "description": "Predictive AI that anticipates symptoms based on your patterns",
+        "benefit1": "PMS and cramps prediction",
+        "benefit2": "Preventive notifications",
+        "benefit3": "Personalized recommendations"
+      }
+    },
     "marketplace": {
       "title": "Curation & Ethical Social Commerce",
       "description": "Discover sustainable products and brands that share your values",

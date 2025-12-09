@@ -205,6 +205,54 @@
       "anonymityOption": "Opção de anonimato",
       "anonymityOptionDesc": "Compartilhe experiências com privacidade total"
     },
+    "premiumFeatures": {
+      "badge": "Funcionalidades Premium",
+      "title": "Recursos Exclusivos com IA",
+      "description": "Desbloqueie todo o potencial da Luna com funcionalidades premium powered by Inteligência Artificial",
+      "viewPlans": "Ver Planos e Preços",
+      "lunaSense": {
+        "title": "Luna Sense",
+        "description": "Sua assistente de IA especializada em saúde feminina, disponível 24/7",
+        "benefit1": "Conversas empáticas e personalizadas",
+        "benefit2": "Adapta-se ao seu ciclo e humor",
+        "benefit3": "Respostas contextualizadas à sua rotina"
+      },
+      "virtualCloset": {
+        "title": "Closet Virtual",
+        "description": "Organize seu guarda-roupa e receba sugestões de looks com IA",
+        "benefit1": "Catalogação automática de roupas",
+        "benefit2": "Sugestões de looks por ocasião",
+        "benefit3": "Combinações baseadas no seu estilo"
+      },
+      "beautyAnalysis": {
+        "title": "Análise de Beleza",
+        "description": "Análise facial com IA para recomendações personalizadas",
+        "benefit1": "Identificação de tom de pele",
+        "benefit2": "Sugestões de maquiagem",
+        "benefit3": "Recomendações de skincare"
+      },
+      "aiJournal": {
+        "title": "Diário com IA",
+        "description": "Escreva sobre seu dia e receba insights profundos com análise de IA",
+        "benefit1": "Análise automática de padrões",
+        "benefit2": "Identificação de gatilhos emocionais",
+        "benefit3": "Sugestões práticas de autocuidado"
+      },
+      "sosFeminino": {
+        "title": "SOS Feminino",
+        "description": "Suporte imediato em momentos difíceis com técnicas de relaxamento",
+        "benefit1": "Técnicas de respiração guiadas",
+        "benefit2": "Frases de acolhimento",
+        "benefit3": "Ações rápidas de autocuidado"
+      },
+      "symptomPredictions": {
+        "title": "Previsão de Sintomas",
+        "description": "IA preditiva que antecipa sintomas baseada nos seus padrões",
+        "benefit1": "Previsão de TPM e cólicas",
+        "benefit2": "Notificações preventivas",
+        "benefit3": "Recomendações personalizadas"
+      }
+    },
     "marketplace": {
       "title": "Curadoria & Social Commerce Ético",
       "description": "Descubra produtos sustentáveis e marcas que compartilham seus valores",

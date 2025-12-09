@@ -21,7 +21,12 @@ import {
   Video,
   Star,
   Leaf,
-  ArrowRight
+  ArrowRight,
+  BookHeart,
+  Shirt,
+  Camera,
+  AlertTriangle,
+  Crown
 } from "lucide-react";
 
 import { MobileNav } from "@/components/MobileNav";
@@ -551,8 +556,241 @@ export default function Features() {
         </div>
       </section>
 
-      {/* Marketplace Section */}
+      {/* Premium Features Section */}
       <section className="py-20 lg:py-32 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-hero text-white rounded-full text-sm font-medium mb-6">
+              <Crown className="w-4 h-4" />
+              {t('features.premiumFeatures.badge')}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {t('features.premiumFeatures.title')}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              {t('features.premiumFeatures.description')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {/* Luna Sense Card */}
+            <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-hero text-white shadow-soft">
+                    <Sparkles className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                    Premium Plus
+                  </span>
+                </div>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.lunaSense.title')}</CardTitle>
+                <CardDescription>
+                  {t('features.premiumFeatures.lunaSense.description')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.lunaSense.benefit1')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.lunaSense.benefit2')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.lunaSense.benefit3')}</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Virtual Closet Card */}
+            <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-hero text-white shadow-soft">
+                    <Shirt className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                    Premium Plus
+                  </span>
+                </div>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.virtualCloset.title')}</CardTitle>
+                <CardDescription>
+                  {t('features.premiumFeatures.virtualCloset.description')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.virtualCloset.benefit1')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.virtualCloset.benefit2')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.virtualCloset.benefit3')}</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Beauty Analysis Card */}
+            <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-hero text-white shadow-soft">
+                    <Camera className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                    Premium Plus
+                  </span>
+                </div>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.beautyAnalysis.title')}</CardTitle>
+                <CardDescription>
+                  {t('features.premiumFeatures.beautyAnalysis.description')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.beautyAnalysis.benefit1')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.beautyAnalysis.benefit2')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.beautyAnalysis.benefit3')}</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* AI Journal Card */}
+            <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-hero text-white shadow-soft">
+                    <BookHeart className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                    Premium
+                  </span>
+                </div>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.aiJournal.title')}</CardTitle>
+                <CardDescription>
+                  {t('features.premiumFeatures.aiJournal.description')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.aiJournal.benefit1')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.aiJournal.benefit2')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.aiJournal.benefit3')}</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* SOS Feminino Card */}
+            <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-destructive text-white shadow-soft">
+                    <AlertTriangle className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                    Premium
+                  </span>
+                </div>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.sosFeminino.title')}</CardTitle>
+                <CardDescription>
+                  {t('features.premiumFeatures.sosFeminino.description')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.sosFeminino.benefit1')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.sosFeminino.benefit2')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.sosFeminino.benefit3')}</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Symptom Predictions Card */}
+            <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-hero text-white shadow-soft">
+                    <TrendingUp className="w-7 h-7" />
+                  </div>
+                  <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                    Premium
+                  </span>
+                </div>
+                <CardTitle className="text-xl">{t('features.premiumFeatures.symptomPredictions.title')}</CardTitle>
+                <CardDescription>
+                  {t('features.premiumFeatures.symptomPredictions.description')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.symptomPredictions.benefit1')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.symptomPredictions.benefit2')}</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <span>{t('features.premiumFeatures.symptomPredictions.benefit3')}</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <NavLink to="/pricing">
+              <Button size="lg" className="group">
+                {t('features.premiumFeatures.viewPlans')}
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </NavLink>
+          </div>
+        </div>
+      </section>
+
+      {/* Marketplace Section */}
+      <section className="py-20 lg:py-32 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div>
