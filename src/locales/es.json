@@ -2091,5 +2091,72 @@
       "veryHigh": "Muy Alto",
       "unknown": "Desconocido"
     }
+  },
+  "refundPolicy": {
+    "title": "Política de Reembolso",
+    "lastUpdated": "Última actualización",
+    "section1": {
+      "title": "1. Compromiso con tu Satisfacción",
+      "content": "En Luna, nos esforzamos por ofrecer un servicio de calidad. Entendemos que las circunstancias pueden cambiar, por eso hemos creado esta política de reembolso clara y justa."
+    },
+    "section2": {
+      "title": "2. Período de Garantía",
+      "intro": "Ofrecemos un período de garantía de 7 días a partir de la fecha de tu primera compra:",
+      "item1": "Si no estás satisfecha con el servicio en los primeros 7 días, puedes solicitar un reembolso completo",
+      "item2": "El período de 7 días comienza el día de la confirmación del pago",
+      "item3": "Esta garantía se aplica solo a la primera suscripción (nuevos clientes)"
+    },
+    "section3": {
+      "title": "3. Cómo Solicitar un Reembolso",
+      "intro": "Para solicitar tu reembolso dentro del período de garantía:",
+      "step1": "Envía un correo a suporte@lunaglow.com.br con el asunto \"Solicitud de Reembolso\"",
+      "step2": "Incluye el correo registrado en la plataforma",
+      "step3": "Indica el motivo de la solicitud (opcional, pero nos ayuda a mejorar)",
+      "step4": "Nuestro equipo responderá en un máximo de 48 horas hábiles"
+    },
+    "section4": {
+      "title": "4. Procesamiento del Reembolso",
+      "intro": "Después de la aprobación de la solicitud:",
+      "item1": "El reembolso se procesará en un máximo de 5 días hábiles",
+      "item2": "El monto se devolverá al mismo método de pago utilizado en la compra",
+      "item3": "Las tarjetas de crédito pueden tardar 1-2 ciclos de facturación en reflejar el crédito",
+      "item4": "Recibirás confirmación por correo cuando se procese el reembolso"
+    },
+    "section5": {
+      "title": "5. Situaciones No Elegibles",
+      "intro": "Los reembolsos NO se conceden en las siguientes situaciones:",
+      "item1": "Solicitudes después del período de garantía de 7 días",
+      "item2": "Renovaciones automáticas de suscripción (cancela antes de la renovación)",
+      "item3": "Uso indebido de la plataforma o violación de los Términos de Uso",
+      "item4": "Cuentas suspendidas por motivos de seguridad",
+      "item5": "Clientes que ya han utilizado la garantía anteriormente"
+    },
+    "section6": {
+      "title": "6. Cancelación de Suscripción",
+      "intro": "Importante distinguir entre reembolso y cancelación:",
+      "item1": "Puedes cancelar tu suscripción en cualquier momento en la configuración del perfil",
+      "item2": "La cancelación evita cargos futuros pero no genera reembolso del período actual",
+      "item3": "Después de la cancelación, mantienes acceso hasta el final del período pagado"
+    },
+    "section7": {
+      "title": "7. Planes Anuales",
+      "content": "Para suscripciones anuales, se aplica la misma política de 7 días. Después de este período, no hay reembolso proporcional. Recomendamos probar el plan mensual primero si no estás segura del servicio."
+    },
+    "section8": {
+      "title": "8. Casos Excepcionales",
+      "content": "En situaciones excepcionales (problemas técnicos graves, cargos duplicados, etc.), analizaremos cada caso individualmente. Contáctanos explicando la situación."
+    },
+    "section9": {
+      "title": "9. Derechos del Consumidor",
+      "content": "Esta política no limita tus derechos garantizados por el Código de Defensa del Consumidor brasileño (Ley Nº 8.078/90). En caso de conflicto, prevalecerán las disposiciones legales."
+    },
+    "section10": {
+      "title": "10. Contacto",
+      "content": "Para preguntas sobre esta política o para solicitar un reembolso:"
+    },
+    "commitment": "En Luna, valoramos a cada cliente. Si tienes algún problema, contáctanos antes de rendirte - a menudo podemos resolver tu problema rápidamente."
+  },
+  "footer": {
+    "refundPolicy": "Política de Reembolso"
   }
 }

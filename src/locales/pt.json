@@ -1918,5 +1918,72 @@
       "veryHigh": "Muito Alto",
       "unknown": "Desconhecido"
     }
+  },
+  "refundPolicy": {
+    "title": "Política de Reembolso",
+    "lastUpdated": "Última atualização",
+    "section1": {
+      "title": "1. Compromisso com sua Satisfação",
+      "content": "Na Luna, nos empenhamos em oferecer um serviço de qualidade. Entendemos que circunstâncias podem mudar, e por isso criamos esta política de reembolso clara e justa."
+    },
+    "section2": {
+      "title": "2. Período de Garantia",
+      "intro": "Oferecemos um período de garantia de 7 dias corridos a partir da data da primeira compra:",
+      "item1": "Se você não estiver satisfeita com o serviço nos primeiros 7 dias, pode solicitar reembolso integral",
+      "item2": "O período de 7 dias começa no dia da confirmação do pagamento",
+      "item3": "Esta garantia aplica-se apenas à primeira assinatura (novos clientes)"
+    },
+    "section3": {
+      "title": "3. Como Solicitar Reembolso",
+      "intro": "Para solicitar seu reembolso dentro do período de garantia:",
+      "step1": "Envie um e-mail para suporte@lunaglow.com.br com o assunto \"Solicitação de Reembolso\"",
+      "step2": "Inclua o e-mail cadastrado na plataforma",
+      "step3": "Informe o motivo da solicitação (opcional, mas nos ajuda a melhorar)",
+      "step4": "Nossa equipe responderá em até 48 horas úteis"
+    },
+    "section4": {
+      "title": "4. Processamento do Reembolso",
+      "intro": "Após aprovação da solicitação:",
+      "item1": "O reembolso será processado em até 5 dias úteis",
+      "item2": "O valor será devolvido ao mesmo método de pagamento utilizado na compra",
+      "item3": "Cartões de crédito podem levar 1-2 ciclos de fatura para refletir o crédito",
+      "item4": "Você receberá confirmação por e-mail quando o reembolso for processado"
+    },
+    "section5": {
+      "title": "5. Situações Não Elegíveis",
+      "intro": "Reembolsos NÃO são concedidos nas seguintes situações:",
+      "item1": "Solicitações após o período de 7 dias de garantia",
+      "item2": "Renovações automáticas de assinatura (cancele antes da renovação)",
+      "item3": "Uso indevido da plataforma ou violação dos Termos de Uso",
+      "item4": "Contas suspensas por motivos de segurança",
+      "item5": "Clientes que já utilizaram a garantia anteriormente"
+    },
+    "section6": {
+      "title": "6. Cancelamento de Assinatura",
+      "intro": "Importante distinguir entre reembolso e cancelamento:",
+      "item1": "Você pode cancelar sua assinatura a qualquer momento nas configurações do perfil",
+      "item2": "O cancelamento impede futuras cobranças, mas não gera reembolso do período atual",
+      "item3": "Após o cancelamento, você mantém acesso até o fim do período pago"
+    },
+    "section7": {
+      "title": "7. Planos Anuais",
+      "content": "Para assinaturas anuais, a mesma política de 7 dias se aplica. Após esse período, não há reembolso proporcional. Recomendamos experimentar o plano mensal primeiro se estiver incerta sobre o serviço."
+    },
+    "section8": {
+      "title": "8. Casos Excepcionais",
+      "content": "Em situações excepcionais (problemas técnicos graves, cobranças duplicadas, etc.), analisaremos cada caso individualmente. Entre em contato conosco explicando a situação."
+    },
+    "section9": {
+      "title": "9. Direitos do Consumidor",
+      "content": "Esta política não limita seus direitos garantidos pelo Código de Defesa do Consumidor brasileiro (Lei nº 8.078/90). Em caso de conflito, prevalecerão as disposições legais."
+    },
+    "section10": {
+      "title": "10. Contato",
+      "content": "Para dúvidas sobre esta política ou para solicitar reembolso:"
+    },
+    "commitment": "Na Luna, valorizamos cada cliente. Se você tiver qualquer problema, entre em contato antes de desistir - muitas vezes podemos resolver sua questão rapidamente."
+  },
+  "footer": {
+    "refundPolicy": "Política de Reembolso"
   }
 }

@@ -1891,5 +1891,72 @@
       "veryHigh": "Very High",
       "unknown": "Unknown"
     }
+  },
+  "refundPolicy": {
+    "title": "Refund Policy",
+    "lastUpdated": "Last updated",
+    "section1": {
+      "title": "1. Commitment to Your Satisfaction",
+      "content": "At Luna, we strive to provide quality service. We understand that circumstances can change, which is why we've created this clear and fair refund policy."
+    },
+    "section2": {
+      "title": "2. Guarantee Period",
+      "intro": "We offer a 7-day guarantee period from the date of your first purchase:",
+      "item1": "If you're not satisfied with the service within the first 7 days, you can request a full refund",
+      "item2": "The 7-day period begins on the day of payment confirmation",
+      "item3": "This guarantee applies only to the first subscription (new customers)"
+    },
+    "section3": {
+      "title": "3. How to Request a Refund",
+      "intro": "To request your refund within the guarantee period:",
+      "step1": "Send an email to suporte@lunaglow.com.br with the subject \"Refund Request\"",
+      "step2": "Include the email registered on the platform",
+      "step3": "Provide the reason for the request (optional, but helps us improve)",
+      "step4": "Our team will respond within 48 business hours"
+    },
+    "section4": {
+      "title": "4. Refund Processing",
+      "intro": "After request approval:",
+      "item1": "The refund will be processed within 5 business days",
+      "item2": "The amount will be returned to the same payment method used for the purchase",
+      "item3": "Credit cards may take 1-2 billing cycles to reflect the credit",
+      "item4": "You will receive email confirmation when the refund is processed"
+    },
+    "section5": {
+      "title": "5. Non-Eligible Situations",
+      "intro": "Refunds are NOT granted in the following situations:",
+      "item1": "Requests after the 7-day guarantee period",
+      "item2": "Automatic subscription renewals (cancel before renewal)",
+      "item3": "Misuse of the platform or violation of Terms of Use",
+      "item4": "Accounts suspended for security reasons",
+      "item5": "Customers who have already used the guarantee before"
+    },
+    "section6": {
+      "title": "6. Subscription Cancellation",
+      "intro": "Important to distinguish between refund and cancellation:",
+      "item1": "You can cancel your subscription at any time in profile settings",
+      "item2": "Cancellation prevents future charges but does not generate a refund for the current period",
+      "item3": "After cancellation, you maintain access until the end of the paid period"
+    },
+    "section7": {
+      "title": "7. Annual Plans",
+      "content": "For annual subscriptions, the same 7-day policy applies. After this period, there is no prorated refund. We recommend trying the monthly plan first if you're uncertain about the service."
+    },
+    "section8": {
+      "title": "8. Exceptional Cases",
+      "content": "In exceptional situations (severe technical issues, duplicate charges, etc.), we will analyze each case individually. Contact us explaining the situation."
+    },
+    "section9": {
+      "title": "9. Consumer Rights",
+      "content": "This policy does not limit your rights guaranteed by the Brazilian Consumer Protection Code (Law No. 8.078/90). In case of conflict, legal provisions shall prevail."
+    },
+    "section10": {
+      "title": "10. Contact",
+      "content": "For questions about this policy or to request a refund:"
+    },
+    "commitment": "At Luna, we value every customer. If you have any problems, contact us before giving up - we can often resolve your issue quickly."
+  },
+  "footer": {
+    "refundPolicy": "Refund Policy"
   }
 }
