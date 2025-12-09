@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,15 +36,23 @@ import logoLuna from "@/assets/logo-luna.png";
 import { Layout } from "@/components/Layout";
 
 export default function Features() {
-  const { t, i18n, ready } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [, setForceUpdate] = useState(0);
   
   // Force re-render when language changes
-  const currentLanguage = i18n.language;
-  
-  if (!ready) return null;
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      setForceUpdate(prev => prev + 1);
+    };
+    
+    i18n.on('languageChanged', handleLanguageChange);
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18n]);
   
   return (
-    <Layout key={currentLanguage}>
+    <Layout>
     <div className="min-h-screen bg-background">
 
       {/* Hero Section */}
