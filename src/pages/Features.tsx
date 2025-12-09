@@ -38,10 +38,13 @@ export default function Features() {
   const { t, i18n, ready } = useTranslation();
   const currentLanguage = i18n.language;
   
-  // Debug: Log translation key values
+  // Debug: Check what's actually in the resource bundle
+  const esBundle = i18n.getResourceBundle('es', 'translation');
   console.log('Current language:', currentLanguage);
-  console.log('Luna Sense title:', t('features.premiumFeatures.lunaSense.title'));
-  console.log('Beauty Analysis title:', t('features.premiumFeatures.beautyAnalysis.title'));
+  console.log('ES features.premiumFeatures exists?', !!esBundle?.features?.premiumFeatures);
+  console.log('ES beautyAnalysis title from bundle:', esBundle?.features?.premiumFeatures?.beautyAnalysis?.title);
+  console.log('Beauty Analysis via t():', t('features.premiumFeatures.beautyAnalysis.title'));
+  console.log('t() with lng override:', t('features.premiumFeatures.beautyAnalysis.title', { lng: 'es' }));
   
   if (!ready) return null;
   
