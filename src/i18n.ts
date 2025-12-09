@@ -16,7 +16,7 @@ i18n
       es: { translation: es },
     },
     fallbackLng: 'pt',
-    debug: false,
+    debug: true, // Enable debug temporarily
     interpolation: {
       escapeValue: false,
     },
@@ -24,6 +24,8 @@ i18n
       order: ['localStorage', 'navigator'],
       caches: ['localStorage'],
     },
+    // Handle language codes like 'es-ES' -> 'es'
+    load: 'languageOnly',
   });
 
 export default i18n;
