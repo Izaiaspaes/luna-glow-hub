@@ -174,12 +174,15 @@ export const Footer = () => {
               {t('footer.share') || 'Compartilhar Luna'}
             </Button>
           </div>
-          <div className="flex gap-6 text-sm text-muted-foreground">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
             <NavLink to="/terms" className="hover:text-primary transition-smooth">
               {t('footer.terms') || 'Termos de Uso'}
             </NavLink>
             <NavLink to="/privacy-policy" className="hover:text-primary transition-smooth">
               {t('footer.privacyPolicy') || 'Política de Privacidade'}
+            </NavLink>
+            <NavLink to="/refund-policy" className="hover:text-primary transition-smooth">
+              {t('footer.refundPolicy') || 'Política de Reembolso'}
             </NavLink>
             <NavLink to="/privacy-policy" className="hover:text-primary transition-smooth">
               {t('footer.cookies') || 'Cookies'}
