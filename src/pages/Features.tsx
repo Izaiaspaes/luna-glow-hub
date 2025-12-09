@@ -138,7 +138,7 @@ export default function Features() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Activity className="w-10 h-10 text-primary mb-2" />
@@ -274,7 +274,7 @@ export default function Features() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Zap className="w-10 h-10 text-primary mb-2" />
@@ -327,7 +327,7 @@ export default function Features() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
@@ -518,7 +518,7 @@ export default function Features() {
             </Card>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Shield className="w-10 h-10 text-primary mb-2" />
@@ -572,7 +572,7 @@ export default function Features() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12">
             {/* Luna Sense Card */}
             <Card className="bg-gradient-card border-2 hover:shadow-hover transition-smooth group">
               <CardHeader>
@@ -877,7 +877,7 @@ export default function Features() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             <Card className="bg-gradient-card">
               <CardHeader>
                 <Package className="w-10 h-10 text-primary mb-2" />
