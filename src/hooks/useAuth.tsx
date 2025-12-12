@@ -51,6 +51,22 @@ export function useAuth() {
     }
   };
 
+  // Check if user is active, sign out if inactive
+  const checkUserActive = async (userId: string): Promise<boolean> => {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_active')
+      .eq('user_id', userId)
+      .maybeSingle();
+    
+    if (profile && profile.is_active === false) {
+      clearUserContext();
+      await supabase.auth.signOut();
+      return false;
+    }
+    return true;
+  };
+
   useEffect(() => {
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -64,6 +80,13 @@ export function useAuth() {
           
           // Check if user is admin and update last_accessed_at
           setTimeout(async () => {
+            // First check if user is active
+            const isActive = await checkUserActive(session.user.id);
+            if (!isActive) {
+              setLoading(false);
+              return;
+            }
+
             const { data } = await supabase
               .from('user_roles')
               .select('role')
@@ -96,6 +119,14 @@ export function useAuth() {
       setUser(session?.user ?? null);
       
       if (session?.user) {
+        // First check if user is active
+        const isActive = await checkUserActive(session.user.id);
+        if (!isActive) {
+          setAdminChecked(true);
+          setLoading(false);
+          return;
+        }
+
         // Check if user is admin
         const { data } = await supabase
           .from('user_roles')
@@ -115,7 +146,18 @@ export function useAuth() {
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    // Periodic check for user active status (every 30 seconds)
+    const activeCheckInterval = setInterval(async () => {
+      const currentSession = await supabase.auth.getSession();
+      if (currentSession.data.session?.user) {
+        await checkUserActive(currentSession.data.session.user.id);
+      }
+    }, 30000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearInterval(activeCheckInterval);
+    };
   }, []);
 
   const signUp = async (email: string, password: string) => {
