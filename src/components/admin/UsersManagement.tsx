@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shield, User, Trash2, CheckCircle, Search, X } from "lucide-react";
+import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -27,6 +27,7 @@ interface UserWithRole {
   created_at: string;
   roles: { role: string }[];
   subscription_plan?: string | null;
+  is_active?: boolean;
 }
 
 export const UsersManagement = () => {
@@ -35,6 +36,7 @@ export const UsersManagement = () => {
   const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<boolean | null>(null);
 
   useEffect(() => {
     loadUsers();
@@ -61,6 +63,7 @@ export const UsersManagement = () => {
       created_at: user.created_at,
       roles: user.roles || [],
       subscription_plan: user.subscription_plan || 'free',
+      is_active: user.is_active ?? true,
     }));
 
     setUsers(usersArray);
@@ -163,6 +166,23 @@ export const UsersManagement = () => {
     }
   };
 
+  const handleToggleActive = async (userId: string, currentStatus: boolean) => {
+    const newStatus = !currentStatus;
+    
+    const { error } = await supabase
+      .from('profiles')
+      .update({ is_active: newStatus })
+      .eq('user_id', userId);
+
+    if (error) {
+      toast.error(`Erro ao ${newStatus ? 'ativar' : 'desativar'} usuário`);
+      console.error(error);
+    } else {
+      toast.success(`Usuário ${newStatus ? 'ativado' : 'desativado'} com sucesso`);
+      loadUsers();
+    }
+  };
+
   const filteredUsers = users.filter(user => {
     const matchesSearch = 
       user.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -170,12 +190,15 @@ export const UsersManagement = () => {
     
     const matchesRole = !roleFilter || user.roles.some(r => r.role === roleFilter);
     
-    return matchesSearch && matchesRole;
+    const matchesStatus = statusFilter === null || (user.is_active ?? true) === statusFilter;
+    
+    return matchesSearch && matchesRole && matchesStatus;
   });
 
   const clearFilters = () => {
     setSearchTerm("");
     setRoleFilter(null);
+    setStatusFilter(null);
   };
 
   return (
@@ -197,7 +220,7 @@ export const UsersManagement = () => {
                   className="pl-9"
                 />
               </div>
-              {(searchTerm || roleFilter) && (
+              {(searchTerm || roleFilter || statusFilter !== null) && (
                 <Button variant="outline" size="icon" onClick={clearFilters}>
                   <X className="w-4 h-4" />
                 </Button>
@@ -237,6 +260,32 @@ export const UsersManagement = () => {
                 Usuário
               </Button>
             </div>
+            
+            <div className="flex gap-2">
+              <Button
+                variant={statusFilter === null ? "default" : "outline"}
+                size="sm"
+                onClick={() => setStatusFilter(null)}
+              >
+                Todos Status
+              </Button>
+              <Button
+                variant={statusFilter === true ? "default" : "outline"}
+                size="sm"
+                onClick={() => setStatusFilter(true)}
+              >
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Ativos
+              </Button>
+              <Button
+                variant={statusFilter === false ? "default" : "outline"}
+                size="sm"
+                onClick={() => setStatusFilter(false)}
+              >
+                <Ban className="w-3 h-3 mr-1" />
+                Inativos
+              </Button>
+            </div>
           </div>
 
           {loadingUsers ? (
@@ -259,13 +308,14 @@ export const UsersManagement = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredUsers.map((user) => {
+              {filteredUsers.map((user) => {
                   const isAdmin = user.roles.some(r => r.role === 'admin');
                   const isModerator = user.roles.some(r => r.role === 'moderator');
                   const isUser = user.roles.some(r => r.role === 'user');
+                  const isActive = user.is_active ?? true;
                   
                   return (
-                    <TableRow key={user.user_id}>
+                    <TableRow key={user.user_id} className={!isActive ? "opacity-60" : ""}>
                       <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.phone || 'Não informado'}</TableCell>
@@ -292,12 +342,18 @@ export const UsersManagement = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="default" className="bg-green-500">
-                          <CheckCircle className="w-3 h-3 mr-1" />Ativo
-                        </Badge>
+                        {isActive ? (
+                          <Badge variant="default" className="bg-green-500">
+                            <CheckCircle className="w-3 h-3 mr-1" />Ativo
+                          </Badge>
+                        ) : (
+                          <Badge variant="destructive">
+                            <Ban className="w-3 h-3 mr-1" />Inativo
+                          </Badge>
+                        )}
                       </TableCell>
                       <TableCell>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-wrap">
                           <Button
                             size="sm"
                             variant={isAdmin ? "destructive" : "outline"}
@@ -314,8 +370,18 @@ export const UsersManagement = () => {
                           </Button>
                           <Button
                             size="sm"
+                            variant={isActive ? "secondary" : "default"}
+                            onClick={() => handleToggleActive(user.user_id, isActive)}
+                            title={isActive ? 'Desativar usuário' : 'Ativar usuário'}
+                          >
+                            {isActive ? <Ban className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
+                          </Button>
+                          <Button
+                            size="sm"
                             variant="ghost"
+                            className="text-destructive hover:text-destructive"
                             onClick={() => setDeleteUserId(user.user_id)}
+                            title="Remover usuário permanentemente"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
