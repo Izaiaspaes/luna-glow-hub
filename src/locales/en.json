@@ -103,7 +103,8 @@
       "emailSentError": "Error sending email: ",
       "passwordsMismatch": "Passwords don't match",
       "resetError": "Error resetting password: ",
-      "socialAuthError": "Error with social login: "
+      "socialAuthError": "Error with social login: ",
+      "accountInactive": "Your account is deactivated. Please contact support."
     },
     "success": {
       "loginSuccess": "Successfully signed in!",

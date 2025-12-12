@@ -64,6 +64,24 @@ export default function Auth() {
           toast.error(t("auth.errors.loginError") + error.message);
         }
       } else {
+        // Check if user is active before allowing login
+        const { data: session } = await supabase.auth.getSession();
+        if (session?.session?.user) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("is_active")
+            .eq("user_id", session.session.user.id)
+            .single();
+          
+          if (profile && profile.is_active === false) {
+            // Sign out the inactive user immediately
+            await supabase.auth.signOut();
+            toast.error(t("auth.errors.accountInactive"));
+            setLoading(false);
+            return;
+          }
+        }
+        
         toast.success(t("auth.success.loginSuccess"));
         navigate("/dashboard");
       }
