@@ -1,0 +1,1 @@
+DROP FUNCTION public.get_users_with_profiles();
