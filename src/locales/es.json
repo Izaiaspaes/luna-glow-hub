@@ -711,7 +711,8 @@
       "emailSentError": "Error al enviar correo: ",
       "passwordsMismatch": "Las contraseñas no coinciden",
       "resetError": "Error al restablecer contraseña: ",
-      "socialAuthError": "Error al iniciar sesión social: "
+      "socialAuthError": "Error al iniciar sesión social: ",
+      "accountInactive": "Tu cuenta está desactivada. Por favor contacta al soporte."
     },
     "success": {
       "loginSuccess": "¡Inicio de sesión exitoso!",

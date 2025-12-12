@@ -103,7 +103,8 @@
       "emailSentError": "Erro ao enviar e-mail: ",
       "passwordsMismatch": "As senhas não coincidem",
       "resetError": "Erro ao redefinir senha: ",
-      "socialAuthError": "Erro ao fazer login social: "
+      "socialAuthError": "Erro ao fazer login social: ",
+      "accountInactive": "Sua conta está desativada. Entre em contato com o suporte."
     },
     "success": {
       "loginSuccess": "Login realizado com sucesso!",
