@@ -1289,6 +1289,7 @@ export type Database = {
           email: string
           full_name: string
           is_active: boolean
+          last_accessed_at: string
           phone: string
           registration_source: Json
           roles: Json
