@@ -54,6 +54,9 @@ verify_jwt = true
 [functions.send-inactivity-reminders]
 verify_jwt = false
 
+[functions.send-reengagement-email]
+verify_jwt = false
+
 [functions.send-newsletter-confirmation]
 verify_jwt = false
 
