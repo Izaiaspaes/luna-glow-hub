@@ -137,11 +137,23 @@ serve(async (req) => {
         </html>
         `;
 
+        const emailSubject = `💜 ${userName}, sentimos sua falta no Luna!`;
         const { error: emailError } = await resend.emails.send({
           from: "Luna <contato@lunaglow.com.br>",
           to: [userEmail],
-          subject: `💜 ${userName}, sentimos sua falta no Luna!`,
+          subject: emailSubject,
           html: emailHtml,
+        });
+
+        // Log email to database
+        await supabaseClient.from("email_logs").insert({
+          user_id: profile.user_id,
+          email_to: userEmail,
+          email_type: "inactivity_reminder_2days",
+          subject: emailSubject,
+          status: emailError ? "failed" : "sent",
+          error_message: emailError?.message || null,
+          metadata: { days_inactive: daysSinceAccess }
         });
 
         if (emailError) {
