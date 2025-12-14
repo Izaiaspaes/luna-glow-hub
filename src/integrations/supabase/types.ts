@@ -281,6 +281,42 @@ export type Database = {
         }
         Relationships: []
       }
+      email_logs: {
+        Row: {
+          created_at: string
+          email_to: string
+          email_type: string
+          error_message: string | null
+          id: string
+          metadata: Json | null
+          status: string
+          subject: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email_to: string
+          email_type: string
+          error_message?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          subject: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email_to?: string
+          email_type?: string
+          error_message?: string | null
+          id?: string
+          metadata?: Json | null
+          status?: string
+          subject?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       energy_tracking: {
         Row: {
           created_at: string

@@ -178,6 +178,18 @@ serve(async (req) => {
           html: emailHtml,
         });
 
+        // Log email to database
+        const emailSubject = `🌙 ${userName}, estamos com saudades! Seu bem-estar te espera`;
+        await supabaseClient.from("email_logs").insert({
+          user_id: profile.user_id,
+          email_to: userEmail,
+          email_type: "reengagement_7days",
+          subject: emailSubject,
+          status: emailError ? "failed" : "sent",
+          error_message: emailError?.message || null,
+          metadata: { days_inactive: daysSinceAccess, is_premium: isPremium }
+        });
+
         if (emailError) {
           console.error("[REENGAGEMENT] Email error for", userEmail, ":", emailError);
           errors.push(`${userEmail}: ${emailError.message}`);
