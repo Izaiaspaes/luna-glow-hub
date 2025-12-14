@@ -6,7 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck } from "lucide-react";
+import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -19,6 +22,15 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+interface RegistrationSource {
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  referral_code?: string;
+}
+
 interface UserWithRole {
   user_id: string;
   email: string;
@@ -28,6 +40,7 @@ interface UserWithRole {
   roles: { role: string }[];
   subscription_plan?: string | null;
   is_active?: boolean;
+  registration_source?: RegistrationSource | null;
 }
 
 export const UsersManagement = () => {
@@ -64,6 +77,7 @@ export const UsersManagement = () => {
       roles: user.roles || [],
       subscription_plan: user.subscription_plan || 'free',
       is_active: user.is_active ?? true,
+      registration_source: user.registration_source || null,
     }));
 
     setUsers(usersArray);
@@ -300,7 +314,8 @@ export const UsersManagement = () => {
                 <TableRow>
                   <TableHead>Nome</TableHead>
                   <TableHead>E-mail</TableHead>
-                  <TableHead>Telefone</TableHead>
+                  <TableHead>Cadastro</TableHead>
+                  <TableHead>Origem</TableHead>
                   <TableHead>Pacote</TableHead>
                   <TableHead>Roles</TableHead>
                   <TableHead>Status</TableHead>
@@ -314,26 +329,72 @@ export const UsersManagement = () => {
                   const isUser = user.roles.some(r => r.role === 'user');
                   const isActive = user.is_active ?? true;
                   
-                  return (
-                    <TableRow key={user.user_id} className={!isActive ? "opacity-60" : ""}>
-                      <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
-                      <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.phone || 'Não informado'}</TableCell>
-                      <TableCell>
-                        <Select
-                          value={user.subscription_plan || 'free'}
-                          onValueChange={(value) => handleChangePlan(user.user_id, value)}
-                        >
-                          <SelectTrigger className="w-[160px]">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="free">Free</SelectItem>
-                            <SelectItem value="premium">✨ Premium</SelectItem>
-                            <SelectItem value="premium_plus">💎 Premium Plus</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
+                    return (
+                      <TableRow key={user.user_id} className={!isActive ? "opacity-60" : ""}>
+                        <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger className="flex items-center gap-1 text-sm">
+                                <Calendar className="w-3 h-3 text-muted-foreground" />
+                                {format(new Date(user.created_at), "dd/MM/yyyy", { locale: ptBR })}
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {format(new Date(user.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </TableCell>
+                        <TableCell>
+                          {user.registration_source ? (
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <Badge variant="outline" className="flex items-center gap-1">
+                                    <Link2 className="w-3 h-3" />
+                                    {user.registration_source.utm_source || 
+                                     user.registration_source.referral_code || 
+                                     'Direto'}
+                                  </Badge>
+                                </TooltipTrigger>
+                                <TooltipContent className="max-w-xs">
+                                  <div className="text-xs space-y-1">
+                                    {user.registration_source.utm_source && (
+                                      <p><strong>Source:</strong> {user.registration_source.utm_source}</p>
+                                    )}
+                                    {user.registration_source.utm_medium && (
+                                      <p><strong>Medium:</strong> {user.registration_source.utm_medium}</p>
+                                    )}
+                                    {user.registration_source.utm_campaign && (
+                                      <p><strong>Campaign:</strong> {user.registration_source.utm_campaign}</p>
+                                    )}
+                                    {user.registration_source.referral_code && (
+                                      <p><strong>Referral:</strong> {user.registration_source.referral_code}</p>
+                                    )}
+                                  </div>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          ) : (
+                            <span className="text-muted-foreground text-sm">Direto</span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Select
+                            value={user.subscription_plan || 'free'}
+                            onValueChange={(value) => handleChangePlan(user.user_id, value)}
+                          >
+                            <SelectTrigger className="w-[160px]">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="free">Free</SelectItem>
+                              <SelectItem value="premium">✨ Premium</SelectItem>
+                              <SelectItem value="premium_plus">💎 Premium Plus</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </TableCell>
                       <TableCell>
                         <div className="flex gap-1">
                           {isAdmin && <Badge variant="destructive"><Shield className="w-3 h-3 mr-1" />Admin</Badge>}
