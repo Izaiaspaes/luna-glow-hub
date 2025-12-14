@@ -664,6 +664,7 @@ export type Database = {
           notification_preferences: Json | null
           phone: string | null
           privacy_mode: boolean | null
+          registration_source: Json | null
           subscription_plan: string | null
           theme: string | null
           tour_completed: boolean | null
@@ -681,6 +682,7 @@ export type Database = {
           notification_preferences?: Json | null
           phone?: string | null
           privacy_mode?: boolean | null
+          registration_source?: Json | null
           subscription_plan?: string | null
           theme?: string | null
           tour_completed?: boolean | null
@@ -698,6 +700,7 @@ export type Database = {
           notification_preferences?: Json | null
           phone?: string | null
           privacy_mode?: boolean | null
+          registration_source?: Json | null
           subscription_plan?: string | null
           theme?: string | null
           tour_completed?: boolean | null
@@ -1287,6 +1290,7 @@ export type Database = {
           full_name: string
           is_active: boolean
           phone: string
+          registration_source: Json
           roles: Json
           subscription_plan: string
           user_id: string

@@ -121,13 +121,41 @@ export default function Onboarding() {
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [registrationSource, setRegistrationSource] = useState<{
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+    utm_term?: string;
+    utm_content?: string;
+    referral_code?: string;
+  } | null>(null);
 
-  // Capture referral code from URL
+  // Capture referral code and UTM parameters from URL
   useEffect(() => {
     const refCode = searchParams.get("ref");
+    const utmSource = searchParams.get("utm_source");
+    const utmMedium = searchParams.get("utm_medium");
+    const utmCampaign = searchParams.get("utm_campaign");
+    const utmTerm = searchParams.get("utm_term");
+    const utmContent = searchParams.get("utm_content");
+    
     if (refCode) {
       setReferralCode(refCode);
       console.log("Referral code captured:", refCode);
+    }
+    
+    // Capture UTM parameters if any exist
+    const sourceData: typeof registrationSource = {};
+    if (utmSource) sourceData.utm_source = utmSource;
+    if (utmMedium) sourceData.utm_medium = utmMedium;
+    if (utmCampaign) sourceData.utm_campaign = utmCampaign;
+    if (utmTerm) sourceData.utm_term = utmTerm;
+    if (utmContent) sourceData.utm_content = utmContent;
+    if (refCode) sourceData.referral_code = refCode;
+    
+    if (Object.keys(sourceData).length > 0) {
+      setRegistrationSource(sourceData);
+      console.log("Registration source captured:", sourceData);
     }
   }, [searchParams]);
 
@@ -193,6 +221,19 @@ export default function Onboarding() {
             } catch (refErr) {
               console.error("Error registering referral:", refErr);
               // Don't block onboarding if referral fails
+            }
+          }
+          
+          // Save registration source (UTM parameters) to profile
+          if (registrationSource) {
+            try {
+              await supabase
+                .from('profiles')
+                .update({ registration_source: registrationSource })
+                .eq('user_id', data.user.id);
+              console.log("Registration source saved successfully");
+            } catch (srcErr) {
+              console.error("Error saving registration source:", srcErr);
             }
           }
           
