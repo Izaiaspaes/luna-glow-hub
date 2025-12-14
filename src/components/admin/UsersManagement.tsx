@@ -41,6 +41,7 @@ interface UserWithRole {
   subscription_plan?: string | null;
   is_active?: boolean;
   registration_source?: RegistrationSource | null;
+  last_accessed_at?: string | null;
 }
 
 export const UsersManagement = () => {
@@ -78,6 +79,7 @@ export const UsersManagement = () => {
       subscription_plan: user.subscription_plan || 'free',
       is_active: user.is_active ?? true,
       registration_source: user.registration_source || null,
+      last_accessed_at: user.last_accessed_at || null,
     }));
 
     setUsers(usersArray);
@@ -315,6 +317,7 @@ export const UsersManagement = () => {
                   <TableHead>Nome</TableHead>
                   <TableHead>E-mail</TableHead>
                   <TableHead>Cadastro</TableHead>
+                  <TableHead>Última Atividade</TableHead>
                   <TableHead>Origem</TableHead>
                   <TableHead>Pacote</TableHead>
                   <TableHead>Roles</TableHead>
@@ -345,6 +348,23 @@ export const UsersManagement = () => {
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
+                        </TableCell>
+                        <TableCell>
+                          {user.last_accessed_at ? (
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger className="flex items-center gap-1 text-sm">
+                                  <Calendar className="w-3 h-3 text-muted-foreground" />
+                                  {format(new Date(user.last_accessed_at), "dd/MM/yyyy", { locale: ptBR })}
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  {format(new Date(user.last_accessed_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          ) : (
+                            <span className="text-muted-foreground text-sm">Nunca</span>
+                          )}
                         </TableCell>
                         <TableCell>
                           {user.registration_source ? (
