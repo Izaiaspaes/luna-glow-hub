@@ -270,25 +270,39 @@ export const AppDemo = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative mx-auto w-[280px] md:w-[320px] touch-pan-y"
+            className="relative mx-auto w-[260px] sm:w-[280px] md:w-[320px] touch-none"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
           >
+            {/* Swipe hint for mobile - shows briefly on first load */}
+            <motion.div
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 3 }}
+              className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none md:hidden"
+            >
+              <div className="bg-black/50 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm flex items-center gap-2">
+                <ChevronLeft className="h-4 w-4 animate-pulse" />
+                <span>{t('appDemo.swipeHint', 'Deslize para ver mais')}</span>
+                <ChevronRight className="h-4 w-4 animate-pulse" />
+              </div>
+            </motion.div>
+
             {/* Phone Frame */}
-            <div className="relative bg-gradient-to-b from-foreground/90 to-foreground rounded-[3rem] p-2 shadow-2xl">
+            <div className="relative bg-gradient-to-b from-foreground/90 to-foreground rounded-[2.5rem] sm:rounded-[3rem] p-1.5 sm:p-2 shadow-2xl">
               {/* Screen - adjusted aspect ratio for real mobile screenshots */}
-              <div className="relative bg-background rounded-[2.5rem] overflow-hidden aspect-[9/20] select-none">
+              <div className="relative bg-background rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden aspect-[9/19] select-none">
                 {/* Real App Screenshot with Carousel */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeScreen}
-                    initial={{ opacity: 0, x: touchEnd && touchStart && touchEnd < touchStart ? 50 : -50 }}
+                    initial={{ opacity: 0, x: touchEnd && touchStart && touchEnd < touchStart ? 30 : -30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: touchEnd && touchStart && touchEnd < touchStart ? -50 : 50 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    exit={{ opacity: 0, x: touchEnd && touchStart && touchEnd < touchStart ? -30 : 30 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                     className="absolute inset-0"
                   >
                     <img 
@@ -296,6 +310,7 @@ export const AppDemo = () => {
                       alt={t(screens[activeScreen].titleKey, screens[activeScreen].defaultTitle)}
                       className="w-full h-full object-cover object-top pointer-events-none"
                       draggable={false}
+                      loading="lazy"
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -438,21 +453,29 @@ export const AppDemo = () => {
             ))}
           </div>
 
-          {/* Mobile Navigation */}
-          <div className="flex justify-center gap-4 mt-4 md:hidden">
+          {/* Mobile Navigation - Larger touch targets */}
+          <div className="flex justify-center gap-6 mt-4 md:hidden">
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={prevScreen}
-              className="w-10 h-10 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground"
+              onClick={() => {
+                prevScreen();
+                setIsPaused(true);
+                setTimeout(() => setIsPaused(false), 5000);
+              }}
+              className="w-12 h-12 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground active:bg-muted"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-6 w-6" />
             </motion.button>
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={nextScreen}
-              className="w-10 h-10 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground"
+              onClick={() => {
+                nextScreen();
+                setIsPaused(true);
+                setTimeout(() => setIsPaused(false), 5000);
+              }}
+              className="w-12 h-12 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground active:bg-muted"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-6 w-6" />
             </motion.button>
           </div>
         </div>
