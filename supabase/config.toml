@@ -1,5 +1,8 @@
 project_id = "savriwalgygixwtcpmya"
 
+[functions.send-upgrade-campaign]
+verify_jwt = false
+
 [functions.analyze-beauty]
 verify_jwt = false
 
