@@ -1964,6 +1964,20 @@
     "badge": "Complete Experience",
     "title": "Everything you need in one place",
     "subtitle": "Smart features that adapt to your cycle and routine",
+    "screens": {
+      "dashboard": {
+        "title": "Personalized Dashboard",
+        "description": "View your health data in an intuitive panel"
+      },
+      "calendar": {
+        "title": "Cycle Calendar",
+        "description": "Track your cycle with precision and receive predictions"
+      },
+      "ai": {
+        "title": "AI Assistant",
+        "description": "Chat with Luna Sense about your wellness"
+      }
+    },
     "feature1": {
       "title": "Smart Tracking",
       "description": "Track your cycle, sleep, mood and energy with personalized insights"

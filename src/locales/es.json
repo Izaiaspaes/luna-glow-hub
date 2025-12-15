@@ -2164,6 +2164,20 @@
     "badge": "Experiencia Completa",
     "title": "Todo lo que necesitas en un solo lugar",
     "subtitle": "Funcionalidades inteligentes que se adaptan a tu ciclo y rutina",
+    "screens": {
+      "dashboard": {
+        "title": "Panel Personalizado",
+        "description": "Visualiza tus datos de salud en un panel intuitivo"
+      },
+      "calendar": {
+        "title": "Calendario del Ciclo",
+        "description": "Acompaña tu ciclo con precisión y recibe predicciones"
+      },
+      "ai": {
+        "title": "Asistente IA",
+        "description": "Conversa con Luna Sense sobre tu bienestar"
+      }
+    },
     "feature1": {
       "title": "Seguimiento Inteligente",
       "description": "Acompaña tu ciclo, sueño, humor y energía con insights personalizados"
