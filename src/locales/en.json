@@ -1959,5 +1959,22 @@
   },
   "footer": {
     "refundPolicy": "Refund Policy"
+  },
+  "appDemo": {
+    "badge": "Complete Experience",
+    "title": "Everything you need in one place",
+    "subtitle": "Smart features that adapt to your cycle and routine",
+    "feature1": {
+      "title": "Smart Tracking",
+      "description": "Track your cycle, sleep, mood and energy with personalized insights"
+    },
+    "feature2": {
+      "title": "Personalized AI",
+      "description": "Recommendations tailored to your body and routine with artificial intelligence"
+    },
+    "feature3": {
+      "title": "Total Privacy",
+      "description": "Your data protected with end-to-end encryption"
+    }
   }
 }
