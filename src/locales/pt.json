@@ -2024,6 +2024,7 @@
     "feature3": {
       "title": "Privacidade Total",
       "description": "Seus dados protegidos com criptografia de ponta a ponta"
-    }
+    },
+    "swipeHint": "Deslize para ver mais"
   }
 }

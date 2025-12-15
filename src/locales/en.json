@@ -1997,6 +1997,7 @@
     "feature3": {
       "title": "Total Privacy",
       "description": "Your data protected with end-to-end encryption"
-    }
+    },
+    "swipeHint": "Swipe to see more"
   }
 }

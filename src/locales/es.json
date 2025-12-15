@@ -2197,6 +2197,7 @@
     "feature3": {
       "title": "Privacidad Total",
       "description": "Tus datos protegidos con encriptación de extremo a extremo"
-    }
+    },
+    "swipeHint": "Desliza para ver más"
   }
 }
