@@ -15,9 +15,11 @@ import { useTranslation } from "react-i18next";
 import { useRef, useState } from "react";
 
 // Import real app screenshots
-import appScreenDashboard from "@/assets/app-screen-dashboard.png";
-import appScreenAiChat from "@/assets/app-screen-ai-chat.png";
-import appScreenCalendar from "@/assets/app-screen-calendar.png";
+import appScreenDashboard from "@/assets/app-screen-dashboard.jpg";
+import appScreenWellness from "@/assets/app-screen-wellness.jpg";
+import appScreenJournal from "@/assets/app-screen-journal.jpg";
+import appScreenBeauty from "@/assets/app-screen-beauty.jpg";
+import appScreenSOS from "@/assets/app-screen-sos.jpg";
 
 const features = [
   {
@@ -68,21 +70,35 @@ const screens = [
     titleKey: "appDemo.screens.dashboard.title",
     descKey: "appDemo.screens.dashboard.description",
     defaultTitle: "Dashboard Personalizado",
-    defaultDesc: "Visualize seus dados de saúde em um painel intuitivo"
+    defaultDesc: "Visualize ciclo, sono, humor e energia em tempo real"
   },
   {
-    image: appScreenCalendar,
-    titleKey: "appDemo.screens.calendar.title",
-    descKey: "appDemo.screens.calendar.description",
-    defaultTitle: "Calendário do Ciclo",
-    defaultDesc: "Acompanhe seu ciclo com precisão e receba previsões"
+    image: appScreenWellness,
+    titleKey: "appDemo.screens.wellness.title",
+    descKey: "appDemo.screens.wellness.description",
+    defaultTitle: "Planos de Bem-Estar",
+    defaultDesc: "Recomendações personalizadas geradas por IA"
   },
   {
-    image: appScreenAiChat,
-    titleKey: "appDemo.screens.ai.title",
-    descKey: "appDemo.screens.ai.description",
-    defaultTitle: "Assistente IA",
-    defaultDesc: "Converse com Luna Sense sobre seu bem-estar"
+    image: appScreenJournal,
+    titleKey: "appDemo.screens.journal.title",
+    descKey: "appDemo.screens.journal.description",
+    defaultTitle: "Diário & Luna Sense",
+    defaultDesc: "Escreva sobre seu dia e converse com IA"
+  },
+  {
+    image: appScreenBeauty,
+    titleKey: "appDemo.screens.beauty.title",
+    descKey: "appDemo.screens.beauty.description",
+    defaultTitle: "Beleza & Closet Virtual",
+    defaultDesc: "Análise de beleza com IA e sugestões de looks"
+  },
+  {
+    image: appScreenSOS,
+    titleKey: "appDemo.screens.sos.title",
+    descKey: "appDemo.screens.sos.description",
+    defaultTitle: "SOS Feminino",
+    defaultDesc: "Suporte imediato quando você mais precisa"
   }
 ];
 

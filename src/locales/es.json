@@ -2167,15 +2167,23 @@
     "screens": {
       "dashboard": {
         "title": "Panel Personalizado",
-        "description": "Visualiza tus datos de salud en un panel intuitivo"
+        "description": "Visualiza ciclo, sueño, humor y energía en tiempo real"
       },
-      "calendar": {
-        "title": "Calendario del Ciclo",
-        "description": "Acompaña tu ciclo con precisión y recibe predicciones"
+      "wellness": {
+        "title": "Planes de Bienestar",
+        "description": "Recomendaciones personalizadas generadas por IA"
       },
-      "ai": {
-        "title": "Asistente IA",
-        "description": "Conversa con Luna Sense sobre tu bienestar"
+      "journal": {
+        "title": "Diario & Luna Sense",
+        "description": "Escribe sobre tu día y conversa con IA"
+      },
+      "beauty": {
+        "title": "Belleza & Closet Virtual",
+        "description": "Análisis de belleza con IA y sugerencias de looks"
+      },
+      "sos": {
+        "title": "SOS Femenino",
+        "description": "Apoyo inmediato cuando más lo necesitas"
       }
     },
     "feature1": {

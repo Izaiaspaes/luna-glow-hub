@@ -1994,15 +1994,23 @@
     "screens": {
       "dashboard": {
         "title": "Dashboard Personalizado",
-        "description": "Visualize seus dados de saúde em um painel intuitivo"
+        "description": "Visualize ciclo, sono, humor e energia em tempo real"
       },
-      "calendar": {
-        "title": "Calendário do Ciclo",
-        "description": "Acompanhe seu ciclo com precisão e receba previsões"
+      "wellness": {
+        "title": "Planos de Bem-Estar",
+        "description": "Recomendações personalizadas geradas por IA"
       },
-      "ai": {
-        "title": "Assistente IA",
-        "description": "Converse com Luna Sense sobre seu bem-estar"
+      "journal": {
+        "title": "Diário & Luna Sense",
+        "description": "Escreva sobre seu dia e converse com IA"
+      },
+      "beauty": {
+        "title": "Beleza & Closet Virtual",
+        "description": "Análise de beleza com IA e sugestões de looks"
+      },
+      "sos": {
+        "title": "SOS Feminino",
+        "description": "Suporte imediato quando você mais precisa"
       }
     },
     "feature1": {
