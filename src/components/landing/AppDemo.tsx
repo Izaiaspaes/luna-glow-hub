@@ -108,6 +108,11 @@ export const AppDemo = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeScreen, setActiveScreen] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  
+  // Touch/swipe gesture state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
 
   // Auto-play carousel every 4 seconds
   const nextScreen = useCallback(() => {
@@ -117,6 +122,37 @@ export const AppDemo = () => {
   const prevScreen = useCallback(() => {
     setActiveScreen((prev) => (prev - 1 + screens.length) % screens.length);
   }, []);
+
+  // Handle touch events for swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsPaused(true);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      setIsPaused(false);
+      return;
+    }
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      nextScreen();
+    } else if (isRightSwipe) {
+      prevScreen();
+    }
+    
+    // Resume auto-play after 5 seconds
+    setTimeout(() => setIsPaused(false), 5000);
+  };
 
   useEffect(() => {
     if (isPaused) return;
@@ -234,30 +270,32 @@ export const AppDemo = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative mx-auto w-[280px] md:w-[320px]"
+            className="relative mx-auto w-[280px] md:w-[320px] touch-pan-y"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={() => setIsPaused(true)}
-            onTouchEnd={() => setIsPaused(false)}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             {/* Phone Frame */}
             <div className="relative bg-gradient-to-b from-foreground/90 to-foreground rounded-[3rem] p-2 shadow-2xl">
               {/* Screen - adjusted aspect ratio for real mobile screenshots */}
-              <div className="relative bg-background rounded-[2.5rem] overflow-hidden aspect-[9/20]">
+              <div className="relative bg-background rounded-[2.5rem] overflow-hidden aspect-[9/20] select-none">
                 {/* Real App Screenshot with Carousel */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeScreen}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.05 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    initial={{ opacity: 0, x: touchEnd && touchStart && touchEnd < touchStart ? 50 : -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: touchEnd && touchStart && touchEnd < touchStart ? -50 : 50 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     className="absolute inset-0"
                   >
                     <img 
                       src={screens[activeScreen].image}
                       alt={t(screens[activeScreen].titleKey, screens[activeScreen].defaultTitle)}
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover object-top pointer-events-none"
+                      draggable={false}
                     />
                   </motion.div>
                 </AnimatePresence>
