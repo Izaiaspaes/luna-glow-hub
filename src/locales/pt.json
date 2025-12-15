@@ -1986,5 +1986,22 @@
   },
   "footer": {
     "refundPolicy": "Política de Reembolso"
+  },
+  "appDemo": {
+    "badge": "Experiência Completa",
+    "title": "Tudo que você precisa em um só lugar",
+    "subtitle": "Funcionalidades inteligentes que se adaptam ao seu ciclo e rotina",
+    "feature1": {
+      "title": "Rastreamento Inteligente",
+      "description": "Acompanhe seu ciclo, sono, humor e energia com insights personalizados"
+    },
+    "feature2": {
+      "title": "IA Personalizada",
+      "description": "Recomendações adaptadas ao seu corpo e rotina com inteligência artificial"
+    },
+    "feature3": {
+      "title": "Privacidade Total",
+      "description": "Seus dados protegidos com criptografia de ponta a ponta"
+    }
   }
 }

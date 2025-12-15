@@ -12,12 +12,14 @@ import { ExitIntentPopup } from "@/components/landing/ExitIntentPopup";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { StickyCTA } from "@/components/landing/StickyCTA";
 import { Quiz } from "@/components/landing/Quiz";
+import { AppDemo } from "@/components/landing/AppDemo";
 
 const LandingPT = () => {
   return (
     <div className="min-h-screen">
       <Hero />
       <Quiz />
+      <AppDemo />
       <Features />
       <ServicesHighlight />
       <Testimonials />

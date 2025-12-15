@@ -10,12 +10,14 @@ import { SocialProof } from "@/components/landing/es/SocialProof";
 import { StickyCTA } from "@/components/landing/es/StickyCTA";
 import { Quiz } from "@/components/landing/es/Quiz";
 import { CountdownTimer } from "@/components/landing/es/CountdownTimer";
+import { AppDemo } from "@/components/landing/AppDemo";
 
 const LandingES = () => {
   return (
     <div className="min-h-screen">
       <Hero />
       <Quiz />
+      <AppDemo />
       <Features />
       <Testimonials />
       <CountdownTimer />
