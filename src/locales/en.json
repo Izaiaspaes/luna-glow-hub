@@ -1967,15 +1967,23 @@
     "screens": {
       "dashboard": {
         "title": "Personalized Dashboard",
-        "description": "View your health data in an intuitive panel"
+        "description": "View cycle, sleep, mood and energy in real time"
       },
-      "calendar": {
-        "title": "Cycle Calendar",
-        "description": "Track your cycle with precision and receive predictions"
+      "wellness": {
+        "title": "Wellness Plans",
+        "description": "Personalized AI-generated recommendations"
       },
-      "ai": {
-        "title": "AI Assistant",
-        "description": "Chat with Luna Sense about your wellness"
+      "journal": {
+        "title": "Journal & Luna Sense",
+        "description": "Write about your day and chat with AI"
+      },
+      "beauty": {
+        "title": "Beauty & Virtual Closet",
+        "description": "AI beauty analysis and outfit suggestions"
+      },
+      "sos": {
+        "title": "SOS Support",
+        "description": "Immediate support when you need it most"
       }
     },
     "feature1": {
