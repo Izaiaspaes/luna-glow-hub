@@ -12,7 +12,8 @@ import {
   ChevronRight
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
 
 // Import real app screenshots
 import appScreenDashboard from "@/assets/app-screen-dashboard.jpg";
@@ -106,6 +107,26 @@ export const AppDemo = () => {
   const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeScreen, setActiveScreen] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-play carousel every 4 seconds
+  const nextScreen = useCallback(() => {
+    setActiveScreen((prev) => (prev + 1) % screens.length);
+  }, []);
+
+  const prevScreen = useCallback(() => {
+    setActiveScreen((prev) => (prev - 1 + screens.length) % screens.length);
+  }, []);
+
+  useEffect(() => {
+    if (isPaused) return;
+    
+    const interval = setInterval(() => {
+      nextScreen();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, nextScreen]);
 
   // Parallax scroll effects
   const { scrollYProgress } = useScroll({
@@ -121,14 +142,6 @@ export const AppDemo = () => {
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -15]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
-
-  const nextScreen = () => {
-    setActiveScreen((prev) => (prev + 1) % screens.length);
-  };
-
-  const prevScreen = () => {
-    setActiveScreen((prev) => (prev - 1 + screens.length) % screens.length);
-  };
 
   return (
     <section 
@@ -222,42 +235,61 @@ export const AppDemo = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="relative mx-auto w-[280px] md:w-[320px]"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
           >
             {/* Phone Frame */}
-            <div className="relative bg-gradient-to-b from-foreground/90 to-foreground rounded-[3rem] p-3 shadow-2xl">
-              {/* Screen */}
-              <div className="relative bg-background rounded-[2.5rem] overflow-hidden aspect-[9/19]">
+            <div className="relative bg-gradient-to-b from-foreground/90 to-foreground rounded-[3rem] p-2 shadow-2xl">
+              {/* Screen - adjusted aspect ratio for real mobile screenshots */}
+              <div className="relative bg-background rounded-[2.5rem] overflow-hidden aspect-[9/20]">
                 {/* Real App Screenshot with Carousel */}
-                <motion.div
-                  key={activeScreen}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="absolute inset-0"
-                >
-                  <img 
-                    src={screens[activeScreen].image}
-                    alt={t(screens[activeScreen].titleKey, screens[activeScreen].defaultTitle)}
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Subtle overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-background/10" />
-                </motion.div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeScreen}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="absolute inset-0"
+                  >
+                    <img 
+                      src={screens[activeScreen].image}
+                      alt={t(screens[activeScreen].titleKey, screens[activeScreen].defaultTitle)}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </motion.div>
+                </AnimatePresence>
 
                 {/* Screen Indicator Dots */}
-                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
                   {screens.map((_, index) => (
                     <button
                       key={index}
-                      onClick={() => setActiveScreen(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      onClick={() => {
+                        setActiveScreen(index);
+                        setIsPaused(true);
+                        setTimeout(() => setIsPaused(false), 5000);
+                      }}
+                      className={`h-1.5 rounded-full transition-all duration-500 ${
                         index === activeScreen 
-                          ? "bg-white w-6" 
-                          : "bg-white/50 hover:bg-white/70"
+                          ? "bg-primary w-4" 
+                          : "bg-white/60 w-1.5 hover:bg-white/80"
                       }`}
                     />
                   ))}
+                </div>
+
+                {/* Progress bar for auto-play */}
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-black/10 z-10">
+                  <motion.div
+                    key={`progress-${activeScreen}`}
+                    initial={{ width: "0%" }}
+                    animate={{ width: isPaused ? "0%" : "100%" }}
+                    transition={{ duration: 4, ease: "linear" }}
+                    className="h-full bg-primary/60"
+                  />
                 </div>
               </div>
             </div>
