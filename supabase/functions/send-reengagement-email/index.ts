@@ -1,8 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -10,6 +7,50 @@ const corsHeaders = {
 };
 
 const INACTIVITY_DAYS = 7;
+
+// ZeptoMail email sending function
+async function sendEmailWithZeptoMail(
+  to: string,
+  toName: string,
+  subject: string,
+  htmlBody: string
+): Promise<{ success: boolean; error?: string }> {
+  const zeptoMailToken = Deno.env.get("ZEPTOMAIL_API_TOKEN");
+  
+  if (!zeptoMailToken) {
+    return { success: false, error: "ZEPTOMAIL_API_TOKEN not configured" };
+  }
+
+  try {
+    const response = await fetch("https://api.zeptomail.com/v1.1/email", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": zeptoMailToken,
+      },
+      body: JSON.stringify({
+        from: { address: "contato@lunaglow.com.br", name: "Luna" },
+        to: [{ email_address: { address: to, name: toName } }],
+        subject: subject,
+        htmlbody: htmlBody,
+      }),
+    });
+
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      console.error("[ZEPTOMAIL] Error response:", responseData);
+      return { success: false, error: responseData.message || responseData.error || `HTTP ${response.status}` };
+    }
+
+    console.log("[ZEPTOMAIL] Email sent successfully to:", to);
+    return { success: true };
+  } catch (error: any) {
+    console.error("[ZEPTOMAIL] Error:", error);
+    return { success: false, error: error.message };
+  }
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -171,35 +212,30 @@ serve(async (req) => {
         </html>
         `;
 
-        const { error: emailError } = await resend.emails.send({
-          from: "Luna <contato@lunaglow.com.br>",
-          to: [userEmail],
-          subject: `🌙 ${userName}, estamos com saudades! Seu bem-estar te espera`,
-          html: emailHtml,
-        });
+        const emailSubject = `🌙 ${userName}, estamos com saudades! Seu bem-estar te espera`;
+        const emailResult = await sendEmailWithZeptoMail(userEmail, userName, emailSubject, emailHtml);
 
         // Log email to database
-        const emailSubject = `🌙 ${userName}, estamos com saudades! Seu bem-estar te espera`;
         await supabaseClient.from("email_logs").insert({
           user_id: profile.user_id,
           email_to: userEmail,
           email_type: "reengagement_7days",
           subject: emailSubject,
-          status: emailError ? "failed" : "sent",
-          error_message: emailError?.message || null,
+          status: emailResult.success ? "sent" : "failed",
+          error_message: emailResult.error || null,
           metadata: { days_inactive: daysSinceAccess, is_premium: isPremium }
         });
 
-        if (emailError) {
-          console.error("[REENGAGEMENT] Email error for", userEmail, ":", emailError);
-          errors.push(`${userEmail}: ${emailError.message}`);
+        if (!emailResult.success) {
+          console.error("[REENGAGEMENT] Email error for", userEmail, ":", emailResult.error);
+          errors.push(`${userEmail}: ${emailResult.error}`);
         } else {
           emailsSent++;
           console.log("[REENGAGEMENT] Reengagement email sent to:", userEmail, "- Inactive for", daysSinceAccess, "days");
         }
 
         // Small delay to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 150));
+        await new Promise(resolve => setTimeout(resolve, 600));
 
       } catch (userError: any) {
         console.error("[REENGAGEMENT] Error processing user:", profile.user_id, userError);

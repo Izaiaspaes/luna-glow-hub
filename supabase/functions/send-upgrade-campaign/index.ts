@@ -1,13 +1,54 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// ZeptoMail email sending function
+async function sendEmailWithZeptoMail(
+  to: string,
+  toName: string,
+  subject: string,
+  htmlBody: string
+): Promise<{ success: boolean; error?: string }> {
+  const zeptoMailToken = Deno.env.get("ZEPTOMAIL_API_TOKEN");
+  
+  if (!zeptoMailToken) {
+    return { success: false, error: "ZEPTOMAIL_API_TOKEN not configured" };
+  }
+
+  try {
+    const response = await fetch("https://api.zeptomail.com/v1.1/email", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": zeptoMailToken,
+      },
+      body: JSON.stringify({
+        from: { address: "contato@lunaglow.com.br", name: "Luna" },
+        to: [{ email_address: { address: to, name: toName } }],
+        subject: subject,
+        htmlbody: htmlBody,
+      }),
+    });
+
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      console.error("[ZEPTOMAIL] Error response:", responseData);
+      return { success: false, error: responseData.message || responseData.error || `HTTP ${response.status}` };
+    }
+
+    console.log("[ZEPTOMAIL] Email sent successfully to:", to);
+    return { success: true };
+  } catch (error: any) {
+    console.error("[ZEPTOMAIL] Error:", error);
+    return { success: false, error: error.message };
+  }
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -166,12 +207,7 @@ serve(async (req) => {
       `;
 
       try {
-        const { error: emailError } = await resend.emails.send({
-          from: "Luna <contato@lunaglow.com.br>",
-          to: [userEmail],
-          subject: emailSubject,
-          html: emailHtml,
-        });
+        const emailResult = await sendEmailWithZeptoMail(userEmail, userName, emailSubject, emailHtml);
 
         // Log email
         await supabaseClient.from("email_logs").insert({
@@ -179,15 +215,15 @@ serve(async (req) => {
           email_to: userEmail,
           email_type: "upgrade_campaign",
           subject: emailSubject,
-          status: emailError ? "failed" : "sent",
-          error_message: emailError?.message || null,
+          status: emailResult.success ? "sent" : "failed",
+          error_message: emailResult.error || null,
           metadata: { current_plan: "free" }
         });
 
-        if (emailError) {
-          console.error(`Email failed for ${userEmail}:`, emailError);
+        if (!emailResult.success) {
+          console.error(`Email failed for ${userEmail}:`, emailResult.error);
           results.emailsFailed++;
-          results.errors.push(`Email to ${userEmail}: ${emailError.message}`);
+          results.errors.push(`Email to ${userEmail}: ${emailResult.error}`);
         } else {
           console.log(`Email sent to ${userEmail}`);
           results.emailsSent++;
@@ -245,6 +281,9 @@ serve(async (req) => {
           }
         }
       }
+
+      // Delay to avoid rate limiting
+      await new Promise(resolve => setTimeout(resolve, 600));
     }
 
     console.log("Upgrade campaign completed:", results);

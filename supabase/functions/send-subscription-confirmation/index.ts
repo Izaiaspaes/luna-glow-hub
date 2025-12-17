@@ -1,13 +1,54 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// ZeptoMail email sending function
+async function sendEmailWithZeptoMail(
+  to: string,
+  toName: string,
+  subject: string,
+  htmlBody: string
+): Promise<{ success: boolean; error?: string }> {
+  const zeptoMailToken = Deno.env.get("ZEPTOMAIL_API_TOKEN");
+  
+  if (!zeptoMailToken) {
+    return { success: false, error: "ZEPTOMAIL_API_TOKEN not configured" };
+  }
+
+  try {
+    const response = await fetch("https://api.zeptomail.com/v1.1/email", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": zeptoMailToken,
+      },
+      body: JSON.stringify({
+        from: { address: "contato@lunaglow.com.br", name: "Luna" },
+        to: [{ email_address: { address: to, name: toName } }],
+        subject: subject,
+        htmlbody: htmlBody,
+      }),
+    });
+
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      console.error("[ZEPTOMAIL] Error response:", responseData);
+      return { success: false, error: responseData.message || responseData.error || `HTTP ${response.status}` };
+    }
+
+    console.log("[ZEPTOMAIL] Email sent successfully to:", to);
+    return { success: true };
+  } catch (error: any) {
+    console.error("[ZEPTOMAIL] Error:", error);
+    return { success: false, error: error.message };
+  }
+}
 
 interface SubscriptionConfirmationRequest {
   userId: string;
@@ -123,7 +164,6 @@ serve(async (req) => {
     
     const benefits = getPlanBenefits(planType, language);
     const planName = getPlanName(planType, language);
-    const dashboardUrl = `${Deno.env.get("SUPABASE_URL")?.replace('.supabase.co', '')}/dashboard`;
 
     const benefitsList = benefits.map(b => `<li style="padding: 8px 0; font-size: 16px;">${b}</li>`).join("");
 
@@ -157,7 +197,7 @@ serve(async (req) => {
           </div>
           
           <div style="text-align: center; margin: 35px 0;">
-            <a href="https://preview--luna-wellbeing-tracker.lovable.app/dashboard" 
+            <a href="https://lunaglow.com.br/dashboard" 
                style="display: inline-block; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 16px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);">
               Acessar meu Dashboard →
             </a>
@@ -179,16 +219,12 @@ serve(async (req) => {
     </html>
     `;
 
-    const { error: emailError } = await resend.emails.send({
-      from: "Luna <contato@lunaglow.com.br>",
-      to: [userEmail],
-      subject: `🎉 Bem-vinda ao Luna ${planName}! Sua assinatura foi confirmada`,
-      html: emailHtml,
-    });
+    const emailSubject = `🎉 Bem-vinda ao Luna ${planName}! Sua assinatura foi confirmada`;
+    const emailResult = await sendEmailWithZeptoMail(userEmail, userName, emailSubject, emailHtml);
 
-    if (emailError) {
-      console.error("[SUBSCRIPTION-CONFIRMATION] Email error:", emailError);
-      throw emailError;
+    if (!emailResult.success) {
+      console.error("[SUBSCRIPTION-CONFIRMATION] Email error:", emailResult.error);
+      throw new Error(emailResult.error);
     }
 
     console.log("[SUBSCRIPTION-CONFIRMATION] Email sent successfully to:", userEmail);

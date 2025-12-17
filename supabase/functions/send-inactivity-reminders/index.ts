@@ -1,13 +1,54 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// ZeptoMail email sending function
+async function sendEmailWithZeptoMail(
+  to: string,
+  toName: string,
+  subject: string,
+  htmlBody: string
+): Promise<{ success: boolean; error?: string }> {
+  const zeptoMailToken = Deno.env.get("ZEPTOMAIL_API_TOKEN");
+  
+  if (!zeptoMailToken) {
+    return { success: false, error: "ZEPTOMAIL_API_TOKEN not configured" };
+  }
+
+  try {
+    const response = await fetch("https://api.zeptomail.com/v1.1/email", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": zeptoMailToken,
+      },
+      body: JSON.stringify({
+        from: { address: "contato@lunaglow.com.br", name: "Luna" },
+        to: [{ email_address: { address: to, name: toName } }],
+        subject: subject,
+        htmlbody: htmlBody,
+      }),
+    });
+
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      console.error("[ZEPTOMAIL] Error response:", responseData);
+      return { success: false, error: responseData.message || responseData.error || `HTTP ${response.status}` };
+    }
+
+    console.log("[ZEPTOMAIL] Email sent successfully to:", to);
+    return { success: true };
+  } catch (error: any) {
+    console.error("[ZEPTOMAIL] Error:", error);
+    return { success: false, error: error.message };
+  }
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -116,7 +157,7 @@ serve(async (req) => {
               </p>
               
               <div style="text-align: center; margin: 35px 0;">
-                <a href="https://preview--luna-wellbeing-tracker.lovable.app/dashboard" 
+                <a href="https://lunaglow.com.br/dashboard" 
                    style="display: inline-block; background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 16px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);">
                   Voltar para o Luna →
                 </a>
@@ -138,12 +179,7 @@ serve(async (req) => {
         `;
 
         const emailSubject = `💜 ${userName}, sentimos sua falta no Luna!`;
-        const { error: emailError } = await resend.emails.send({
-          from: "Luna <contato@lunaglow.com.br>",
-          to: [userEmail],
-          subject: emailSubject,
-          html: emailHtml,
-        });
+        const emailResult = await sendEmailWithZeptoMail(userEmail, userName, emailSubject, emailHtml);
 
         // Log email to database
         await supabaseClient.from("email_logs").insert({
@@ -151,20 +187,20 @@ serve(async (req) => {
           email_to: userEmail,
           email_type: "inactivity_reminder_2days",
           subject: emailSubject,
-          status: emailError ? "failed" : "sent",
-          error_message: emailError?.message || null,
+          status: emailResult.success ? "sent" : "failed",
+          error_message: emailResult.error || null,
           metadata: { days_inactive: daysSinceAccess }
         });
 
-        if (emailError) {
-          console.error("[INACTIVITY-REMINDERS] Email error for", userEmail, ":", emailError);
-          errors.push(`${userEmail}: ${emailError.message}`);
+        if (!emailResult.success) {
+          console.error("[INACTIVITY-REMINDERS] Email error for", userEmail, ":", emailResult.error);
+          errors.push(`${userEmail}: ${emailResult.error}`);
         } else {
           emailsSent++;
           console.log("[INACTIVITY-REMINDERS] Reminder sent to:", userEmail);
         }
 
-        // Delay to avoid rate limiting (Resend allows 2 req/s)
+        // Delay to avoid rate limiting
         await new Promise(resolve => setTimeout(resolve, 600));
 
       } catch (userError: any) {
