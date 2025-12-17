@@ -54,6 +54,9 @@ verify_jwt = true
 [functions.process-referral]
 verify_jwt = true
 
+[functions.resend-email]
+verify_jwt = false
+
 [functions.send-inactivity-reminders]
 verify_jwt = false
 
