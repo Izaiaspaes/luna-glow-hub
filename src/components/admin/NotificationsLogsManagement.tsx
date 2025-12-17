@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Mail, Bell, Search, RefreshCw, CheckCircle, XCircle, Clock, Download, Filter, Send, Users } from "lucide-react";
+import { Mail, Bell, Search, RefreshCw, CheckCircle, XCircle, Clock, Download, Filter, Send, Users, RotateCcw } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -61,6 +61,7 @@ export function NotificationsLogsManagement() {
   const [sendToAll, setSendToAll] = useState(true);
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [sendingPush, setSendingPush] = useState(false);
+  const [resendingEmailId, setResendingEmailId] = useState<string | null>(null);
 
   useEffect(() => {
     loadData();
@@ -276,6 +277,29 @@ export function NotificationsLogsManagement() {
     setSelectedUserIds([]);
   };
 
+  const handleResendEmail = async (emailLog: EmailLog) => {
+    setResendingEmailId(emailLog.id);
+    try {
+      const { data, error } = await supabase.functions.invoke('resend-email', {
+        body: { emailLogId: emailLog.id }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        toast.success(data.message || "Email reenviado com sucesso!");
+        loadEmailLogs(); // Refresh the list
+      } else {
+        toast.error(`Falha ao reenviar: ${data?.error || "Erro desconhecido"}`);
+      }
+    } catch (error: any) {
+      console.error('Error resending email:', error);
+      toast.error(`Erro ao reenviar email: ${error.message}`);
+    } finally {
+      setResendingEmailId(null);
+    }
+  };
+
   const uniqueSubscribedUsers = [...new Set(pushSubscriptions.map(sub => sub.user_id))];
 
   return (
@@ -424,12 +448,13 @@ export function NotificationsLogsManagement() {
                       <TableHead>Assunto</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead>Erro</TableHead>
+                      <TableHead className="w-[80px]">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredEmailLogs.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                        <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                           Nenhum log de email encontrado
                         </TableCell>
                       </TableRow>
@@ -449,6 +474,20 @@ export function NotificationsLogsManagement() {
                           <TableCell>{getStatusBadge(log.status)}</TableCell>
                           <TableCell className="max-w-[150px] truncate text-red-400" title={log.error_message || ""}>
                             {log.error_message || "-"}
+                          </TableCell>
+                          <TableCell>
+                            {log.status === "failed" && !log.email_type.includes("_resend") && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleResendEmail(log)}
+                                disabled={resendingEmailId === log.id}
+                                className="h-8 w-8 p-0"
+                                title="Reenviar email"
+                              >
+                                <RotateCcw className={`w-4 h-4 ${resendingEmailId === log.id ? 'animate-spin' : ''}`} />
+                              </Button>
+                            )}
                           </TableCell>
                         </TableRow>
                       ))
