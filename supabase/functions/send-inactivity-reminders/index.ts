@@ -108,11 +108,21 @@ serve(async (req) => {
         // Get preferred name from onboarding
         const { data: onboarding } = await supabaseClient
           .from("user_onboarding_data")
-          .select("preferred_name")
+          .select("preferred_name, full_name")
           .eq("user_id", profile.user_id)
-          .single();
+          .maybeSingle();
 
-        const userName = onboarding?.preferred_name || profile.full_name || "Luna User";
+        // Priority: preferred_name > onboarding.full_name first word > profile.full_name first word
+        let userName = "Querida";
+        if (onboarding?.preferred_name) {
+          userName = onboarding.preferred_name;
+        } else if (onboarding?.full_name) {
+          userName = onboarding.full_name.split(" ")[0];
+        } else if (profile.full_name) {
+          userName = profile.full_name.split(" ")[0];
+        }
+        
+        console.log("[INACTIVITY-REMINDERS] User:", profile.user_id, "Name:", userName);
         const userEmail = userData.user.email;
 
         // Calculate days since last access
