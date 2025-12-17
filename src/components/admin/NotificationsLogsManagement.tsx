@@ -290,11 +290,15 @@ export function NotificationsLogsManagement() {
         toast.success(data.message || "Email reenviado com sucesso!");
         loadEmailLogs(); // Refresh the list
       } else {
-        toast.error(`Falha ao reenviar: ${data?.error || "Erro desconhecido"}`);
+        const errorMsg = typeof data?.error === 'object' 
+          ? JSON.stringify(data.error) 
+          : (data?.error || "Erro desconhecido");
+        toast.error(`Falha ao reenviar: ${errorMsg}`);
       }
     } catch (error: any) {
       console.error('Error resending email:', error);
-      toast.error(`Erro ao reenviar email: ${error.message}`);
+      const errorMsg = error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error));
+      toast.error(`Erro ao reenviar email: ${errorMsg}`);
     } finally {
       setResendingEmailId(null);
     }
