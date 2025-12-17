@@ -164,8 +164,8 @@ serve(async (req) => {
           console.log("[INACTIVITY-REMINDERS] Reminder sent to:", userEmail);
         }
 
-        // Small delay to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Delay to avoid rate limiting (Resend allows 2 req/s)
+        await new Promise(resolve => setTimeout(resolve, 600));
 
       } catch (userError: any) {
         console.error("[INACTIVITY-REMINDERS] Error processing user:", profile.user_id, userError);
