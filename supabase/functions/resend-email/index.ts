@@ -92,34 +92,66 @@ serve(async (req) => {
 
     // Get user name for personalization
     let userName = "Querida";
+    
+    // Try to get user name from user_id first
     if (emailLog.user_id) {
       const { data: onboarding } = await supabaseClient
         .from("user_onboarding_data")
-        .select("preferred_name")
+        .select("preferred_name, full_name")
         .eq("user_id", emailLog.user_id)
-        .single();
+        .maybeSingle();
       
       if (onboarding?.preferred_name) {
         userName = onboarding.preferred_name;
+      } else if (onboarding?.full_name) {
+        userName = onboarding.full_name.split(" ")[0]; // First name only
       } else {
         const { data: profile } = await supabaseClient
           .from("profiles")
           .select("full_name")
           .eq("user_id", emailLog.user_id)
-          .single();
+          .maybeSingle();
         if (profile?.full_name) {
-          userName = profile.full_name;
+          userName = profile.full_name.split(" ")[0]; // First name only
         }
       }
     }
+    
+    // If no user_id or name found, try to look up by email
+    if (userName === "Querida" && emailLog.email_to) {
+      // Get user by email from auth.users via profiles join
+      const { data: users } = await supabaseClient
+        .rpc("get_users_with_profiles");
+      
+      const matchingUser = users?.find((u: any) => u.email === emailLog.email_to);
+      if (matchingUser?.user_id) {
+        const { data: onboarding } = await supabaseClient
+          .from("user_onboarding_data")
+          .select("preferred_name, full_name")
+          .eq("user_id", matchingUser.user_id)
+          .maybeSingle();
+        
+        if (onboarding?.preferred_name) {
+          userName = onboarding.preferred_name;
+        } else if (onboarding?.full_name) {
+          userName = onboarding.full_name.split(" ")[0];
+        } else if (matchingUser.full_name) {
+          userName = matchingUser.full_name.split(" ")[0];
+        }
+      }
+    }
+
+    console.log("[RESEND-EMAIL] Using userName:", userName);
 
     // Generate email HTML based on type
     let emailHtml = "";
     let emailSubject = emailLog.subject;
 
-    switch (emailLog.email_type) {
+    // Normalize email type for matching (remove _resend suffix and variations)
+    const normalizedType = emailLog.email_type.replace(/_resend$/, "").replace(/_2days$/, "").replace(/_7days$/, "");
+
+    switch (normalizedType) {
       case "reengagement":
-      case "reengagement_7days":
         emailHtml = generateReengagementEmail(userName, emailLog.metadata?.days_inactive || 7, emailLog.metadata?.is_premium);
         break;
       
