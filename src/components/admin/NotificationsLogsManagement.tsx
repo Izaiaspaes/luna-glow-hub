@@ -155,6 +155,13 @@ export function NotificationsLogsManagement() {
             Falhou
           </Badge>
         );
+      case "no_subscriptions":
+        return (
+          <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+            <Bell className="w-3 h-3 mr-1" />
+            Sem Inscritos
+          </Badge>
+        );
       default:
         return (
           <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
@@ -173,6 +180,8 @@ export function NotificationsLogsManagement() {
       upgrade_campaign: { label: "Campanha de Upgrade", color: "bg-pink-500/20 text-pink-400" },
       partner_invite: { label: "Convite de Parceiro", color: "bg-cyan-500/20 text-cyan-400" },
       newsletter_confirmation: { label: "Confirmação Newsletter", color: "bg-green-500/20 text-green-400" },
+      push_notification: { label: "Push Notification", color: "bg-violet-500/20 text-violet-400" },
+      no_subscriptions: { label: "Sem Inscritos", color: "bg-yellow-500/20 text-yellow-400" },
     };
     
     const config = typeLabels[type] || { label: type, color: "bg-gray-500/20 text-gray-400" };
@@ -456,6 +465,26 @@ export function NotificationsLogsManagement() {
         </TabsContent>
 
         <TabsContent value="push" className="space-y-4">
+          {/* Warning if no subscriptions */}
+          {pushStats.activeUsers === 0 && (
+            <Card className="bg-yellow-500/10 border-yellow-500/30">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-yellow-500/20">
+                    <Bell className="w-5 h-5 text-yellow-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-yellow-400">Nenhum usuário inscrito para push</h4>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Para receber push notifications, os usuários precisam ativar as notificações no navegador/PWA. 
+                      Quando um usuário acessa o app e permite notificações, a inscrição aparecerá aqui automaticamente.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Send Push Card */}
           <Card className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/30">
             <CardHeader>
@@ -464,15 +493,21 @@ export function NotificationsLogsManagement() {
                 Enviar Push Notification
               </CardTitle>
               <CardDescription>
-                Envie notificações push para usuários inscritos
+                {pushStats.activeUsers > 0 
+                  ? `Envie notificações push para ${pushStats.activeUsers} usuário(s) inscrito(s)`
+                  : 'Nenhum usuário inscrito ainda'
+                }
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Dialog open={pushDialogOpen} onOpenChange={setPushDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                  <Button 
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                    disabled={pushStats.activeUsers === 0}
+                  >
                     <Bell className="w-4 h-4 mr-2" />
-                    Nova Notificação Push
+                    {pushStats.activeUsers === 0 ? 'Aguardando Inscrições' : 'Nova Notificação Push'}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
