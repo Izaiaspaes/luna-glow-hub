@@ -62,6 +62,7 @@ export function NotificationsLogsManagement() {
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [sendingPush, setSendingPush] = useState(false);
   const [resendingEmailId, setResendingEmailId] = useState<string | null>(null);
+  const [resendingAllFailed, setResendingAllFailed] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -288,7 +289,7 @@ export function NotificationsLogsManagement() {
 
       if (data?.success) {
         toast.success(data.message || "Email reenviado com sucesso!");
-        loadEmailLogs(); // Refresh the list
+        loadEmailLogs();
       } else {
         const errorMsg = typeof data?.error === 'object' 
           ? JSON.stringify(data.error) 
@@ -301,6 +302,45 @@ export function NotificationsLogsManagement() {
       toast.error(`Erro ao reenviar email: ${errorMsg}`);
     } finally {
       setResendingEmailId(null);
+    }
+  };
+
+  const handleResendAllFailed = async () => {
+    const failedEmails = filteredEmailLogs.filter(log => log.status === "failed");
+    if (failedEmails.length === 0) {
+      toast.info("Nenhum email falhado para reenviar");
+      return;
+    }
+
+    setResendingAllFailed(true);
+    let successCount = 0;
+    let failCount = 0;
+
+    for (const emailLog of failedEmails) {
+      try {
+        const { data, error } = await supabase.functions.invoke('resend-email', {
+          body: { emailLogId: emailLog.id }
+        });
+
+        if (error || !data?.success) {
+          failCount++;
+        } else {
+          successCount++;
+        }
+      } catch {
+        failCount++;
+      }
+    }
+
+    setResendingAllFailed(false);
+    loadEmailLogs();
+
+    if (successCount > 0 && failCount === 0) {
+      toast.success(`${successCount} email(s) reenviado(s) com sucesso!`);
+    } else if (successCount > 0 && failCount > 0) {
+      toast.warning(`${successCount} sucesso(s), ${failCount} falha(s)`);
+    } else {
+      toast.error(`Todos os ${failCount} reenvios falharam`);
     }
   };
 
@@ -392,7 +432,7 @@ export function NotificationsLogsManagement() {
                     Visualize todos os emails enviados pelo sistema
                   </CardDescription>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" onClick={loadData} disabled={loading}>
                     <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
                     Atualizar
@@ -401,6 +441,18 @@ export function NotificationsLogsManagement() {
                     <Download className="w-4 h-4 mr-2" />
                     Exportar CSV
                   </Button>
+                  {emailStats.failed > 0 && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleResendAllFailed} 
+                      disabled={resendingAllFailed}
+                      className="text-orange-400 border-orange-400/50 hover:bg-orange-400/10"
+                    >
+                      <RotateCcw className={`w-4 h-4 mr-2 ${resendingAllFailed ? 'animate-spin' : ''}`} />
+                      {resendingAllFailed ? 'Reenviando...' : `Reenviar ${emailStats.failed} Falhados`}
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardHeader>
@@ -480,12 +532,12 @@ export function NotificationsLogsManagement() {
                             {log.error_message || "-"}
                           </TableCell>
                           <TableCell>
-                            {log.status === "failed" && !log.email_type.includes("_resend") && (
+                            {log.status === "failed" && (
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handleResendEmail(log)}
-                                disabled={resendingEmailId === log.id}
+                                disabled={resendingEmailId === log.id || resendingAllFailed}
                                 className="h-8 w-8 p-0"
                                 title="Reenviar email"
                               >
