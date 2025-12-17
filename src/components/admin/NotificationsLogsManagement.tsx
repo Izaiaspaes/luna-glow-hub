@@ -7,8 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Mail, Bell, Search, RefreshCw, CheckCircle, XCircle, Clock, Download, Filter } from "lucide-react";
+import { Mail, Bell, Search, RefreshCw, CheckCircle, XCircle, Clock, Download, Filter, Send, Users } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -49,6 +53,14 @@ export function NotificationsLogsManagement() {
     totalSubscriptions: 0,
     activeUsers: 0
   });
+
+  // Push notification form state
+  const [pushDialogOpen, setPushDialogOpen] = useState(false);
+  const [pushTitle, setPushTitle] = useState("");
+  const [pushBody, setPushBody] = useState("");
+  const [sendToAll, setSendToAll] = useState(true);
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+  const [sendingPush, setSendingPush] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -189,6 +201,73 @@ export function NotificationsLogsManagement() {
     link.click();
     toast.success("CSV exportado com sucesso!");
   };
+
+  const handleSendPushNotification = async () => {
+    if (!pushTitle.trim() || !pushBody.trim()) {
+      toast.error("Preencha o título e a mensagem da notificação");
+      return;
+    }
+
+    if (!sendToAll && selectedUserIds.length === 0) {
+      toast.error("Selecione pelo menos um usuário para enviar");
+      return;
+    }
+
+    setSendingPush(true);
+    try {
+      const payload: any = {
+        title: pushTitle,
+        body: pushBody,
+        icon: '/pwa-192x192.png',
+        badge: '/favicon.png',
+        data: {
+          type: 'admin_broadcast',
+          timestamp: new Date().toISOString()
+        }
+      };
+
+      if (!sendToAll) {
+        payload.userIds = selectedUserIds;
+      }
+
+      const { data, error } = await supabase.functions.invoke('send-push-notification', {
+        body: payload
+      });
+
+      if (error) throw error;
+
+      toast.success(`Push enviado! ${data?.message || ''}`);
+      setPushDialogOpen(false);
+      setPushTitle("");
+      setPushBody("");
+      setSelectedUserIds([]);
+      setSendToAll(true);
+    } catch (error: any) {
+      console.error('Error sending push:', error);
+      toast.error(`Erro ao enviar push: ${error.message}`);
+    } finally {
+      setSendingPush(false);
+    }
+  };
+
+  const toggleUserSelection = (userId: string) => {
+    setSelectedUserIds(prev => 
+      prev.includes(userId) 
+        ? prev.filter(id => id !== userId)
+        : [...prev, userId]
+    );
+  };
+
+  const selectAllUsers = () => {
+    const uniqueUserIds = [...new Set(pushSubscriptions.map(sub => sub.user_id))];
+    setSelectedUserIds(uniqueUserIds);
+  };
+
+  const deselectAllUsers = () => {
+    setSelectedUserIds([]);
+  };
+
+  const uniqueSubscribedUsers = [...new Set(pushSubscriptions.map(sub => sub.user_id))];
 
   return (
     <div className="space-y-6">
@@ -377,6 +456,157 @@ export function NotificationsLogsManagement() {
         </TabsContent>
 
         <TabsContent value="push" className="space-y-4">
+          {/* Send Push Card */}
+          <Card className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/30">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Send className="w-5 h-5" />
+                Enviar Push Notification
+              </CardTitle>
+              <CardDescription>
+                Envie notificações push para usuários inscritos
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Dialog open={pushDialogOpen} onOpenChange={setPushDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                    <Bell className="w-4 h-4 mr-2" />
+                    Nova Notificação Push
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <Bell className="w-5 h-5" />
+                      Enviar Push Notification
+                    </DialogTitle>
+                    <DialogDescription>
+                      Configure e envie uma notificação push para os usuários
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="push-title">Título da Notificação</Label>
+                      <Input
+                        id="push-title"
+                        placeholder="Ex: Nova funcionalidade disponível!"
+                        value={pushTitle}
+                        onChange={(e) => setPushTitle(e.target.value)}
+                        maxLength={50}
+                      />
+                      <p className="text-xs text-muted-foreground">{pushTitle.length}/50 caracteres</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="push-body">Mensagem</Label>
+                      <Textarea
+                        id="push-body"
+                        placeholder="Ex: Confira as novidades que preparamos para você!"
+                        value={pushBody}
+                        onChange={(e) => setPushBody(e.target.value)}
+                        rows={3}
+                        maxLength={200}
+                      />
+                      <p className="text-xs text-muted-foreground">{pushBody.length}/200 caracteres</p>
+                    </div>
+
+                    <div className="space-y-4 border-t pt-4">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="send-all"
+                          checked={sendToAll}
+                          onCheckedChange={(checked) => {
+                            setSendToAll(!!checked);
+                            if (checked) setSelectedUserIds([]);
+                          }}
+                        />
+                        <Label htmlFor="send-all" className="flex items-center gap-2">
+                          <Users className="w-4 h-4" />
+                          Enviar para todos os {pushStats.activeUsers} usuários inscritos
+                        </Label>
+                      </div>
+
+                      {!sendToAll && (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <Label>Selecionar Usuários</Label>
+                            <div className="flex gap-2">
+                              <Button variant="outline" size="sm" onClick={selectAllUsers}>
+                                Selecionar todos
+                              </Button>
+                              <Button variant="outline" size="sm" onClick={deselectAllUsers}>
+                                Limpar
+                              </Button>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {selectedUserIds.length} de {uniqueSubscribedUsers.length} usuários selecionados
+                          </p>
+                          <div className="max-h-[200px] overflow-y-auto border rounded-md p-2 space-y-2">
+                            {uniqueSubscribedUsers.map((userId) => (
+                              <div key={userId} className="flex items-center space-x-2">
+                                <Checkbox
+                                  id={`user-${userId}`}
+                                  checked={selectedUserIds.includes(userId)}
+                                  onCheckedChange={() => toggleUserSelection(userId)}
+                                />
+                                <Label htmlFor={`user-${userId}`} className="font-mono text-xs cursor-pointer">
+                                  {userId.substring(0, 8)}...{userId.substring(userId.length - 4)}
+                                </Label>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Preview */}
+                    {pushTitle && pushBody && (
+                      <div className="border rounded-lg p-4 bg-muted/30">
+                        <p className="text-xs text-muted-foreground mb-2">Prévia da notificação:</p>
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                            <Bell className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-sm">{pushTitle}</p>
+                            <p className="text-sm text-muted-foreground">{pushBody}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setPushDialogOpen(false)}>
+                      Cancelar
+                    </Button>
+                    <Button 
+                      onClick={handleSendPushNotification} 
+                      disabled={sendingPush || !pushTitle.trim() || !pushBody.trim()}
+                      className="bg-gradient-to-r from-purple-500 to-pink-500"
+                    >
+                      {sendingPush ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                          Enviando...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4 mr-2" />
+                          Enviar Notificação
+                        </>
+                      )}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </CardContent>
+          </Card>
+
+          {/* Subscriptions Card */}
           <Card className="bg-card/50 border-border/50">
             <CardHeader>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
