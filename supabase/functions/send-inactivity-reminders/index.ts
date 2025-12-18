@@ -50,6 +50,47 @@ async function sendEmailWithZeptoMail(
   }
 }
 
+function firstWordFromName(name?: string | null): string | null {
+  const n = (name ?? "").trim();
+  if (!n) return null;
+  return n.split(/\s+/)[0] || null;
+}
+
+function nameFromEmail(email?: string | null): string | null {
+  const e = (email ?? "").trim();
+  if (!e || !e.includes("@")) return null;
+  const local = e.split("@")[0]?.trim();
+  if (!local) return null;
+
+  const token = local.split(/[._-]+/).filter(Boolean)[0] ?? local;
+  const cleaned = token.replace(/[0-9]+/g, "").trim();
+  const base = cleaned || token;
+
+  if (!base) return null;
+  return base.charAt(0).toUpperCase() + base.slice(1);
+}
+
+function resolveUserName(opts: {
+  preferredName?: string | null;
+  fullName?: string | null;
+  profileName?: string | null;
+  email?: string | null;
+}): string {
+  const preferred = (opts.preferredName ?? "").trim();
+  if (preferred) return preferred;
+
+  const fromFull = firstWordFromName(opts.fullName);
+  if (fromFull) return fromFull;
+
+  const fromProfile = firstWordFromName(opts.profileName);
+  if (fromProfile) return fromProfile;
+
+  const fromEmail = nameFromEmail(opts.email);
+  if (fromEmail) return fromEmail;
+
+  return "Luna";
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -106,22 +147,21 @@ serve(async (req) => {
         }
 
         // Get preferred name from onboarding
+        const userEmail = userData.user.email;
+
         const { data: onboarding } = await supabaseClient
           .from("user_onboarding_data")
           .select("preferred_name, full_name")
           .eq("user_id", profile.user_id)
           .maybeSingle();
 
-        // Priority: preferred_name > onboarding.full_name first word > profile.full_name first word
-        let userName = "Querida";
-        if (onboarding?.preferred_name) {
-          userName = onboarding.preferred_name;
-        } else if (onboarding?.full_name) {
-          userName = onboarding.full_name.split(" ")[0];
-        } else if (profile.full_name) {
-          userName = profile.full_name.split(" ")[0];
-        }
-        
+        const userName = resolveUserName({
+          preferredName: onboarding?.preferred_name,
+          fullName: onboarding?.full_name,
+          profileName: profile.full_name,
+          email: userEmail,
+        });
+
         console.log("[INACTIVITY-REMINDERS] User:", profile.user_id, "Name:", userName);
         const userEmail = userData.user.email;
 

@@ -50,6 +50,47 @@ async function sendEmailWithZeptoMail(
   }
 }
 
+function firstWordFromName(name?: string | null): string | null {
+  const n = (name ?? "").trim();
+  if (!n) return null;
+  return n.split(/\s+/)[0] || null;
+}
+
+function nameFromEmail(email?: string | null): string | null {
+  const e = (email ?? "").trim();
+  if (!e || !e.includes("@")) return null;
+  const local = e.split("@")[0]?.trim();
+  if (!local) return null;
+
+  const token = local.split(/[._-]+/).filter(Boolean)[0] ?? local;
+  const cleaned = token.replace(/[0-9]+/g, "").trim();
+  const base = cleaned || token;
+
+  if (!base) return null;
+  return base.charAt(0).toUpperCase() + base.slice(1);
+}
+
+function resolveUserName(opts: {
+  preferredName?: string | null;
+  fullName?: string | null;
+  profileName?: string | null;
+  email?: string | null;
+}): string {
+  const preferred = (opts.preferredName ?? "").trim();
+  if (preferred) return preferred;
+
+  const fromFull = firstWordFromName(opts.fullName);
+  if (fromFull) return fromFull;
+
+  const fromProfile = firstWordFromName(opts.profileName);
+  if (fromProfile) return fromProfile;
+
+  const fromEmail = nameFromEmail(opts.email);
+  if (fromEmail) return fromEmail;
+
+  return "Luna";
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -91,8 +132,8 @@ serve(async (req) => {
     console.log("[RESEND-EMAIL] Found email log:", emailLog.email_type, "to:", emailLog.email_to);
 
     // Get user name for personalization
-    let userName = "Querida";
-    
+    let userName = resolveUserName({ email: emailLog.email_to });
+
     // Try to get user name from user_id first
     if (emailLog.user_id) {
       const { data: onboarding } = await supabaseClient
@@ -100,44 +141,39 @@ serve(async (req) => {
         .select("preferred_name, full_name")
         .eq("user_id", emailLog.user_id)
         .maybeSingle();
-      
-      if (onboarding?.preferred_name) {
-        userName = onboarding.preferred_name;
-      } else if (onboarding?.full_name) {
-        userName = onboarding.full_name.split(" ")[0]; // First name only
-      } else {
-        const { data: profile } = await supabaseClient
-          .from("profiles")
-          .select("full_name")
-          .eq("user_id", emailLog.user_id)
-          .maybeSingle();
-        if (profile?.full_name) {
-          userName = profile.full_name.split(" ")[0]; // First name only
-        }
-      }
+
+      const { data: profile } = await supabaseClient
+        .from("profiles")
+        .select("full_name")
+        .eq("user_id", emailLog.user_id)
+        .maybeSingle();
+
+      userName = resolveUserName({
+        preferredName: onboarding?.preferred_name,
+        fullName: onboarding?.full_name,
+        profileName: profile?.full_name,
+        email: emailLog.email_to,
+      });
     }
-    
-    // If no user_id or name found, try to look up by email
-    if (userName === "Querida" && emailLog.email_to) {
-      // Get user by email from auth.users via profiles join
-      const { data: users } = await supabaseClient
-        .rpc("get_users_with_profiles");
-      
+
+    // If no user_id, try to look up by email to get better personalization
+    if (!emailLog.user_id && emailLog.email_to) {
+      const { data: users } = await supabaseClient.rpc("get_users_with_profiles");
       const matchingUser = users?.find((u: any) => u.email === emailLog.email_to);
+
       if (matchingUser?.user_id) {
         const { data: onboarding } = await supabaseClient
           .from("user_onboarding_data")
           .select("preferred_name, full_name")
           .eq("user_id", matchingUser.user_id)
           .maybeSingle();
-        
-        if (onboarding?.preferred_name) {
-          userName = onboarding.preferred_name;
-        } else if (onboarding?.full_name) {
-          userName = onboarding.full_name.split(" ")[0];
-        } else if (matchingUser.full_name) {
-          userName = matchingUser.full_name.split(" ")[0];
-        }
+
+        userName = resolveUserName({
+          preferredName: onboarding?.preferred_name,
+          fullName: onboarding?.full_name,
+          profileName: matchingUser.full_name,
+          email: emailLog.email_to,
+        });
       }
     }
 
