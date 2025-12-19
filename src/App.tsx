@@ -47,33 +47,31 @@ const AppContent = () => {
         onRenew={handleRenewSession}
         onLogout={handleLogout}
       />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/pricing/success" element={<PricingSuccess />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/partner-invite" element={<PartnerInvite />} />
-          <Route path="/partner-dashboard" element={<PartnerDashboard />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/onboarding/success" element={<OnboardingSuccess />} />
-          <Route path="/install" element={<Install />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/promotion-rules" element={<PromotionRules />} />
-          <Route path="/pt" element={<LandingPT />} />
-          <Route path="/en" element={<LandingEN />} />
-          <Route path="/es" element={<LandingES />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/pricing/success" element={<PricingSuccess />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/partner-invite" element={<PartnerInvite />} />
+        <Route path="/partner-dashboard" element={<PartnerDashboard />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/onboarding/success" element={<OnboardingSuccess />} />
+        <Route path="/install" element={<Install />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/promotion-rules" element={<PromotionRules />} />
+        <Route path="/pt" element={<LandingPT />} />
+        <Route path="/en" element={<LandingEN />} />
+        <Route path="/es" element={<LandingES />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 };
@@ -81,9 +79,11 @@ const AppContent = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-        <AppContent />
-      </Suspense>
+      <BrowserRouter>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <AppContent />
+        </Suspense>
+      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
