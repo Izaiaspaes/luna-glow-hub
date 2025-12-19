@@ -163,7 +163,6 @@ serve(async (req) => {
         });
 
         console.log("[INACTIVITY-REMINDERS] User:", profile.user_id, "Name:", userName);
-        const userEmail = userData.user.email;
 
         // Calculate days since last access
         const lastAccess = new Date(profile.last_accessed_at);
