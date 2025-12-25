@@ -311,101 +311,244 @@ export const UsersManagement = () => {
               {users.length === 0 ? "Nenhum usuário encontrado" : "Nenhum usuário corresponde aos filtros"}
             </p>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nome</TableHead>
-                  <TableHead>E-mail</TableHead>
-                  <TableHead>Cadastro</TableHead>
-                  <TableHead>Última Atividade</TableHead>
-                  <TableHead>Origem</TableHead>
-                  <TableHead>Pacote</TableHead>
-                  <TableHead>Roles</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Ações</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-              {filteredUsers.map((user) => {
+            <>
+              {/* Desktop Table - hidden on mobile */}
+              <div className="hidden lg:block overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Nome</TableHead>
+                      <TableHead>E-mail</TableHead>
+                      <TableHead>Cadastro</TableHead>
+                      <TableHead>Última Atividade</TableHead>
+                      <TableHead>Origem</TableHead>
+                      <TableHead>Pacote</TableHead>
+                      <TableHead>Roles</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                  {filteredUsers.map((user) => {
+                      const isAdmin = user.roles.some(r => r.role === 'admin');
+                      const isModerator = user.roles.some(r => r.role === 'moderator');
+                      const isUser = user.roles.some(r => r.role === 'user');
+                      const isActive = user.is_active ?? true;
+                      
+                        return (
+                          <TableRow key={user.user_id} className={!isActive ? "opacity-60" : ""}>
+                            <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger className="flex items-center gap-1 text-sm">
+                                    <Calendar className="w-3 h-3 text-muted-foreground" />
+                                    {format(new Date(user.created_at), "dd/MM/yyyy", { locale: ptBR })}
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    {format(new Date(user.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            </TableCell>
+                            <TableCell>
+                              {user.last_accessed_at ? (
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger className="flex items-center gap-1 text-sm">
+                                      <Calendar className="w-3 h-3 text-muted-foreground" />
+                                      {format(new Date(user.last_accessed_at), "dd/MM/yyyy", { locale: ptBR })}
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      {format(new Date(user.last_accessed_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              ) : (
+                                <span className="text-muted-foreground text-sm">Nunca</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {user.registration_source ? (
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger>
+                                      <Badge variant="outline" className="flex items-center gap-1">
+                                        <Link2 className="w-3 h-3" />
+                                        {user.registration_source.utm_source || 
+                                         user.registration_source.referral_code || 
+                                         'Direto'}
+                                      </Badge>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-xs">
+                                      <div className="text-xs space-y-1">
+                                        {user.registration_source.utm_source && (
+                                          <p><strong>Source:</strong> {user.registration_source.utm_source}</p>
+                                        )}
+                                        {user.registration_source.utm_medium && (
+                                          <p><strong>Medium:</strong> {user.registration_source.utm_medium}</p>
+                                        )}
+                                        {user.registration_source.utm_campaign && (
+                                          <p><strong>Campaign:</strong> {user.registration_source.utm_campaign}</p>
+                                        )}
+                                        {user.registration_source.referral_code && (
+                                          <p><strong>Referral:</strong> {user.registration_source.referral_code}</p>
+                                        )}
+                                      </div>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              ) : (
+                                <span className="text-muted-foreground text-sm">Direto</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              <Select
+                                value={user.subscription_plan || 'free'}
+                                onValueChange={(value) => handleChangePlan(user.user_id, value)}
+                              >
+                                <SelectTrigger className="w-[160px]">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="free">Free</SelectItem>
+                                  <SelectItem value="premium">✨ Premium</SelectItem>
+                                  <SelectItem value="premium_plus">💎 Premium Plus</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </TableCell>
+                          <TableCell>
+                            <div className="flex gap-1">
+                              {isAdmin && <Badge variant="destructive"><Shield className="w-3 h-3 mr-1" />Admin</Badge>}
+                              {isModerator && <Badge variant="secondary"><User className="w-3 h-3 mr-1" />Moderador</Badge>}
+                              {isUser && <Badge variant="outline"><User className="w-3 h-3 mr-1" />Usuário</Badge>}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            {isActive ? (
+                              <Badge variant="default" className="bg-green-500">
+                                <CheckCircle className="w-3 h-3 mr-1" />Ativo
+                              </Badge>
+                            ) : (
+                              <Badge variant="destructive">
+                                <Ban className="w-3 h-3 mr-1" />Inativo
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2 flex-wrap">
+                              <Button
+                                size="sm"
+                                variant={isAdmin ? "destructive" : "outline"}
+                                onClick={() => handleToggleRole(user.user_id, 'admin')}
+                              >
+                                {isAdmin ? 'Remover' : 'Tornar'} Admin
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant={isModerator ? "destructive" : "outline"}
+                                onClick={() => handleToggleRole(user.user_id, 'moderator')}
+                              >
+                                {isModerator ? 'Remover' : 'Tornar'} Moderador
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant={isActive ? "secondary" : "default"}
+                                onClick={() => handleToggleActive(user.user_id, isActive)}
+                                title={isActive ? 'Desativar usuário' : 'Ativar usuário'}
+                              >
+                                {isActive ? <Ban className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-destructive hover:text-destructive"
+                                onClick={() => setDeleteUserId(user.user_id)}
+                                title="Remover usuário permanentemente"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile Cards - visible only on mobile/tablet */}
+              <div className="lg:hidden space-y-4">
+                {filteredUsers.map((user) => {
                   const isAdmin = user.roles.some(r => r.role === 'admin');
                   const isModerator = user.roles.some(r => r.role === 'moderator');
                   const isUser = user.roles.some(r => r.role === 'user');
                   const isActive = user.is_active ?? true;
-                  
-                    return (
-                      <TableRow key={user.user_id} className={!isActive ? "opacity-60" : ""}>
-                        <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger className="flex items-center gap-1 text-sm">
-                                <Calendar className="w-3 h-3 text-muted-foreground" />
-                                {format(new Date(user.created_at), "dd/MM/yyyy", { locale: ptBR })}
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                {format(new Date(user.created_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </TableCell>
-                        <TableCell>
-                          {user.last_accessed_at ? (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger className="flex items-center gap-1 text-sm">
-                                  <Calendar className="w-3 h-3 text-muted-foreground" />
-                                  {format(new Date(user.last_accessed_at), "dd/MM/yyyy", { locale: ptBR })}
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  {format(new Date(user.last_accessed_at), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          ) : (
-                            <span className="text-muted-foreground text-sm">Nunca</span>
+
+                  return (
+                    <Card key={user.user_id} className={`${!isActive ? "opacity-60" : ""}`}>
+                      <CardContent className="p-4 space-y-3">
+                        {/* Header: Name, Status and Delete */}
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold text-base truncate">{user.full_name || 'Não informado'}</p>
+                            <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                          </div>
+                          <div className="flex items-center gap-2 shrink-0">
+                            {isActive ? (
+                              <Badge variant="default" className="bg-green-500 text-xs">
+                                <CheckCircle className="w-3 h-3 mr-1" />Ativo
+                              </Badge>
+                            ) : (
+                              <Badge variant="destructive" className="text-xs">
+                                <Ban className="w-3 h-3 mr-1" />Inativo
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Info Grid */}
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div>
+                            <span className="text-muted-foreground">Cadastro:</span>
+                            <p className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-muted-foreground" />
+                              {format(new Date(user.created_at), "dd/MM/yy", { locale: ptBR })}
+                            </p>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Última atividade:</span>
+                            <p className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-muted-foreground" />
+                              {user.last_accessed_at 
+                                ? format(new Date(user.last_accessed_at), "dd/MM/yy", { locale: ptBR })
+                                : 'Nunca'}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Roles */}
+                        <div className="flex flex-wrap gap-1">
+                          {isAdmin && <Badge variant="destructive" className="text-xs"><Shield className="w-3 h-3 mr-1" />Admin</Badge>}
+                          {isModerator && <Badge variant="secondary" className="text-xs"><User className="w-3 h-3 mr-1" />Mod</Badge>}
+                          {isUser && <Badge variant="outline" className="text-xs"><User className="w-3 h-3 mr-1" />User</Badge>}
+                          {user.registration_source && (
+                            <Badge variant="outline" className="text-xs">
+                              <Link2 className="w-3 h-3 mr-1" />
+                              {user.registration_source.utm_source || user.registration_source.referral_code || 'Direto'}
+                            </Badge>
                           )}
-                        </TableCell>
-                        <TableCell>
-                          {user.registration_source ? (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger>
-                                  <Badge variant="outline" className="flex items-center gap-1">
-                                    <Link2 className="w-3 h-3" />
-                                    {user.registration_source.utm_source || 
-                                     user.registration_source.referral_code || 
-                                     'Direto'}
-                                  </Badge>
-                                </TooltipTrigger>
-                                <TooltipContent className="max-w-xs">
-                                  <div className="text-xs space-y-1">
-                                    {user.registration_source.utm_source && (
-                                      <p><strong>Source:</strong> {user.registration_source.utm_source}</p>
-                                    )}
-                                    {user.registration_source.utm_medium && (
-                                      <p><strong>Medium:</strong> {user.registration_source.utm_medium}</p>
-                                    )}
-                                    {user.registration_source.utm_campaign && (
-                                      <p><strong>Campaign:</strong> {user.registration_source.utm_campaign}</p>
-                                    )}
-                                    {user.registration_source.referral_code && (
-                                      <p><strong>Referral:</strong> {user.registration_source.referral_code}</p>
-                                    )}
-                                  </div>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          ) : (
-                            <span className="text-muted-foreground text-sm">Direto</span>
-                          )}
-                        </TableCell>
-                        <TableCell>
+                        </div>
+
+                        {/* Plan Selector */}
+                        <div>
+                          <span className="text-sm text-muted-foreground mb-1 block">Pacote:</span>
                           <Select
                             value={user.subscription_plan || 'free'}
                             onValueChange={(value) => handleChangePlan(user.user_id, value)}
                           >
-                            <SelectTrigger className="w-[160px]">
+                            <SelectTrigger className="w-full">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -414,40 +557,25 @@ export const UsersManagement = () => {
                               <SelectItem value="premium_plus">💎 Premium Plus</SelectItem>
                             </SelectContent>
                           </Select>
-                        </TableCell>
-                      <TableCell>
-                        <div className="flex gap-1">
-                          {isAdmin && <Badge variant="destructive"><Shield className="w-3 h-3 mr-1" />Admin</Badge>}
-                          {isModerator && <Badge variant="secondary"><User className="w-3 h-3 mr-1" />Moderador</Badge>}
-                          {isUser && <Badge variant="outline"><User className="w-3 h-3 mr-1" />Usuário</Badge>}
                         </div>
-                      </TableCell>
-                      <TableCell>
-                        {isActive ? (
-                          <Badge variant="default" className="bg-green-500">
-                            <CheckCircle className="w-3 h-3 mr-1" />Ativo
-                          </Badge>
-                        ) : (
-                          <Badge variant="destructive">
-                            <Ban className="w-3 h-3 mr-1" />Inativo
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2 flex-wrap">
+
+                        {/* Actions */}
+                        <div className="flex flex-wrap gap-2 pt-2 border-t">
                           <Button
                             size="sm"
                             variant={isAdmin ? "destructive" : "outline"}
                             onClick={() => handleToggleRole(user.user_id, 'admin')}
+                            className="flex-1 min-w-[100px] text-xs"
                           >
-                            {isAdmin ? 'Remover' : 'Tornar'} Admin
+                            {isAdmin ? 'Rem.' : '+'} Admin
                           </Button>
                           <Button
                             size="sm"
                             variant={isModerator ? "destructive" : "outline"}
                             onClick={() => handleToggleRole(user.user_id, 'moderator')}
+                            className="flex-1 min-w-[100px] text-xs"
                           >
-                            {isModerator ? 'Remover' : 'Tornar'} Moderador
+                            {isModerator ? 'Rem.' : '+'} Mod
                           </Button>
                           <Button
                             size="sm"
@@ -467,12 +595,12 @@ export const UsersManagement = () => {
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
-                      </TableCell>
-                    </TableRow>
+                      </CardContent>
+                    </Card>
                   );
                 })}
-              </TableBody>
-            </Table>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>
