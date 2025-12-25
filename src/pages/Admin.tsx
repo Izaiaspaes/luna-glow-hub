@@ -90,52 +90,54 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-11 lg:w-[1500px]">
-            <TabsTrigger value="statistics" className="flex items-center gap-2">
-              <BarChart3 className="w-4 h-4" />
-              <span className="hidden sm:inline">Estatísticas</span>
-            </TabsTrigger>
-            <TabsTrigger value="users" className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              <span className="hidden sm:inline">Usuários</span>
-            </TabsTrigger>
-            <TabsTrigger value="notifications" className="flex items-center gap-2">
-              <Bell className="w-4 h-4" />
-              <span className="hidden sm:inline">Notificações</span>
-            </TabsTrigger>
-            <TabsTrigger value="referrals" className="flex items-center gap-2">
-              <UserPlus className="w-4 h-4" />
-              <span className="hidden sm:inline">Indicações</span>
-            </TabsTrigger>
-            <TabsTrigger value="banners" className="flex items-center gap-2">
-              <Megaphone className="w-4 h-4" />
-              <span className="hidden sm:inline">Banners</span>
-            </TabsTrigger>
-            <TabsTrigger value="testimonials" className="flex items-center gap-2">
-              <MessageSquareQuote className="w-4 h-4" />
-              <span className="hidden sm:inline">Testemunhos</span>
-            </TabsTrigger>
-            <TabsTrigger value="newsletter" className="flex items-center gap-2">
-              <Newspaper className="w-4 h-4" />
-              <span className="hidden sm:inline">Newsletter</span>
-            </TabsTrigger>
-            <TabsTrigger value="plans" className="flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              <span className="hidden sm:inline">Pacotes</span>
-            </TabsTrigger>
-            <TabsTrigger value="coupons" className="flex items-center gap-2">
-              <Ticket className="w-4 h-4" />
-              <span className="hidden sm:inline">Cupons</span>
-            </TabsTrigger>
-            <TabsTrigger value="suggestions" className="flex items-center gap-2">
-              <Lightbulb className="w-4 h-4" />
-              <span className="hidden sm:inline">Sugestões</span>
-            </TabsTrigger>
-            <TabsTrigger value="prices" className="flex items-center gap-2">
-              <DollarSign className="w-4 h-4" />
-              <span className="hidden sm:inline">Preços</span>
-            </TabsTrigger>
-          </TabsList>
+          <div className="w-full overflow-x-auto scrollbar-hide">
+            <TabsList className="inline-flex h-10 items-center justify-start gap-1 p-1 min-w-max">
+              <TabsTrigger value="statistics" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <BarChart3 className="w-4 h-4" />
+                <span>Estatísticas</span>
+              </TabsTrigger>
+              <TabsTrigger value="users" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Users className="w-4 h-4" />
+                <span>Usuários</span>
+              </TabsTrigger>
+              <TabsTrigger value="notifications" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Bell className="w-4 h-4" />
+                <span>Notificações</span>
+              </TabsTrigger>
+              <TabsTrigger value="referrals" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <UserPlus className="w-4 h-4" />
+                <span>Indicações</span>
+              </TabsTrigger>
+              <TabsTrigger value="banners" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Megaphone className="w-4 h-4" />
+                <span>Banners</span>
+              </TabsTrigger>
+              <TabsTrigger value="testimonials" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <MessageSquareQuote className="w-4 h-4" />
+                <span>Testemunhos</span>
+              </TabsTrigger>
+              <TabsTrigger value="newsletter" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Newspaper className="w-4 h-4" />
+                <span>Newsletter</span>
+              </TabsTrigger>
+              <TabsTrigger value="plans" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <FileText className="w-4 h-4" />
+                <span>Pacotes</span>
+              </TabsTrigger>
+              <TabsTrigger value="coupons" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Ticket className="w-4 h-4" />
+                <span>Cupons</span>
+              </TabsTrigger>
+              <TabsTrigger value="suggestions" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Lightbulb className="w-4 h-4" />
+                <span>Sugestões</span>
+              </TabsTrigger>
+              <TabsTrigger value="prices" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <DollarSign className="w-4 h-4" />
+                <span>Preços</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="statistics" className="space-y-4">
             <Statistics />
