@@ -10,8 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, Plus, Trash2, Edit, Ticket, Copy } from "lucide-react";
+import { Loader2, Plus, Trash2, Edit, Ticket, Copy, Calendar } from "lucide-react";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface Coupon {
   id: string;
@@ -337,23 +338,85 @@ export const CouponsManagement = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Código</TableHead>
-              <TableHead>Desconto</TableHead>
-              <TableHead>Usos</TableHead>
-              <TableHead>Validade</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {coupons.map((coupon) => (
-              <TableRow key={coupon.id}>
-                <TableCell className="font-mono font-bold">
+        {/* Desktop Table */}
+        <div className="hidden md:block">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Código</TableHead>
+                <TableHead>Desconto</TableHead>
+                <TableHead>Usos</TableHead>
+                <TableHead>Validade</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Ações</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {coupons.map((coupon) => (
+                <TableRow key={coupon.id}>
+                  <TableCell className="font-mono font-bold">
+                    <div className="flex items-center gap-2">
+                      {coupon.code}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => copyCode(coupon.code)}
+                        className="h-6 w-6 p-0"
+                      >
+                        <Copy className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    {coupon.discount_type === 'percentage' 
+                      ? `${coupon.discount_value}%`
+                      : `R$ ${coupon.discount_value.toFixed(2)}`
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {coupon.current_uses} / {coupon.max_uses}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {format(new Date(coupon.valid_from), 'dd/MM/yyyy')} até{' '}
+                    {format(new Date(coupon.valid_until), 'dd/MM/yyyy')}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={coupon.is_active ? "default" : "secondary"}>
+                      {coupon.is_active ? "Ativo" : "Inativo"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(coupon)}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setDeleteId(coupon.id)}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-3">
+          {coupons.map((coupon) => (
+            <Card key={coupon.id} className="p-4">
+              <div className="space-y-3">
+                <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    {coupon.code}
+                    <span className="font-mono font-bold text-lg">{coupon.code}</span>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -363,47 +426,58 @@ export const CouponsManagement = () => {
                       <Copy className="h-3 w-3" />
                     </Button>
                   </div>
-                </TableCell>
-                <TableCell>
-                  {coupon.discount_type === 'percentage' 
-                    ? `${coupon.discount_value}%`
-                    : `R$ ${coupon.discount_value.toFixed(2)}`
-                  }
-                </TableCell>
-                <TableCell>
-                  {coupon.current_uses} / {coupon.max_uses}
-                </TableCell>
-                <TableCell className="text-sm">
-                  {format(new Date(coupon.valid_from), 'dd/MM/yyyy')} até{' '}
-                  {format(new Date(coupon.valid_until), 'dd/MM/yyyy')}
-                </TableCell>
-                <TableCell>
                   <Badge variant={coupon.is_active ? "default" : "secondary"}>
                     {coupon.is_active ? "Ativo" : "Inativo"}
                   </Badge>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleEdit(coupon)}
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setDeleteId(coupon.id)}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Desconto:</span>
+                    <p className="font-medium">
+                      {coupon.discount_type === 'percentage' 
+                        ? `${coupon.discount_value}%`
+                        : `R$ ${coupon.discount_value.toFixed(2)}`
+                      }
+                    </p>
                   </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                  <div>
+                    <span className="text-muted-foreground">Usos:</span>
+                    <p className="font-medium">{coupon.current_uses} / {coupon.max_uses}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Calendar className="w-3 h-3" />
+                  {format(new Date(coupon.valid_from), 'dd/MM/yy', { locale: ptBR })} - {format(new Date(coupon.valid_until), 'dd/MM/yy', { locale: ptBR })}
+                </div>
+
+                {coupon.description && (
+                  <p className="text-xs text-muted-foreground">{coupon.description}</p>
+                )}
+
+                <div className="flex gap-2 pt-2 border-t">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleEdit(coupon)}
+                  >
+                    <Edit className="h-4 w-4 mr-1" />
+                    Editar
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setDeleteId(coupon.id)}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
 
         {coupons.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">

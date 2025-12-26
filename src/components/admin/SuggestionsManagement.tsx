@@ -21,7 +21,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Trash2, Check, Eye, Filter } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Loader2, Trash2, Check, Eye, Filter, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import {
   Dialog,
@@ -167,7 +168,8 @@ export const SuggestionsManagement = () => {
         </div>
       </div>
 
-      <div className="rounded-md border">
+      {/* Desktop Table */}
+      <div className="hidden md:block rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>
@@ -223,6 +225,58 @@ export const SuggestionsManagement = () => {
             )}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {suggestions.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            {t('admin.suggestions.noSuggestions') || "Nenhuma sugestão encontrada"}
+          </div>
+        ) : (
+          suggestions.map((suggestion) => (
+            <Card key={suggestion.id}>
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-muted-foreground truncate">{suggestion.email}</p>
+                    <p className="text-sm line-clamp-2 mt-1">{suggestion.suggestion}</p>
+                  </div>
+                  {getStatusBadge(suggestion.status)}
+                </div>
+                
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1 text-muted-foreground">
+                    <Calendar className="w-3 h-3" />
+                    {format(new Date(suggestion.created_at), 'dd/MM/yy HH:mm')}
+                  </div>
+                  {suggestion.category && (
+                    <Badge variant="outline" className="text-xs">{suggestion.category}</Badge>
+                  )}
+                </div>
+
+                <div className="flex gap-2 pt-2 border-t">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => openSuggestionDialog(suggestion)}
+                  >
+                    <Eye className="h-4 w-4 mr-1" />
+                    Ver
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleDeleteSuggestion(suggestion.id)}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
 
       <Dialog open={!!selectedSuggestion} onOpenChange={() => setSelectedSuggestion(null)}>

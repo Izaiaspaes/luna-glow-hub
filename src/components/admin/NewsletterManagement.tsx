@@ -229,42 +229,75 @@ export const NewsletterManagement = () => {
                 : "Nenhum inscrito ainda"}
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>E-mail</TableHead>
-                  <TableHead>Data de Inscrição</TableHead>
-                  <TableHead>Origem</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <>
+              {/* Desktop Table */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>E-mail</TableHead>
+                      <TableHead>Data de Inscrição</TableHead>
+                      <TableHead>Origem</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredSubscribers.map((subscriber) => (
+                      <TableRow key={subscriber.id}>
+                        <TableCell className="font-medium">
+                          {subscriber.email}
+                        </TableCell>
+                        <TableCell>
+                          {format(
+                            new Date(subscriber.subscribed_at),
+                            "dd/MM/yyyy 'às' HH:mm",
+                            { locale: ptBR }
+                          )}
+                        </TableCell>
+                        <TableCell className="capitalize">
+                          {subscriber.source}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={subscriber.is_active ? "default" : "secondary"}
+                          >
+                            {subscriber.is_active ? "Ativo" : "Inativo"}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="md:hidden space-y-3">
                 {filteredSubscribers.map((subscriber) => (
-                  <TableRow key={subscriber.id}>
-                    <TableCell className="font-medium">
-                      {subscriber.email}
-                    </TableCell>
-                    <TableCell>
-                      {format(
-                        new Date(subscriber.subscribed_at),
-                        "dd/MM/yyyy 'às' HH:mm",
-                        { locale: ptBR }
-                      )}
-                    </TableCell>
-                    <TableCell className="capitalize">
-                      {subscriber.source}
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={subscriber.is_active ? "default" : "secondary"}
-                      >
-                        {subscriber.is_active ? "Ativo" : "Inativo"}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
+                  <Card key={subscriber.id} className="p-4">
+                    <div className="space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm truncate">{subscriber.email}</p>
+                        </div>
+                        <Badge
+                          variant={subscriber.is_active ? "default" : "secondary"}
+                          className="shrink-0"
+                        >
+                          {subscriber.is_active ? "Ativo" : "Inativo"}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {format(new Date(subscriber.subscribed_at), "dd/MM/yy HH:mm", { locale: ptBR })}
+                        </div>
+                        <span className="capitalize">{subscriber.source}</span>
+                      </div>
+                    </div>
+                  </Card>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>
