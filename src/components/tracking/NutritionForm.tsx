@@ -12,8 +12,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState, useRef, useEffect } from "react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
-import { Sparkles } from "lucide-react";
+import { Sparkles, CheckCircle2, AlertCircle, Utensils } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const getNutritionSchema = (t: (key: string) => string) => z.object({
   nutritionDate: z.string(),
@@ -38,6 +39,7 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
 
   const form = useForm<NutritionFormData>({
     resolver: zodResolver(getNutritionSchema(t)),
@@ -48,7 +50,20 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
       portionSize: "",
       notes: "",
     },
+    mode: "onChange",
   });
+
+  const getFieldStatus = (fieldName: keyof NutritionFormData) => {
+    const value = form.watch(fieldName);
+    const hasError = !!form.formState.errors[fieldName];
+    const isTouched = touchedFields[fieldName];
+    const hasValue = value !== undefined && value !== "";
+    
+    if (!isTouched) return "default";
+    if (hasError) return "error";
+    if (hasValue) return "success";
+    return "default";
+  };
 
   useEffect(() => {
     if (analysis && submitButtonRef.current) {
@@ -138,6 +153,8 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
     }
   };
 
+  const foodsStatus = getFieldStatus("foodsConsumed");
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 md:space-y-6">
@@ -146,7 +163,10 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="nutritionDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.date")}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium flex items-center gap-2">
+                <Utensils className="w-4 h-4" />
+                {t("forms.nutrition.date")}
+              </FormLabel>
               <FormControl>
                 <Input 
                   type="date" 
@@ -188,15 +208,26 @@ export function NutritionForm({ userId, onSuccess }: NutritionFormProps) {
           name="foodsConsumed"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base md:text-sm font-medium">{t("forms.nutrition.foodsConsumed")}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium flex items-center gap-2">
+                {t("forms.nutrition.foodsConsumed")}
+                {foodsStatus === "success" && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                {foodsStatus === "error" && <AlertCircle className="w-4 h-4 text-destructive" />}
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder={t("forms.nutrition.foodsPlaceholder")}
-                  className="min-h-[120px] md:min-h-[100px] text-base md:text-sm p-4 resize-none"
+                  className={cn(
+                    "min-h-[120px] md:min-h-[100px] text-base md:text-sm p-4 resize-none transition-all duration-200",
+                    foodsStatus === "success" && "border-green-500 focus-visible:ring-green-500/20",
+                    foodsStatus === "error" && "border-destructive focus-visible:ring-destructive/20"
+                  )}
                   {...field}
+                  onBlur={() => setTouchedFields(prev => ({ ...prev, foodsConsumed: true }))}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+                {form.formState.errors.foodsConsumed && <AlertCircle className="w-3 h-3" />}
+              </FormMessage>
             </FormItem>
           )}
         />

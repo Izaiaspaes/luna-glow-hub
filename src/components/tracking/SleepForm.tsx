@@ -9,10 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
-import { Moon } from "lucide-react";
+import { Moon, CheckCircle2, AlertCircle } from "lucide-react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 interface SleepFormProps {
   userId: string;
@@ -26,6 +27,7 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
 
   const sleepSchema = z.object({
     sleep_date: z.string().min(1, t('forms.sleep.dateRequired')),
@@ -37,12 +39,30 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
 
   type SleepFormData = z.infer<typeof sleepSchema>;
   
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<SleepFormData>({
+  const { register, handleSubmit, setValue, watch, formState: { errors }, trigger } = useForm<SleepFormData>({
     resolver: zodResolver(sleepSchema),
     defaultValues: {
       sleep_quality: 3,
     },
+    mode: "onChange",
   });
+
+  const handleFieldBlur = async (fieldName: keyof SleepFormData) => {
+    setTouchedFields(prev => ({ ...prev, [fieldName]: true }));
+    await trigger(fieldName);
+  };
+
+  const getFieldStatus = (fieldName: keyof SleepFormData) => {
+    const value = watch(fieldName);
+    const hasError = !!errors[fieldName];
+    const isTouched = touchedFields[fieldName];
+    const hasValue = value !== undefined && value !== "";
+    
+    if (!isTouched) return "default";
+    if (hasError) return "error";
+    if (hasValue) return "success";
+    return "default";
+  };
 
   useEffect(() => {
     if (analysis && submitButtonRef.current) {
@@ -121,21 +141,35 @@ export function SleepForm({ userId, onSuccess }: SleepFormProps) {
     }
   };
 
+  const dateStatus = getFieldStatus("sleep_date");
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="sleep_date" className="text-base md:text-sm font-medium">
-          <Moon className="w-4 h-4 inline mr-2" />
+        <Label htmlFor="sleep_date" className="text-base md:text-sm font-medium flex items-center gap-2">
+          <Moon className="w-4 h-4" />
           {t('forms.sleep.date')}
+          {dateStatus === "success" && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+          {dateStatus === "error" && <AlertCircle className="w-4 h-4 text-destructive" />}
         </Label>
-        <Input
-          id="sleep_date"
-          type="date"
-          className="h-12 md:h-10 text-base md:text-sm px-4"
-          {...register("sleep_date")}
-        />
+        <div className="relative">
+          <Input
+            id="sleep_date"
+            type="date"
+            className={cn(
+              "h-12 md:h-10 text-base md:text-sm px-4 transition-all duration-200",
+              dateStatus === "success" && "border-green-500 focus-visible:ring-green-500/20",
+              dateStatus === "error" && "border-destructive focus-visible:ring-destructive/20"
+            )}
+            {...register("sleep_date")}
+            onBlur={() => handleFieldBlur("sleep_date")}
+          />
+        </div>
         {errors.sleep_date && (
-          <p className="text-sm text-destructive">{errors.sleep_date.message}</p>
+          <p className="text-sm text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+            <AlertCircle className="w-3 h-3" />
+            {errors.sleep_date.message}
+          </p>
         )}
       </div>
 
