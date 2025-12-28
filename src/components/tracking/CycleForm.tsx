@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslation } from "react-i18next";
+import { CheckCircle2, AlertCircle, Calendar } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CycleFormProps {
   userId: string;
@@ -25,6 +27,7 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
 
   const cycleSchema = z.object({
     cycleStartDate: z.string().min(1, t('forms.cycle.dateRequired')),
@@ -46,7 +49,20 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
       symptoms: "",
       notes: "",
     },
+    mode: "onChange",
   });
+
+  const getFieldStatus = (fieldName: keyof CycleFormData) => {
+    const value = form.watch(fieldName);
+    const hasError = !!form.formState.errors[fieldName];
+    const isTouched = touchedFields[fieldName];
+    const hasValue = value !== undefined && value !== "";
+    
+    if (!isTouched) return "default";
+    if (hasError) return "error";
+    if (hasValue) return "success";
+    return "default";
+  };
 
   useEffect(() => {
     if (analysis && submitButtonRef.current) {
@@ -108,6 +124,8 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
     }
   };
 
+  const dateStatus = getFieldStatus("cycleStartDate");
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
@@ -116,15 +134,27 @@ export function CycleForm({ userId, onSuccess }: CycleFormProps) {
           name="cycleStartDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base md:text-sm font-medium">{t('forms.cycle.startDate')}</FormLabel>
+              <FormLabel className="text-base md:text-sm font-medium flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                {t('forms.cycle.startDate')}
+                {dateStatus === "success" && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                {dateStatus === "error" && <AlertCircle className="w-4 h-4 text-destructive" />}
+              </FormLabel>
               <FormControl>
                 <Input 
                   type="date" 
-                  className="h-12 md:h-10 text-base md:text-sm px-4"
-                  {...field} 
+                  className={cn(
+                    "h-12 md:h-10 text-base md:text-sm px-4 transition-all duration-200",
+                    dateStatus === "success" && "border-green-500 focus-visible:ring-green-500/20",
+                    dateStatus === "error" && "border-destructive focus-visible:ring-destructive/20"
+                  )}
+                  {...field}
+                  onBlur={() => setTouchedFields(prev => ({ ...prev, cycleStartDate: true }))}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+                {form.formState.errors.cycleStartDate && <AlertCircle className="w-3 h-3" />}
+              </FormMessage>
             </FormItem>
           )}
         />

@@ -10,10 +10,11 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Smile } from "lucide-react";
+import { Smile, CheckCircle2, AlertCircle } from "lucide-react";
 import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { HealthAnalysis } from "@/components/HealthAnalysis";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const getMoodSchema = (t: (key: string) => string) => z.object({
   mood_date: z.string().min(1, t("forms.mood.dateRequired")),
@@ -36,13 +37,32 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
   
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<MoodFormData>({
+  const { register, handleSubmit, setValue, watch, formState: { errors }, trigger } = useForm<MoodFormData>({
     resolver: zodResolver(getMoodSchema(t)),
     defaultValues: {
       mood_level: 3,
     },
+    mode: "onChange",
   });
+
+  const handleFieldBlur = async (fieldName: keyof MoodFormData) => {
+    setTouchedFields(prev => ({ ...prev, [fieldName]: true }));
+    await trigger(fieldName);
+  };
+
+  const getFieldStatus = (fieldName: keyof MoodFormData) => {
+    const value = watch(fieldName);
+    const hasError = !!errors[fieldName];
+    const isTouched = touchedFields[fieldName];
+    const hasValue = value !== undefined && value !== "";
+    
+    if (!isTouched) return "default";
+    if (hasError) return "error";
+    if (hasValue) return "success";
+    return "default";
+  };
 
   useEffect(() => {
     if (analysis && submitButtonRef.current) {
@@ -105,27 +125,44 @@ export function MoodForm({ userId, onSuccess }: MoodFormProps) {
     }
   };
 
+  const dateStatus = getFieldStatus("mood_date");
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="mood_date" className="text-base md:text-sm font-medium">
-          <Smile className="w-4 h-4 inline mr-2" />
+        <Label htmlFor="mood_date" className="text-base md:text-sm font-medium flex items-center gap-2">
+          <Smile className="w-4 h-4" />
           {t("forms.mood.date")}
+          {dateStatus === "success" && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+          {dateStatus === "error" && <AlertCircle className="w-4 h-4 text-destructive" />}
         </Label>
-        <Input
-          id="mood_date"
-          type="date"
-          className="h-12 md:h-10 text-base md:text-sm px-4"
-          {...register("mood_date")}
-        />
+        <div className="relative">
+          <Input
+            id="mood_date"
+            type="date"
+            className={cn(
+              "h-12 md:h-10 text-base md:text-sm px-4 transition-all duration-200",
+              dateStatus === "success" && "border-green-500 focus-visible:ring-green-500/20",
+              dateStatus === "error" && "border-destructive focus-visible:ring-destructive/20"
+            )}
+            {...register("mood_date")}
+            onBlur={() => handleFieldBlur("mood_date")}
+          />
+        </div>
         {errors.mood_date && (
-          <p className="text-sm text-destructive">{errors.mood_date.message}</p>
+          <p className="text-sm text-destructive flex items-center gap-1 animate-in fade-in slide-in-from-top-1">
+            <AlertCircle className="w-3 h-3" />
+            {errors.mood_date.message}
+          </p>
         )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="mood_type" className="text-base md:text-sm font-medium">{t("forms.mood.feeling")}</Label>
-        <Select onValueChange={(value) => setValue("mood_type", value)}>
+        <Select onValueChange={(value) => {
+          setValue("mood_type", value);
+          setTouchedFields(prev => ({ ...prev, mood_type: true }));
+        }}>
           <SelectTrigger className="h-12 md:h-10 text-base md:text-sm">
             <SelectValue placeholder={t("forms.mood.feelingPlaceholder")} />
           </SelectTrigger>
