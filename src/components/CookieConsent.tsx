@@ -8,6 +8,11 @@ export const CookieConsent = () => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
+  const tx = (key: string, fallback: string) => {
+    const value = t(key, { defaultValue: fallback });
+    return value === key ? fallback : value;
+  };
+
   useEffect(() => {
     const consent = localStorage.getItem("luna-cookie-consent");
     if (!consent) {
@@ -35,7 +40,7 @@ export const CookieConsent = () => {
           <button
             onClick={handleDecline}
             className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
-            aria-label={t('common.close')}
+            aria-label={tx("common.close", "Fechar")}
           >
             <X className="w-5 h-5" />
           </button>
@@ -49,23 +54,23 @@ export const CookieConsent = () => {
 
             <div className="flex-1 space-y-3">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-xl font-semibold">{t('cookies.title')}</h3>
+                <h3 className="text-xl font-semibold">{tx("cookies.title", "Sua Privacidade Importa")}</h3>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/20 text-secondary text-xs font-medium">
                   <Shield className="w-3.5 h-3.5" />
-                  {t('cookies.lgpdBadge')}
+                  {tx("cookies.lgpdBadge", "Conforme LGPD")}
                 </div>
               </div>
               
               <p className="text-sm text-muted-foreground leading-relaxed">
-                {t('cookies.description')}
+                {tx("cookies.description", "Usamos cookies essenciais para o funcionamento do site e cookies analíticos para melhorar sua experiência. Você pode aceitar todos ou apenas os essenciais.")}
               </p>
 
               <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
                 <Link to="/privacy-policy" className="hover:text-foreground transition-colors underline">
-                  {t('cookies.privacyPolicy')}
+                  {tx("cookies.privacyPolicy", "Política de Privacidade")}
                 </Link>
                 <Link to="/terms" className="hover:text-foreground transition-colors underline">
-                  {t('cookies.terms')}
+                  {tx("cookies.terms", "Termos de Uso")}
                 </Link>
               </div>
             </div>
@@ -76,13 +81,13 @@ export const CookieConsent = () => {
                 onClick={handleDecline}
                 className="w-full sm:w-auto"
               >
-                {t('cookies.decline')}
+                {tx("cookies.decline", "Apenas Essenciais")}
               </Button>
               <Button
                 onClick={handleAccept}
                 className="w-full sm:w-auto bg-gradient-colorful text-white hover:opacity-90"
               >
-                {t('cookies.accept')}
+                {tx("cookies.accept", "Aceitar Todos")}
               </Button>
             </div>
           </div>

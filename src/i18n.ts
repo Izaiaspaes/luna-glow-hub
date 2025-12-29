@@ -26,6 +26,15 @@ i18n
     },
     // Handle language codes like 'es-ES' -> 'es'
     load: 'languageOnly',
+    // Return the key if translation is missing - we'll handle fallbacks in code
+    returnEmptyString: false,
+    // Use defaultValue when provided
+    saveMissing: false,
+    // Parse missing key and use fallback format
+    parseMissingKeyHandler: (key: string) => {
+      // Return empty string so || fallback works
+      return '';
+    },
   });
 
 export default i18n;

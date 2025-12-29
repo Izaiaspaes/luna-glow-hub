@@ -10,36 +10,41 @@ import { useTranslation } from "react-i18next";
 export const FAQ = () => {
   const { t } = useTranslation();
 
+  const tx = (key: string, fallback: string) => {
+    const value = t(key, { defaultValue: fallback });
+    return value === key ? fallback : value;
+  };
+
   const faqs = [
     {
       icon: Shield,
-      question: t('faq.q1'),
-      answer: t('faq.a1'),
+      question: tx('faq.q1', 'A Luna é gratuita?'),
+      answer: tx('faq.a1', 'Sim! A Luna oferece um plano gratuito com recursos essenciais. Você também pode assinar o Premium para funcionalidades avançadas.'),
     },
     {
       icon: Sparkles,
-      question: t('faq.q2'),
-      answer: t('faq.a2'),
+      question: tx('faq.q2', 'Como funciona a IA da Luna?'),
+      answer: tx('faq.a2', 'Nossa IA analisa seus dados de saúde para oferecer insights personalizados sobre seu ciclo, sono, humor e energia.'),
     },
     {
       icon: Calendar,
-      question: t('faq.q3'),
-      answer: t('faq.a3'),
+      question: tx('faq.q3', 'Posso acompanhar meu ciclo menstrual?'),
+      answer: tx('faq.a3', 'Sim! A Luna oferece acompanhamento completo do ciclo menstrual com previsões e alertas personalizados.'),
     },
     {
       icon: CreditCard,
-      question: t('faq.q4'),
-      answer: t('faq.a4'),
+      question: tx('faq.q4', 'Como funciona o pagamento?'),
+      answer: tx('faq.a4', 'Aceitamos cartão de crédito e PIX. Você pode cancelar sua assinatura a qualquer momento.'),
     },
     {
       icon: Users,
-      question: t('faq.q5'),
-      answer: t('faq.a5'),
+      question: tx('faq.q5', 'Posso compartilhar dados com meu parceiro?'),
+      answer: tx('faq.a5', 'Sim! Com o recurso de compartilhamento, você pode escolher quais informações compartilhar.'),
     },
     {
       icon: Lock,
-      question: t('faq.q6'),
-      answer: t('faq.a6'),
+      question: tx('faq.q6', 'Meus dados estão seguros?'),
+      answer: tx('faq.a6', 'Absolutamente! Usamos criptografia de ponta e seguimos a LGPD para proteger suas informações.'),
     },
   ];
   return (
@@ -47,10 +52,10 @@ export const FAQ = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            {t('faq.title')}
+            {tx('faq.title', 'Perguntas Frequentes')}
           </h2>
           <p className="text-muted-foreground text-lg">
-            {t('faq.subtitle')}
+            {tx('faq.subtitle', 'Tire suas dúvidas sobre a Luna')}
           </p>
         </div>
 
