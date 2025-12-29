@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -46,6 +46,9 @@ interface UserWithRole {
 
 const ITEMS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
 
+type SortField = 'full_name' | 'email' | 'created_at' | 'last_accessed_at' | 'subscription_plan' | 'is_active';
+type SortDirection = 'asc' | 'desc';
+
 export const UsersManagement = () => {
   const [users, setUsers] = useState<UserWithRole[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
@@ -55,6 +58,8 @@ export const UsersManagement = () => {
   const [statusFilter, setStatusFilter] = useState<boolean | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortField, setSortField] = useState<SortField>('created_at');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   useEffect(() => {
     loadUsers();
@@ -203,8 +208,8 @@ export const UsersManagement = () => {
     }
   };
 
-  const filteredUsers = useMemo(() => {
-    return users.filter(user => {
+  const filteredAndSortedUsers = useMemo(() => {
+    const filtered = users.filter(user => {
       const matchesSearch = 
         user.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(searchTerm.toLowerCase());
@@ -215,15 +220,72 @@ export const UsersManagement = () => {
       
       return matchesSearch && matchesRole && matchesStatus;
     });
-  }, [users, searchTerm, roleFilter, statusFilter]);
+
+    // Sort the filtered users
+    return filtered.sort((a, b) => {
+      let aValue: any;
+      let bValue: any;
+
+      switch (sortField) {
+        case 'full_name':
+          aValue = a.full_name?.toLowerCase() || '';
+          bValue = b.full_name?.toLowerCase() || '';
+          break;
+        case 'email':
+          aValue = a.email.toLowerCase();
+          bValue = b.email.toLowerCase();
+          break;
+        case 'created_at':
+          aValue = new Date(a.created_at).getTime();
+          bValue = new Date(b.created_at).getTime();
+          break;
+        case 'last_accessed_at':
+          aValue = a.last_accessed_at ? new Date(a.last_accessed_at).getTime() : 0;
+          bValue = b.last_accessed_at ? new Date(b.last_accessed_at).getTime() : 0;
+          break;
+        case 'subscription_plan':
+          aValue = a.subscription_plan || '';
+          bValue = b.subscription_plan || '';
+          break;
+        case 'is_active':
+          aValue = a.is_active ?? true ? 1 : 0;
+          bValue = b.is_active ?? true ? 1 : 0;
+          break;
+        default:
+          return 0;
+      }
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }, [users, searchTerm, roleFilter, statusFilter, sortField, sortDirection]);
 
   // Pagination calculations
-  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredAndSortedUsers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedUsers = useMemo(() => {
-    return filteredUsers.slice(startIndex, endIndex);
-  }, [filteredUsers, startIndex, endIndex]);
+    return filteredAndSortedUsers.slice(startIndex, endIndex);
+  }, [filteredAndSortedUsers, startIndex, endIndex]);
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  const SortIcon = ({ field }: { field: SortField }) => {
+    if (sortField !== field) {
+      return <ArrowUpDown className="w-3 h-3 ml-1 opacity-50" />;
+    }
+    return sortDirection === 'asc' 
+      ? <ArrowUp className="w-3 h-3 ml-1" /> 
+      : <ArrowDown className="w-3 h-3 ml-1" />;
+  };
 
   // Reset to first page when filters change
   useEffect(() => {
@@ -359,7 +421,7 @@ export const UsersManagement = () => {
 
           {loadingUsers ? (
             <p className="text-muted-foreground">Carregando usuários...</p>
-          ) : filteredUsers.length === 0 ? (
+          ) : filteredAndSortedUsers.length === 0 ? (
             <p className="text-muted-foreground">
               {users.length === 0 ? "Nenhum usuário encontrado" : "Nenhum usuário corresponde aos filtros"}
             </p>
@@ -368,7 +430,7 @@ export const UsersManagement = () => {
               {/* Pagination Info & Items Per Page */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 text-sm">
                 <p className="text-muted-foreground">
-                  Mostrando {startIndex + 1}-{Math.min(endIndex, filteredUsers.length)} de {filteredUsers.length} usuários
+                  Mostrando {startIndex + 1}-{Math.min(endIndex, filteredAndSortedUsers.length)} de {filteredAndSortedUsers.length} usuários
                 </p>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">Itens por página:</span>
@@ -395,14 +457,62 @@ export const UsersManagement = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Nome</TableHead>
-                      <TableHead>E-mail</TableHead>
-                      <TableHead>Cadastro</TableHead>
-                      <TableHead>Última Atividade</TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleSort('full_name')}
+                      >
+                        <span className="flex items-center">
+                          Nome
+                          <SortIcon field="full_name" />
+                        </span>
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleSort('email')}
+                      >
+                        <span className="flex items-center">
+                          E-mail
+                          <SortIcon field="email" />
+                        </span>
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleSort('created_at')}
+                      >
+                        <span className="flex items-center">
+                          Cadastro
+                          <SortIcon field="created_at" />
+                        </span>
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleSort('last_accessed_at')}
+                      >
+                        <span className="flex items-center">
+                          Última Atividade
+                          <SortIcon field="last_accessed_at" />
+                        </span>
+                      </TableHead>
                       <TableHead>Origem</TableHead>
-                      <TableHead>Pacote</TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleSort('subscription_plan')}
+                      >
+                        <span className="flex items-center">
+                          Pacote
+                          <SortIcon field="subscription_plan" />
+                        </span>
+                      </TableHead>
                       <TableHead>Roles</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-muted/50 transition-colors"
+                        onClick={() => handleSort('is_active')}
+                      >
+                        <span className="flex items-center">
+                          Status
+                          <SortIcon field="is_active" />
+                        </span>
+                      </TableHead>
                       <TableHead>Ações</TableHead>
                     </TableRow>
                   </TableHeader>
