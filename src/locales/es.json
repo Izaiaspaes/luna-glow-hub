@@ -494,7 +494,9 @@
     "share": "Compartir Luna",
     "terms": "Términos de Uso",
     "privacyPolicy": "Política de Privacidad",
-    "cookies": "Cookies"
+    "refundPolicy": "Política de Reembolso",
+    "cookies": "Cookies",
+    "developedBy": "Desarrollado por"
   },
   "dashboard": {
     "welcome": "¡Hola{{name}}, bienvenida! 👋",

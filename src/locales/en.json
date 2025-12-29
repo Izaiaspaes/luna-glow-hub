@@ -426,7 +426,9 @@
     "share": "Share Luna",
     "terms": "Terms of Use",
     "privacyPolicy": "Privacy Policy",
-    "cookies": "Cookies"
+    "refundPolicy": "Refund Policy",
+    "cookies": "Cookies",
+    "developedBy": "Developed by"
   },
   "dashboard": {
     "welcome": "Welcome back",

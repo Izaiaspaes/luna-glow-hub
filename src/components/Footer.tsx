@@ -159,21 +159,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              © {currentYear} Luna. {t('footer.rights')}
-            </p>
-            <Button 
-              onClick={handleShare} 
-              variant="outline" 
-              size="sm"
-              className="gap-2"
-            >
-              <Share2 className="h-4 w-4" />
-              {t('footer.share') || 'Compartilhar Luna'}
-            </Button>
-          </div>
+        <div className="pt-8 border-t border-border flex flex-col gap-4">
           <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground">
             <NavLink to="/terms" className="hover:text-primary transition-smooth">
               {t('footer.terms') || 'Termos de Uso'}
@@ -187,6 +173,33 @@ export const Footer = () => {
             <NavLink to="/privacy-policy" className="hover:text-primary transition-smooth">
               {t('footer.cookies') || 'Cookies'}
             </NavLink>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <p className="text-sm text-muted-foreground">
+                © {currentYear} Luna. {t('footer.rights') || 'Todos os direitos reservados.'}
+              </p>
+              <Button 
+                onClick={handleShare} 
+                variant="outline" 
+                size="sm"
+                className="gap-2"
+              >
+                <Share2 className="h-4 w-4" />
+                {t('footer.share') || 'Compartilhar Luna'}
+              </Button>
+            </div>
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <span>{t('footer.developedBy') || 'Desenvolvido por'}</span>
+              <a 
+                href="https://topdigitais.net" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 font-medium transition-colors"
+              >
+                Top Digitais
+              </a>
+            </div>
           </div>
         </div>
       </div>
