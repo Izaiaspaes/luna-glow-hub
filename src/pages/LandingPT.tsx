@@ -13,6 +13,7 @@ import { SocialProof } from "@/components/landing/SocialProof";
 import { StickyCTA } from "@/components/landing/StickyCTA";
 import { Quiz } from "@/components/landing/Quiz";
 import { AppDemo } from "@/components/landing/AppDemo";
+import { Footer } from "@/components/landing/Footer";
 
 const LandingPT = () => {
   return (
@@ -31,6 +32,7 @@ const LandingPT = () => {
       <FinalCTA />
       <ExitIntentPopup />
       <SocialProof />
+      <Footer />
       <StickyCTA />
     </div>
   );
