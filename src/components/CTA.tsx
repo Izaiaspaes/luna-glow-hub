@@ -2,10 +2,31 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { trackCTAClick, trackStartOnboarding, trackViewFeatures } from "@/lib/analytics";
 
 export const CTA = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const handleStartClick = () => {
+    trackCTAClick({
+      ctaLocation: 'cta_section',
+      ctaText: t('cta.startButton'),
+      destination: '/auth'
+    });
+    trackStartOnboarding({ source: 'cta_section' });
+    navigate("/auth");
+  };
+
+  const handleFeaturesClick = () => {
+    trackCTAClick({
+      ctaLocation: 'cta_section',
+      ctaText: t('cta.featuresButton'),
+      destination: '/features'
+    });
+    trackViewFeatures({ source: 'cta_section' });
+    navigate("/features");
+  };
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10 relative overflow-hidden">
@@ -31,7 +52,7 @@ export const CTA = () => {
           <Button
             size="lg"
             variant="colorful"
-            onClick={() => navigate("/auth")}
+            onClick={handleStartClick}
             className="group text-lg px-8 py-6"
           >
             {t('cta.startButton')}
@@ -41,7 +62,7 @@ export const CTA = () => {
           <Button
             size="lg"
             variant="outline"
-            onClick={() => navigate("/features")}
+            onClick={handleFeaturesClick}
             className="border-primary/50 hover:bg-primary/5 hover:border-primary transition-all duration-300 text-lg px-8 py-6"
           >
             {t('cta.featuresButton')}

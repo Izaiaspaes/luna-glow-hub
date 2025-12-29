@@ -103,3 +103,51 @@ export const trackLead = (params?: {
     lead_source: params?.source || 'newsletter'
   });
 };
+
+// CTA Click - track main CTA button clicks
+export const trackCTAClick = (params: {
+  ctaLocation: string;
+  ctaText: string;
+  destination?: string;
+}) => {
+  pushToDataLayer({
+    event: 'cta_click',
+    cta_location: params.ctaLocation,
+    cta_text: params.ctaText,
+    cta_destination: params.destination || 'unknown'
+  });
+};
+
+// Button Click - generic button tracking
+export const trackButtonClick = (params: {
+  buttonName: string;
+  buttonLocation: string;
+  buttonType?: 'primary' | 'secondary' | 'outline';
+}) => {
+  pushToDataLayer({
+    event: 'button_click',
+    button_name: params.buttonName,
+    button_location: params.buttonLocation,
+    button_type: params.buttonType || 'primary'
+  });
+};
+
+// Start Onboarding - when user clicks to start onboarding
+export const trackStartOnboarding = (params?: {
+  source?: string;
+}) => {
+  pushToDataLayer({
+    event: 'start_onboarding',
+    onboarding_source: params?.source || 'unknown'
+  });
+};
+
+// View Features - when user clicks to view features
+export const trackViewFeatures = (params?: {
+  source?: string;
+}) => {
+  pushToDataLayer({
+    event: 'view_features',
+    features_source: params?.source || 'unknown'
+  });
+};

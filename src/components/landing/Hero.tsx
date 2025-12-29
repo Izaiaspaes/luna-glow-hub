@@ -3,8 +3,29 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Sparkles, Shield, Heart } from "lucide-react";
 import heroImage from "@/assets/hero-woman-phone.jpg";
 import { motion } from "framer-motion";
+import { trackCTAClick, trackStartOnboarding, trackViewFeatures } from "@/lib/analytics";
 
 export const Hero = () => {
+  const handleStartClick = () => {
+    trackCTAClick({
+      ctaLocation: 'hero',
+      ctaText: 'Comece Grátis Agora',
+      destination: '/onboarding'
+    });
+    trackStartOnboarding({ source: 'hero' });
+    window.location.href = '/onboarding';
+  };
+
+  const handlePremiumClick = () => {
+    trackCTAClick({
+      ctaLocation: 'hero',
+      ctaText: 'Ver Pacotes Premium',
+      destination: '/onboarding'
+    });
+    trackViewFeatures({ source: 'hero_premium' });
+    window.location.href = '/onboarding';
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-luna-pink-light to-luna-peach">
       {/* Decorative elements */}
@@ -99,7 +120,7 @@ export const Hero = () => {
                 size="xl" 
                 variant="cta" 
                 className="group"
-                onClick={() => window.location.href = '/onboarding'}
+                onClick={handleStartClick}
               >
                 Comece Grátis Agora
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -107,7 +128,7 @@ export const Hero = () => {
               <Button 
                 size="xl" 
                 variant="ctaOutline"
-                onClick={() => window.location.href = '/onboarding'}
+                onClick={handlePremiumClick}
               >
                 Ver Pacotes Premium
               </Button>
