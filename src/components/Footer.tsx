@@ -94,7 +94,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <NavLink to="/features" className="hover:text-primary transition-smooth">
-                  {t("nav.features")}
+                  {tx("nav.features", "Funcionalidades")}
                 </NavLink>
               </li>
               <li>
@@ -102,7 +102,7 @@ export const Footer = () => {
                   to="/privacy-policy"
                   className="hover:text-primary transition-smooth"
                 >
-                  {t("privacy.title")}
+                  {tx("privacy.title", "Privacidade")}
                 </NavLink>
               </li>
               <li>
@@ -112,7 +112,7 @@ export const Footer = () => {
               </li>
               <li>
                 <NavLink to="/pricing" className="hover:text-primary transition-smooth">
-                  {t("nav.pricing")}
+                  {tx("nav.pricing", "Assinaturas")}
                 </NavLink>
               </li>
               <li>
@@ -121,7 +121,7 @@ export const Footer = () => {
                   className="hover:text-primary transition-smooth flex items-center gap-1"
                 >
                   <Smartphone className="h-3 w-3" />
-                  {t("install.installApp", "Instalar App")}
+                  {tx("install.installApp", "Instalar App")}
                 </NavLink>
               </li>
             </ul>
@@ -135,7 +135,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <NavLink to="/blog" className="hover:text-primary transition-smooth">
-                  {t("nav.blog")}
+                  {tx("nav.blog", "Blog")}
                 </NavLink>
               </li>
               <li>

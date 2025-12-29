@@ -8,25 +8,30 @@ import featureShop from "@/assets/feature-shop.jpg";
 export const Features = () => {
   const { t, i18n } = useTranslation();
 
+  const tx = (key: string, fallback: string) => {
+    const value = t(key, { defaultValue: fallback });
+    return value === key ? fallback : value;
+  };
+
   const features = [
     {
       icon: Heart,
-      title: t("features.health.title"),
-      description: t("features.health.description"),
+      title: tx("features.health.title", "Saúde & Bem-estar"),
+      description: tx("features.health.description", "Acompanhe seu ciclo menstrual, sono e energia com IA personalizada"),
       image: featureHealth,
       color: "primary",
     },
     {
       icon: Users,
-      title: t("features.community.title"),
-      description: t("features.community.description"),
+      title: tx("features.community.title", "Comunidade"),
+      description: tx("features.community.description", "Conecte-se com outras mulheres em uma comunidade segura e acolhedora"),
       image: featureCommunity,
       color: "secondary",
     },
     {
       icon: ShoppingBag,
-      title: t("features.shop.title"),
-      description: t("features.shop.description"),
+      title: tx("features.shop.title", "Marketplace"),
+      description: tx("features.shop.description", "Produtos selecionados para seu bem-estar feminino"),
       image: featureShop,
       color: "accent",
     },
@@ -37,12 +42,12 @@ export const Features = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 space-y-4">
           <h2 id="features-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            {t("features.sectionTitle")}{" "}
+            {tx("features.sectionTitle", "Tudo que você precisa para")}{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
-              {t("features.sectionTitleHighlight")}
+              {tx("features.sectionTitleHighlight", "seu bem-estar")}
             </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("features.sectionDescription")}</p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{tx("features.sectionDescription", "Descubra ferramentas criadas especialmente para você")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

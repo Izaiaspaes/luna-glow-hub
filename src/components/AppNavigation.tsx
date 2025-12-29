@@ -15,6 +15,11 @@ export const AppNavigation = () => {
   const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const tx = (key: string, fallback: string) => {
+    const value = t(key, { defaultValue: fallback });
+    return value === key ? fallback : value;
+  };
+
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (user) {
@@ -74,12 +79,12 @@ export const AppNavigation = () => {
               {user ? (
                 <>
                   <LayoutDashboard className="h-4 w-4" />
-                  {t("nav.dashboard")}
+                  {tx("nav.dashboard", "Dashboard")}
                 </>
               ) : (
                 <>
                   <Home className="h-4 w-4" />
-                  {t("nav.home")}
+                  {tx("nav.home", "Início")}
                 </>
               )}
             </Button>
@@ -91,7 +96,7 @@ export const AppNavigation = () => {
               className="gap-2"
             >
               <Sparkles className="h-4 w-4" />
-              {t("nav.features")}
+              {tx("nav.features", "Funcionalidades")}
             </Button>
 
             <Button
@@ -101,7 +106,7 @@ export const AppNavigation = () => {
               className="gap-2"
             >
               <DollarSign className="h-4 w-4" />
-              {t("nav.pricing")}
+              {tx("nav.pricing", "Assinaturas")}
             </Button>
 
             {user && isAdmin && (
@@ -112,7 +117,7 @@ export const AppNavigation = () => {
                 className="gap-2"
               >
                 <ShieldCheck className="h-4 w-4" />
-                {t("nav.adminPanel")}
+                {tx("nav.adminPanel", "Painel Admin")}
               </Button>
             )}
           </div>
@@ -129,7 +134,7 @@ export const AppNavigation = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate("/dashboard?settings=true")}
-                title={t("nav.settings")}
+                title={tx("nav.settings", "Configurações")}
                 className="hidden md:inline-flex"
               >
                 <Settings className="h-5 w-5" />
@@ -141,7 +146,7 @@ export const AppNavigation = () => {
                 className="gap-2 hidden md:inline-flex"
               >
                 <LogOut className="h-4 w-4" />
-                {t("nav.logout")}
+                {tx("nav.logout", "Sair")}
               </Button>
             </>
           ) : (
@@ -151,7 +156,7 @@ export const AppNavigation = () => {
               onClick={() => navigate("/auth")}
               className="hidden md:inline-flex"
             >
-              {t("nav.login")}
+              {tx("nav.login", "Entrar")}
             </Button>
           )}
           
@@ -160,7 +165,7 @@ export const AppNavigation = () => {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">{t("nav.openMenu")}</span>
+                <span className="sr-only">{tx("nav.openMenu", "Abrir menu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
@@ -181,12 +186,12 @@ export const AppNavigation = () => {
                   {user ? (
                     <>
                       <LayoutDashboard className="h-5 w-5" />
-                      {t("nav.dashboard")}
+                      {tx("nav.dashboard", "Dashboard")}
                     </>
                   ) : (
                     <>
                       <Home className="h-5 w-5" />
-                      {t("nav.home")}
+                      {tx("nav.home", "Início")}
                     </>
                   )}
                 </Button>
@@ -200,7 +205,7 @@ export const AppNavigation = () => {
                   className="justify-start gap-3"
                 >
                   <Sparkles className="h-5 w-5" />
-                  {t("nav.features")}
+                  {tx("nav.features", "Funcionalidades")}
                 </Button>
                 
                 <Button
@@ -212,7 +217,7 @@ export const AppNavigation = () => {
                   className="justify-start gap-3"
                 >
                   <DollarSign className="h-5 w-5" />
-                  {t("nav.pricing")}
+                  {tx("nav.pricing", "Assinaturas")}
                 </Button>
                 
                 {user && isAdmin && (
@@ -225,7 +230,7 @@ export const AppNavigation = () => {
                     className="justify-start gap-3"
                   >
                     <ShieldCheck className="h-5 w-5" />
-                    {t("nav.adminPanel")}
+                    {tx("nav.adminPanel", "Painel Admin")}
                   </Button>
                 )}
                 
@@ -243,7 +248,7 @@ export const AppNavigation = () => {
                         className="w-full justify-start gap-3"
                       >
                         <Settings className="h-5 w-5" />
-                        {t("nav.settings")}
+                        {tx("nav.settings", "Configurações")}
                       </Button>
                       <Button
                         variant="outline"
@@ -254,7 +259,7 @@ export const AppNavigation = () => {
                         className="w-full justify-start gap-3"
                       >
                         <LogOut className="h-5 w-5" />
-                        {t("nav.logout")}
+                        {tx("nav.logout", "Sair")}
                       </Button>
                     </>
                   ) : (
@@ -266,7 +271,7 @@ export const AppNavigation = () => {
                       }}
                       className="w-full"
                     >
-                      {t("nav.login")}
+                      {tx("nav.login", "Entrar")}
                     </Button>
                   )}
                 </div>

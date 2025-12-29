@@ -20,6 +20,12 @@ export const Hero = () => {
   const {
     t
   } = useTranslation();
+  
+  const tx = (key: string, fallback: string) => {
+    const value = t(key, { defaultValue: fallback });
+    return value === key ? fallback : value;
+  };
+  
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
@@ -37,29 +43,29 @@ export const Hero = () => {
             </div>
             
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
-              {t('hero.title')}
+              {tx('hero.title', 'Sua jornada de bem-estar começa aqui')}
             </h1>
             
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
-              {t('hero.subtitle')}
+              {tx('hero.subtitle', 'Acompanhe seu ciclo, sono, humor e energia com IA personalizada para você')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center lg:justify-start">
               <NavLink to="/onboarding">
                 <Button variant="colorful" size="default" className="group w-full sm:w-auto h-10 sm:h-11 md:h-12 text-sm sm:text-base">
-                  {t('hero.cta')}
+                  {tx('hero.cta', 'Começar Grátis')}
                   <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </NavLink>
               <NavLink to="/features">
                 <Button variant="outline" size="default" className="w-full sm:w-auto h-10 sm:h-11 md:h-12 text-sm sm:text-base">
-                  {t('hero.ctaSecondary')}
+                  {tx('hero.ctaSecondary', 'Ver Funcionalidades')}
                 </Button>
               </NavLink>
               <NavLink to="/install" className="hidden sm:block">
                 <Button variant="ghost" size="default" className="gap-2 h-10 sm:h-11 md:h-12 text-sm sm:text-base">
                   <Smartphone className="h-4 w-4 sm:h-5 sm:w-5" />
-                  {t('install.installApp', 'Instalar App')}
+                  {tx('install.installApp', 'Instalar App')}
                 </Button>
               </NavLink>
             </div>
@@ -68,17 +74,17 @@ export const Hero = () => {
             <div className="flex items-center gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-start pt-2 sm:pt-4">
               <div className="text-center">
                 <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">100%</p>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{t('hero.stats.private')}</p>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{tx('hero.stats.private', 'Privado')}</p>
               </div>
               <div className="h-8 sm:h-10 md:h-12 w-px bg-border"></div>
               <div className="text-center">
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{t('hero.stats.free')}</p>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{t('hero.stats.freeDesc')}</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{tx('hero.stats.free', 'Grátis')}</p>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{tx('hero.stats.freeDesc', 'Para sempre')}</p>
               </div>
               <div className="h-8 sm:h-10 md:h-12 w-px bg-border"></div>
               <div className="text-center">
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{t('hero.stats.ai')}</p>
-                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{t('hero.stats.aiDesc')}</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{tx('hero.stats.ai', 'IA')}</p>
+                <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{tx('hero.stats.aiDesc', 'Personalizada')}</p>
               </div>
             </div>
           </div>
@@ -97,8 +103,8 @@ export const Hero = () => {
             
             {/* Floating card */}
             <div className="absolute -bottom-6 -left-6 bg-card p-6 rounded-2xl shadow-hover max-w-xs hidden lg:block">
-              <p className="text-sm text-muted-foreground mb-2">{t('hero.floatingCard.lastAnalysis')}</p>
-              <p className="font-semibold text-lg">{t('hero.floatingCard.sleepImprovement')}</p>
+              <p className="text-sm text-muted-foreground mb-2">{tx('hero.floatingCard.lastAnalysis', 'Última análise')}</p>
+              <p className="font-semibold text-lg">{tx('hero.floatingCard.sleepImprovement', '+23% qualidade do sono')}</p>
             </div>
           </div>
         </div>
