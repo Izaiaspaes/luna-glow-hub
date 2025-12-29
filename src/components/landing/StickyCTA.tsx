@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GuaranteeBadge } from "./GuaranteeBadge";
+import { trackCTAClick, trackStartOnboarding } from "@/lib/analytics";
 
 export const StickyCTA = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,6 +17,16 @@ export const StickyCTA = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleClick = () => {
+    trackCTAClick({
+      ctaLocation: 'sticky_cta',
+      ctaText: 'Começar Agora',
+      destination: '/onboarding'
+    });
+    trackStartOnboarding({ source: 'sticky_cta' });
+    window.location.href = '/onboarding';
+  };
 
   return (
     <AnimatePresence>
@@ -46,7 +57,7 @@ export const StickyCTA = () => {
                 size="lg"
                 variant="cta"
                 className="w-full md:w-auto text-lg px-8 py-6"
-                onClick={() => window.location.href = '/onboarding'}
+                onClick={handleClick}
               >
                 Começar Agora
                 <ArrowRight className="ml-2 w-5 h-5" />

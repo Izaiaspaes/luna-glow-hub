@@ -1,7 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { trackCTAClick, trackStartOnboarding, trackViewFeatures } from "@/lib/analytics";
 
 export const FinalCTA = () => {
+  const handleStartClick = () => {
+    trackCTAClick({
+      ctaLocation: 'final_cta',
+      ctaText: 'Começar Grátis Agora',
+      destination: '/onboarding'
+    });
+    trackStartOnboarding({ source: 'final_cta' });
+    window.location.href = '/onboarding';
+  };
+
+  const handleViewFeaturesClick = () => {
+    trackCTAClick({
+      ctaLocation: 'final_cta',
+      ctaText: 'Ver Todos os Recursos',
+      destination: '/onboarding'
+    });
+    trackViewFeatures({ source: 'final_cta' });
+    window.location.href = '/onboarding';
+  };
+
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background gradient */}
@@ -28,7 +49,7 @@ export const FinalCTA = () => {
               size="xl" 
               variant="cta"
               className="group"
-              onClick={() => window.location.href = '/onboarding'}
+              onClick={handleStartClick}
             >
               Começar Grátis Agora
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -36,7 +57,7 @@ export const FinalCTA = () => {
             <Button 
               size="xl" 
               variant="ctaOutline"
-              onClick={() => window.location.href = '/onboarding'}
+              onClick={handleViewFeaturesClick}
             >
               Ver Todos os Recursos
             </Button>
