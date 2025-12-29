@@ -11,6 +11,7 @@ import { StickyCTA } from "@/components/landing/en/StickyCTA";
 import { Quiz } from "@/components/landing/en/Quiz";
 import { CountdownTimer } from "@/components/landing/en/CountdownTimer";
 import { AppDemo } from "@/components/landing/AppDemo";
+import { Footer } from "@/components/landing/Footer";
 
 const LandingEN = () => {
   return (
@@ -27,6 +28,7 @@ const LandingEN = () => {
       <FinalCTA />
       <ExitIntentPopup />
       <SocialProof />
+      <Footer />
       <StickyCTA />
     </div>
   );
