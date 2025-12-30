@@ -338,7 +338,53 @@
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Resolve your doubts about privacy, functionality and Luna features",
+    "subtitle": "Everything you need to know about Luna Glow. Didn't find your answer? Contact us!",
+    "badge": "Help Center",
+    "categories": {
+      "about": "About Luna",
+      "features": "Features",
+      "payment": "Plans & Payment",
+      "community": "Sharing & Community"
+    },
+    "aboutLuna": {
+      "q1": "Is Luna Glow really free?",
+      "a1": "Yes! You can use Luna Glow for free forever with basic features like cycle tracking, calendar, and daily insights. Premium and Premium Plus plans unlock advanced features like unlimited AI, complete beauty and health analysis, virtual closet, and much more.",
+      "q2": "How does Luna's AI work?",
+      "a2": "Our advanced AI analyzes your health data, menstrual cycle, mood, sleep, and energy to offer 100% personalized insights. It learns from your unique patterns and continuously adapts to provide the best predictions and recommendations.",
+      "q3": "Is my data really secure?",
+      "a3": "Absolutely! Your privacy is our top priority. We use end-to-end encryption, strictly follow GDPR, and NEVER share or sell your data. You have full control over your information and can export or delete everything at any time."
+    },
+    "features": {
+      "q1": "Can I track my menstrual cycle?",
+      "a1": "Yes! Luna offers complete menstrual cycle tracking with accurate predictions, personalized alerts, symptom logging, and insights about each phase of your cycle. Our AI learns from your patterns to offer increasingly accurate predictions.",
+      "q2": "What is AI Beauty Analysis?",
+      "a2": "It's an exclusive feature that analyzes your unique characteristics (skin tone, face shape, hair type) to offer personalized makeup, skincare, and style recommendations. Available on Premium and Premium Plus plans.",
+      "q3": "How does the Virtual Closet work?",
+      "a3": "You can photograph your clothes and the AI automatically organizes them by category, color, and occasion. The system suggests outfit combinations based on your style, weather, and schedule. It's like having a personal fashion consultant!",
+      "q4": "Does Luna track sleep and energy?",
+      "a4": "Yes! You can log sleep quality, times, and how you felt when waking up. Luna correlates this data with your cycle and mood to identify patterns and offer personalized tips to improve your rest.",
+      "q5": "What is Luna Sense?",
+      "a5": "It's our conversational AI assistant you can consult anytime. She knows your history, understands your context, and offers personalized advice on health, wellness, beauty, and self-care."
+    },
+    "payment": {
+      "q1": "What payment methods do you accept?",
+      "a1": "We accept credit cards (Visa, Mastercard, Elo, American Express), PIX, and bank slips. Payments are processed securely via Stripe.",
+      "q2": "Can I cancel my subscription anytime?",
+      "a2": "Yes! You can cancel your Premium plan anytime, with no fees or penalties. If you cancel, you'll continue to have access to premium features until the end of your paid period.",
+      "q3": "How does the 7-day guarantee work?",
+      "a3": "If you're not satisfied within the first 7 days, we refund 100% of the amount paid, no questions asked. We want you to be sure Luna is perfect for you."
+    },
+    "community": {
+      "q1": "Can I share my data with my partner?",
+      "a1": "Yes! With the Partner Mode feature, you can invite someone to follow selected information from your cycle. You control exactly what is shared and can revoke access at any time.",
+      "q2": "Does Luna work as an app?",
+      "a2": "Yes! Luna Glow is a Progressive Web App (PWA), meaning you can install it directly on your phone without needing an app store. It works offline and sends notifications like any native app."
+    },
+    "cta": {
+      "title": "Still have questions?",
+      "subtitle": "Our team is ready to help you",
+      "button": "Contact Us"
+    },
     "q1": "Is my data really secure?",
     "a1": "Yes! Privacy is our top priority. All your data is encrypted and stored securely. You have full control over your information and can export or delete your data at any time. We never share your personal information without your explicit consent.",
     "q2": "How does Luna's Artificial Intelligence work?",

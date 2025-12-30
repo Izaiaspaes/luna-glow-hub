@@ -338,7 +338,53 @@
   },
   "faq": {
     "title": "Perguntas Frequentes",
-    "subtitle": "Resolva suas dúvidas sobre privacidade, funcionamento e características da Luna",
+    "subtitle": "Tudo o que você precisa saber sobre a Luna Glow. Não encontrou sua resposta? Entre em contato conosco!",
+    "badge": "Central de Ajuda",
+    "categories": {
+      "about": "Sobre a Luna",
+      "features": "Funcionalidades",
+      "payment": "Planos e Pagamento",
+      "community": "Compartilhamento e Comunidade"
+    },
+    "aboutLuna": {
+      "q1": "A Luna Glow é realmente gratuita?",
+      "a1": "Sim! Você pode usar a Luna Glow gratuitamente para sempre com funcionalidades básicas como acompanhamento de ciclo, calendário e insights diários. Os planos Premium e Premium Plus desbloqueiam recursos avançados como IA ilimitada, análises completas de beleza e saúde, guarda-roupa virtual e muito mais.",
+      "q2": "Como funciona a IA da Luna?",
+      "a2": "Nossa IA avançada analisa seus dados de saúde, ciclo menstrual, humor, sono e energia para oferecer insights 100% personalizados. Ela aprende com seus padrões únicos e se adapta continuamente para oferecer as melhores previsões e recomendações.",
+      "q3": "Meus dados estão realmente seguros?",
+      "a3": "Absolutamente! Sua privacidade é nossa prioridade máxima. Usamos criptografia de ponta a ponta, seguimos rigorosamente a LGPD e NUNCA compartilhamos ou vendemos seus dados. Você tem controle total sobre suas informações e pode exportar ou excluir tudo a qualquer momento."
+    },
+    "features": {
+      "q1": "Posso acompanhar meu ciclo menstrual?",
+      "a1": "Sim! A Luna oferece acompanhamento completo do ciclo menstrual com previsões precisas, alertas personalizados, registro de sintomas e insights sobre cada fase do seu ciclo. Nossa IA aprende com seus padrões para oferecer previsões cada vez mais precisas.",
+      "q2": "O que é a Análise de Beleza com IA?",
+      "a2": "É um recurso exclusivo que analisa suas características únicas (tom de pele, formato do rosto, tipo de cabelo) para oferecer recomendações personalizadas de maquiagem, skincare e estilo. Disponível nos planos Premium e Premium Plus.",
+      "q3": "Como funciona o Guarda-Roupa Virtual?",
+      "a3": "Você pode fotografar suas roupas e a IA organiza automaticamente por categoria, cor e ocasião. O sistema sugere combinações de looks baseadas no seu estilo, no clima e na sua agenda. É como ter uma consultora de moda pessoal!",
+      "q4": "A Luna acompanha sono e energia?",
+      "a4": "Sim! Você pode registrar a qualidade do sono, horários e como se sentiu ao acordar. A Luna correlaciona esses dados com seu ciclo e humor para identificar padrões e oferecer dicas personalizadas para melhorar seu descanso.",
+      "q5": "O que é a Luna Sense?",
+      "a5": "É nossa assistente de IA conversacional que você pode consultar a qualquer momento. Ela conhece seu histórico, entende seu contexto e oferece conselhos personalizados sobre saúde, bem-estar, beleza e autocuidado."
+    },
+    "payment": {
+      "q1": "Quais formas de pagamento vocês aceitam?",
+      "a1": "Aceitamos cartão de crédito (Visa, Mastercard, Elo, American Express), PIX e boleto bancário. Os pagamentos são processados de forma segura via Stripe.",
+      "q2": "Posso cancelar minha assinatura a qualquer momento?",
+      "a2": "Sim! Você pode cancelar seu plano Premium a qualquer momento, sem taxas ou penalidades. Se cancelar, você continua tendo acesso aos recursos premium até o fim do período já pago.",
+      "q3": "Como funciona a garantia de 7 dias?",
+      "a3": "Se você não ficar satisfeita nos primeiros 7 dias, reembolsamos 100% do valor pago, sem perguntas. Queremos que você tenha certeza de que a Luna é perfeita para você."
+    },
+    "community": {
+      "q1": "Posso compartilhar meus dados com meu parceiro(a)?",
+      "a1": "Sim! Com o recurso de Modo Parceiro, você pode convidar alguém para acompanhar informações selecionadas do seu ciclo. Você controla exatamente o que é compartilhado e pode revogar o acesso a qualquer momento.",
+      "q2": "A Luna funciona como aplicativo?",
+      "a2": "Sim! A Luna Glow é um Progressive Web App (PWA), ou seja, você pode instalá-la diretamente no seu celular sem precisar de loja de apps. Funciona offline e envia notificações como qualquer app nativo."
+    },
+    "cta": {
+      "title": "Ainda tem dúvidas?",
+      "subtitle": "Nossa equipe está pronta para ajudar você",
+      "button": "Fale Conosco"
+    },
     "q1": "Meus dados estão realmente seguros?",
     "a1": "Sim! A privacidade é nossa máxima prioridade. Todos os seus dados estão criptografados e armazenados com segurança. Você tem controle total sobre suas informações e pode exportar ou excluir seus dados a qualquer momento. Nunca compartilhamos suas informações pessoais sem seu consentimento explícito.",
     "q2": "Como funciona a Inteligência Artificial da Luna?",
