@@ -17,6 +17,7 @@ import testimonialAna from "@/assets/testimonial-ana.jpg";
 import testimonialJulia from "@/assets/testimonial-julia.jpg";
 
 const fallbackTestimonials = [
+  // Portuguese testimonials
   {
     name: "Maria Silva",
     age: 28,
@@ -24,7 +25,7 @@ const fallbackTestimonials = [
     text: "Finalmente encontrei um app que entende as mulheres de verdade! O Luna me ajuda a entender meu corpo de forma simples e a IA realmente personaliza tudo para mim. Estou adorando os planos de bem-estar!",
     rating: 5,
     highlight: "Perdeu 5kg em 3 meses",
-    location: "São Paulo, SP",
+    location: "São Paulo, BR",
   },
   {
     name: "Ana Santos",
@@ -33,7 +34,7 @@ const fallbackTestimonials = [
     text: "A privacidade que o Luna oferece é incrível. Posso registrar tudo sem medo e as recomendações são sempre no ponto. Sinto que tenho uma amiga especialista me acompanhando todos os dias.",
     rating: 5,
     highlight: "Ciclo regulado em 2 meses",
-    location: "Rio de Janeiro, RJ",
+    location: "Rio de Janeiro, BR",
   },
   {
     name: "Julia Costa",
@@ -42,7 +43,7 @@ const fallbackTestimonials = [
     text: "O rastreamento de ciclo combinado com humor e energia mudou minha rotina! Agora entendo melhor meus padrões e consigo me cuidar de forma muito mais consciente. Recomendo demais!",
     rating: 5,
     highlight: "Sono melhorou 40%",
-    location: "Belo Horizonte, MG",
+    location: "Belo Horizonte, BR",
   },
   {
     name: "Fernanda Lima",
@@ -51,7 +52,7 @@ const fallbackTestimonials = [
     text: "Nunca imaginei que um app pudesse fazer tanta diferença na minha vida. As previsões de sintomas me ajudam a me preparar para os dias difíceis. Simplesmente incrível!",
     rating: 5,
     highlight: "TPM mais controlada",
-    location: "Curitiba, PR",
+    location: "Curitiba, BR",
   },
   {
     name: "Camila Oliveira",
@@ -60,7 +61,7 @@ const fallbackTestimonials = [
     text: "Como mãe de dois, não tinha tempo para cuidar de mim. O Luna me mostrou que pequenas ações diárias fazem toda diferença. Estou mais disposta e feliz!",
     rating: 5,
     highlight: "Energia aumentou 60%",
-    location: "Porto Alegre, RS",
+    location: "Porto Alegre, BR",
   },
   {
     name: "Beatriz Mendes",
@@ -69,7 +70,63 @@ const fallbackTestimonials = [
     text: "O diário feminino é terapêutico! A IA entende exatamente o que estou passando e me dá insights que nunca imaginaria. É como ter uma amiga que realmente te entende.",
     rating: 5,
     highlight: "Autoconhecimento elevado",
-    location: "Salvador, BA",
+    location: "Salvador, BR",
+  },
+  // Spanish testimonials
+  {
+    name: "Sofía García",
+    age: 26,
+    photo: testimonialMaria,
+    text: "¡Luna cambió completamente mi relación con mi cuerpo! Las predicciones son increíblemente precisas y los consejos personalizados me ayudan cada día. Es como tener una coach personal siempre disponible.",
+    rating: 5,
+    highlight: "Ciclo predecido al 95%",
+    location: "Madrid, ES",
+  },
+  {
+    name: "Valentina Rodríguez",
+    age: 31,
+    photo: testimonialAna,
+    text: "Después de años buscando una app que realmente entienda a las mujeres, encontré Luna. El seguimiento del sueño y el humor me ha dado claridad sobre mis patrones. ¡Lo recomiendo a todas!",
+    rating: 5,
+    highlight: "Mejor calidad de sueño",
+    location: "Buenos Aires, AR",
+  },
+  {
+    name: "Isabella Martínez",
+    age: 29,
+    photo: testimonialJulia,
+    text: "La IA de Luna es impresionante. Entiende exactamente lo que necesito en cada fase de mi ciclo. Los planes de bienestar personalizados han transformado mi rutina diaria por completo.",
+    rating: 5,
+    highlight: "Energía al máximo",
+    location: "Ciudad de México, MX",
+  },
+  // English testimonials
+  {
+    name: "Emma Thompson",
+    age: 28,
+    photo: testimonialMaria,
+    text: "Luna has been a game-changer for understanding my body! The AI-powered insights are spot-on, and the personalized wellness plans have helped me feel more in control of my health than ever before.",
+    rating: 5,
+    highlight: "Lost 10lbs in 2 months",
+    location: "New York, US",
+  },
+  {
+    name: "Sarah Johnson",
+    age: 33,
+    photo: testimonialAna,
+    text: "I love how Luna combines cycle tracking with mood and energy monitoring. The predictions are incredibly accurate, and the privacy features give me peace of mind. Best wellness app I've ever used!",
+    rating: 5,
+    highlight: "Cycle regulated",
+    location: "London, UK",
+  },
+  {
+    name: "Olivia Williams",
+    age: 25,
+    photo: testimonialJulia,
+    text: "The journal feature with AI insights is amazing! It's like having a supportive friend who truly understands what I'm going through. Luna has helped me discover patterns I never noticed before.",
+    rating: 5,
+    highlight: "Better self-awareness",
+    location: "Toronto, CA",
   },
 ];
 
