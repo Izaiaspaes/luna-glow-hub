@@ -93,6 +93,94 @@ function resolveUserName(opts: {
   return "Luna";
 }
 
+// Rich message templates for 7+ day inactive users
+function getReengagementMessage(daysSinceAccess: number, userName: string, isPremium: boolean): { 
+  subject: string; 
+  headline: string; 
+  intro: string;
+  sections: { emoji: string; title: string; description: string }[];
+  cta: string;
+} {
+  const templates = [
+    {
+      subject: `🎨 ${userName}, sua análise de beleza personalizada te espera!`,
+      headline: `Descubra suas cores perfeitas, ${userName}!`,
+      intro: `A tecnologia de análise de beleza do Luna usa IA para descobrir as cores de maquiagem, roupas e acessórios que mais combinam com você. É como ter uma consultora de imagem pessoal!`,
+      sections: [
+        { emoji: '💄', title: 'Análise de Beleza', description: 'Descubra tons de base, batom e sombras ideais para sua pele' },
+        { emoji: '👗', title: 'Paleta de Cores', description: 'Saiba quais cores de roupa valorizam seu tom de pele' },
+        { emoji: '💅', title: 'Sugestões de Esmalte', description: 'Cores que harmonizam com sua coloração pessoal' },
+        { emoji: '✨', title: 'Dicas Personalizadas', description: 'Recomendações baseadas no formato do seu rosto' }
+      ],
+      cta: 'Fazer minha análise de beleza'
+    },
+    {
+      subject: `👗 ${userName}, seu armário virtual está esperando!`,
+      headline: `Organize seus looks com IA, ${userName}!`,
+      intro: `Imagine ter um closet inteligente que sugere combinações perfeitas de roupas para cada ocasião! O Armário Virtual do Luna faz exatamente isso.`,
+      sections: [
+        { emoji: '📸', title: 'Fotografe suas peças', description: 'A IA identifica cores, estilo e categoriza automaticamente' },
+        { emoji: '👠', title: 'Sugestões de Looks', description: 'Combinações inteligentes para cada ocasião' },
+        { emoji: '🌤️', title: 'Baseado no Clima', description: 'Sugestões adequadas para o tempo' },
+        { emoji: '🌙', title: 'Sincronizado com seu Ciclo', description: 'Looks que combinam com como você se sente' }
+      ],
+      cta: 'Montar meu armário virtual'
+    },
+    {
+      subject: `🧘 ${userName}, seu plano de bem-estar personalizado está pronto!`,
+      headline: `Cuide de você com inteligência, ${userName}!`,
+      intro: `A Luna analisa todos os seus dados - ciclo, sono, humor, energia - e cria planos de bem-estar únicos para você. É autocuidado baseado em ciência!`,
+      sections: [
+        { emoji: '🧘', title: 'Planos de Bem-Estar', description: 'Rotinas personalizadas geradas por IA' },
+        { emoji: '🥗', title: 'Dicas de Nutrição', description: 'Alimentação ideal para sua fase do ciclo' },
+        { emoji: '🏃‍♀️', title: 'Exercícios Sugeridos', description: 'Atividades físicas adequadas ao seu momento' },
+        { emoji: '💆', title: 'Autocuidado', description: 'Rituais de bem-estar para corpo e mente' }
+      ],
+      cta: 'Ver meu plano de bem-estar'
+    },
+    {
+      subject: `🔮 ${userName}, suas previsões de sintomas estão disponíveis!`,
+      headline: `Antecipe como vai se sentir, ${userName}!`,
+      intro: `A IA da Luna aprende com seus padrões e consegue prever sintomas antes que eles apareçam. Assim você pode se preparar e cuidar de você preventivamente!`,
+      sections: [
+        { emoji: '🔮', title: 'Previsões Inteligentes', description: 'Saiba o que esperar nos próximos dias' },
+        { emoji: '⚡', title: 'Níveis de Energia', description: 'Previsão de quando você estará mais ativa' },
+        { emoji: '💭', title: 'Tendências de Humor', description: 'Entenda suas oscilações emocionais' },
+        { emoji: '🩸', title: 'Ciclo Preciso', description: 'Previsões cada vez mais certeiras' }
+      ],
+      cta: 'Ver minhas previsões'
+    },
+    {
+      subject: `📔 ${userName}, seu diário com IA te espera!`,
+      headline: `Escreva e descubra padrões, ${userName}!`,
+      intro: `O Diário da Mulher não é um diário comum - a IA lê suas entradas e descobre conexões entre seus sentimentos, ciclo e bem-estar que você nem imaginava!`,
+      sections: [
+        { emoji: '📔', title: 'Diário Inteligente', description: 'Escreva ou grave por voz seus pensamentos' },
+        { emoji: '🎙️', title: 'Transcrição Automática', description: 'Fale e a IA transcreve para você' },
+        { emoji: '🔍', title: 'Análise de Padrões', description: 'Descubra conexões entre emoções e ciclo' },
+        { emoji: '💡', title: 'Insights Automáticos', description: 'Sugestões baseadas no que você escreve' }
+      ],
+      cta: 'Escrever no meu diário'
+    },
+    {
+      subject: `💕 ${userName}, conecte-se melhor com seu parceiro!`,
+      headline: `Luna a Dois: mais compreensão, ${userName}!`,
+      intro: `Seu parceiro pode entender melhor suas fases e como te apoiar em cada momento. O Luna a Dois cria uma ponte de compreensão no relacionamento!`,
+      sections: [
+        { emoji: '💕', title: 'Compartilhamento Discreto', description: 'Você controla o que compartilhar' },
+        { emoji: '🔔', title: 'Alertas para o Parceiro', description: 'Ele recebe dicas de como te apoiar' },
+        { emoji: '💬', title: 'Comunicação Melhor', description: 'Mais empatia e compreensão' },
+        { emoji: '🔒', title: 'Privacidade Total', description: 'Você decide cada detalhe' }
+      ],
+      cta: 'Conhecer Luna a Dois'
+    }
+  ];
+  
+  // Select template for variety
+  const index = (userName.charCodeAt(0) + daysSinceAccess) % templates.length;
+  return templates[index];
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -170,6 +258,9 @@ serve(async (req) => {
         // Calculate days since last access
         const lastAccess = new Date(profile.last_accessed_at);
         const daysSinceAccess = Math.floor((Date.now() - lastAccess.getTime()) / (1000 * 60 * 60 * 24));
+        
+        // Get rich contextual message
+        const message = getReengagementMessage(daysSinceAccess, userName, isPremium);
 
         const emailHtml = `
         <!DOCTYPE html>
@@ -181,8 +272,7 @@ serve(async (req) => {
         <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fef7ff;">
           <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
             <div style="background: linear-gradient(135deg, #be185d, #7c3aed, #6366f1); padding: 40px; border-radius: 24px 24px 0 0; text-align: center;">
-              <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700;">🌙 ${userName}, voltamos a pensar em você!</h1>
-              <p style="color: rgba(255,255,255,0.9); font-size: 16px; margin-top: 12px;">Já se passaram ${daysSinceAccess} dias desde sua última visita</p>
+              <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700;">🌙 ${message.headline}</h1>
             </div>
             
             <div style="background: white; padding: 40px; border-radius: 0 0 24px 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.12);">
@@ -191,51 +281,44 @@ serve(async (req) => {
               </p>
               
               <p style="font-size: 16px; color: #6b7280; line-height: 1.7;">
-                Sabemos que a vida pode ser agitada, mas seu bem-estar merece atenção especial. A Luna está aqui para te ajudar a cuidar de você mesma, e quanto mais você registra, mais personalizadas ficam as recomendações!
+                ${message.intro}
               </p>
               
               <div style="background: linear-gradient(135deg, #fdf2f8, #ede9fe); padding: 28px; border-radius: 18px; margin: 30px 0; border-left: 4px solid #be185d;">
-                <h2 style="color: #7c3aed; margin: 0 0 18px 0; font-size: 19px; font-weight: 600;">🎁 O que você está perdendo:</h2>
-                <ul style="list-style: none; padding: 0; margin: 0; color: #374151;">
-                  <li style="padding: 10px 0; font-size: 15px; display: flex; align-items: center;">
-                    <span style="margin-right: 12px; font-size: 20px;">📊</span>
-                    <span>Análises inteligentes do seu ciclo e humor</span>
-                  </li>
-                  <li style="padding: 10px 0; font-size: 15px; display: flex; align-items: center;">
-                    <span style="margin-right: 12px; font-size: 20px;">🧘</span>
-                    <span>Planos de bem-estar personalizados com IA</span>
-                  </li>
-                  <li style="padding: 10px 0; font-size: 15px; display: flex; align-items: center;">
-                    <span style="margin-right: 12px; font-size: 20px;">📔</span>
-                    <span>Diário feminino com insights automáticos</span>
-                  </li>
-                  <li style="padding: 10px 0; font-size: 15px; display: flex; align-items: center;">
-                    <span style="margin-right: 12px; font-size: 20px;">🔮</span>
-                    <span>Previsões de sintomas e recomendações preventivas</span>
-                  </li>
-                  ${isPremium ? `
-                  <li style="padding: 10px 0; font-size: 15px; display: flex; align-items: center;">
-                    <span style="margin-right: 12px; font-size: 20px;">✨</span>
-                    <span><strong>Seus recursos Premium estão te esperando!</strong></span>
-                  </li>
-                  ` : ''}
-                </ul>
+                <h2 style="color: #7c3aed; margin: 0 0 18px 0; font-size: 19px; font-weight: 600;">🎁 O que você pode fazer:</h2>
+                ${message.sections.map(s => `
+                <div style="padding: 12px 0; display: flex; align-items: flex-start;">
+                  <span style="font-size: 24px; margin-right: 15px;">${s.emoji}</span>
+                  <div>
+                    <strong style="color: #374151; font-size: 15px;">${s.title}</strong>
+                    <p style="color: #6b7280; font-size: 14px; margin: 4px 0 0 0;">${s.description}</p>
+                  </div>
+                </div>
+                `).join('')}
               </div>
               
-              <div style="background: #fef3c7; padding: 20px; border-radius: 12px; margin: 25px 0;">
+              ${isPremium ? `
+              <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 20px; border-radius: 12px; margin: 25px 0; border-left: 4px solid #f59e0b;">
                 <p style="font-size: 15px; color: #92400e; margin: 0; font-weight: 500;">
-                  💡 <strong>Dica:</strong> Apenas 2 minutos por dia registrando como você se sente pode transformar seu autoconhecimento!
+                  👑 <strong>Você é Premium!</strong> Todos esses recursos estão liberados para você sem limites. Aproveite!
                 </p>
               </div>
+              ` : `
+              <div style="background: linear-gradient(135deg, #dbeafe, #e0e7ff); padding: 20px; border-radius: 12px; margin: 25px 0; border-left: 4px solid #3b82f6;">
+                <p style="font-size: 15px; color: #1e40af; margin: 0;">
+                  💎 <strong>Dica:</strong> Usuárias Premium têm acesso ilimitado a todos os recursos. <a href="https://lunaglow.com.br/pricing" style="color: #7c3aed; font-weight: bold;">Conheça os planos!</a>
+                </p>
+              </div>
+              `}
               
               <p style="font-size: 16px; color: #6b7280; line-height: 1.7; text-align: center; font-style: italic; margin: 30px 0;">
-                "Você merece se sentir bem consigo mesma. Volte quando estiver pronta - estaremos aqui!" 💜
+                "O primeiro passo para se sentir melhor é conhecer a si mesma." 💜
               </p>
               
               <div style="text-align: center; margin: 40px 0 30px 0;">
                 <a href="https://lunaglow.com.br/dashboard" 
-                   style="display: inline-block; background: linear-gradient(135deg, #be185d, #7c3aed); color: white; padding: 18px 50px; border-radius: 35px; text-decoration: none; font-weight: bold; font-size: 17px; box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4); transition: transform 0.2s;">
-                  Retomar meu bem-estar →
+                   style="display: inline-block; background: linear-gradient(135deg, #be185d, #7c3aed); color: white; padding: 18px 50px; border-radius: 35px; text-decoration: none; font-weight: bold; font-size: 17px; box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);">
+                  ${message.cta} →
                 </a>
               </div>
               
@@ -259,18 +342,21 @@ serve(async (req) => {
         </html>
         `;
 
-        const emailSubject = `🌙 ${userName}, estamos com saudades! Seu bem-estar te espera`;
-        const emailResult = await sendEmailWithZeptoMail(userEmail, userName, emailSubject, emailHtml);
+        const emailResult = await sendEmailWithZeptoMail(userEmail, userName, message.subject, emailHtml);
 
         // Log email to database
         await supabaseClient.from("email_logs").insert({
           user_id: profile.user_id,
           email_to: userEmail,
-          email_type: "reengagement_7days",
-          subject: emailSubject,
+          email_type: "reengagement_feature_highlight",
+          subject: message.subject,
           status: emailResult.success ? "sent" : "failed",
           error_message: emailResult.error || null,
-          metadata: { days_inactive: daysSinceAccess, is_premium: isPremium }
+          metadata: { 
+            days_inactive: daysSinceAccess, 
+            is_premium: isPremium,
+            template_cta: message.cta
+          }
         });
 
         if (!emailResult.success) {
