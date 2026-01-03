@@ -1,8 +1,8 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const ZEPTOMAIL_API_TOKEN = Deno.env.get("ZEPTOMAIL_API_TOKEN");
+const ZOHO_EMAIL = Deno.env.get("ZOHO_EMAIL");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
@@ -33,7 +33,7 @@ const logEmail = async (
       subject,
       status,
       error_message: errorMessage?.trim() ? errorMessage : null,
-      metadata: { source: "send-partner-invite", provider: "resend", ...(extraMetadata ?? {}) },
+      metadata: { source: "send-partner-invite", provider: "zeptomail", ...(extraMetadata ?? {}) },
     });
   } catch (logError) {
     console.error("Error logging email:", logError);
@@ -73,21 +73,21 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    if (!RESEND_API_KEY) {
-      console.error("RESEND_API_KEY not configured");
-      await logEmail(supabase, partnerEmail, logSubject, "failed", "RESEND_API_KEY not configured");
+    if (!ZEPTOMAIL_API_TOKEN) {
+      console.error("ZEPTOMAIL_API_TOKEN not configured");
+      await logEmail(supabase, partnerEmail, logSubject, "failed", "ZEPTOMAIL_API_TOKEN not configured");
       throw new Error("Email service not configured");
     }
 
-    console.log("Initializing Resend client...");
-    const resend = new Resend(RESEND_API_KEY);
+    const fromEmail = ZOHO_EMAIL || "noreply@lunaglow.com.br";
+    console.log(`Using sender email: ${fromEmail}`);
 
     const acceptUrl = `https://lunaglow.com.br/partner-invite?token=${inviteToken}`;
     console.log("Accept URL:", acceptUrl);
 
     const subject = `${ownerName} convidou você para o Luna a Dois 💜`;
 
-    const html = `
+    const htmlBody = `
       <!DOCTYPE html>
       <html>
         <head>
@@ -146,29 +146,65 @@ const handler = async (req: Request): Promise<Response> => {
       </html>
     `;
 
-    const emailData = await resend.emails.send({
-      from: "Luna <noreply@lunaglow.com.br>",
-      to: [partnerEmail],
-      subject,
-      html,
+    // ZeptoMail API v1.1 - REST call
+    const zeptoPayload = {
+      from: {
+        address: fromEmail,
+        name: "Luna"
+      },
+      to: [
+        {
+          email_address: {
+            address: partnerEmail,
+            name: partnerEmail.split("@")[0]
+          }
+        }
+      ],
+      subject: subject,
+      htmlbody: htmlBody
+    };
+
+    console.log("Sending email via ZeptoMail API...");
+    console.log("Payload:", JSON.stringify({ ...zeptoPayload, htmlbody: "[HTML content]" }));
+
+    const zeptoResponse = await fetch("https://api.zeptomail.com/v1.1/email", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": ZEPTOMAIL_API_TOKEN
+      },
+      body: JSON.stringify(zeptoPayload)
     });
 
-    console.log("Resend response:", JSON.stringify(emailData));
+    const responseText = await zeptoResponse.text();
+    console.log(`ZeptoMail response status: ${zeptoResponse.status}`);
+    console.log(`ZeptoMail response body: ${responseText}`);
 
-    if (emailData.error) {
-      console.error("Resend error:", emailData.error);
-      await logEmail(supabase, partnerEmail, subject, "failed", emailData.error.message, {
-        resend_error: emailData.error,
-      });
-      throw new Error(emailData.error.message);
+    let responseData;
+    try {
+      responseData = JSON.parse(responseText);
+    } catch {
+      responseData = { raw: responseText };
     }
 
-    console.log("Partner invite email sent successfully!");
+    if (!zeptoResponse.ok) {
+      const errorMsg = responseData?.message || responseData?.error || `HTTP ${zeptoResponse.status}`;
+      console.error("ZeptoMail error:", errorMsg);
+      await logEmail(supabase, partnerEmail, subject, "failed", errorMsg, {
+        zeptomail_status: zeptoResponse.status,
+        zeptomail_response: responseData
+      });
+      throw new Error(`ZeptoMail error: ${errorMsg}`);
+    }
+
+    console.log("Partner invite email sent successfully via ZeptoMail!");
     await logEmail(supabase, partnerEmail, subject, "sent", undefined, {
-      resend_id: emailData.data?.id,
+      zeptomail_request_id: responseData?.request_id,
+      zeptomail_data: responseData?.data
     });
 
-    return new Response(JSON.stringify({ success: true, data: emailData }), {
+    return new Response(JSON.stringify({ success: true, data: responseData }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
