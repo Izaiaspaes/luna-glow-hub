@@ -2,7 +2,6 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 
-
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -34,7 +33,7 @@ const logEmail = async (
       subject,
       status,
       error_message: errorMessage?.trim() ? errorMessage : null,
-      metadata: { source: "send-partner-invite", ...(extraMetadata ?? {}) },
+      metadata: { source: "send-partner-invite", provider: "resend", ...(extraMetadata ?? {}) },
     });
   } catch (logError) {
     console.error("Error logging email:", logError);
@@ -42,7 +41,7 @@ const logEmail = async (
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  console.log("send-partner-invite function called");
+  console.log("=== send-partner-invite function started ===");
   
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -55,38 +54,36 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const body = await req.json();
-    console.log("Request body received:", JSON.stringify(body));
+    console.log("Request body:", JSON.stringify(body));
 
     const { partnerEmail, ownerName, inviteToken }: PartnerInviteRequest = body;
 
     logEmailTo = partnerEmail || "unknown";
     logSubject = `${ownerName} convidou você para o Luna a Dois 💜`;
 
-    console.log(`Processing invite for: ${partnerEmail} from: ${ownerName}`);
+    console.log(`Partner email: ${partnerEmail}, Owner: ${ownerName}`);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!partnerEmail || !emailRegex.test(partnerEmail)) {
-      console.error("Invalid email address:", partnerEmail);
-      await logEmail(supabase, partnerEmail || "unknown", "Convite Luna a Dois", "failed", "Invalid email address");
+      console.error("Invalid email:", partnerEmail);
+      await logEmail(supabase, partnerEmail || "unknown", logSubject, "failed", "Invalid email address");
       return new Response(
         JSON.stringify({ error: "Invalid email address" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
     if (!RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured");
+      console.error("RESEND_API_KEY not configured");
+      await logEmail(supabase, partnerEmail, logSubject, "failed", "RESEND_API_KEY not configured");
       throw new Error("Email service not configured");
     }
 
+    console.log("Initializing Resend client...");
     const resend = new Resend(RESEND_API_KEY);
 
-    // Use the correct production URL
     const acceptUrl = `https://lunaglow.com.br/partner-invite?token=${inviteToken}`;
-    console.log("Invite URL:", acceptUrl);
+    console.log("Accept URL:", acceptUrl);
 
     const subject = `${ownerName} convidou você para o Luna a Dois 💜`;
 
@@ -150,16 +147,25 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     const emailData = await resend.emails.send({
-      from: "Luna <onboarding@resend.dev>",
+      from: "Luna <noreply@lunaglow.com.br>",
       to: [partnerEmail],
       subject,
       html,
     });
 
-    console.log("Partner invite email sent successfully via Resend:", emailData);
+    console.log("Resend response:", JSON.stringify(emailData));
 
+    if (emailData.error) {
+      console.error("Resend error:", emailData.error);
+      await logEmail(supabase, partnerEmail, subject, "failed", emailData.error.message, {
+        resend_error: emailData.error,
+      });
+      throw new Error(emailData.error.message);
+    }
+
+    console.log("Partner invite email sent successfully!");
     await logEmail(supabase, partnerEmail, subject, "sent", undefined, {
-      provider: "resend",
+      resend_id: emailData.data?.id,
     });
 
     return new Response(JSON.stringify({ success: true, data: emailData }), {
