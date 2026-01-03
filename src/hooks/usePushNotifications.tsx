@@ -111,13 +111,18 @@ export const usePushNotifications = () => {
       }
       console.log('Storing subscription for user:', user.id);
 
+      // First try to delete existing subscription
+      await supabase
+        .from('push_subscriptions')
+        .delete()
+        .eq('user_id', user.id);
+
+      // Then insert new subscription
       const { error } = await supabase
         .from('push_subscriptions')
-        .upsert({
+        .insert({
           user_id: user.id,
           subscription_data: subscription.toJSON() as any
-        }, {
-          onConflict: 'user_id'
         });
 
       if (error) {
