@@ -1321,6 +1321,7 @@ export type Database = {
       get_users_with_profiles: {
         Args: never
         Returns: {
+          country: string
           created_at: string
           email: string
           full_name: string
