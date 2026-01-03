@@ -1,6 +1,9 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const ZEPTOMAIL_API_TOKEN = Deno.env.get("ZEPTOMAIL_API_TOKEN");
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -14,17 +17,48 @@ interface PartnerInviteRequest {
   inviteToken: string;
 }
 
+const logEmail = async (
+  supabase: any,
+  email: string,
+  subject: string,
+  status: string,
+  errorMessage?: string
+) => {
+  try {
+    await supabase.from("email_logs").insert({
+      email_to: email,
+      email_type: "partner_invite",
+      subject: subject,
+      status: status,
+      error_message: errorMessage || null,
+      metadata: { source: "send-partner-invite" },
+    });
+  } catch (logError) {
+    console.error("Error logging email:", logError);
+  }
+};
+
 const handler = async (req: Request): Promise<Response> => {
+  console.log("send-partner-invite function called");
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
+
   try {
-    const { partnerEmail, ownerName, inviteToken }: PartnerInviteRequest =
-      await req.json();
+    const body = await req.json();
+    console.log("Request body received:", JSON.stringify(body));
+    
+    const { partnerEmail, ownerName, inviteToken }: PartnerInviteRequest = body;
+
+    console.log(`Processing invite for: ${partnerEmail} from: ${ownerName}`);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!partnerEmail || !emailRegex.test(partnerEmail)) {
+      console.error("Invalid email address:", partnerEmail);
+      await logEmail(supabase, partnerEmail || "unknown", "Convite Luna a Dois", "failed", "Invalid email address");
       return new Response(
         JSON.stringify({ error: "Invalid email address" }),
         {
@@ -36,10 +70,13 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!ZEPTOMAIL_API_TOKEN) {
       console.error("ZEPTOMAIL_API_TOKEN is not configured");
+      await logEmail(supabase, partnerEmail, "Convite Luna a Dois", "failed", "Email service not configured");
       throw new Error("Email service not configured");
     }
 
-    const acceptUrl = `https://luna-app.lovable.app/partner-invite?token=${inviteToken}`;
+    // Use the correct production URL
+    const acceptUrl = `https://lunaglow.com.br/partner-invite?token=${inviteToken}`;
+    console.log("Invite URL:", acceptUrl);
 
     const emailResponse = await fetch("https://api.zeptomail.com/v1.1/email", {
       method: "POST",
@@ -122,16 +159,21 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
+    console.log("ZeptoMail API response status:", emailResponse.status);
+
     if (!emailResponse.ok) {
       const errorText = await emailResponse.text();
       console.error("ZeptoMail API error:", errorText);
+      await logEmail(supabase, partnerEmail, `${ownerName} convidou você para o Luna a Dois 💜`, "failed", errorText);
       throw new Error(`Failed to send email: ${errorText}`);
     }
 
     const emailData = await emailResponse.json();
     console.log("Partner invite email sent successfully via ZeptoMail:", emailData);
 
-    return new Response(JSON.stringify(emailData), {
+    await logEmail(supabase, partnerEmail, `${ownerName} convidou você para o Luna a Dois 💜`, "sent");
+
+    return new Response(JSON.stringify({ success: true, data: emailData }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",

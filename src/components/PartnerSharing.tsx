@@ -125,7 +125,13 @@ export const PartnerSharing = () => {
       if (insertError) throw insertError;
 
       // Send invite email
-      const { error: emailError } = await supabase.functions.invoke(
+      console.log("Sending partner invite email...", {
+        partnerEmail: validation.data.email,
+        ownerName: profile?.full_name || user.email,
+        inviteToken,
+      });
+      
+      const { data: emailData, error: emailError } = await supabase.functions.invoke(
         "send-partner-invite",
         {
           body: {
@@ -136,13 +142,20 @@ export const PartnerSharing = () => {
         }
       );
 
+      console.log("Email response:", { emailData, emailError });
+
       if (emailError) {
         console.error("Error sending invite email:", emailError);
-        toast.success(
-          "Convite criado, mas houve um problema ao enviar o e-mail. Compartilhe o link manualmente."
+        toast.warning(
+          "Convite criado, mas houve um problema ao enviar o e-mail. O convite está ativo, compartilhe o link manualmente se necessário."
+        );
+      } else if (emailData?.error) {
+        console.error("Email service error:", emailData.error);
+        toast.warning(
+          "Convite criado, mas o serviço de e-mail retornou um erro. O convite está ativo."
         );
       } else {
-        toast.success("Convite enviado com sucesso!");
+        toast.success("Convite enviado com sucesso! O parceiro receberá um e-mail.");
       }
 
       setPartnerEmail("");
