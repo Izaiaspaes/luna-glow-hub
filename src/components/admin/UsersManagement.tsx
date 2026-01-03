@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown, Globe } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -42,6 +42,7 @@ interface UserWithRole {
   is_active?: boolean;
   registration_source?: RegistrationSource | null;
   last_accessed_at?: string | null;
+  country?: string | null;
 }
 
 const ITEMS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
@@ -89,6 +90,7 @@ export const UsersManagement = () => {
       is_active: user.is_active ?? true,
       registration_source: user.registration_source || null,
       last_accessed_at: user.last_accessed_at || null,
+      country: user.country || null,
     }));
 
     setUsers(usersArray);
@@ -494,6 +496,7 @@ export const UsersManagement = () => {
                         </span>
                       </TableHead>
                       <TableHead>Origem</TableHead>
+                      <TableHead>País</TableHead>
                       <TableHead 
                         className="cursor-pointer hover:bg-muted/50 transition-colors"
                         onClick={() => handleSort('subscription_plan')}
@@ -589,6 +592,16 @@ export const UsersManagement = () => {
                                 </TooltipProvider>
                               ) : (
                                 <span className="text-muted-foreground text-sm">Direto</span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {user.country ? (
+                                <span className="flex items-center gap-1 text-sm">
+                                  <Globe className="w-3 h-3 text-muted-foreground" />
+                                  {user.country}
+                                </span>
+                              ) : (
+                                <span className="text-muted-foreground text-sm">-</span>
                               )}
                             </TableCell>
                             <TableCell>
@@ -712,6 +725,13 @@ export const UsersManagement = () => {
                               {user.last_accessed_at 
                                 ? format(new Date(user.last_accessed_at), "dd/MM/yy", { locale: ptBR })
                                 : 'Nunca'}
+                            </p>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">País:</span>
+                            <p className="flex items-center gap-1">
+                              <Globe className="w-3 h-3 text-muted-foreground" />
+                              {user.country || '-'}
                             </p>
                           </div>
                         </div>
