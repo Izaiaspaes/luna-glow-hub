@@ -295,6 +295,38 @@ export default function Onboarding() {
     const { error } = await saveOnboardingData(finalData, true);
     
     if (!error) {
+      // Activate automatic 7-day trial for new FREE users
+      try {
+        const { data: { user: currentUser } } = await supabase.auth.getUser();
+        if (currentUser) {
+          const trialEndsAt = new Date();
+          trialEndsAt.setDate(trialEndsAt.getDate() + 7);
+          
+          // Update profile with trial info
+          await supabase
+            .from('profiles')
+            .update({
+              trial_started_at: new Date().toISOString(),
+              trial_ends_at: trialEndsAt.toISOString(),
+              trial_type: 'automatic'
+            })
+            .eq('user_id', currentUser.id);
+          
+          // Log the trial
+          await supabase.from('trial_logs').insert({
+            user_id: currentUser.id,
+            trial_type: 'automatic',
+            duration_days: 7,
+            ends_at: trialEndsAt.toISOString(),
+          });
+          
+          console.log('Automatic 7-day trial activated for new user');
+        }
+      } catch (trialErr) {
+        console.error('Error activating trial:', trialErr);
+        // Don't block onboarding if trial activation fails
+      }
+      
       toast.success(t('onboarding.completedSuccess'));
       navigate("/onboarding/success");
     }

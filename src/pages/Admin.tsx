@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus, Bell } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus, Bell, Gift } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -18,6 +18,7 @@ import { PriceManagement } from "@/components/admin/PriceManagement";
 import { ReferralsManagement } from "@/components/admin/ReferralsManagement";
 import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import { NotificationsLogsManagement } from "@/components/admin/NotificationsLogsManagement";
+import { TrialManagement } from "@/components/admin/TrialManagement";
 import logoLuna from "@/assets/logo-luna.png";
 
 import { Layout } from "@/components/Layout";
@@ -108,6 +109,10 @@ export default function Admin() {
                 <UserPlus className="w-4 h-4" />
                 <span>Indicações</span>
               </TabsTrigger>
+              <TabsTrigger value="trials" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Gift className="w-4 h-4" />
+                <span>Trials</span>
+              </TabsTrigger>
               <TabsTrigger value="banners" className="flex items-center gap-2 whitespace-nowrap px-3">
                 <Megaphone className="w-4 h-4" />
                 <span>Banners</span>
@@ -153,6 +158,10 @@ export default function Admin() {
 
           <TabsContent value="referrals" className="space-y-4">
             <ReferralsManagement />
+          </TabsContent>
+
+          <TabsContent value="trials" className="space-y-4">
+            <TrialManagement />
           </TabsContent>
 
           <TabsContent value="banners" className="space-y-4">
