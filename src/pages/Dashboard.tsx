@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useTheme } from "@/hooks/useTheme";
+import { useTrial } from "@/hooks/useTrial";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
@@ -49,6 +50,7 @@ import { LunaSense } from "@/components/LunaSense";
 import { SOSButton } from "@/components/SOSButton";
 import { BeautyAnalysis } from "@/components/BeautyAnalysis";
 import VirtualCloset from "@/components/VirtualCloset";
+import { TrialBanner } from "@/components/TrialBanner";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import logoLuna from "@/assets/logo-luna.png";
@@ -279,6 +281,7 @@ export default function Dashboard() {
 
   return (
     <Layout>
+      <TrialBanner />
       <div className="min-h-screen bg-background">
       <PlanLimitModal 
         open={showPlanLimitModal} 

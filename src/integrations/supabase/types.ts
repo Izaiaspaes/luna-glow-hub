@@ -704,6 +704,9 @@ export type Database = {
           subscription_plan: string | null
           theme: string | null
           tour_completed: boolean | null
+          trial_ends_at: string | null
+          trial_started_at: string | null
+          trial_type: string | null
           updated_at: string
           user_id: string
         }
@@ -722,6 +725,9 @@ export type Database = {
           subscription_plan?: string | null
           theme?: string | null
           tour_completed?: boolean | null
+          trial_ends_at?: string | null
+          trial_started_at?: string | null
+          trial_type?: string | null
           updated_at?: string
           user_id: string
         }
@@ -740,6 +746,9 @@ export type Database = {
           subscription_plan?: string | null
           theme?: string | null
           tour_completed?: boolean | null
+          trial_ends_at?: string | null
+          trial_started_at?: string | null
+          trial_type?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -961,6 +970,48 @@ export type Database = {
           user_age?: number | null
           user_avatar_url?: string | null
           user_name?: string
+        }
+        Relationships: []
+      }
+      trial_logs: {
+        Row: {
+          activated_by: string | null
+          converted_at: string | null
+          converted_to_paid: boolean | null
+          created_at: string
+          duration_days: number
+          ends_at: string
+          id: string
+          notes: string | null
+          started_at: string
+          trial_type: string
+          user_id: string
+        }
+        Insert: {
+          activated_by?: string | null
+          converted_at?: string | null
+          converted_to_paid?: boolean | null
+          created_at?: string
+          duration_days?: number
+          ends_at: string
+          id?: string
+          notes?: string | null
+          started_at?: string
+          trial_type: string
+          user_id: string
+        }
+        Update: {
+          activated_by?: string | null
+          converted_at?: string | null
+          converted_to_paid?: boolean | null
+          created_at?: string
+          duration_days?: number
+          ends_at?: string
+          id?: string
+          notes?: string | null
+          started_at?: string
+          trial_type?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -1317,21 +1368,27 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      activate_trial: {
+        Args: { p_days?: number; p_type?: string; p_user_id: string }
+        Returns: boolean
+      }
       generate_referral_code: { Args: never; Returns: string }
       get_users_with_profiles: {
         Args: never
         Returns: {
-          country: string
           created_at: string
           email: string
           full_name: string
+          id: string
           is_active: boolean
           last_accessed_at: string
-          phone: string
+          nationality: string
           registration_source: Json
-          roles: Json
+          roles: string[]
           subscription_plan: string
-          user_id: string
+          trial_ends_at: string
+          trial_started_at: string
+          trial_type: string
         }[]
       }
       has_role: {
@@ -1341,6 +1398,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_trial_active: { Args: { p_user_id: string }; Returns: boolean }
       make_user_admin: { Args: { _email: string }; Returns: undefined }
       validate_referral_code: { Args: { code: string }; Returns: boolean }
     }
