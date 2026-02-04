@@ -1853,7 +1853,7 @@
   },
   "referral": {
     "title": "Invita y Gana",
-    "description": "¡Invita amigas y obtén 10% de descuento en tu próxima renovación cuando ellas se queden 30 días suscriptoras!",
+    "description": "¡Invita amigas y gana comisión en efectivo sobre su primera mensualidad cuando ellas se queden 30 días suscriptoras!",
     "yourLink": "Tu enlace de referencia",
     "code": "Código",
     "share": "Compartir",
@@ -1864,7 +1864,8 @@
     "howItWorks": "Cómo funciona",
     "step1": "Comparte tu enlace con amigas",
     "step2": "Ella se registra y suscribe a un plan",
-    "step3": "¡Después de 30 días de suscripción activa, obtienes 10% de descuento!",
+    "step3": "¡Después de 30 días de suscripción activa, ganas comisión!",
+    "step4": "El saldo queda disponible para retiro vía PIX",
     "yourReferrals": "Tus referencias",
     "anonymous": "Usuaria",
     "stats": {
@@ -1887,13 +1888,13 @@
     "referral": {
       "title": "Programa Indica y Gana",
       "howItWorks": "Cómo funciona:",
-      "howItWorksDesc": "Comparte tu enlace de indicación exclusivo con amigas y conocidas. Cuando se registren y suscriban a un plan de pago, ¡ganas beneficios!",
+      "howItWorksDesc": "Comparte tu enlace de indicación exclusivo con amigas y conocidas. Cuando se registren y suscriban a un plan de pago, ¡ganas comisión en efectivo!",
       "benefit": "Beneficio para quien indica:",
-      "benefitDesc": "Recibes un 10% de descuento en tu próxima renovación de suscripción cuando tu indicada permanezca suscrita por 30 días consecutivos.",
+      "benefitDesc": "Recibes comisión en efectivo sobre la primera mensualidad cuando tu indicada permanezca suscrita por 30 días consecutivos. El valor queda disponible para retiro.",
       "eligibility": "Período de elegibilidad:",
-      "eligibilityDesc": "La indicada debe mantener la suscripción activa por al menos 30 días para que el descuento se aplique a tu cuenta.",
-      "accumulation": "Acumulación de descuentos:",
-      "accumulationDesc": "Puedes acumular múltiples indicaciones válidas. Los descuentos se aplican automáticamente en tu próximo cobro.",
+      "eligibilityDesc": "La indicada debe mantener la suscripción activa por al menos 30 días para que la comisión sea liberada.",
+      "accumulation": "Acumulación de comisiones:",
+      "accumulationDesc": "Puedes acumular múltiples indicaciones válidas. Las comisiones se acreditan automáticamente en tu saldo.",
       "important": "Importante:",
       "importantDesc": "Indicaciones fraudulentas, auto-registros o uso indebido del programa resultarán en la pérdida de beneficios y posible suspensión de la cuenta."
     },

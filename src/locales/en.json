@@ -1681,7 +1681,7 @@
   },
   "referral": {
     "title": "Refer & Earn",
-    "description": "Invite friends and get 10% off your next renewal when they stay subscribed for 30 days!",
+    "description": "Invite friends and earn cash commission on their first payment when they stay subscribed for 30 days!",
     "yourLink": "Your referral link",
     "code": "Code",
     "share": "Share",
@@ -1692,7 +1692,8 @@
     "howItWorks": "How it works",
     "step1": "Share your link with friends",
     "step2": "They sign up and subscribe to a plan",
-    "step3": "After 30 days of active subscription, you get 10% off!",
+    "step3": "After 30 days of active subscription, you earn commission!",
+    "step4": "Balance becomes available for withdrawal via PIX",
     "yourReferrals": "Your referrals",
     "anonymous": "User",
     "stats": {
@@ -1715,13 +1716,13 @@
     "referral": {
       "title": "Refer and Earn Program",
       "howItWorks": "How it works:",
-      "howItWorksDesc": "Share your exclusive referral link with friends and acquaintances. When they sign up and subscribe to a paid plan, you earn benefits!",
+      "howItWorksDesc": "Share your exclusive referral link with friends. When they sign up and subscribe to a paid plan, you earn cash commission!",
       "benefit": "Benefit for referrers:",
-      "benefitDesc": "You receive a 10% discount on your next subscription renewal when your referral remains subscribed for 30 consecutive days.",
+      "benefitDesc": "You receive cash commission on their first payment when your referral remains subscribed for 30 consecutive days. The balance becomes available for withdrawal.",
       "eligibility": "Eligibility period:",
-      "eligibilityDesc": "The referred user must maintain an active subscription for at least 30 days for the discount to be applied to your account.",
-      "accumulation": "Discount accumulation:",
-      "accumulationDesc": "You can accumulate multiple valid referrals. Discounts are automatically applied to your next billing.",
+      "eligibilityDesc": "The referred user must maintain an active subscription for at least 30 days for the commission to be released.",
+      "accumulation": "Commission accumulation:",
+      "accumulationDesc": "You can accumulate multiple valid referrals. Commissions are automatically credited to your balance.",
       "important": "Important:",
       "importantDesc": "Fraudulent referrals, self-registrations or misuse of the program will result in loss of benefits and possible account suspension."
     },

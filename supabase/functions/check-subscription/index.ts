@@ -84,13 +84,25 @@ serve(async (req) => {
       if (referral) {
         logStep("User was referred, registering commission", { referralId: referral.id });
         
+        // Get commission settings from database
+        const { data: commissionSettings } = await supabaseClient
+          .from("commission_settings")
+          .select("commission_rate, eligibility_days")
+          .eq("is_active", true)
+          .single();
+        
+        const COMMISSION_RATE = commissionSettings?.commission_rate 
+          ? Number(commissionSettings.commission_rate) / 100 
+          : 0.50;
+        const ELIGIBILITY_DAYS = commissionSettings?.eligibility_days || 30;
+        
+        logStep("Using commission settings", { COMMISSION_RATE, ELIGIBILITY_DAYS });
+        
         // Get the price amount from Stripe
         const priceId = subscription.items.data[0].price.id;
         const price = await stripe.prices.retrieve(priceId);
         const paymentAmount = (price.unit_amount || 0) / 100; // Convert from cents
         
-        const COMMISSION_RATE = 0.50;
-        const ELIGIBILITY_DAYS = 30;
         const commissionAmount = paymentAmount * COMMISSION_RATE;
         const eligibleAt = new Date();
         eligibleAt.setDate(eligibleAt.getDate() + ELIGIBILITY_DAYS);

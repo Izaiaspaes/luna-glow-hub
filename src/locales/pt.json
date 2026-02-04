@@ -1708,7 +1708,7 @@
   },
   "referral": {
     "title": "Indique e Ganhe",
-    "description": "Indique amigas e ganhe 10% de desconto na sua próxima renovação quando elas ficarem 30 dias assinantes!",
+    "description": "Indique amigas e ganhe comissão em dinheiro sobre a primeira mensalidade quando elas ficarem 30 dias assinantes!",
     "yourLink": "Seu link de indicação",
     "code": "Código",
     "share": "Compartilhar",
@@ -1719,7 +1719,8 @@
     "howItWorks": "Como funciona",
     "step1": "Compartilhe seu link com amigas",
     "step2": "Ela se cadastra e assina um plano",
-    "step3": "Após 30 dias de assinatura ativa, você ganha 10% de desconto!",
+    "step3": "Após 30 dias de assinatura ativa, você ganha comissão!",
+    "step4": "O saldo fica disponível para saque via PIX",
     "yourReferrals": "Suas indicações",
     "anonymous": "Usuária",
     "stats": {
@@ -1742,13 +1743,13 @@
     "referral": {
       "title": "Programa Indique e Ganhe",
       "howItWorks": "Como funciona:",
-      "howItWorksDesc": "Compartilhe seu link de indicação exclusivo com amigas e conhecidas. Quando elas se cadastrarem e assinarem um plano pago, você ganha benefícios!",
+      "howItWorksDesc": "Compartilhe seu link de indicação exclusivo com amigas e conhecidas. Quando elas se cadastrarem e assinarem um plano pago, você ganha comissão em dinheiro!",
       "benefit": "Benefício para quem indica:",
-      "benefitDesc": "Você recebe 10% de desconto na sua próxima renovação de assinatura quando sua indicada permanecer assinante por 30 dias consecutivos.",
+      "benefitDesc": "Você recebe comissão em dinheiro sobre a primeira mensalidade quando sua indicada permanecer assinante por 30 dias consecutivos. O valor fica disponível para saque via PIX.",
       "eligibility": "Período de elegibilidade:",
-      "eligibilityDesc": "A indicada deve manter a assinatura ativa por no mínimo 30 dias para que o desconto seja aplicado à sua conta.",
-      "accumulation": "Acúmulo de descontos:",
-      "accumulationDesc": "Você pode acumular múltiplas indicações válidas. Os descontos são aplicados automaticamente na sua próxima cobrança.",
+      "eligibilityDesc": "A indicada deve manter a assinatura ativa por no mínimo 30 dias para que a comissão seja liberada para saque.",
+      "accumulation": "Acúmulo de comissões:",
+      "accumulationDesc": "Você pode acumular múltiplas indicações válidas. As comissões são creditadas automaticamente no seu saldo.",
       "important": "Importante:",
       "importantDesc": "Indicações fraudulentas, autocadastramentos ou uso indevido do programa resultarão na perda dos benefícios e possível suspensão da conta."
     },
