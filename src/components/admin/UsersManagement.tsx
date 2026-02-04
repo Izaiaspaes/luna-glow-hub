@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown, Globe } from "lucide-react";
+import { Shield, User, Trash2, CheckCircle, Search, X, Ban, UserCheck, Calendar, Link2, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown, Globe, HeartHandshake } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -43,6 +43,8 @@ interface UserWithRole {
   registration_source?: RegistrationSource | null;
   last_accessed_at?: string | null;
   country?: string | null;
+  isPartner?: boolean;
+  partnerOwnerEmail?: string | null;
 }
 
 const ITEMS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
@@ -57,14 +59,55 @@ export const UsersManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<boolean | null>(null);
+  const [partnerFilter, setPartnerFilter] = useState<boolean | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [partnerUserIds, setPartnerUserIds] = useState<Map<string, string>>(new Map());
 
   useEffect(() => {
     loadUsers();
+    loadPartnerRelationships();
   }, []);
+
+  const loadPartnerRelationships = async () => {
+    // Load all partner relationships to identify which users are partners
+    const { data: relationships, error } = await supabase
+      .from('partner_relationships')
+      .select('partner_user_id, owner_user_id, partner_email, status')
+      .eq('status', 'accepted')
+      .not('partner_user_id', 'is', null);
+
+    if (error) {
+      console.error('Error loading partner relationships:', error);
+      return;
+    }
+
+    // Create a map of partner_user_id -> owner email (we'll need to fetch owner emails)
+    const partnerMap = new Map<string, string>();
+    
+    if (relationships && relationships.length > 0) {
+      // Get owner user IDs
+      const ownerIds = [...new Set(relationships.map(r => r.owner_user_id))];
+      
+      // Fetch owner profiles to get their emails/names
+      const { data: ownerProfiles } = await supabase
+        .from('profiles')
+        .select('user_id, full_name')
+        .in('user_id', ownerIds);
+      
+      const ownerNameMap = new Map(ownerProfiles?.map(p => [p.user_id, p.full_name || 'Usuária']) || []);
+      
+      relationships.forEach(rel => {
+        if (rel.partner_user_id) {
+          partnerMap.set(rel.partner_user_id, ownerNameMap.get(rel.owner_user_id) || 'Usuária');
+        }
+      });
+    }
+
+    setPartnerUserIds(partnerMap);
+  };
 
   const loadUsers = async () => {
     setLoadingUsers(true);
@@ -220,7 +263,10 @@ export const UsersManagement = () => {
       
       const matchesStatus = statusFilter === null || (user.is_active ?? true) === statusFilter;
       
-      return matchesSearch && matchesRole && matchesStatus;
+      const isPartner = partnerUserIds.has(user.user_id);
+      const matchesPartner = partnerFilter === null || isPartner === partnerFilter;
+      
+      return matchesSearch && matchesRole && matchesStatus && matchesPartner;
     });
 
     // Sort the filtered users
@@ -261,7 +307,7 @@ export const UsersManagement = () => {
       if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
       return 0;
     });
-  }, [users, searchTerm, roleFilter, statusFilter, sortField, sortDirection]);
+  }, [users, searchTerm, roleFilter, statusFilter, partnerFilter, partnerUserIds, sortField, sortDirection]);
 
   // Pagination calculations
   const totalPages = Math.ceil(filteredAndSortedUsers.length / itemsPerPage);
@@ -292,12 +338,13 @@ export const UsersManagement = () => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, roleFilter, statusFilter, itemsPerPage]);
+  }, [searchTerm, roleFilter, statusFilter, partnerFilter, itemsPerPage]);
 
   const clearFilters = () => {
     setSearchTerm("");
     setRoleFilter(null);
     setStatusFilter(null);
+    setPartnerFilter(null);
     setCurrentPage(1);
   };
 
@@ -394,7 +441,7 @@ export const UsersManagement = () => {
               </Button>
             </div>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
                 variant={statusFilter === null ? "default" : "outline"}
                 size="sm"
@@ -417,6 +464,33 @@ export const UsersManagement = () => {
               >
                 <Ban className="w-3 h-3 mr-1" />
                 Inativos
+              </Button>
+            </div>
+            
+            {/* Partner filter - Luna a Dois */}
+            <div className="flex gap-2 flex-wrap">
+              <Button
+                variant={partnerFilter === null ? "default" : "outline"}
+                size="sm"
+                onClick={() => setPartnerFilter(null)}
+              >
+                Todos Tipos
+              </Button>
+              <Button
+                variant={partnerFilter === true ? "default" : "outline"}
+                size="sm"
+                onClick={() => setPartnerFilter(true)}
+                className="gap-1"
+              >
+                <HeartHandshake className="w-3 h-3" />
+                Parceiros Luna a Dois ({partnerUserIds.size})
+              </Button>
+              <Button
+                variant={partnerFilter === false ? "default" : "outline"}
+                size="sm"
+                onClick={() => setPartnerFilter(false)}
+              >
+                Usuárias Regulares
               </Button>
             </div>
           </div>
@@ -525,10 +599,31 @@ export const UsersManagement = () => {
                       const isModerator = user.roles.some(r => r.role === 'moderator');
                       const isUser = user.roles.some(r => r.role === 'user');
                       const isActive = user.is_active ?? true;
+                      const isPartner = partnerUserIds.has(user.user_id);
+                      const partnerOwnerName = partnerUserIds.get(user.user_id);
                       
                         return (
                           <TableRow key={user.user_id} className={!isActive ? "opacity-60" : ""}>
-                            <TableCell className="font-medium">{user.full_name || 'Não informado'}</TableCell>
+                            <TableCell className="font-medium">
+                              <div className="flex items-center gap-2">
+                                {user.full_name || 'Não informado'}
+                                {isPartner && (
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger>
+                                        <Badge variant="secondary" className="text-xs gap-1 bg-primary/10 text-primary">
+                                          <HeartHandshake className="w-3 h-3" />
+                                          Parceiro
+                                        </Badge>
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <p className="text-xs">Parceiro Luna a Dois de: {partnerOwnerName}</p>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                )}
+                              </div>
+                            </TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>
                               <TooltipProvider>
@@ -686,6 +781,8 @@ export const UsersManagement = () => {
                   const isModerator = user.roles.some(r => r.role === 'moderator');
                   const isUser = user.roles.some(r => r.role === 'user');
                   const isActive = user.is_active ?? true;
+                  const isPartner = partnerUserIds.has(user.user_id);
+                  const partnerOwnerName = partnerUserIds.get(user.user_id);
 
                   return (
                     <Card key={user.user_id} className={`${!isActive ? "opacity-60" : ""}`}>
@@ -693,12 +790,23 @@ export const UsersManagement = () => {
                         {/* Header: Name, Status and Delete */}
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
-                            <p className="font-semibold text-base truncate">{user.full_name || 'Não informado'}</p>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <p className="font-semibold text-base truncate">{user.full_name || 'Não informado'}</p>
+                              {isPartner && (
+                                <Badge variant="secondary" className="text-xs gap-1 bg-primary/10 text-primary">
+                                  <HeartHandshake className="w-3 h-3" />
+                                  Parceiro
+                                </Badge>
+                              )}
+                            </div>
                             <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                            {isPartner && partnerOwnerName && (
+                              <p className="text-xs text-muted-foreground">Luna a Dois de: {partnerOwnerName}</p>
+                            )}
                           </div>
                           <div className="flex items-center gap-2 shrink-0">
                             {isActive ? (
-                              <Badge variant="default" className="bg-green-500 text-xs">
+                              <Badge variant="default" className="bg-green-600 dark:bg-green-500 text-xs">
                                 <CheckCircle className="w-3 h-3 mr-1" />Ativo
                               </Badge>
                             ) : (

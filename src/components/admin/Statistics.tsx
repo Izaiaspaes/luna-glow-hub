@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Heart, TrendingUp, Calendar, Activity } from "lucide-react";
+import { Users, Heart, TrendingUp, Calendar, Activity, UserPlus, HeartHandshake } from "lucide-react";
 
 interface Stats {
   totalUsers: number;
@@ -12,6 +12,9 @@ interface Stats {
   sleepTracking: number;
   moodTracking: number;
   energyTracking: number;
+  totalPartnerRelationships: number;
+  acceptedPartners: number;
+  pendingPartners: number;
 }
 
 export const Statistics = () => {
@@ -24,6 +27,9 @@ export const Statistics = () => {
     sleepTracking: 0,
     moodTracking: 0,
     energyTracking: 0,
+    totalPartnerRelationships: 0,
+    acceptedPartners: 0,
+    pendingPartners: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -68,6 +74,21 @@ export const Statistics = () => {
       .from('energy_tracking')
       .select('*', { count: 'exact', head: true });
 
+    // Get partner relationships stats (Luna a Dois)
+    const { count: totalPartnerRelationships } = await supabase
+      .from('partner_relationships')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: acceptedPartners } = await supabase
+      .from('partner_relationships')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'accepted');
+
+    const { count: pendingPartners } = await supabase
+      .from('partner_relationships')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending');
+
     setStats({
       totalUsers: totalUsers || 0,
       activeUsers: totalUsers || 0, // For now, all registered users are considered active
@@ -77,6 +98,9 @@ export const Statistics = () => {
       sleepTracking: sleepTracking || 0,
       moodTracking: moodTracking || 0,
       energyTracking: energyTracking || 0,
+      totalPartnerRelationships: totalPartnerRelationships || 0,
+      acceptedPartners: acceptedPartners || 0,
+      pendingPartners: pendingPartners || 0,
     });
 
     setLoading(false);
@@ -124,6 +148,45 @@ export const Statistics = () => {
         />
       </div>
 
+      {/* Luna a Dois Stats */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <HeartHandshake className="h-5 w-5 text-primary" />
+            Luna a Dois (Parceiros)
+          </CardTitle>
+          <CardDescription>Estatísticas de convites e parceiros cadastrados</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <UserPlus className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Total de Convites</span>
+              </div>
+              <p className="text-2xl font-bold">{loading ? "..." : stats.totalPartnerRelationships}</p>
+              <p className="text-xs text-muted-foreground">Convites enviados</p>
+            </div>
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <HeartHandshake className="h-4 w-4 text-green-600 dark:text-green-400" />
+                <span className="text-sm font-medium">Parceiros Aceitos</span>
+              </div>
+              <p className="text-2xl font-bold">{loading ? "..." : stats.acceptedPartners}</p>
+              <p className="text-xs text-muted-foreground">Parceiros que aceitaram o convite</p>
+            </div>
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                <span className="text-sm font-medium">Convites Pendentes</span>
+              </div>
+              <p className="text-2xl font-bold">{loading ? "..." : stats.pendingPartners}</p>
+              <p className="text-xs text-muted-foreground">Aguardando aceitação</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Rastreamento de Dados</CardTitle>
@@ -133,7 +196,7 @@ export const Statistics = () => {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Heart className="h-4 w-4 text-pink-500" />
+                <Heart className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium">Ciclo Menstrual</span>
               </div>
               <p className="text-2xl font-bold">{loading ? "..." : stats.cycleTracking}</p>
@@ -141,7 +204,7 @@ export const Statistics = () => {
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Activity className="h-4 w-4 text-blue-500" />
+                <Activity className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <span className="text-sm font-medium">Sono</span>
               </div>
               <p className="text-2xl font-bold">{loading ? "..." : stats.sleepTracking}</p>
@@ -149,7 +212,7 @@ export const Statistics = () => {
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Activity className="h-4 w-4 text-yellow-500" />
+                <Activity className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                 <span className="text-sm font-medium">Humor</span>
               </div>
               <p className="text-2xl font-bold">{loading ? "..." : stats.moodTracking}</p>
@@ -157,7 +220,7 @@ export const Statistics = () => {
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Activity className="h-4 w-4 text-green-500" />
+                <Activity className="h-4 w-4 text-green-600 dark:text-green-400" />
                 <span className="text-sm font-medium">Energia</span>
               </div>
               <p className="text-2xl font-bold">{loading ? "..." : stats.energyTracking}</p>
