@@ -126,12 +126,19 @@ export const useCommission = () => {
     }).format(amount);
   };
 
+  // Check if user has any commission activity
+  const hasCommissions = 
+    transactions.length > 0 || 
+    withdrawals.length > 0 || 
+    balance.total_earned > 0;
+
   return {
     balance,
     transactions,
     withdrawals,
     isLoading,
     error,
+    hasCommissions,
     requestWithdrawal,
     formatCurrency,
     refresh: fetchBalance,

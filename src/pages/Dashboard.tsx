@@ -46,6 +46,7 @@ import { PremiumPlusTour } from "@/components/PremiumPlusTour";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
 import { ReferralSection } from "@/components/ReferralSection";
 import { CommissionBalance } from "@/components/CommissionBalance";
+import { useCommission } from "@/hooks/useCommission";
 import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
 import { SOSButton } from "@/components/SOSButton";
@@ -83,6 +84,7 @@ export default function Dashboard() {
   const virtualClosetRef = useRef<HTMLDivElement>(null);
   const sosFemininoRef = useRef<HTMLDivElement>(null);
   const { profile } = useProfile();
+  const { hasCommissions } = useCommission();
   
   // Check if user has Premium or Premium Plus access
   const hasPremiumAccess = profile?.subscription_plan === 'premium' || 
@@ -619,10 +621,12 @@ export default function Dashboard() {
                     
                     {/* Referral Program */}
                     {hasPremiumAccess && (
-                      <>
-                        <ReferralSection />
-                        <CommissionBalance />
-                      </>
+                      <ReferralSection />
+                    )}
+                    
+                    {/* Commission Balance - only show if user has commissions */}
+                    {hasCommissions && (
+                      <CommissionBalance />
                     )}
                     
                     {/* AI Wellness Plans Section */}
