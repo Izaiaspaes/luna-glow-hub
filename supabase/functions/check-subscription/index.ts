@@ -72,6 +72,85 @@ serve(async (req) => {
       logStep("Active subscription found", { subscriptionId: subscription.id, endDate: subscriptionEnd });
       productId = subscription.items.data[0].price.product as string;
       logStep("Determined subscription tier", { productId });
+
+      // Check if this user was referred and register commission
+      const { data: referral } = await supabaseClient
+        .from("referrals")
+        .select("*")
+        .eq("referred_user_id", user.id)
+        .eq("status", "signed_up")
+        .single();
+
+      if (referral) {
+        logStep("User was referred, registering commission", { referralId: referral.id });
+        
+        // Get the price amount from Stripe
+        const priceId = subscription.items.data[0].price.id;
+        const price = await stripe.prices.retrieve(priceId);
+        const paymentAmount = (price.unit_amount || 0) / 100; // Convert from cents
+        
+        const COMMISSION_RATE = 0.50;
+        const ELIGIBILITY_DAYS = 30;
+        const commissionAmount = paymentAmount * COMMISSION_RATE;
+        const eligibleAt = new Date();
+        eligibleAt.setDate(eligibleAt.getDate() + ELIGIBILITY_DAYS);
+
+        // Create commission transaction
+        await supabaseClient
+          .from("commission_transactions")
+          .insert({
+            user_id: referral.referrer_user_id,
+            referral_id: referral.id,
+            referred_user_id: user.id,
+            amount: commissionAmount,
+            currency: price.currency?.toUpperCase() || "BRL",
+            status: "pending",
+            payment_amount: paymentAmount,
+            commission_rate: COMMISSION_RATE,
+            eligible_at: eligibleAt.toISOString(),
+          });
+
+        // Update or create balance for referrer
+        const { data: existingBalance } = await supabaseClient
+          .from("user_commission_balance")
+          .select("*")
+          .eq("user_id", referral.referrer_user_id)
+          .single();
+
+        if (existingBalance) {
+          await supabaseClient
+            .from("user_commission_balance")
+            .update({
+              pending_balance: Number(existingBalance.pending_balance) + commissionAmount,
+            })
+            .eq("user_id", referral.referrer_user_id);
+        } else {
+          await supabaseClient
+            .from("user_commission_balance")
+            .insert({
+              user_id: referral.referrer_user_id,
+              pending_balance: commissionAmount,
+              available_balance: 0,
+              total_earned: 0,
+              total_withdrawn: 0,
+            });
+        }
+
+        // Update referral status
+        await supabaseClient
+          .from("referrals")
+          .update({
+            status: "subscribed",
+            referred_subscribed_at: new Date().toISOString(),
+            reward_eligible_at: eligibleAt.toISOString(),
+          })
+          .eq("id", referral.id);
+
+        logStep("Commission registered successfully", { 
+          commissionAmount,
+          eligibleAt: eligibleAt.toISOString()
+        });
+      }
     } else {
       logStep("No active subscription found");
     }

@@ -109,7 +109,7 @@ export const ReferralSection = () => {
             {t("referral.title", "Indique e Ganhe")}
           </CardTitle>
           <CardDescription>
-            {t("referral.description", "Indique amigas e ganhe 10% de desconto na sua próxima renovação quando elas ficarem 30 dias assinantes!")}
+            {t("referral.description", "Indique amigas e ganhe 50% de comissão sobre a primeira mensalidade quando elas ficarem 30 dias assinantes!")}
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6 space-y-6">
@@ -189,7 +189,8 @@ export const ReferralSection = () => {
             <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
               <li>{t("referral.step1", "Compartilhe seu link com amigas")}</li>
               <li>{t("referral.step2", "Ela se cadastra e assina um plano")}</li>
-              <li>{t("referral.step3", "Após 30 dias de assinatura ativa, você ganha 10% de desconto!")}</li>
+              <li>{t("referral.step3", "Após 30 dias de assinatura ativa, você ganha 50% de comissão!")}</li>
+              <li>{t("referral.step4", "O saldo fica disponível para saque via PIX")}</li>
             </ol>
           </div>
 

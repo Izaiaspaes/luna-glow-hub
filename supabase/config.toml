@@ -86,3 +86,12 @@ verify_jwt = false
 
 [functions.check-referral-rewards]
 verify_jwt = false
+
+[functions.process-commission]
+verify_jwt = false
+
+[functions.check-commission-eligibility]
+verify_jwt = false
+
+[functions.send-trial-expired-notification]
+verify_jwt = false

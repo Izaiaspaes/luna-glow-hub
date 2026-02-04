@@ -188,6 +188,62 @@ export type Database = {
         }
         Relationships: []
       }
+      commission_transactions: {
+        Row: {
+          amount: number
+          available_at: string | null
+          commission_rate: number
+          created_at: string
+          currency: string
+          eligible_at: string | null
+          id: string
+          payment_amount: number
+          referral_id: string | null
+          referred_user_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          available_at?: string | null
+          commission_rate?: number
+          created_at?: string
+          currency?: string
+          eligible_at?: string | null
+          id?: string
+          payment_amount: number
+          referral_id?: string | null
+          referred_user_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          available_at?: string | null
+          commission_rate?: number
+          created_at?: string
+          currency?: string
+          eligible_at?: string | null
+          id?: string
+          payment_amount?: number
+          referral_id?: string | null
+          referred_user_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commission_transactions_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: false
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cycle_tracking: {
         Row: {
           created_at: string
@@ -1015,6 +1071,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_commission_balance: {
+        Row: {
+          available_balance: number
+          created_at: string
+          id: string
+          pending_balance: number
+          total_earned: number
+          total_withdrawn: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          available_balance?: number
+          created_at?: string
+          id?: string
+          pending_balance?: number
+          total_earned?: number
+          total_withdrawn?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          available_balance?: number
+          created_at?: string
+          id?: string
+          pending_balance?: number
+          total_earned?: number
+          total_withdrawn?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_onboarding_data: {
         Row: {
           age: number | null
@@ -1315,6 +1404,60 @@ export type Database = {
           user_id?: string
           valid_from?: string
           valid_until?: string | null
+        }
+        Relationships: []
+      }
+      withdrawal_requests: {
+        Row: {
+          account_holder_name: string | null
+          admin_notes: string | null
+          amount: number
+          bank_name: string | null
+          created_at: string
+          currency: string
+          id: string
+          paid_at: string | null
+          pix_key: string | null
+          pix_key_type: string | null
+          processed_at: string | null
+          processed_by: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_holder_name?: string | null
+          admin_notes?: string | null
+          amount: number
+          bank_name?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          pix_key?: string | null
+          pix_key_type?: string | null
+          processed_at?: string | null
+          processed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_holder_name?: string | null
+          admin_notes?: string | null
+          amount?: number
+          bank_name?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          pix_key?: string | null
+          pix_key_type?: string | null
+          processed_at?: string | null
+          processed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

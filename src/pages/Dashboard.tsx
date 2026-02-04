@@ -45,6 +45,7 @@ import { AppTour } from "@/components/AppTour";
 import { PremiumPlusTour } from "@/components/PremiumPlusTour";
 import { SubscriptionCard } from "@/components/SubscriptionCard";
 import { ReferralSection } from "@/components/ReferralSection";
+import { CommissionBalance } from "@/components/CommissionBalance";
 import { WomenJournal } from "@/components/WomenJournal";
 import { LunaSense } from "@/components/LunaSense";
 import { SOSButton } from "@/components/SOSButton";
@@ -617,7 +618,12 @@ export default function Dashboard() {
                     <SubscriptionCard />
                     
                     {/* Referral Program */}
-                    {hasPremiumAccess && <ReferralSection />}
+                    {hasPremiumAccess && (
+                      <>
+                        <ReferralSection />
+                        <CommissionBalance />
+                      </>
+                    )}
                     
                     {/* AI Wellness Plans Section */}
                     <div>
