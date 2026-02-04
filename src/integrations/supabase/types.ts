@@ -188,6 +188,36 @@ export type Database = {
         }
         Relationships: []
       }
+      commission_settings: {
+        Row: {
+          commission_rate: number
+          created_at: string
+          eligibility_days: number
+          id: string
+          is_active: boolean
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          commission_rate?: number
+          created_at?: string
+          eligibility_days?: number
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          commission_rate?: number
+          created_at?: string
+          eligibility_days?: number
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       commission_transactions: {
         Row: {
           amount: number

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useReferral } from "@/hooks/useReferral";
+import { useCommissionSettings } from "@/hooks/useCommissionSettings";
 import { toast } from "sonner";
 import { 
   Copy, 
@@ -28,6 +29,7 @@ export const ReferralSection = () => {
     copyReferralLink, 
     getStats 
   } = useReferral();
+  const { commissionRate, eligibilityDays } = useCommissionSettings();
   const [isCopying, setIsCopying] = useState(false);
 
   const handleCopyLink = async () => {
@@ -109,7 +111,7 @@ export const ReferralSection = () => {
             {t("referral.title", "Indique e Ganhe")}
           </CardTitle>
           <CardDescription>
-            {t("referral.description", "Indique amigas e ganhe 50% de comissão sobre a primeira mensalidade quando elas ficarem 30 dias assinantes!")}
+            Indique amigas e ganhe <strong>{commissionRate}% de comissão</strong> sobre a primeira mensalidade quando elas ficarem {eligibilityDays} dias assinantes!
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6 space-y-6">
@@ -189,7 +191,7 @@ export const ReferralSection = () => {
             <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
               <li>{t("referral.step1", "Compartilhe seu link com amigas")}</li>
               <li>{t("referral.step2", "Ela se cadastra e assina um plano")}</li>
-              <li>{t("referral.step3", "Após 30 dias de assinatura ativa, você ganha 50% de comissão!")}</li>
+              <li>Após {eligibilityDays} dias de assinatura ativa, você ganha {commissionRate}% de comissão!</li>
               <li>{t("referral.step4", "O saldo fica disponível para saque via PIX")}</li>
             </ol>
           </div>

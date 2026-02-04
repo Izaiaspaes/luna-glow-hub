@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus, Bell, Gift, Wallet } from "lucide-react";
+import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus, Bell, Gift, Wallet, Percent } from "lucide-react";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -20,6 +20,7 @@ import { NotificationsBell } from "@/components/admin/NotificationsBell";
 import { NotificationsLogsManagement } from "@/components/admin/NotificationsLogsManagement";
 import { TrialManagement } from "@/components/admin/TrialManagement";
 import { WithdrawalsManagement } from "@/components/admin/WithdrawalsManagement";
+import { CommissionSettingsManagement } from "@/components/admin/CommissionSettingsManagement";
 import logoLuna from "@/assets/logo-luna.png";
 
 import { Layout } from "@/components/Layout";
@@ -146,6 +147,10 @@ export default function Admin() {
                 <DollarSign className="w-4 h-4" />
                 <span>Preços</span>
               </TabsTrigger>
+              <TabsTrigger value="commission" className="flex items-center gap-2 whitespace-nowrap px-3">
+                <Percent className="w-4 h-4" />
+                <span>Comissão</span>
+              </TabsTrigger>
             </TabsList>
           </div>
 
@@ -199,6 +204,10 @@ export default function Admin() {
 
               <TabsContent value="prices" className="space-y-4">
                 <PriceManagement />
+              </TabsContent>
+
+              <TabsContent value="commission" className="space-y-4">
+                <CommissionSettingsManagement />
               </TabsContent>
         </Tabs>
       </main>
