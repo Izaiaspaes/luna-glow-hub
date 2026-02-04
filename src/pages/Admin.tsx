@@ -4,7 +4,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { NavLink } from "@/components/NavLink";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, BarChart3, FileText, Newspaper, MessageSquareQuote, Share2, Megaphone, Lightbulb, Ticket, DollarSign, UserPlus, Bell, Gift, Wallet, Percent } from "lucide-react";
+import { Heart } from "lucide-react";
+import { AdminTabsNavigation } from "@/components/admin/AdminTabsNavigation";
 import { toast } from "sonner";
 import { UsersManagement } from "@/components/admin/UsersManagement";
 import { Statistics } from "@/components/admin/Statistics";
@@ -93,66 +94,7 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="statistics" className="space-y-6">
-          <div className="w-full overflow-x-auto scrollbar-hide">
-            <TabsList className="inline-flex h-10 items-center justify-start gap-1 p-1 min-w-max">
-              <TabsTrigger value="statistics" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <BarChart3 className="w-4 h-4" />
-                <span>Estatísticas</span>
-              </TabsTrigger>
-              <TabsTrigger value="users" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Users className="w-4 h-4" />
-                <span>Usuários</span>
-              </TabsTrigger>
-              <TabsTrigger value="notifications" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Bell className="w-4 h-4" />
-                <span>Notificações</span>
-              </TabsTrigger>
-              <TabsTrigger value="referrals" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <UserPlus className="w-4 h-4" />
-                <span>Indicações</span>
-              </TabsTrigger>
-              <TabsTrigger value="withdrawals" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Wallet className="w-4 h-4" />
-                <span>Saques</span>
-              </TabsTrigger>
-              <TabsTrigger value="trials" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Gift className="w-4 h-4" />
-                <span>Trials</span>
-              </TabsTrigger>
-              <TabsTrigger value="banners" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Megaphone className="w-4 h-4" />
-                <span>Banners</span>
-              </TabsTrigger>
-              <TabsTrigger value="testimonials" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <MessageSquareQuote className="w-4 h-4" />
-                <span>Testemunhos</span>
-              </TabsTrigger>
-              <TabsTrigger value="newsletter" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Newspaper className="w-4 h-4" />
-                <span>Newsletter</span>
-              </TabsTrigger>
-              <TabsTrigger value="plans" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <FileText className="w-4 h-4" />
-                <span>Pacotes</span>
-              </TabsTrigger>
-              <TabsTrigger value="coupons" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Ticket className="w-4 h-4" />
-                <span>Cupons</span>
-              </TabsTrigger>
-              <TabsTrigger value="suggestions" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Lightbulb className="w-4 h-4" />
-                <span>Sugestões</span>
-              </TabsTrigger>
-              <TabsTrigger value="prices" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <DollarSign className="w-4 h-4" />
-                <span>Preços</span>
-              </TabsTrigger>
-              <TabsTrigger value="commission" className="flex items-center gap-2 whitespace-nowrap px-3">
-                <Percent className="w-4 h-4" />
-                <span>Comissão</span>
-              </TabsTrigger>
-            </TabsList>
-          </div>
+          <AdminTabsNavigation />
 
           <TabsContent value="statistics" className="space-y-4">
             <Statistics />
