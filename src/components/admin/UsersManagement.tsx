@@ -123,17 +123,17 @@ export const UsersManagement = () => {
     }
 
     const usersArray: UserWithRole[] = (usersData || []).map((user: any) => ({
-      user_id: user.user_id,
+      user_id: user.id,
       email: user.email || 'N/A',
       full_name: user.full_name,
       phone: user.phone,
       created_at: user.created_at,
-      roles: user.roles || [],
+      roles: (user.roles || []).map((r: string) => ({ role: r })),
       subscription_plan: user.subscription_plan || 'free',
       is_active: user.is_active ?? true,
       registration_source: user.registration_source || null,
       last_accessed_at: user.last_accessed_at || null,
-      country: user.country || null,
+      country: user.nationality || null,
     }));
 
     setUsers(usersArray);
