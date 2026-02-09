@@ -12,16 +12,16 @@ export const PRICING_CONFIG = {
       yearly: 0,
     },
     premium: {
-      monthly: 19.90,
-      yearly: 199.00,
+      monthly: 29.90,
+      yearly: 299.00,
       stripePriceId: {
         monthly: "price_1SX6CVIEVFZTiFWxkPKHuWRw",
         yearly: "price_1SX6CjIEVFZTiFWxlX10yitN",
       }
     },
     premiumPlus: {
-      monthly: 29.90,
-      yearly: 299.00,
+      monthly: 59.90,
+      yearly: 599.00,
       stripePriceId: {
         monthly: "price_1SYebkIEVFZTiFWxFUKducJE",
         yearly: "price_1SYghcIEVFZTiFWxxqiCmWth",
