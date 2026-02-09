@@ -13,8 +13,8 @@ const PRODUCT_TIERS = {
   "prod_TU4LGK6XvlFPPV": { name: "Premium Mensal", color: "bg-gradient-hero" },
   "prod_TU4LclTaY8G9Y4": { name: "Premium Anual", color: "bg-gradient-hero" },
   // Premium Plus products
-  "prod_TVfx4bH4H0okVe": { name: "Premium Plus Mensal", color: "bg-gradient-hero" },
-  "prod_TVfxAziuEOC4QN": { name: "Premium Plus Anual", color: "bg-gradient-hero" },
+  "prod_Twp9boefTAyYo1": { name: "Premium Plus Mensal", color: "bg-gradient-hero" },
+  "prod_Twp94r0yxoNmRg": { name: "Premium Plus Anual", color: "bg-gradient-hero" },
 };
 
 export function SubscriptionCard() {
@@ -70,8 +70,8 @@ export function SubscriptionCard() {
   
   const isPremiumPlus = 
     profile?.subscription_plan === "premium_plus" ||
-    subscriptionStatus?.product_id === 'prod_TVfx4bH4H0okVe' ||
-    subscriptionStatus?.product_id === 'prod_TVfxAziuEOC4QN';
+    subscriptionStatus?.product_id === 'prod_Twp9boefTAyYo1' ||
+    subscriptionStatus?.product_id === 'prod_Twp94r0yxoNmRg';
 
   // Check if subscription is manual (admin-assigned) vs paid (Stripe)
   const isManualSubscription = effectiveSubscribed && !subscriptionStatus?.subscribed;

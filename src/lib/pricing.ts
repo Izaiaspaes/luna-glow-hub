@@ -23,8 +23,8 @@ export const PRICING_CONFIG = {
       monthly: 59.90,
       yearly: 599.00,
       stripePriceId: {
-        monthly: "price_1SYebkIEVFZTiFWxFUKducJE",
-        yearly: "price_1SYghcIEVFZTiFWxxqiCmWth",
+        monthly: "price_1SyvUtIEVFZTiFWxN8IqgNea",
+        yearly: "price_1SyvUtIEVFZTiFWxh9qWPpUJ",
       }
     }
   },
