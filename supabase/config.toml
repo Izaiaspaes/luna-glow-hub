@@ -95,3 +95,6 @@ verify_jwt = false
 
 [functions.send-trial-expired-notification]
 verify_jwt = false
+
+[functions.get-stripe-stats]
+verify_jwt = false
