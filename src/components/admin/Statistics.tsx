@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Heart, TrendingUp, Calendar, Activity, UserPlus, HeartHandshake } from "lucide-react";
+import { Users, Heart, TrendingUp, Calendar, Activity, UserPlus, HeartHandshake, CreditCard, Crown } from "lucide-react";
 
 interface Stats {
   totalUsers: number;
@@ -15,6 +15,14 @@ interface Stats {
   totalPartnerRelationships: number;
   acceptedPartners: number;
   pendingPartners: number;
+}
+
+interface StripeStats {
+  total_active: number;
+  premium_monthly: number;
+  premium_yearly: number;
+  premium_plus_monthly: number;
+  premium_plus_yearly: number;
 }
 
 export const Statistics = () => {
@@ -31,10 +39,13 @@ export const Statistics = () => {
     acceptedPartners: 0,
     pendingPartners: 0,
   });
+  const [stripeStats, setStripeStats] = useState<StripeStats | null>(null);
+  const [stripeLoading, setStripeLoading] = useState(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStats();
+    loadStripeStats();
   }, []);
 
   const loadStats = async () => {
@@ -106,6 +117,19 @@ export const Statistics = () => {
     setLoading(false);
   };
 
+  const loadStripeStats = async () => {
+    setStripeLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('get-stripe-stats');
+      if (!error && data) {
+        setStripeStats(data);
+      }
+    } catch (err) {
+      console.error('Error loading Stripe stats:', err);
+    }
+    setStripeLoading(false);
+  };
+
   const StatCard = ({ title, value, icon: Icon, description }: { title: string; value: number; icon: any; description: string }) => (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -148,7 +172,61 @@ export const Statistics = () => {
         />
       </div>
 
-      {/* Luna a Dois Stats */}
+      {/* Stripe Paid Plans Stats */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CreditCard className="h-5 w-5 text-primary" />
+            Assinaturas Pagas (Stripe)
+          </CardTitle>
+          <CardDescription>Planos ativos gerados via compra no Stripe</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Total Ativos</span>
+              </div>
+              <p className="text-2xl font-bold">{stripeLoading ? "..." : stripeStats?.total_active ?? 0}</p>
+              <p className="text-xs text-muted-foreground">Assinaturas ativas</p>
+            </div>
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <Crown className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Premium Mensal</span>
+              </div>
+              <p className="text-2xl font-bold">{stripeLoading ? "..." : stripeStats?.premium_monthly ?? 0}</p>
+              <p className="text-xs text-muted-foreground">R$ 29,90/mês</p>
+            </div>
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <Crown className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Premium Anual</span>
+              </div>
+              <p className="text-2xl font-bold">{stripeLoading ? "..." : stripeStats?.premium_yearly ?? 0}</p>
+              <p className="text-xs text-muted-foreground">R$ 299,00/ano</p>
+            </div>
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <Crown className="h-4 w-4 text-accent-foreground" />
+                <span className="text-sm font-medium">Plus Mensal</span>
+              </div>
+              <p className="text-2xl font-bold">{stripeLoading ? "..." : stripeStats?.premium_plus_monthly ?? 0}</p>
+              <p className="text-xs text-muted-foreground">R$ 59,90/mês</p>
+            </div>
+            <div className="space-y-2 p-4 rounded-lg bg-muted/50">
+              <div className="flex items-center gap-2">
+                <Crown className="h-4 w-4 text-accent-foreground" />
+                <span className="text-sm font-medium">Plus Anual</span>
+              </div>
+              <p className="text-2xl font-bold">{stripeLoading ? "..." : stripeStats?.premium_plus_yearly ?? 0}</p>
+              <p className="text-xs text-muted-foreground">R$ 599,00/ano</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
