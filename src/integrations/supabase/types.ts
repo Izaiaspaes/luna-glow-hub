@@ -1546,6 +1546,17 @@ export type Database = {
         Returns: boolean
       }
       generate_referral_code: { Args: never; Returns: string }
+      get_partner_invite_by_token: {
+        Args: { p_token: string }
+        Returns: {
+          id: string
+          invited_at: string
+          owner_user_id: string
+          partner_email: string
+          sharing_settings: Json
+          status: string
+        }[]
+      }
       get_users_with_profiles: {
         Args: never
         Returns: {

@@ -29,10 +29,7 @@ export default function PartnerInvite() {
 
     try {
       const { data, error } = await supabase
-        .from("partner_relationships")
-        .select("*")
-        .eq("invite_token", token)
-        .eq("status", "pending")
+        .rpc("get_partner_invite_by_token", { p_token: token })
         .single();
 
       if (error || !data) {
