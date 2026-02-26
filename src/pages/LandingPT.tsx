@@ -1,5 +1,6 @@
 import { Hero } from "@/components/landing/Hero";
 import { Features } from "@/components/landing/Features";
+import { HowItWorks } from "@/components/landing/HowItWorks";
 import { ServicesHighlight } from "@/components/landing/ServicesHighlight";
 import { Pricing } from "@/components/landing/Pricing";
 import { Testimonials } from "@/components/landing/Testimonials";
@@ -22,6 +23,7 @@ const LandingPT = () => {
       <Quiz />
       <AppDemo />
       <Features />
+      <HowItWorks />
       <ServicesHighlight />
       <Testimonials />
       <CompetitorComparison />

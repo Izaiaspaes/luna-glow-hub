@@ -1,5 +1,6 @@
 import { Hero } from "@/components/landing/en/Hero";
 import { Features } from "@/components/landing/en/Features";
+import { HowItWorks } from "@/components/landing/en/HowItWorks";
 import { Pricing } from "@/components/landing/en/Pricing";
 import { Testimonials } from "@/components/landing/en/Testimonials";
 import { FAQ } from "@/components/landing/en/FAQ";
@@ -20,6 +21,7 @@ const LandingEN = () => {
       <Quiz />
       <AppDemo />
       <Features />
+      <HowItWorks />
       <Testimonials />
       <CountdownTimer />
       <TrustSection />
