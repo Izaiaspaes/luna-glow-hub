@@ -75,6 +75,7 @@ export default function Dashboard() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showPlanLimitModal, setShowPlanLimitModal] = useState(false);
   const [sosDialogOpen, setSOSDialogOpen] = useState(false);
+  const [cycleInfo, setCycleInfo] = useState<{ day: number; phase: string } | null>(null);
   const { user, loading, isAdmin, adminChecked, signOut, subscriptionStatus } = useAuth();
   
   // Refs for Premium Plus sections
@@ -120,6 +121,40 @@ export default function Dashboard() {
       loadWellnessPlans();
     }
   }, [user, activeTab]);
+
+  // Load cycle phase data
+  useEffect(() => {
+    if (user) {
+      loadCyclePhase();
+    }
+  }, [user]);
+
+  const loadCyclePhase = async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from('cycle_tracking')
+      .select('cycle_start_date, cycle_length')
+      .eq('user_id', user.id)
+      .order('cycle_start_date', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!error && data) {
+      const cycleStart = new Date(data.cycle_start_date);
+      const today = new Date();
+      const daysSinceStart = Math.floor((today.getTime() - cycleStart.getTime()) / (1000 * 60 * 60 * 24));
+      const cycleLength = data.cycle_length || 28;
+      const dayInCycle = (daysSinceStart % cycleLength) + 1;
+
+      let phase: string;
+      if (dayInCycle <= 5) phase = 'menstrual';
+      else if (dayInCycle <= 13) phase = 'follicular';
+      else if (dayInCycle <= 17) phase = 'ovulatory';
+      else phase = 'luteal';
+
+      setCycleInfo({ day: dayInCycle, phase });
+    }
+  };
 
   // Check for settings query param and open settings if present
   useEffect(() => {
@@ -264,6 +299,7 @@ export default function Dashboard() {
     setDialogOpen(false);
     setTrackingType(null);
     loadRecentData();
+    loadCyclePhase();
   };
 
   const scrollToPremiumSection = (ref: React.RefObject<HTMLDivElement>) => {
@@ -315,8 +351,12 @@ export default function Dashboard() {
               <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
             </CardHeader>
             <CardContent className="p-2.5 pt-0 sm:p-4 sm:pt-0 md:p-6 md:pt-0">
-              <div className="text-base sm:text-lg md:text-2xl font-bold">{t('dashboard.quickStats.cycleDay')}</div>
-              <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">{t('dashboard.quickStats.cyclePhase')}</p>
+              <div className="text-base sm:text-lg md:text-2xl font-bold">
+                {cycleInfo ? t('features.cycleTracking.cycleDay', { day: cycleInfo.day }) : t('dashboard.quickStats.cycleDay')}
+              </div>
+              <p className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground">
+                {cycleInfo ? t(`dashboard.phases.${cycleInfo.phase}`) : t('dashboard.quickStats.cyclePhase')}
+              </p>
             </CardContent>
           </Card>
 
