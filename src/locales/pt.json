@@ -504,6 +504,12 @@
       "energyScore": "3,8/5",
       "energyLevel": "Nível moderado"
     },
+    "phases": {
+      "menstrual": "Fase Menstrual",
+      "follicular": "Fase Folicular",
+      "ovulatory": "Fase Ovulatória",
+      "luteal": "Fase Lútea"
+    },
     "tabs": {
       "overview": "Visão Geral",
       "overviewShort": "Geral",
