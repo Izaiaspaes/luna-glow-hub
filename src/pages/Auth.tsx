@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import logoLuna from "@/assets/logo-luna.png";
 import { useTranslation } from "react-i18next";
 import { lovable } from "@/integrations/lovable/index";
+import { isLovablePreview, openAppOutsidePreview } from "@/lib/lovablePreview";
 
 export default function Auth() {
   const { t } = useTranslation();
@@ -25,6 +26,56 @@ export default function Auth() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const { user, signIn, signUp } = useAuth();
   const navigate = useNavigate();
+
+  const handleGoogleLogin = async () => {
+    if (isLovablePreview()) {
+      const opened = openAppOutsidePreview();
+
+      if (opened) {
+        toast.info("O login com Google abre fora do Preview. Continue na nova aba.");
+      } else {
+        toast.error("Abra o app em uma nova aba e tente novamente com Google.");
+      }
+
+      return;
+    }
+
+    setGoogleLoading(true);
+
+    try {
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+        extraParams: {
+          prompt: "select_account",
+        },
+      });
+
+      if (result?.error) {
+        console.error("Google OAuth error:", result.error);
+
+        if (result.error.message.includes("Preview mode")) {
+          const opened = openAppOutsidePreview();
+
+          if (opened) {
+            toast.info("O Preview não suporta Google login. Continue na nova aba.");
+            return;
+          }
+        }
+
+        toast.error(t("auth.errors.loginError") + (result.error.message || "Erro ao conectar com Google"));
+        return;
+      }
+
+      if (result?.redirected) {
+        return;
+      }
+    } catch (err: any) {
+      console.error("Google OAuth exception:", err);
+      toast.error("Erro ao conectar com Google. Tente novamente.");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
 
   const authSchema = z.object({
     email: z.string().email({ message: t("auth.errors.invalidEmail") }),
@@ -278,27 +329,7 @@ export default function Auth() {
                 variant="outline"
                 className="w-full gap-2"
                 disabled={googleLoading}
-                onClick={async () => {
-                  setGoogleLoading(true);
-                  try {
-                    const result = await lovable.auth.signInWithOAuth("google", {
-                      redirect_uri: window.location.origin,
-                    });
-                    
-                    if (result?.error) {
-                      console.error("Google OAuth error:", result.error);
-                      toast.error(t("auth.errors.loginError") + (result.error.message || "Erro ao conectar com Google"));
-                    } else if (result?.redirected) {
-                      // User is being redirected to Google - don't reset loading
-                      return;
-                    }
-                  } catch (err: any) {
-                    console.error("Google OAuth exception:", err);
-                    toast.error("Erro ao conectar com Google. Tente novamente.");
-                  } finally {
-                    setGoogleLoading(false);
-                  }
-                }}
+                onClick={handleGoogleLogin}
               >
                 <svg className="h-4 w-4" viewBox="0 0 24 24">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
