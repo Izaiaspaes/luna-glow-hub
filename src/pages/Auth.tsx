@@ -281,11 +281,20 @@ export default function Auth() {
                 onClick={async () => {
                   setGoogleLoading(true);
                   try {
-                    await lovable.auth.signInWithOAuth("google", {
+                    const result = await lovable.auth.signInWithOAuth("google", {
                       redirect_uri: window.location.origin,
                     });
-                  } catch (err) {
-                    console.error(err);
+                    
+                    if (result?.error) {
+                      console.error("Google OAuth error:", result.error);
+                      toast.error(t("auth.errors.loginError") + (result.error.message || "Erro ao conectar com Google"));
+                    } else if (result?.redirected) {
+                      // User is being redirected to Google - don't reset loading
+                      return;
+                    }
+                  } catch (err: any) {
+                    console.error("Google OAuth exception:", err);
+                    toast.error("Erro ao conectar com Google. Tente novamente.");
                   } finally {
                     setGoogleLoading(false);
                   }
