@@ -53,6 +53,7 @@ export default defineConfig(({ mode }) => ({
         maximumFileSizeToCacheInBytes: 25 * 1024 * 1024, // 25 MB
       },
       workbox: {
+        navigateFallbackDenylist: [/^\/~oauth/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
