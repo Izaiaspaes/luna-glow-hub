@@ -26,7 +26,11 @@
     "accept": "Aceptar y Continuar",
     "decline": "Solo Esenciales",
     "privacyPolicy": "Política de Privacidad",
-    "terms": "Términos de Uso"
+    "terms": "Términos de Uso",
+    "shortTitle": "Usamos cookies para mejorar tu experiencia",
+    "moreInfo": "Más info",
+    "lessInfo": "Menos info",
+    "acceptShort": "Aceptar"
   },
   "nav": {
     "home": "Inicio",
