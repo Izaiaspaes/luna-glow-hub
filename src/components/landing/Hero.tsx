@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Sparkles, Shield, Heart } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, Heart, Play } from "lucide-react";
 import heroImage from "@/assets/hero-woman-phone.jpg";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { trackCTAClick, trackStartOnboarding, trackViewFeatures } from "@/lib/analytics";
 
 export const Hero = () => {
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const handleStartClick = () => {
     trackCTAClick({
       ctaLocation: 'hero',
@@ -65,14 +67,37 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-primary/20">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/yIGeeyj3NYo?autoplay=1&mute=1"
-              title="Luna - Apresentação"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-primary/20 bg-muted">
+            {videoLoaded ? (
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/yIGeeyj3NYo?autoplay=1&mute=1&rel=0"
+                title="Luna - Apresentação"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setVideoLoaded(true)}
+                className="group relative w-full h-full cursor-pointer"
+                aria-label="Reproduzir vídeo de apresentação"
+              >
+                <img
+                  src={`https://i.ytimg.com/vi/yIGeeyj3NYo/hqdefault.jpg`}
+                  alt="Luna - Apresentação em vídeo"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-colorful shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Play className="w-10 h-10 md:w-12 md:h-12 text-white fill-white ml-1" />
+                  </div>
+                </div>
+              </button>
+            )}
           </div>
         </motion.div>
 
