@@ -410,16 +410,17 @@ export const GlobalFloatingChat = () => {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-40"
           >
             <Button
               onClick={() => setIsOpen(true)}
               size="lg"
-              className="h-16 w-16 rounded-full shadow-2xl gradient-bg hover:scale-110 transition-transform group"
+              className="h-12 w-12 md:h-16 md:w-16 rounded-full shadow-2xl gradient-bg hover:scale-110 transition-transform group"
+              aria-label="Abrir chat de ajuda"
             >
-              <MessageCircle className="w-7 h-7 text-white group-hover:scale-110 transition-transform" />
+              <MessageCircle className="w-5 h-5 md:w-7 md:h-7 text-white group-hover:scale-110 transition-transform" />
               <motion.div
-                className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"
+                className="absolute -top-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 border-white"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
@@ -435,9 +436,9 @@ export const GlobalFloatingChat = () => {
             initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-3rem)]"
+            className="fixed bottom-4 right-2 left-2 md:bottom-6 md:right-6 md:left-auto z-50 md:w-96 md:max-w-[calc(100vw-3rem)]"
           >
-            <Card className="h-[600px] max-h-[calc(100vh-6rem)] flex flex-col shadow-2xl border-2 border-primary/20">
+            <Card className="h-[80vh] md:h-[600px] max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-6rem)] flex flex-col shadow-2xl border-2 border-primary/20">
               {/* Header */}
               <div className="bg-gradient-to-r from-[hsl(var(--luna-pink))] via-[hsl(var(--luna-purple))] to-[hsl(var(--primary))] text-white p-4 flex items-center justify-between rounded-t-lg">
                 <div className="flex items-center gap-3">

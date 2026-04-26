@@ -111,11 +111,11 @@ export function SOSButton({ open: externalOpen, onOpenChange }: SOSButtonProps =
       {externalOpen === undefined && hasPremiumAccess && (
         <Button
           onClick={handleSOSClick}
-          className="fixed bottom-24 right-6 z-50 h-16 w-16 rounded-full bg-gradient-to-r from-red-500 to-pink-500 hover:opacity-90 shadow-lg hover:shadow-xl transition-all animate-pulse"
+          className="fixed bottom-36 right-4 md:bottom-24 md:right-6 z-40 h-12 w-12 md:h-16 md:w-16 rounded-full bg-gradient-to-r from-red-500 to-pink-500 hover:opacity-90 shadow-lg hover:shadow-xl transition-all animate-pulse"
           size="icon"
           aria-label={t('sos.title')}
         >
-          <AlertCircle className="w-8 h-8 text-white" />
+          <AlertCircle className="w-5 h-5 md:w-8 md:h-8 text-white" />
         </Button>
       )}
 
