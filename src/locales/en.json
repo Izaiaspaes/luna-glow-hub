@@ -39,7 +39,11 @@
     "accept": "Accept & Continue",
     "decline": "Essential Only",
     "privacyPolicy": "Privacy Policy",
-    "terms": "Terms of Use"
+    "terms": "Terms of Use",
+    "shortTitle": "We use cookies to improve your experience",
+    "moreInfo": "More info",
+    "lessInfo": "Less info",
+    "acceptShort": "Accept"
   },
   "nav": {
     "home": "Home",
