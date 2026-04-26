@@ -30,19 +30,19 @@ const createStep1Schema = (t: (key: string) => string) => z.object({
       message: t('onboarding.form.invalidCharacters')
     }),
   preferred_name: z.string()
-    .min(1, t('onboarding.form.preferredNameRequired'))
-    .min(2, t('onboarding.form.preferredNameMin'))
     .max(50, t('onboarding.form.preferredNameMax'))
-    .refine(val => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
+    .refine(val => !val || /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val), {
       message: t('onboarding.form.invalidCharacters')
-    }),
+    })
+    .optional()
+    .or(z.literal("")),
   age: z.number({
-    required_error: t('onboarding.form.ageRequired'),
     invalid_type_error: t('onboarding.form.ageInvalid')
   })
     .int(t('onboarding.form.ageInvalid'))
     .min(13, t('onboarding.form.ageMin'))
-    .max(120, t('onboarding.form.ageMax')),
+    .max(120, t('onboarding.form.ageMax'))
+    .optional(),
   profession: z.string()
     .max(100, t('onboarding.form.professionMax'))
     .optional()
@@ -223,7 +223,8 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
           
           <div className="space-y-1.5 md:space-y-2">
             <Label htmlFor="preferred_name" className="flex items-center gap-1 text-sm md:text-base">
-              {t('onboarding.form.preferredName')} <span className="text-destructive">*</span>
+              {t('onboarding.form.preferredName')}
+              <span className="text-xs text-muted-foreground ml-1">({t('common.optional') || 'opcional'})</span>
             </Label>
             <Input
               id="preferred_name"
@@ -267,7 +268,8 @@ export function OnboardingStep1({ data, onNext, onAutoSave, isLoading, authError
 
           <div className="space-y-1.5 md:space-y-2">
             <Label htmlFor="age" className="flex items-center gap-1 text-sm md:text-base">
-              {t('onboarding.form.age')} <span className="text-destructive">*</span>
+              {t('onboarding.form.age')}
+              <span className="text-xs text-muted-foreground ml-1">({t('common.optional') || 'opcional'})</span>
             </Label>
             <Input
               id="age"
