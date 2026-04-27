@@ -1538,7 +1538,48 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      price_settings_public: {
+        Row: {
+          billing_period: string | null
+          created_at: string | null
+          currency: string | null
+          id: string | null
+          is_active: boolean | null
+          is_promotion: boolean | null
+          plan_type: string | null
+          price: number | null
+          promotion_end_date: string | null
+          promotion_start_date: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          billing_period?: string | null
+          created_at?: string | null
+          currency?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_promotion?: boolean | null
+          plan_type?: string | null
+          price?: number | null
+          promotion_end_date?: string | null
+          promotion_start_date?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          billing_period?: string | null
+          created_at?: string | null
+          currency?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_promotion?: boolean | null
+          plan_type?: string | null
+          price?: number | null
+          promotion_end_date?: string | null
+          promotion_start_date?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       activate_trial: {
