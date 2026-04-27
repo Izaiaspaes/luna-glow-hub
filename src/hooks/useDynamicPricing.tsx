@@ -114,7 +114,7 @@ export const useDynamicPricing = () => {
             // Only apply price if it's not a promotion or if promotion is active
             if (!price.is_promotion || isPromotionActive) {
               dynamicPricing[currencyKey][planKey][periodKey] = price.price;
-              dynamicPricing[currencyKey][planKey].stripePriceId[periodKey] = price.stripe_price_id;
+              // stripe_price_id is no longer fetched from DB (security): keep static fallback from PRICING_CONFIG
             }
           });
 
