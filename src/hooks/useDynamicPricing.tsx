@@ -8,7 +8,6 @@ interface PriceSetting {
   currency: 'brl' | 'usd';
   billing_period: 'monthly' | 'yearly';
   price: number;
-  stripe_price_id: string;
   is_active: boolean;
   is_promotion: boolean;
   promotion_start_date: string | null;
