@@ -8,7 +8,6 @@ interface PriceSetting {
   currency: 'brl' | 'usd';
   billing_period: 'monthly' | 'yearly';
   price: number;
-  stripe_price_id: string;
   is_active: boolean;
   is_promotion: boolean;
   promotion_start_date: string | null;
@@ -56,8 +55,8 @@ export const useDynamicPricing = () => {
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const { data, error } = await supabase
-          .from('price_settings')
+        const { data, error } = await (supabase as any)
+          .from('price_settings_public')
           .select('*')
           .eq('is_active', true);
 
@@ -115,7 +114,7 @@ export const useDynamicPricing = () => {
             // Only apply price if it's not a promotion or if promotion is active
             if (!price.is_promotion || isPromotionActive) {
               dynamicPricing[currencyKey][planKey][periodKey] = price.price;
-              dynamicPricing[currencyKey][planKey].stripePriceId[periodKey] = price.stripe_price_id;
+              // stripe_price_id is no longer fetched from DB (security): keep static fallback from PRICING_CONFIG
             }
           });
 
