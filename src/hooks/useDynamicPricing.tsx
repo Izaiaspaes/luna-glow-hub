@@ -55,8 +55,8 @@ export const useDynamicPricing = () => {
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const { data, error } = await supabase
-          .from('price_settings')
+        const { data, error } = await (supabase as any)
+          .from('price_settings_public')
           .select('*')
           .eq('is_active', true);
 
