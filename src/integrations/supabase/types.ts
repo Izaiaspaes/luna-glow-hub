@@ -1584,6 +1584,15 @@ export type Database = {
       }
       is_trial_active: { Args: { p_user_id: string }; Returns: boolean }
       make_user_admin: { Args: { _email: string }; Returns: undefined }
+      validate_invite_code: {
+        Args: { p_code: string }
+        Returns: {
+          current_uses: number
+          expires_at: string
+          is_valid: boolean
+          max_uses: number
+        }[]
+      }
       validate_referral_code: { Args: { code: string }; Returns: boolean }
     }
     Enums: {
